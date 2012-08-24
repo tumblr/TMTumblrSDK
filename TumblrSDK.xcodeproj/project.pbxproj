@@ -15,6 +15,32 @@
 		936C7FE015E72D8C00C0ED53 /* libTumblrSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 936C7FC715E72D8C00C0ED53 /* libTumblrSDK.a */; };
 		936C7FE615E72D8C00C0ED53 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 936C7FE415E72D8C00C0ED53 /* InfoPlist.strings */; };
 		936C7FE915E72D8C00C0ED53 /* TMTumblrSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 936C7FE815E72D8C00C0ED53 /* TMTumblrSDKTests.m */; };
+		9387D76515E7346600E2876E /* JXHTTPDataBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74A15E7346600E2876E /* JXHTTPDataBody.m */; };
+		9387D76615E7346600E2876E /* JXHTTPDataBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74A15E7346600E2876E /* JXHTTPDataBody.m */; };
+		9387D76715E7346600E2876E /* JXHTTPFileBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74C15E7346600E2876E /* JXHTTPFileBody.m */; };
+		9387D76815E7346600E2876E /* JXHTTPFileBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74C15E7346600E2876E /* JXHTTPFileBody.m */; };
+		9387D76915E7346600E2876E /* JXHTTPFormEncodedBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74E15E7346600E2876E /* JXHTTPFormEncodedBody.m */; };
+		9387D76A15E7346600E2876E /* JXHTTPFormEncodedBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74E15E7346600E2876E /* JXHTTPFormEncodedBody.m */; };
+		9387D76B15E7346600E2876E /* JXHTTPJSONBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75015E7346600E2876E /* JXHTTPJSONBody.m */; };
+		9387D76C15E7346600E2876E /* JXHTTPJSONBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75015E7346600E2876E /* JXHTTPJSONBody.m */; };
+		9387D76D15E7346600E2876E /* JXHTTPMultipartBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75215E7346600E2876E /* JXHTTPMultipartBody.m */; };
+		9387D76E15E7346600E2876E /* JXHTTPMultipartBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75215E7346600E2876E /* JXHTTPMultipartBody.m */; };
+		9387D76F15E7346600E2876E /* JXHTTPOperation+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75415E7346600E2876E /* JXHTTPOperation+Convenience.m */; };
+		9387D77015E7346600E2876E /* JXHTTPOperation+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75415E7346600E2876E /* JXHTTPOperation+Convenience.m */; };
+		9387D77115E7346600E2876E /* JXHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75615E7346600E2876E /* JXHTTPOperation.m */; };
+		9387D77215E7346600E2876E /* JXHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75615E7346600E2876E /* JXHTTPOperation.m */; };
+		9387D77315E7346600E2876E /* JXHTTPOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75915E7346600E2876E /* JXHTTPOperationQueue.m */; };
+		9387D77415E7346600E2876E /* JXHTTPOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75915E7346600E2876E /* JXHTTPOperationQueue.m */; };
+		9387D77515E7346600E2876E /* JXOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75D15E7346600E2876E /* JXOperation.m */; };
+		9387D77615E7346600E2876E /* JXOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75D15E7346600E2876E /* JXOperation.m */; };
+		9387D77715E7346600E2876E /* JXOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75F15E7346600E2876E /* JXOperationQueue.m */; };
+		9387D77815E7346600E2876E /* JXOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D75F15E7346600E2876E /* JXOperationQueue.m */; };
+		9387D77915E7346600E2876E /* JXURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D76115E7346600E2876E /* JXURLConnectionOperation.m */; };
+		9387D77A15E7346600E2876E /* JXURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D76115E7346600E2876E /* JXURLConnectionOperation.m */; };
+		9387D77B15E7346600E2876E /* JXURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D76315E7346600E2876E /* JXURLEncoding.m */; };
+		9387D77C15E7346600E2876E /* JXURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D76315E7346600E2876E /* JXURLEncoding.m */; };
+		9387D77D15E7346600E2876E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9387D76415E7346600E2876E /* README.md */; };
+		9387D78115E734E000E2876E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9387D77F15E734BD00E2876E /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +78,36 @@
 		936C7FE515E72D8C00C0ED53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		936C7FE715E72D8C00C0ED53 /* TMTumblrSDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMTumblrSDKTests.h; sourceTree = "<group>"; };
 		936C7FE815E72D8C00C0ED53 /* TMTumblrSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMTumblrSDKTests.m; sourceTree = "<group>"; };
+		9387D74815E7346600E2876E /* JXHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTP.h; sourceTree = "<group>"; };
+		9387D74915E7346600E2876E /* JXHTTPDataBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPDataBody.h; sourceTree = "<group>"; };
+		9387D74A15E7346600E2876E /* JXHTTPDataBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHTTPDataBody.m; sourceTree = "<group>"; };
+		9387D74B15E7346600E2876E /* JXHTTPFileBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPFileBody.h; sourceTree = "<group>"; };
+		9387D74C15E7346600E2876E /* JXHTTPFileBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHTTPFileBody.m; sourceTree = "<group>"; };
+		9387D74D15E7346600E2876E /* JXHTTPFormEncodedBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPFormEncodedBody.h; sourceTree = "<group>"; };
+		9387D74E15E7346600E2876E /* JXHTTPFormEncodedBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHTTPFormEncodedBody.m; sourceTree = "<group>"; };
+		9387D74F15E7346600E2876E /* JXHTTPJSONBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPJSONBody.h; sourceTree = "<group>"; };
+		9387D75015E7346600E2876E /* JXHTTPJSONBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHTTPJSONBody.m; sourceTree = "<group>"; };
+		9387D75115E7346600E2876E /* JXHTTPMultipartBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPMultipartBody.h; sourceTree = "<group>"; };
+		9387D75215E7346600E2876E /* JXHTTPMultipartBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHTTPMultipartBody.m; sourceTree = "<group>"; };
+		9387D75315E7346600E2876E /* JXHTTPOperation+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JXHTTPOperation+Convenience.h"; sourceTree = "<group>"; };
+		9387D75415E7346600E2876E /* JXHTTPOperation+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JXHTTPOperation+Convenience.m"; sourceTree = "<group>"; };
+		9387D75515E7346600E2876E /* JXHTTPOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPOperation.h; sourceTree = "<group>"; };
+		9387D75615E7346600E2876E /* JXHTTPOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHTTPOperation.m; sourceTree = "<group>"; };
+		9387D75715E7346600E2876E /* JXHTTPOperationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPOperationDelegate.h; sourceTree = "<group>"; };
+		9387D75815E7346600E2876E /* JXHTTPOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPOperationQueue.h; sourceTree = "<group>"; };
+		9387D75915E7346600E2876E /* JXHTTPOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHTTPOperationQueue.m; sourceTree = "<group>"; };
+		9387D75A15E7346600E2876E /* JXHTTPOperationQueueDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPOperationQueueDelegate.h; sourceTree = "<group>"; };
+		9387D75B15E7346600E2876E /* JXHTTPRequestBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPRequestBody.h; sourceTree = "<group>"; };
+		9387D75C15E7346600E2876E /* JXOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXOperation.h; sourceTree = "<group>"; };
+		9387D75D15E7346600E2876E /* JXOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXOperation.m; sourceTree = "<group>"; };
+		9387D75E15E7346600E2876E /* JXOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXOperationQueue.h; sourceTree = "<group>"; };
+		9387D75F15E7346600E2876E /* JXOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXOperationQueue.m; sourceTree = "<group>"; };
+		9387D76015E7346600E2876E /* JXURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXURLConnectionOperation.h; sourceTree = "<group>"; };
+		9387D76115E7346600E2876E /* JXURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXURLConnectionOperation.m; sourceTree = "<group>"; };
+		9387D76215E7346600E2876E /* JXURLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXURLEncoding.h; sourceTree = "<group>"; };
+		9387D76315E7346600E2876E /* JXURLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXURLEncoding.m; sourceTree = "<group>"; };
+		9387D76415E7346600E2876E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		9387D77F15E734BD00E2876E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9387D78115E734E000E2876E /* UIKit.framework in Frameworks */,
 				936C7FCB15E72D8C00C0ED53 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,8 +155,10 @@
 		936C7FC915E72D8C00C0ED53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9387D74715E7346600E2876E /* JXHTTP */,
 				936C7FCA15E72D8C00C0ED53 /* Foundation.framework */,
 				936C7FD915E72D8C00C0ED53 /* SenTestingKit.framework */,
+				9387D77F15E734BD00E2876E /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -139,6 +198,42 @@
 				936C7FE415E72D8C00C0ED53 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9387D74715E7346600E2876E /* JXHTTP */ = {
+			isa = PBXGroup;
+			children = (
+				9387D74815E7346600E2876E /* JXHTTP.h */,
+				9387D74915E7346600E2876E /* JXHTTPDataBody.h */,
+				9387D74A15E7346600E2876E /* JXHTTPDataBody.m */,
+				9387D74B15E7346600E2876E /* JXHTTPFileBody.h */,
+				9387D74C15E7346600E2876E /* JXHTTPFileBody.m */,
+				9387D74D15E7346600E2876E /* JXHTTPFormEncodedBody.h */,
+				9387D74E15E7346600E2876E /* JXHTTPFormEncodedBody.m */,
+				9387D74F15E7346600E2876E /* JXHTTPJSONBody.h */,
+				9387D75015E7346600E2876E /* JXHTTPJSONBody.m */,
+				9387D75115E7346600E2876E /* JXHTTPMultipartBody.h */,
+				9387D75215E7346600E2876E /* JXHTTPMultipartBody.m */,
+				9387D75315E7346600E2876E /* JXHTTPOperation+Convenience.h */,
+				9387D75415E7346600E2876E /* JXHTTPOperation+Convenience.m */,
+				9387D75515E7346600E2876E /* JXHTTPOperation.h */,
+				9387D75615E7346600E2876E /* JXHTTPOperation.m */,
+				9387D75715E7346600E2876E /* JXHTTPOperationDelegate.h */,
+				9387D75815E7346600E2876E /* JXHTTPOperationQueue.h */,
+				9387D75915E7346600E2876E /* JXHTTPOperationQueue.m */,
+				9387D75A15E7346600E2876E /* JXHTTPOperationQueueDelegate.h */,
+				9387D75B15E7346600E2876E /* JXHTTPRequestBody.h */,
+				9387D75C15E7346600E2876E /* JXOperation.h */,
+				9387D75D15E7346600E2876E /* JXOperation.m */,
+				9387D75E15E7346600E2876E /* JXOperationQueue.h */,
+				9387D75F15E7346600E2876E /* JXOperationQueue.m */,
+				9387D76015E7346600E2876E /* JXURLConnectionOperation.h */,
+				9387D76115E7346600E2876E /* JXURLConnectionOperation.m */,
+				9387D76215E7346600E2876E /* JXURLEncoding.h */,
+				9387D76315E7346600E2876E /* JXURLEncoding.m */,
+				9387D76415E7346600E2876E /* README.md */,
+			);
+			path = JXHTTP;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				936C7FE615E72D8C00C0ED53 /* InfoPlist.strings in Resources */,
+				9387D77D15E7346600E2876E /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +336,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				936C7FD215E72D8C00C0ED53 /* TMTumblrSDK.m in Sources */,
+				9387D76515E7346600E2876E /* JXHTTPDataBody.m in Sources */,
+				9387D76715E7346600E2876E /* JXHTTPFileBody.m in Sources */,
+				9387D76915E7346600E2876E /* JXHTTPFormEncodedBody.m in Sources */,
+				9387D76B15E7346600E2876E /* JXHTTPJSONBody.m in Sources */,
+				9387D76D15E7346600E2876E /* JXHTTPMultipartBody.m in Sources */,
+				9387D76F15E7346600E2876E /* JXHTTPOperation+Convenience.m in Sources */,
+				9387D77115E7346600E2876E /* JXHTTPOperation.m in Sources */,
+				9387D77315E7346600E2876E /* JXHTTPOperationQueue.m in Sources */,
+				9387D77515E7346600E2876E /* JXOperation.m in Sources */,
+				9387D77715E7346600E2876E /* JXOperationQueue.m in Sources */,
+				9387D77915E7346600E2876E /* JXURLConnectionOperation.m in Sources */,
+				9387D77B15E7346600E2876E /* JXURLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +356,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				936C7FE915E72D8C00C0ED53 /* TMTumblrSDKTests.m in Sources */,
+				9387D76615E7346600E2876E /* JXHTTPDataBody.m in Sources */,
+				9387D76815E7346600E2876E /* JXHTTPFileBody.m in Sources */,
+				9387D76A15E7346600E2876E /* JXHTTPFormEncodedBody.m in Sources */,
+				9387D76C15E7346600E2876E /* JXHTTPJSONBody.m in Sources */,
+				9387D76E15E7346600E2876E /* JXHTTPMultipartBody.m in Sources */,
+				9387D77015E7346600E2876E /* JXHTTPOperation+Convenience.m in Sources */,
+				9387D77215E7346600E2876E /* JXHTTPOperation.m in Sources */,
+				9387D77415E7346600E2876E /* JXHTTPOperationQueue.m in Sources */,
+				9387D77615E7346600E2876E /* JXOperation.m in Sources */,
+				9387D77815E7346600E2876E /* JXOperationQueue.m in Sources */,
+				9387D77A15E7346600E2876E /* JXURLConnectionOperation.m in Sources */,
+				9387D77C15E7346600E2876E /* JXURLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
