@@ -137,7 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				936C7FCC15E72D8C00C0ED53 /* TumblrSDK */,
-				936C7FE115E72D8C00C0ED53 /* TumblrSDKTests */,
+				936C7FE115E72D8C00C0ED53 /* Tests */,
 				936C7FC915E72D8C00C0ED53 /* Frameworks */,
 				936C7FC815E72D8C00C0ED53 /* Products */,
 			);
@@ -181,14 +181,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		936C7FE115E72D8C00C0ED53 /* TumblrSDKTests */ = {
+		936C7FE115E72D8C00C0ED53 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				936C7FE715E72D8C00C0ED53 /* TMTumblrSDKTests.h */,
 				936C7FE815E72D8C00C0ED53 /* TMTumblrSDKTests.m */,
 				936C7FE215E72D8C00C0ED53 /* Supporting Files */,
 			);
-			path = TumblrSDKTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		936C7FE215E72D8C00C0ED53 /* Supporting Files */ = {
