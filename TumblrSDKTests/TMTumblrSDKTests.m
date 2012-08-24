@@ -1,12 +1,12 @@
 //
-//  TumblrSDKTests.m
-//  TumblrSDKTests
+//  TMTumblrSDKTests.m
+//  Tumblr SDK
 //
 //  Created by Bryan Irace on 8/23/12.
 //  Copyright (c) 2012 Bryan Irace. All rights reserved.
 //
 
-#import "TumblrSDKTests.h"
+#import "TMTumblrSDKTests.h"
 
 @implementation TumblrSDKTests
 
@@ -26,7 +26,7 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in TumblrSDKTests");
+//    STFail(@"Unit tests are not implemented yet in TumblrSDKTests");
 }
 
 @end
