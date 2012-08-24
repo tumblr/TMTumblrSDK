@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'tumblrsdk' target in the 'tumblrsdk' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif
