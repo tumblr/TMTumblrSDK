@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TumblrSDK : NSObject
+@interface TMTumblrSDK : NSObject
 
 @end

@@ -8,7 +8,7 @@
 
 #import "TMTumblrSDKTests.h"
 
-@implementation TumblrSDKTests
+@implementation TMTumblrSDKTests
 
 - (void)setUp
 {

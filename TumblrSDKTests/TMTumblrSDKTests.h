@@ -8,6 +8,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface TumblrSDKTests : SenTestCase
+@interface TMTumblrSDKTests : SenTestCase
 
 @end

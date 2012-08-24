@@ -8,6 +8,8 @@
 
 #import "TMTumblrSDK.h"
 
-@implementation TumblrSDK
+#import "JXHTTP.h"
+
+@implementation TMTumblrSDK
 
 @end
