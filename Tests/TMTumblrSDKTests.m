@@ -8,25 +8,24 @@
 
 #import "TMTumblrSDKTests.h"
 
+#import "TMAPIClient.h"
+
 @implementation TMTumblrSDKTests
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
-    
-    // Set-up code here.
 }
 
-- (void)tearDown
-{
-    // Tear-down code here.
-    
+- (void)tearDown {
     [super tearDown];
 }
 
-- (void)testExample
-{
-//    STFail(@"Unit tests are not implemented yet in TumblrSDKTests");
+- (void)testBlogInfo {
+    [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^(NSDictionary *result) {
+        NSLog(@"Result: %@", result);
+        
+        STAssertNotNil(result, nil);
+    } error:nil];
 }
 
 @end
