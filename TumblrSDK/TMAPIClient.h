@@ -32,4 +32,16 @@ typedef void (^TMAPIErrorCallback)(NSError *);
 - (void)avatar:(NSString *)blogName size:(int)size
        success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
 
+- (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+      success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
+
+- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters
+      success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
+
+- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters
+       success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
+
+- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters
+            success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
+
 @end

@@ -62,6 +62,51 @@ static NSString * const TMAPIParameterOffset = @"offset";
     [self sendRequest:request];
 }
 
+- (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+      success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    NSString *path = [NSString stringWithFormat:@"blog/%@.tumblr.com/posts", blogName];
+    if (type) path = [path stringByAppendingFormat:@"/%@", type];
+    
+    if (parameters) {
+        parameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+        ((NSMutableDictionary *)parameters)[TMAPIParameterAPIKey] = self.APIKey;
+    } else {
+        parameters = @{ TMAPIParameterAPIKey : self.APIKey };
+    }
+    
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:path parameters:parameters
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters
+      success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:
+                                [NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters
+      success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:
+                                [NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters
+            success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:
+                                [NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
 #pragma mark - Misc.
 
 + (id)sharedInstance {
@@ -93,12 +138,11 @@ static inline NSString *intToString(int integer) {
     __block JXHTTPOperation *request;
     NSString *URLString = [NSString stringWithFormat:@"http://api.tumblr.com/v2/%@", path];
     
-    if ([method isEqualToString:TMAPIRequestMethodGET]) {
-        request = [JXHTTPOperation withURLString:URLString queryParameters:parameters];
-        
-    } else if ([method isEqualToString:TMAPIRequestMethodPOST]) {
+    if ([method isEqualToString:TMAPIRequestMethodPOST]) {
         request = [JXHTTPOperation withURLString:URLString];
         request.requestBody = [JXHTTPJSONBody withJSONObject:parameters];
+    } else {
+        request = [JXHTTPOperation withURLString:URLString queryParameters:parameters];
     }
     
     request.completionBlock = ^ {
@@ -113,8 +157,9 @@ static inline NSString *intToString(int integer) {
             }
         } else {
             if (error) {
+                // TODO: Pass blog or user errors from server in user info dictionary
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    error([NSError errorWithDomain:@"" code:statusCode userInfo:nil]);
+                    error([NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil]);
                 });
             }
         }
