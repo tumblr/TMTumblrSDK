@@ -1,2 +1,1 @@
-tumblr-ios-sdk
-==============
+# Tumblr SDK for iOS
