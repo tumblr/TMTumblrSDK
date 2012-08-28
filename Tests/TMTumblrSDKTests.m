@@ -25,6 +25,8 @@
 
 #pragma mark - Tests
 
+// Blog methods
+
 - (void)testBlogInfo {
     [self performAsynchronousTest:^ {
         [_client blogInfo:@"bryan"
@@ -34,17 +36,17 @@
 
 - (void)testFollowers {
     [self performAsynchronousTest:^ {
-        [_client followers:@"bryan" limit:20 offset:0
+        [_client followers:@"bryan" parameters:nil
                    success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
-//- (void)testAvatar {
-//    [self performAsynchronousTest:^ {
-//        [_client avatar:@"bryan" size:64
-//                success:_defaultSuccessCallback error:_defaultErrorCallback];
-//    }];
-//}
+- (void)testAvatar {
+    [self performAsynchronousTest:^ {
+        [_client avatar:@"bryan" size:64
+                success:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
 
 - (void)testPosts {
     [self performAsynchronousTest:^ {
@@ -71,6 +73,44 @@
     [self performAsynchronousTest:^ {
         [_client submissions:@"bryan" parameters:nil
                      success:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
+
+// User methods
+
+- (void)testUserInfo {
+    [self performAsynchronousTest:^ {
+        [_client userInfo:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
+
+- (void)testDashboard {
+    [self performAsynchronousTest:^ {
+        [_client dashboard:nil
+                   success:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
+
+- (void)testLikes {
+    [self performAsynchronousTest:^ {
+        [_client likes:nil
+               success:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
+
+- (void)testFollowing {
+    [self performAsynchronousTest:^ {
+        [_client following:nil
+                   success:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
+
+// Tagged methods
+
+- (void)testTagged {
+    [self performAsynchronousTest:^ {
+        [_client tagged:@"lol" parameters:nil
+                success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
