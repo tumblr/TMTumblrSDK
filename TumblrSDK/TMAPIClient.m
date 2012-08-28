@@ -17,7 +17,12 @@ static NSString * const TMAPIRequestMethodPOST = @"POST";
 static NSString * const TMAPIParameterAPIKey = @"api_key";
 static NSString * const TMAPIParameterLimit = @"limit";
 static NSString * const TMAPIParameterOffset = @"offset";
+static NSString * const TMAPIParameterTag = @"tag";
 
+// Response keys
+static NSString * const TMAPIResponseKeyMeta = @"meta";
+static NSString * const TMAPIResponseKeyStatus = @"status";
+static NSString * const TMAPIResponseKeyResponse = @"response";
 
 @interface TMAPIClient()
 
@@ -42,12 +47,10 @@ static NSString * const TMAPIParameterOffset = @"offset";
     [self sendRequest:request];
 }
 
-- (void)followers:(NSString *)blogName limit:(int)limit offset:(int)offset
+- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters
           success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
     JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:
-                                [NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:@{
-                                  TMAPIParameterLimit : intToString(limit),
-                                 TMAPIParameterOffset : intToString(offset) }
+                                [NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters
                                                success:success error:error];
     
     [self sendRequest:request];
@@ -67,12 +70,8 @@ static NSString * const TMAPIParameterOffset = @"offset";
     NSString *path = [NSString stringWithFormat:@"blog/%@.tumblr.com/posts", blogName];
     if (type) path = [path stringByAppendingFormat:@"/%@", type];
     
-    if (parameters) {
-        parameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-        ((NSMutableDictionary *)parameters)[TMAPIParameterAPIKey] = self.APIKey;
-    } else {
-        parameters = @{ TMAPIParameterAPIKey : self.APIKey };
-    }
+    parameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    ((NSMutableDictionary *)parameters)[TMAPIParameterAPIKey] = self.APIKey;
     
     JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:path parameters:parameters
                                                success:success error:error];
@@ -107,6 +106,53 @@ static NSString * const TMAPIParameterOffset = @"offset";
     [self sendRequest:request];
 }
 
+#pragma mark - User methods
+
+- (void)userInfo:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:@"user/info" parameters:nil
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+- (void)dashboard:(NSDictionary *)parameters
+          success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:@"user/dashboard" parameters:parameters
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+- (void)likes:(NSDictionary *)parameters
+      success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:@"user/likes" parameters:parameters
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+- (void)following:(NSDictionary *)parameters
+          success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:@"user/following" parameters:parameters
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+#pragma mark - Tagged methods
+
+- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters
+       success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    parameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    ((NSMutableDictionary *)parameters)[TMAPIParameterTag] = tag;
+    ((NSMutableDictionary *)parameters)[TMAPIParameterAPIKey] = self.APIKey;
+    
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:@"tagged" parameters:parameters
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
 #pragma mark - Misc.
 
 + (id)sharedInstance {
@@ -118,21 +164,6 @@ static NSString * const TMAPIParameterOffset = @"offset";
 
 #pragma mark - Convenience
 
-static inline NSString *intToString(int integer) {
-    return [NSString stringWithFormat:@"%d", integer];
-}
-
-- (void)sendRequest:(JXHTTPOperation *)request {
-    NSString *authorizationHeaderValue =
-    [TMOAuth authorizationHeaderForRequest:request nonce:request.uniqueIDString
-                               consumerKey:self.OAuthConsumerKey consumerSecret:self.OAuthConsumerSecret
-                                     token:self.OAuthToken tokenSecret:self.OAuthTokenSecret];
-    
-    [request setValue:authorizationHeaderValue forRequestHeader:@"Authorization"];
-    
-    [[JXHTTPOperationQueue sharedQueue] addOperation:request];
-}
-
 - (JXHTTPOperation *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters
                              success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
     __block JXHTTPOperation *request;
@@ -141,18 +172,19 @@ static inline NSString *intToString(int integer) {
     if ([method isEqualToString:TMAPIRequestMethodPOST]) {
         request = [JXHTTPOperation withURLString:URLString];
         request.requestBody = [JXHTTPJSONBody withJSONObject:parameters];
+        
     } else {
         request = [JXHTTPOperation withURLString:URLString queryParameters:parameters];
     }
     
     request.completionBlock = ^ {
         NSDictionary *response = request.responseJSON;
-        int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
+        int statusCode = response[TMAPIResponseKeyMeta] ? [response[TMAPIResponseKeyMeta][TMAPIResponseKeyStatus] intValue] : 0;
         
         if (statusCode == 200) {
             if (success) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    success(response[@"response"]);
+                    success(response[TMAPIResponseKeyResponse]);
                 });
             }
         } else {
@@ -166,6 +198,17 @@ static inline NSString *intToString(int integer) {
     };
     
     return request;
+}
+
+- (void)sendRequest:(JXHTTPOperation *)request {
+    NSString *authorizationHeaderValue =
+    [TMOAuth authorizationHeaderForRequest:request nonce:request.uniqueIDString
+                               consumerKey:self.OAuthConsumerKey consumerSecret:self.OAuthConsumerSecret
+                                     token:self.OAuthToken tokenSecret:self.OAuthTokenSecret];
+    
+    [request setValue:authorizationHeaderValue forRequestHeader:@"Authorization"];
+    
+    [[JXHTTPOperationQueue sharedQueue] addOperation:request];
 }
 
 #pragma mark - Memory management

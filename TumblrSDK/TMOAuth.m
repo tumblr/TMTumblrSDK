@@ -53,7 +53,6 @@
     for (NSString *key in [[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
         id value = signatureParameters[key];
         
-        // TODO: Ensure JXHTTP supports arrays of values
         if ([value isKindOfClass:[NSArray class]]) {
             for (id arrayValue in (NSArray *)value) {
                 addParameter(key, arrayValue);
