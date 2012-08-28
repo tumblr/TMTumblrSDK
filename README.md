@@ -31,3 +31,6 @@ To run the tests, set the `defaultBlogName` property in TumblrSDKTests.m and upd
 * OAuth token secret
 * OAuth consumer key
 * OAuth consumer secret
+
+## License
+Freely available for use under the MIT license: [http://bryan.mit-license.org](http://bryan.mit-license.org)
