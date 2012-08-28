@@ -1,5 +1,4 @@
 # Tumblr SDK for iOS
-A full Tumblr API client.
 
     [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result) {
         NSLog(@"Blog description: %@", result[@"description"]);
