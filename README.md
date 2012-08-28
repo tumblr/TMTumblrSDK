@@ -1,5 +1,5 @@
 # Tumblr SDK for iOS
-A full Tumblr API client:
+A full Tumblr API client.
 
     [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result) {
         NSLog(@"Blog description: %@", result[@"description"]);
@@ -10,6 +10,8 @@ A full Tumblr API client:
 The Tumblr SDK for iOS is built on Justin Ouellette's lightweight [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Usage
+See the official [Tumblr API documentation](http://www.tumblr.com/docs/en/api/v2) for usage instructions.
+
 Import **TMTumblrSDK.h**. Configure `[TMAPIClient sharedInstance]` with your:
 
 * Tumblr API key
