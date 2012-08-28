@@ -24,12 +24,12 @@
 
 #pragma mark - Tests
 
-//- (void)testBlogInfo {
-//    [self performAsynchronousTest:^ {
-//        [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:self.defaultSuccessCallback
-//                                         error:self.defaultErrorCallback];
-//    }];
-//}
+- (void)testBlogInfo {
+    [self performAsynchronousTest:^ {
+        [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:self.defaultSuccessCallback
+                                         error:self.defaultErrorCallback];
+    }];
+}
 
 - (void)testFollowers {
     [self performAsynchronousTest:^ {
@@ -43,6 +43,19 @@
 
 - (void)setUp {
     [super setUp];
+    
+    self.defaultSuccessCallback = ^ (NSDictionary *result) {
+        STAssertEquals(result[@"meta"][@"status"], 200, @"Response status code must be 200");
+        STAssertNotNil(result[@"response"], @"Response body cannot be nil");
+        
+        self.receivedAsynchronousCallback = YES;
+    };
+    
+    self.defaultErrorCallback = ^ (NSError *error, NSArray *validationErrors) {
+        STFail(@"Request failed");
+        
+        self.receivedAsynchronousCallback = YES;
+    };    
     
     static dispatch_once_t predicate;
     
@@ -70,20 +83,6 @@
         [TMAPIClient sharedInstance].OAuthTokenSecret = OAuthTokenSecret;
         
         [credentials release];
-        
-        self.defaultSuccessCallback = ^ (NSDictionary *result) {
-            NSLog(@"Result: %@", result);
-            
-            STAssertNotNil(result, nil);
-            
-            self.receivedAsynchronousCallback = YES;
-        };
-        
-        self.defaultErrorCallback = ^ (NSError *error, NSArray *validationErrors) {
-            STFail(@"Error callback received");
-            
-            self.receivedAsynchronousCallback = YES;
-        };
     });
 }
 

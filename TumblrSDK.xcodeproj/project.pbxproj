@@ -164,8 +164,8 @@
 		936C7FC915E72D8C00C0ED53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				93E275FF15EC61F10080E2B3 /* NSData+Base64 */,
 				9387D74715E7346600E2876E /* JXHTTP */,
+				93E275FF15EC61F10080E2B3 /* NSData+Base64 */,
 				936C7FCA15E72D8C00C0ED53 /* Foundation.framework */,
 				936C7FD915E72D8C00C0ED53 /* SenTestingKit.framework */,
 				9387D77F15E734BD00E2876E /* UIKit.framework */,
