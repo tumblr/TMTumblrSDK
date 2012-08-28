@@ -7,16 +7,17 @@
 //
 
 #import "TMAPIClient.h"
+#import "TMOAuth.h"
 
 // Request methods
 static NSString * const TMAPIRequestMethodGET = @"GET";
 static NSString * const TMAPIRequestMethodPOST = @"POST";
 
 // Parameter keys
-static NSString * const TMAPIKeyParameterKey = @"api_key";
-
-// Paths
-static NSString * const TMAPIPathBlogInfo = @"blog/%@.tumblr.com/info";
+static NSString * const TMAPIParameterAPIKey = @"api_key";
+static NSString * const TMAPIParameterBaseHostname = @"base-hostname";
+static NSString * const TMAPIParameterLimit = @"limit";
+static NSString * const TMAPIParameterOffset = @"offset";
 
 
 @interface TMAPIClient()
@@ -24,19 +25,37 @@ static NSString * const TMAPIPathBlogInfo = @"blog/%@.tumblr.com/info";
 - (JXHTTPOperation *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters
                                success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
 
+- (void)sendRequest:(JXHTTPOperation *)request;
+
 @end
 
 
 @implementation TMAPIClient
 
+#pragma mark - Blog methods
+
 - (void)blogInfo:(NSString *)blogName success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
     JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:
-                                [NSString stringWithFormat:TMAPIPathBlogInfo, blogName]
-                                            parameters:@{@"api_key" : @""}
-                                               success:success error:nil];
+                                [NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName] parameters:@{
+                                 TMAPIParameterAPIKey : self.APIKey }
+                                               success:success error:error];
     
-    [[JXHTTPOperationQueue sharedQueue] addOperation:request];
+    [self sendRequest:request];
 }
+
+- (void)followers:(NSString *)blogName limit:(int)limit offset:(int)offset
+          success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:
+                                [NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:@{
+                           TMAPIParameterBaseHostname : blogName,
+                                  TMAPIParameterLimit : intToString(limit),
+                                 TMAPIParameterOffset : intToString(offset) }
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+#pragma mark - Misc.
 
 + (id)sharedInstance {
     static TMAPIClient *instance;
@@ -45,7 +64,22 @@ static NSString * const TMAPIPathBlogInfo = @"blog/%@.tumblr.com/info";
     return instance;
 }
 
-#pragma mark - Class extension
+#pragma mark - Convenience
+
+static inline NSString *intToString(int integer) {
+    return [NSString stringWithFormat:@"%d", integer];
+}
+
+- (void)sendRequest:(JXHTTPOperation *)request {
+    NSString *authorizationHeaderValue =
+    [TMOAuth authorizationHeaderForRequest:request nonce:request.uniqueIDString
+                               consumerKey:self.OAuthConsumerKey consumerSecret:self.OAuthConsumerSecret
+                                     token:self.OAuthToken tokenSecret:self.OAuthTokenSecret];
+    
+    [request setValue:authorizationHeaderValue forRequestHeader:@"Authorization"];
+    
+    [[JXHTTPOperationQueue sharedQueue] addOperation:request];
+}
 
 - (JXHTTPOperation *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters
                              success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
@@ -59,8 +93,6 @@ static NSString * const TMAPIPathBlogInfo = @"blog/%@.tumblr.com/info";
         request = [JXHTTPOperation withURLString:URLString];
         request.requestBody = [JXHTTPJSONBody withJSONObject:parameters];
     }
-
-    request.delegate = self;
     
     request.completionBlock = ^ {
         // TODO: Introspect response code to determine success or error
@@ -75,19 +107,16 @@ static NSString * const TMAPIPathBlogInfo = @"blog/%@.tumblr.com/info";
     return request;
 }
 
-#pragma mark - JXHTTPOperationDelegate
+#pragma mark - Memory management
 
-- (void)httpOperationWillStart:(JXHTTPOperation *)operation {
-    NSLog(@"");
-}
-
-- (void)httpOperationDidFail:(JXHTTPOperation *)operation {
-    // What happens if fails here? No way to invoke error block
-    NSLog(@"");
-}
-
-- (void)httpOperationDidFinish:(JXHTTPOperation *)operation {
-    NSLog(@"");
+- (void)dealloc {
+    self.APIKey = nil;
+    self.OAuthConsumerKey = nil;
+    self.OAuthConsumerSecret = nil;
+    self.OAuthToken = nil;
+    self.OAuthTokenSecret = nil;
+    
+    [super dealloc];
 }
 
 @end

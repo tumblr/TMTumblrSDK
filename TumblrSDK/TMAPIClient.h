@@ -6,16 +6,25 @@
 //  Copyright (c) 2012 Bryan Irace. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "JXHTTP.h"
-
 typedef void (^TMAPISuccessCallback)(id);
 typedef void (^TMAPIErrorCallback)(NSError *, NSArray *);
 
-@interface TMAPIClient : NSObject <JXHTTPOperationDelegate>
+@interface TMAPIClient : NSObject
 
-+ (id)sharedInstance;
+@property (nonatomic, copy) NSString *APIKey;
+@property (nonatomic, copy) NSString *OAuthConsumerKey;
+@property (nonatomic, copy) NSString *OAuthConsumerSecret;
+@property (nonatomic, copy) NSString *OAuthToken;
+@property (nonatomic, copy) NSString *OAuthTokenSecret;
 
-- (void)blogInfo:(NSString *)blogName success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
++ (TMAPIClient *)sharedInstance;
+
+// Blog methods
+
+- (void)blogInfo:(NSString *)blogName
+         success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
+
+- (void)followers:(NSString *)blogName limit:(int)limit offset:(int)offset
+          success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
 
 @end

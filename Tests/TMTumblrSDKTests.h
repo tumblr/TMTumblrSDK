@@ -10,5 +10,4 @@
 
 @interface TMTumblrSDKTests : SenTestCase
 
-
 @end
