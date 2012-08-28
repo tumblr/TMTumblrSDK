@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		934F5EDA15EC076C00AF21A8 /* TMOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 934F5ED915EC076C00AF21A8 /* TMOAuth.m */; };
+		934F5EDB15EC076C00AF21A8 /* TMOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 934F5ED915EC076C00AF21A8 /* TMOAuth.m */; };
 		936C7FCB15E72D8C00C0ED53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936C7FCA15E72D8C00C0ED53 /* Foundation.framework */; };
 		936C7FDA15E72D8C00C0ED53 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936C7FD915E72D8C00C0ED53 /* SenTestingKit.framework */; };
 		936C7FDD15E72D8C00C0ED53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936C7FCA15E72D8C00C0ED53 /* Foundation.framework */; };
 		936C7FE015E72D8C00C0ED53 /* libTumblrSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 936C7FC715E72D8C00C0ED53 /* libTumblrSDK.a */; };
-		936C7FE615E72D8C00C0ED53 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 936C7FE415E72D8C00C0ED53 /* InfoPlist.strings */; };
 		936C7FE915E72D8C00C0ED53 /* TMTumblrSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 936C7FE815E72D8C00C0ED53 /* TMTumblrSDKTests.m */; };
 		9387D76515E7346600E2876E /* JXHTTPDataBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74A15E7346600E2876E /* JXHTTPDataBody.m */; };
 		9387D76615E7346600E2876E /* JXHTTPDataBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74A15E7346600E2876E /* JXHTTPDataBody.m */; };
@@ -39,6 +40,9 @@
 		9387D77C15E7346600E2876E /* JXURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D76315E7346600E2876E /* JXURLEncoding.m */; };
 		9387D77D15E7346600E2876E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9387D76415E7346600E2876E /* README.md */; };
 		9387D78115E734E000E2876E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9387D77F15E734BD00E2876E /* UIKit.framework */; };
+		93E2760315EC628E0080E2B3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E2760215EC628E0080E2B3 /* NSData+Base64.m */; };
+		93E2760415EC628E0080E2B3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E2760215EC628E0080E2B3 /* NSData+Base64.m */; };
+		93E2760915EC7A890080E2B3 /* Credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93E2760815EC7A890080E2B3 /* Credentials.plist */; };
 		93F86C2615EB05B700EA70A1 /* TMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F86C2515EB05B700EA70A1 /* TMAPIClient.m */; };
 		93F86C2715EB05B700EA70A1 /* TMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F86C2515EB05B700EA70A1 /* TMAPIClient.m */; };
 		93F86C2C15EB0B5900EA70A1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9387D77F15E734BD00E2876E /* UIKit.framework */; };
@@ -67,13 +71,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		934F5ED815EC076C00AF21A8 /* TMOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMOAuth.h; sourceTree = "<group>"; };
+		934F5ED915EC076C00AF21A8 /* TMOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMOAuth.m; sourceTree = "<group>"; };
 		936C7FC715E72D8C00C0ED53 /* libTumblrSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTumblrSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		936C7FCA15E72D8C00C0ED53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		936C7FCE15E72D8C00C0ED53 /* TumblrSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TumblrSDK-Prefix.pch"; sourceTree = "<group>"; };
-		936C7FD815E72D8C00C0ED53 /* TumblrSDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TumblrSDKTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		936C7FD815E72D8C00C0ED53 /* TumblrSDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = TumblrSDKTests.octest; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		936C7FD915E72D8C00C0ED53 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		936C7FE315E72D8C00C0ED53 /* TumblrSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TumblrSDKTests-Info.plist"; sourceTree = "<group>"; };
-		936C7FE515E72D8C00C0ED53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		936C7FE715E72D8C00C0ED53 /* TMTumblrSDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMTumblrSDKTests.h; sourceTree = "<group>"; };
 		936C7FE815E72D8C00C0ED53 /* TMTumblrSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMTumblrSDKTests.m; sourceTree = "<group>"; };
 		9387D74815E7346600E2876E /* JXHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTP.h; sourceTree = "<group>"; };
@@ -106,6 +110,10 @@
 		9387D76315E7346600E2876E /* JXURLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXURLEncoding.m; sourceTree = "<group>"; };
 		9387D76415E7346600E2876E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		9387D77F15E734BD00E2876E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		93E2760115EC628E0080E2B3 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		93E2760215EC628E0080E2B3 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		93E2760615EC79CC0080E2B3 /* TumblrSDKTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TumblrSDKTests-Info.plist"; sourceTree = "<group>"; };
+		93E2760815EC7A890080E2B3 /* Credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Credentials.plist; sourceTree = "<group>"; };
 		93F86C2415EB05B700EA70A1 /* TMAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClient.h; sourceTree = "<group>"; };
 		93F86C2515EB05B700EA70A1 /* TMAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +164,7 @@
 		936C7FC915E72D8C00C0ED53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93E275FF15EC61F10080E2B3 /* NSData+Base64 */,
 				9387D74715E7346600E2876E /* JXHTTP */,
 				936C7FCA15E72D8C00C0ED53 /* Foundation.framework */,
 				936C7FD915E72D8C00C0ED53 /* SenTestingKit.framework */,
@@ -170,6 +179,8 @@
 				936C7FCD15E72D8C00C0ED53 /* Supporting Files */,
 				93F86C2415EB05B700EA70A1 /* TMAPIClient.h */,
 				93F86C2515EB05B700EA70A1 /* TMAPIClient.m */,
+				934F5ED815EC076C00AF21A8 /* TMOAuth.h */,
+				934F5ED915EC076C00AF21A8 /* TMOAuth.m */,
 			);
 			path = TumblrSDK;
 			sourceTree = "<group>";
@@ -185,20 +196,11 @@
 		936C7FE115E72D8C00C0ED53 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				93E2760515EC79B50080E2B3 /* Supporting Files */,
 				936C7FE715E72D8C00C0ED53 /* TMTumblrSDKTests.h */,
 				936C7FE815E72D8C00C0ED53 /* TMTumblrSDKTests.m */,
-				936C7FE215E72D8C00C0ED53 /* Supporting Files */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		936C7FE215E72D8C00C0ED53 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				936C7FE315E72D8C00C0ED53 /* TumblrSDKTests-Info.plist */,
-				936C7FE415E72D8C00C0ED53 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		9387D74715E7346600E2876E /* JXHTTP */ = {
@@ -235,6 +237,24 @@
 				9387D76415E7346600E2876E /* README.md */,
 			);
 			path = JXHTTP;
+			sourceTree = "<group>";
+		};
+		93E275FF15EC61F10080E2B3 /* NSData+Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				93E2760115EC628E0080E2B3 /* NSData+Base64.h */,
+				93E2760215EC628E0080E2B3 /* NSData+Base64.m */,
+			);
+			path = "NSData+Base64";
+			sourceTree = "<group>";
+		};
+		93E2760515EC79B50080E2B3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				93E2760815EC7A890080E2B3 /* Credentials.plist */,
+				93E2760615EC79CC0080E2B3 /* TumblrSDKTests-Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,8 +328,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				936C7FE615E72D8C00C0ED53 /* InfoPlist.strings in Resources */,
 				9387D77D15E7346600E2876E /* README.md in Resources */,
+				93E2760915EC7A890080E2B3 /* Credentials.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +369,8 @@
 				9387D77915E7346600E2876E /* JXURLConnectionOperation.m in Sources */,
 				9387D77B15E7346600E2876E /* JXURLEncoding.m in Sources */,
 				93F86C2615EB05B700EA70A1 /* TMAPIClient.m in Sources */,
+				934F5EDA15EC076C00AF21A8 /* TMOAuth.m in Sources */,
+				93E2760315EC628E0080E2B3 /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +392,8 @@
 				9387D77A15E7346600E2876E /* JXURLConnectionOperation.m in Sources */,
 				9387D77C15E7346600E2876E /* JXURLEncoding.m in Sources */,
 				93F86C2715EB05B700EA70A1 /* TMAPIClient.m in Sources */,
+				934F5EDB15EC076C00AF21A8 /* TMOAuth.m in Sources */,
+				93E2760415EC628E0080E2B3 /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,17 +406,6 @@
 			targetProxy = 936C7FDE15E72D8C00C0ED53 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		936C7FE415E72D8C00C0ED53 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				936C7FE515E72D8C00C0ED53 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		936C7FEA15E72D8C00C0ED53 /* Debug */ = {
