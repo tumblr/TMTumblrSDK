@@ -21,10 +21,6 @@ typedef void (^TMAPIErrorCallback)(NSError *);
 
 + (TMAPIClient *)sharedInstance;
 
-// TODO: Add methods that don't require properties with defaults?
-
-// TODO: Probably use my own queue instance rather than shared queue
-
 // Blog methods
 
 - (void)blogInfo:(NSString *)blogName

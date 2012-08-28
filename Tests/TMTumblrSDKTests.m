@@ -148,7 +148,7 @@
     
     static dispatch_once_t predicate;
     
-    dispatch_once(&predicate, ^{
+    dispatch_once(&predicate, ^ {
         NSDictionary *credentials = [[NSDictionary alloc] initWithContentsOfFile:
                                      [[NSBundle bundleForClass:[TMTumblrSDKTests class]] pathForResource:@"Credentials"
                                                                                                   ofType:@"plist"]];
@@ -185,7 +185,7 @@
     while (!self.receivedAsynchronousCallback && [loopUntil timeIntervalSinceNow] > 0) {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:loopUntil];
         
-            // Not sure why this is necessary but I get EXC_BAD_ACCESS otherwise
+        // Not sure why this is necessary but I get EXC_BAD_ACCESS on the above line otherwise
         [NSThread sleepForTimeInterval:0.05];
     }
     
