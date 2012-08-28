@@ -45,7 +45,7 @@
     [super setUp];
     
     self.defaultSuccessCallback = ^ (NSDictionary *result) {
-        STAssertEquals(result[@"meta"][@"status"], 200, @"Response status code must be 200");
+        STAssertEquals([result[@"meta"][@"status"] intValue], 200, @"Response status code must be 200");
         STAssertNotNil(result[@"response"], @"Response body cannot be nil");
         
         self.receivedAsynchronousCallback = YES;
