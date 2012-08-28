@@ -53,8 +53,6 @@
     for (NSString *key in [[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
         id value = signatureParameters[key];
         
-        // TODO: Can use Underscore-like function here?
-        
         if ([value isKindOfClass:[NSArray class]]) {
             for (id arrayValue in (NSArray *)value) {
                 addParameter(key, arrayValue);
@@ -112,14 +110,11 @@ static inline NSDictionary *queryStringToDictionary(NSString *query) {
         NSArray *keyValuePair = [parameter componentsSeparatedByString:@"="];
         
         if (keyValuePair.count != 2) {
-            // TODO: Possible for a parameter to have only a key and no value
+            // TODO: Possible for a parameter to have only a key and no value?
             continue;
         }
         
-        NSString *parameterKey = URLDecode([keyValuePair objectAtIndex:0]);
-        NSString *parameterValue = URLDecode([keyValuePair objectAtIndex:1]);
-        
-        [mutableParameterDictionary setObject:parameterValue forKey:parameterKey];
+        [mutableParameterDictionary setObject:URLDecode(keyValuePair[1]) forKey:URLDecode(keyValuePair[0])];
     }
     
     return [NSDictionary dictionaryWithDictionary:mutableParameterDictionary];
