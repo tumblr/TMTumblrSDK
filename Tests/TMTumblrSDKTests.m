@@ -12,7 +12,8 @@
 
 @interface TMTumblrSDKTests()
 
-@property (nonatomic, copy) TMAPISuccessCallback defaultSuccessCallback;
+@property (nonatomic, copy) NSString *defaultBlogName;
+@property (nonatomic, copy) TMAPICallback defaultSuccessCallback;
 @property (nonatomic, copy) TMAPIErrorCallback defaultErrorCallback;
 @property (nonatomic, assign) BOOL receivedAsynchronousCallback;
 @property (nonatomic, retain) TMAPIClient *client;
@@ -29,49 +30,53 @@
 
 - (void)testBlogInfo {
     [self performAsynchronousTest:^ {
-        [_client blogInfo:@"bryan"
+        [_client blogInfo:_defaultBlogName
                   success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
 - (void)testFollowers {
     [self performAsynchronousTest:^ {
-        [_client followers:@"bryan" parameters:nil
+        [_client followers:_defaultBlogName parameters:nil
                    success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
 - (void)testAvatar {
     [self performAsynchronousTest:^ {
-        [_client avatar:@"bryan" size:64
-                success:_defaultSuccessCallback error:_defaultErrorCallback];
+        [_client avatar:_defaultBlogName size:64
+                success:^ (NSData *data) {
+                    STAssertNotNil(data, @"Data cannot be nil");
+                    
+                    self.receivedAsynchronousCallback = YES;
+                } error:_defaultErrorCallback];
     }];
 }
 
 - (void)testPosts {
     [self performAsynchronousTest:^ {
-        [_client posts:@"bryan" type:nil parameters:nil
+        [_client posts:_defaultBlogName type:nil parameters:nil
                success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
 - (void)testQueue {
     [self performAsynchronousTest:^ {
-        [_client queue:@"bryan" parameters:nil
+        [_client queue:_defaultBlogName parameters:nil
                success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
 - (void)testDrafts {
     [self performAsynchronousTest:^ {
-        [_client drafts:@"bryan" parameters:nil
+        [_client drafts:_defaultBlogName parameters:nil
                 success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
 - (void)testSubmissions {
     [self performAsynchronousTest:^ {
-        [_client submissions:@"bryan" parameters:nil
+        [_client submissions:_defaultBlogName parameters:nil
                      success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
@@ -119,12 +124,16 @@
 - (void)setUp {
     [super setUp];
     
-    self.defaultSuccessCallback = ^ (NSDictionary *result) {
+    self.defaultBlogName = @"brydev";
+    
+    __block TMTumblrSDKTests *blockSelf = self;
+    
+    self.defaultSuccessCallback = ^ (id result) {
         NSLog(@"%@", result);
         
         STAssertNotNil(result, @"Response cannot be nil");
         
-        self.receivedAsynchronousCallback = YES;
+        blockSelf.receivedAsynchronousCallback = YES;
     };
     
     self.defaultErrorCallback = ^ (NSError *error) {
@@ -132,8 +141,8 @@
         
         STFail(@"Request failed");
         
-        self.receivedAsynchronousCallback = YES;
-    };    
+        blockSelf.receivedAsynchronousCallback = YES;
+    };
     
     self.client = [TMAPIClient sharedInstance];
     
@@ -173,8 +182,12 @@
     
     NSDate *loopUntil = [NSDate dateWithTimeIntervalSinceNow:10];
     
-    while (!self.receivedAsynchronousCallback && [loopUntil timeIntervalSinceNow] > 0)
+    while (!self.receivedAsynchronousCallback && [loopUntil timeIntervalSinceNow] > 0) {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:loopUntil];
+        
+            // Not sure why this is necessary but I get EXC_BAD_ACCESS otherwise
+        [NSThread sleepForTimeInterval:0.05];
+    }
     
     if (!self.receivedAsynchronousCallback)
         STFail(@"Request timed out");
