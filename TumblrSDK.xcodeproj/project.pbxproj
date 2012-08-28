@@ -40,6 +40,14 @@
 		9387D77C15E7346600E2876E /* JXURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D76315E7346600E2876E /* JXURLEncoding.m */; };
 		9387D77D15E7346600E2876E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9387D76415E7346600E2876E /* README.md */; };
 		9387D78115E734E000E2876E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9387D77F15E734BD00E2876E /* UIKit.framework */; };
+		9392B1A615ED61F20060542C /* TMAPIClient+Blog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392B1A515ED61F20060542C /* TMAPIClient+Blog.m */; };
+		9392B1A715ED61F20060542C /* TMAPIClient+Blog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392B1A515ED61F20060542C /* TMAPIClient+Blog.m */; };
+		9392B1AA15ED62100060542C /* TMAPIClient+Posting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392B1A915ED62100060542C /* TMAPIClient+Posting.m */; };
+		9392B1AB15ED62100060542C /* TMAPIClient+Posting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392B1A915ED62100060542C /* TMAPIClient+Posting.m */; };
+		9392B1AE15ED62270060542C /* TMAPIClient+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392B1AD15ED62270060542C /* TMAPIClient+User.m */; };
+		9392B1AF15ED62270060542C /* TMAPIClient+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392B1AD15ED62270060542C /* TMAPIClient+User.m */; };
+		9392B1B215ED62320060542C /* TMAPIClient+Tagging.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392B1B115ED62320060542C /* TMAPIClient+Tagging.m */; };
+		9392B1B315ED62320060542C /* TMAPIClient+Tagging.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392B1B115ED62320060542C /* TMAPIClient+Tagging.m */; };
 		93E2760315EC628E0080E2B3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E2760215EC628E0080E2B3 /* NSData+Base64.m */; };
 		93E2760415EC628E0080E2B3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E2760215EC628E0080E2B3 /* NSData+Base64.m */; };
 		93E2760915EC7A890080E2B3 /* Credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93E2760815EC7A890080E2B3 /* Credentials.plist */; };
@@ -110,6 +118,15 @@
 		9387D76315E7346600E2876E /* JXURLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXURLEncoding.m; sourceTree = "<group>"; };
 		9387D76415E7346600E2876E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		9387D77F15E734BD00E2876E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9392B1A415ED61F20060542C /* TMAPIClient+Blog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TMAPIClient+Blog.h"; sourceTree = "<group>"; };
+		9392B1A515ED61F20060542C /* TMAPIClient+Blog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TMAPIClient+Blog.m"; sourceTree = "<group>"; };
+		9392B1A815ED62100060542C /* TMAPIClient+Posting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TMAPIClient+Posting.h"; sourceTree = "<group>"; };
+		9392B1A915ED62100060542C /* TMAPIClient+Posting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TMAPIClient+Posting.m"; sourceTree = "<group>"; };
+		9392B1AC15ED62270060542C /* TMAPIClient+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TMAPIClient+User.h"; sourceTree = "<group>"; };
+		9392B1AD15ED62270060542C /* TMAPIClient+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TMAPIClient+User.m"; sourceTree = "<group>"; };
+		9392B1B015ED62320060542C /* TMAPIClient+Tagging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TMAPIClient+Tagging.h"; sourceTree = "<group>"; };
+		9392B1B115ED62320060542C /* TMAPIClient+Tagging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TMAPIClient+Tagging.m"; sourceTree = "<group>"; };
+		9392B1B415ED63F60060542C /* TMTumblrSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMTumblrSDK.h; sourceTree = "<group>"; };
 		93E2760115EC628E0080E2B3 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		93E2760215EC628E0080E2B3 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		93E2760615EC79CC0080E2B3 /* TumblrSDKTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TumblrSDKTests-Info.plist"; sourceTree = "<group>"; };
@@ -177,10 +194,8 @@
 			isa = PBXGroup;
 			children = (
 				936C7FCD15E72D8C00C0ED53 /* Supporting Files */,
-				93F86C2415EB05B700EA70A1 /* TMAPIClient.h */,
-				93F86C2515EB05B700EA70A1 /* TMAPIClient.m */,
-				934F5ED815EC076C00AF21A8 /* TMOAuth.h */,
-				934F5ED915EC076C00AF21A8 /* TMOAuth.m */,
+				9392B1A315ED61D60060542C /* API */,
+				9392B1B415ED63F60060542C /* TMTumblrSDK.h */,
 			);
 			path = TumblrSDK;
 			sourceTree = "<group>";
@@ -237,6 +252,25 @@
 				9387D76415E7346600E2876E /* README.md */,
 			);
 			path = JXHTTP;
+			sourceTree = "<group>";
+		};
+		9392B1A315ED61D60060542C /* API */ = {
+			isa = PBXGroup;
+			children = (
+				93F86C2415EB05B700EA70A1 /* TMAPIClient.h */,
+				93F86C2515EB05B700EA70A1 /* TMAPIClient.m */,
+				9392B1A415ED61F20060542C /* TMAPIClient+Blog.h */,
+				9392B1A515ED61F20060542C /* TMAPIClient+Blog.m */,
+				9392B1A815ED62100060542C /* TMAPIClient+Posting.h */,
+				9392B1A915ED62100060542C /* TMAPIClient+Posting.m */,
+				9392B1AC15ED62270060542C /* TMAPIClient+User.h */,
+				9392B1AD15ED62270060542C /* TMAPIClient+User.m */,
+				9392B1B015ED62320060542C /* TMAPIClient+Tagging.h */,
+				9392B1B115ED62320060542C /* TMAPIClient+Tagging.m */,
+				934F5ED815EC076C00AF21A8 /* TMOAuth.h */,
+				934F5ED915EC076C00AF21A8 /* TMOAuth.m */,
+			);
+			name = API;
 			sourceTree = "<group>";
 		};
 		93E275FF15EC61F10080E2B3 /* NSData+Base64 */ = {
@@ -371,6 +405,10 @@
 				93F86C2615EB05B700EA70A1 /* TMAPIClient.m in Sources */,
 				934F5EDA15EC076C00AF21A8 /* TMOAuth.m in Sources */,
 				93E2760315EC628E0080E2B3 /* NSData+Base64.m in Sources */,
+				9392B1A615ED61F20060542C /* TMAPIClient+Blog.m in Sources */,
+				9392B1AA15ED62100060542C /* TMAPIClient+Posting.m in Sources */,
+				9392B1AE15ED62270060542C /* TMAPIClient+User.m in Sources */,
+				9392B1B215ED62320060542C /* TMAPIClient+Tagging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +432,10 @@
 				93F86C2715EB05B700EA70A1 /* TMAPIClient.m in Sources */,
 				934F5EDB15EC076C00AF21A8 /* TMOAuth.m in Sources */,
 				93E2760415EC628E0080E2B3 /* NSData+Base64.m in Sources */,
+				9392B1A715ED61F20060542C /* TMAPIClient+Blog.m in Sources */,
+				9392B1AB15ED62100060542C /* TMAPIClient+Posting.m in Sources */,
+				9392B1AF15ED62270060542C /* TMAPIClient+User.m in Sources */,
+				9392B1B315ED62320060542C /* TMAPIClient+Tagging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
