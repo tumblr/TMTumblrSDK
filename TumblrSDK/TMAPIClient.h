@@ -7,7 +7,7 @@
 //
 
 typedef void (^TMAPISuccessCallback)(id);
-typedef void (^TMAPIErrorCallback)(NSError *, NSArray *);
+typedef void (^TMAPIErrorCallback)(NSError *);
 
 @interface TMAPIClient : NSObject
 
@@ -19,6 +19,8 @@ typedef void (^TMAPIErrorCallback)(NSError *, NSArray *);
 
 + (TMAPIClient *)sharedInstance;
 
+// TODO: Add methods that don't require properties with defaults?
+
 // Blog methods
 
 - (void)blogInfo:(NSString *)blogName
@@ -26,5 +28,8 @@ typedef void (^TMAPIErrorCallback)(NSError *, NSArray *);
 
 - (void)followers:(NSString *)blogName limit:(int)limit offset:(int)offset
           success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
+
+- (void)avatar:(NSString *)blogName size:(int)size
+       success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error;
 
 @end

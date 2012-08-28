@@ -39,19 +39,30 @@
     }];
 }
 
+- (void)testAvatar {
+    [self performAsynchronousTest:^ {
+        [[TMAPIClient sharedInstance] avatar:@"bryan" size:64
+                                        success:self.defaultSuccessCallback
+                                          error:self.defaultErrorCallback];
+    }];
+}
+
 #pragma mark - Common
 
 - (void)setUp {
     [super setUp];
     
     self.defaultSuccessCallback = ^ (NSDictionary *result) {
-        STAssertEquals([result[@"meta"][@"status"] intValue], 200, @"Response status code must be 200");
-        STAssertNotNil(result[@"response"], @"Response body cannot be nil");
+        NSLog(@"%@", result);
+        
+        STAssertNotNil(result, @"Response cannot be nil");
         
         self.receivedAsynchronousCallback = YES;
     };
     
-    self.defaultErrorCallback = ^ (NSError *error, NSArray *validationErrors) {
+    self.defaultErrorCallback = ^ (NSError *error) {
+        NSLog(@"%@", error);
+        
         STFail(@"Request failed");
         
         self.receivedAsynchronousCallback = YES;

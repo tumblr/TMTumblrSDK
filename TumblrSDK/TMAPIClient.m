@@ -15,7 +15,6 @@ static NSString * const TMAPIRequestMethodPOST = @"POST";
 
 // Parameter keys
 static NSString * const TMAPIParameterAPIKey = @"api_key";
-static NSString * const TMAPIParameterBaseHostname = @"base-hostname";
 static NSString * const TMAPIParameterLimit = @"limit";
 static NSString * const TMAPIParameterOffset = @"offset";
 
@@ -47,9 +46,17 @@ static NSString * const TMAPIParameterOffset = @"offset";
           success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
     JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:
                                 [NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:@{
-                           TMAPIParameterBaseHostname : blogName,
                                   TMAPIParameterLimit : intToString(limit),
                                  TMAPIParameterOffset : intToString(offset) }
+                                               success:success error:error];
+    
+    [self sendRequest:request];
+}
+
+- (void)avatar:(NSString *)blogName size:(int)size
+       success:(TMAPISuccessCallback)success error:(TMAPIErrorCallback)error {
+    JXHTTPOperation *request = [self requestWithMethod:TMAPIRequestMethodGET path:
+                                [NSString stringWithFormat:@"blog/%@.tumblr.com/avatar/%d", blogName, size] parameters:nil
                                                success:success error:error];
     
     [self sendRequest:request];
@@ -95,12 +102,21 @@ static inline NSString *intToString(int integer) {
     }
     
     request.completionBlock = ^ {
-        // TODO: Introspect response code to determine success or error
+        NSDictionary *response = request.responseJSON;
+        int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
         
-        if (success) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                success(request.responseJSON);
-            });
+        if (statusCode == 200) {
+            if (success) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    success(response[@"response"]);
+                });
+            }
+        } else {
+            if (error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    error([NSError errorWithDomain:@"" code:statusCode userInfo:nil]);
+                });
+            }
         }
     };
     
