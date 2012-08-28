@@ -37,8 +37,8 @@ static NSString * const TMAPIResponseKeyResponse = @"response";
 - (void)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
        error:(TMAPIErrorCallback)error;
 
-- (void)createPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-             error:(TMAPIErrorCallback)error;
+- (void)createPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+           success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
 - (void)sendRequest:(JXHTTPOperation *)request success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
