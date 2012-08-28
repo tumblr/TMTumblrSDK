@@ -15,6 +15,7 @@
 @property (nonatomic, copy) TMAPISuccessCallback defaultSuccessCallback;
 @property (nonatomic, copy) TMAPIErrorCallback defaultErrorCallback;
 @property (nonatomic, assign) BOOL receivedAsynchronousCallback;
+@property (nonatomic, retain) TMAPIClient *client;
 
 - (void)performAsynchronousTest:(void(^)(void))testCode;
 
@@ -26,24 +27,50 @@
 
 - (void)testBlogInfo {
     [self performAsynchronousTest:^ {
-        [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:self.defaultSuccessCallback
-                                         error:self.defaultErrorCallback];
+        [_client blogInfo:@"bryan"
+                  success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
 - (void)testFollowers {
     [self performAsynchronousTest:^ {
-        [[TMAPIClient sharedInstance] followers:@"bryan" limit:20 offset:0
-                                        success:self.defaultSuccessCallback
-                                          error:self.defaultErrorCallback];
+        [_client followers:@"bryan" limit:20 offset:0
+                   success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
-- (void)testAvatar {
+//- (void)testAvatar {
+//    [self performAsynchronousTest:^ {
+//        [_client avatar:@"bryan" size:64
+//                success:_defaultSuccessCallback error:_defaultErrorCallback];
+//    }];
+//}
+
+- (void)testPosts {
     [self performAsynchronousTest:^ {
-        [[TMAPIClient sharedInstance] avatar:@"bryan" size:64
-                                        success:self.defaultSuccessCallback
-                                          error:self.defaultErrorCallback];
+        [_client posts:@"bryan" type:nil parameters:nil
+               success:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
+
+- (void)testQueue {
+    [self performAsynchronousTest:^ {
+        [_client queue:@"bryan" parameters:nil
+               success:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
+
+- (void)testDrafts {
+    [self performAsynchronousTest:^ {
+        [_client drafts:@"bryan" parameters:nil
+                success:_defaultSuccessCallback error:_defaultErrorCallback];
+    }];
+}
+
+- (void)testSubmissions {
+    [self performAsynchronousTest:^ {
+        [_client submissions:@"bryan" parameters:nil
+                     success:_defaultSuccessCallback error:_defaultErrorCallback];
     }];
 }
 
@@ -67,6 +94,8 @@
         
         self.receivedAsynchronousCallback = YES;
     };    
+    
+    self.client = [TMAPIClient sharedInstance];
     
     static dispatch_once_t predicate;
     

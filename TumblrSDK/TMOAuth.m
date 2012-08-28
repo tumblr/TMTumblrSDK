@@ -73,6 +73,8 @@
                                      URLEncode([baseURL absoluteString]),
                                      URLEncode(parameterString)];
     
+    [baseURL release];
+    
     // Hash the raw signature string into an encrypted signature
     NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret];
     
