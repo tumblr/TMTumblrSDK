@@ -1,8 +1,6 @@
 .DS_Store
 *~
 
-Tests/Credentials.plist
-
 *.xcuserstate
 *pbxuser
 project.xcworkspace/
