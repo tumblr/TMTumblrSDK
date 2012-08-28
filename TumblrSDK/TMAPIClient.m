@@ -28,6 +28,8 @@ static NSString * const TMAPIResponseKeyResponse = @"response";
 
 @interface TMAPIClient()
 
+@property (nonatomic, retain) JXHTTPOperationQueue *queue;
+
 - (JXHTTPOperation *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters
                                success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
@@ -170,7 +172,16 @@ static NSString * const TMAPIResponseKeyResponse = @"response";
     [self sendRequest:request];
 }
 
-#pragma mark - Misc.
+#pragma mark - Initialization
+
+- (id)init {
+    if (self = [super init]) {
+        _queue = [[JXHTTPOperationQueue alloc] init];
+        _queue.maxConcurrentOperationCount = 1;
+    }
+    
+    return self;
+}
 
 + (id)sharedInstance {
     static TMAPIClient *instance;
@@ -227,7 +238,7 @@ static NSString * const TMAPIResponseKeyResponse = @"response";
     
     [request setValue:authorizationHeaderValue forRequestHeader:@"Authorization"];
     
-    [[JXHTTPOperationQueue sharedQueue] addOperation:request];
+    [self.queue addOperation:request];
 }
 
 #pragma mark - Memory management
@@ -238,6 +249,8 @@ static NSString * const TMAPIResponseKeyResponse = @"response";
     self.OAuthConsumerSecret = nil;
     self.OAuthToken = nil;
     self.OAuthTokenSecret = nil;
+    
+    self.queue = nil;
     
     [super dealloc];
 }
