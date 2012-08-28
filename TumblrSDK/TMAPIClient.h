@@ -23,62 +23,80 @@ typedef void (^TMAPIErrorCallback)(NSError *);
 
 // Blog methods
 
-- (void)blogInfo:(NSString *)blogName
-         success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)blogInfo:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters
-          success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+            error:(TMAPIErrorCallback)error;
 
-- (void)avatar:(NSString *)blogName size:(int)size
-       success:(TMAPIDataCallback)success error:(TMAPIErrorCallback)error;
+- (void)avatar:(NSString *)blogName size:(int)size success:(TMAPIDataCallback)success error:(TMAPIErrorCallback)error;
 
 - (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
       success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters
-      success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+        error:(TMAPIErrorCallback)error;
 
-- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters
-       success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+         error:(TMAPIErrorCallback)error;
 
-- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters
-            success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+              error:(TMAPIErrorCallback)error;
 
 // Posting methods
 
-// TODO: Text
-// TODO: Photo
-// TODO: Quote
-// TODO: Link
-// TODO: Chat
-// TODO: Audio
-// TODO: Video
-// TODO: Answer
-// TODO: Edit
-// TODO: Reblog
-// TODO: Delete
+- (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+           error:(TMAPIErrorCallback)error;
+
+- (void)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+             error:(TMAPIErrorCallback)error;
+
+- (void)deletePost:(NSString *)blogName id:(NSString *)postID success:(TMAPICallback)success
+             error:(TMAPIErrorCallback)error;
+
+- (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+       error:(TMAPIErrorCallback)error;
+
+- (void)quote:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+        error:(TMAPIErrorCallback)error;
+
+- (void)link:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+       error:(TMAPIErrorCallback)error;
+
+- (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+       error:(TMAPIErrorCallback)error;
+
+- (void)audio:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+        error:(TMAPIErrorCallback)error;
+
+- (void)video:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+        error:(TMAPIErrorCallback)error;
+
+- (void)photo:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+        error:(TMAPIErrorCallback)error;
 
 // User methods
 
 - (void)userInfo:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)dashboard:(NSDictionary *)parameters
-          success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)dashboard:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)likes:(NSDictionary *)parameters
-      success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)likes:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)following:(NSDictionary *)parameters
-          success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)following:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-// TODO: Follow
-// TODO: Unfollow
-// TODO: Like
-// TODO: Unlike
+- (void)follow:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+
+- (void)unfollow:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+
+- (void)like:(NSString *)postID reblogKey:(NSString *)reblogKey success:(TMAPICallback)success
+       error:(TMAPIErrorCallback)error;
+
+- (void)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey success:(TMAPICallback)success
+         error:(TMAPIErrorCallback)error;
 
 // Tagged methods
 
-- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters
-       success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+         error:(TMAPIErrorCallback)error;
 
 @end
