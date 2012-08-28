@@ -2,7 +2,7 @@
 A full Tumblr API client built on the lightweight [JXHTTP](https://github.com/jstn/JXHTTP) networking library by [Justin Ouellette](https://github.com/jstn).
 
 ## Usage
-Import **TMTumblrSDK.h**. Configure **[TMAPIClient sharedInstance] with:
+Import **TMTumblrSDK.h**. Configure **[TMAPIClient sharedInstance]** with:
 
 * Your Tumblr API key
 * OAuth token
