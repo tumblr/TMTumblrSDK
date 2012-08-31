@@ -71,12 +71,12 @@
     
     NSMutableString *rawSignature = [NSString stringWithFormat:@"%@&%@&%@", request.requestMethod,
                                      URLEncode([baseURL absoluteString]),
-                                     URLEncode(parameterString)];
+                                     parameterString];
     
     [baseURL release];
     
     // Hash the raw signature string into an encrypted signature
-    NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret];
+    NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret ? tokenSecret : @""];
     
     // Add the encrypted signature to the header parameter dictionary
     headerParameters[@"oauth_signature"] = [HMACSHA1(rawSignature, keyString) base64EncodedString];
