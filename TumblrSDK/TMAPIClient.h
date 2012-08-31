@@ -23,7 +23,6 @@ extern NSString * const TMAPIParameterType;
 
 @interface TMAPIClient : NSObject
 
-@property (nonatomic, copy) NSString *APIKey;
 @property (nonatomic, copy) NSString *OAuthConsumerKey;
 @property (nonatomic, copy) NSString *OAuthConsumerSecret;
 @property (nonatomic, copy) NSString *OAuthToken;

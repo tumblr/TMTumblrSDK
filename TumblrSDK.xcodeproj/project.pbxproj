@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9328888E15F06211002432A0 /* TMAPIClient+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = 9328888D15F06211002432A0 /* TMAPIClient+Auth.m */; };
+		9328888F15F06211002432A0 /* TMAPIClient+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = 9328888D15F06211002432A0 /* TMAPIClient+Auth.m */; };
 		934F5EDA15EC076C00AF21A8 /* TMOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 934F5ED915EC076C00AF21A8 /* TMOAuth.m */; };
 		934F5EDB15EC076C00AF21A8 /* TMOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 934F5ED915EC076C00AF21A8 /* TMOAuth.m */; };
 		936C7FCB15E72D8C00C0ED53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936C7FCA15E72D8C00C0ED53 /* Foundation.framework */; };
@@ -79,6 +81,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9328888C15F06211002432A0 /* TMAPIClient+Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TMAPIClient+Auth.h"; sourceTree = "<group>"; };
+		9328888D15F06211002432A0 /* TMAPIClient+Auth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TMAPIClient+Auth.m"; sourceTree = "<group>"; };
 		934F5ED815EC076C00AF21A8 /* TMOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMOAuth.h; sourceTree = "<group>"; };
 		934F5ED915EC076C00AF21A8 /* TMOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMOAuth.m; sourceTree = "<group>"; };
 		936C7FC715E72D8C00C0ED53 /* libTumblrSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTumblrSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -259,6 +263,8 @@
 			children = (
 				93F86C2415EB05B700EA70A1 /* TMAPIClient.h */,
 				93F86C2515EB05B700EA70A1 /* TMAPIClient.m */,
+				9328888C15F06211002432A0 /* TMAPIClient+Auth.h */,
+				9328888D15F06211002432A0 /* TMAPIClient+Auth.m */,
 				9392B1A415ED61F20060542C /* TMAPIClient+Blog.h */,
 				9392B1A515ED61F20060542C /* TMAPIClient+Blog.m */,
 				9392B1A815ED62100060542C /* TMAPIClient+Posting.h */,
@@ -409,6 +415,7 @@
 				9392B1AA15ED62100060542C /* TMAPIClient+Posting.m in Sources */,
 				9392B1AE15ED62270060542C /* TMAPIClient+User.m in Sources */,
 				9392B1B215ED62320060542C /* TMAPIClient+Tagging.m in Sources */,
+				9328888E15F06211002432A0 /* TMAPIClient+Auth.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +443,7 @@
 				9392B1AB15ED62100060542C /* TMAPIClient+Posting.m in Sources */,
 				9392B1AF15ED62270060542C /* TMAPIClient+User.m in Sources */,
 				9392B1B315ED62320060542C /* TMAPIClient+Tagging.m in Sources */,
+				9328888F15F06211002432A0 /* TMAPIClient+Auth.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
