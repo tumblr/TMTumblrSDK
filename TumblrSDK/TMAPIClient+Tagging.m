@@ -15,7 +15,7 @@
     NSMutableDictionary *mutableParameters = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters]
             : [NSMutableDictionary dictionary];
     mutableParameters[TMAPIParameterTag] = tag;
-    mutableParameters[TMAPIParameterAPIKey] = self.APIKey;
+    mutableParameters[TMAPIParameterAPIKey] = self.OAuthConsumerKey;
     
     [self get:@"tagged" parameters:mutableParameters success:success error:error];
 }

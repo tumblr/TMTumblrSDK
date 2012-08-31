@@ -15,19 +15,20 @@
 
 @implementation TMOAuth
 
-// TODO: Ensure this works without OAuthToken, OAuthTokenSecret
-
 + (NSString *)authorizationHeaderForRequest:(JXHTTPOperation *)request nonce:(NSString *)nonce
                                 consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
                                       token:(NSString *)token tokenSecret:(NSString *)tokenSecret {
+    // TODO: Ensure this works without OAuthToken, OAuthTokenSecret
     NSMutableDictionary *headerParameters = [[@{
         @"oauth_timestamp" : UNIXTimestamp([NSDate date]),
         @"oauth_nonce" : nonce,
         @"oauth_version" : @"1.0",
         @"oauth_signature_method" : @"HMAC-SHA1",
         @"oauth_consumer_key" : consumerKey,
-        @"oauth_token" : token
     } mutableCopy] autorelease];
+    
+    if (token && token.length > 0)
+        headerParameters[@"oauth_token"] = token;
     
     NSMutableDictionary *signatureParameters = [NSMutableDictionary dictionaryWithDictionary:headerParameters];
 
@@ -82,7 +83,7 @@
     
     NSMutableArray *components = [NSMutableArray array];
     
-    for (NSString *key in headerParameters) {
+    for (NSString *key in headerParameters) {  
         [components addObject:[NSString stringWithFormat:@"%@=\"%@\"", key, URLEncode(headerParameters[key])]];
     }
     

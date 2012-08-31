@@ -63,7 +63,7 @@ NSString * const TMAPIResponseKeyResponse = @"response";
 - (void)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
        error:(TMAPIErrorCallback)error {
     JXHTTPOperation *request = [JXHTTPOperation withURLString:[TMAPIBaseURL stringByAppendingString:path]];
-    request.requestBody = [JXHTTPJSONBody withJSONObject:parameters];
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:parameters];
 
     [self sendRequest:request success:success error:error];
 }
@@ -114,7 +114,6 @@ NSString * const TMAPIResponseKeyResponse = @"response";
 #pragma mark - Memory management
 
 - (void)dealloc {
-    self.APIKey = nil;
     self.OAuthConsumerKey = nil;
     self.OAuthConsumerSecret = nil;
     self.OAuthToken = nil;
