@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryan Irace. All rights reserved.
 //
 
+#import "JXHTTP.h"
+
 #import "TMAPIClient.h"
 #import "TMAPIClient+Auth.h"
 #import "TMAPIClient+Blog.h"
