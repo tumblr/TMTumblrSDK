@@ -48,7 +48,7 @@
     NSMutableArray *parameters = [NSMutableArray array];
     
     void (^addParameter)(NSString *key, id value) = ^(NSString *key, id value) {
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, URLEncode(value)]];
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, value]];
     };
     
     for (NSString *key in [[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
@@ -63,7 +63,7 @@
         }
     }
     
-    NSString *parameterString = [parameters componentsJoinedByString:@"&"];
+    NSString *parameterString = URLEncode([parameters componentsJoinedByString:@"&"]);
     
     NSURL *URL = request.requestURL;
     
