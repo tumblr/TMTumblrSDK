@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryan Irace. All rights reserved.
 //
 
+#import "JXHTTP.h"
+
 @interface TMOAuth : NSObject
 
 + (NSString *)authorizationHeaderForRequest:(JXHTTPOperation *)request nonce:(NSString *)nonce
