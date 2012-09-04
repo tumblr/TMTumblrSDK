@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryan Irace. All rights reserved.
 //
 
+#import "JXHTTP.h"
+
 typedef void (^TMAPICallback)(id);
 typedef void (^TMAPIDataCallback)(NSData *);
 typedef void (^TMAPIErrorCallback)(NSError *);
