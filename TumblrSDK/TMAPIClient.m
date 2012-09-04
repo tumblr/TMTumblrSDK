@@ -97,7 +97,7 @@ NSString * const TMAPIResponseKeyResponse = @"response";
                 });
             }
         } else {
-            NSLog(@"%@", request.requestURL);
+            NSLog(@"%@", blockRequest.requestURL);
             
             if (error) {
                 // TODO: Pass blog or user errors from server in user info dictionary
