@@ -10,7 +10,7 @@
 
 @interface TMAPIClient (Tagging)
 
-- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-         error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)tagged:(NSString *)tag parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                      error:(TMAPIErrorCallback)error;
 
 @end

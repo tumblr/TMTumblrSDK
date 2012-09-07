@@ -10,22 +10,22 @@
 
 @interface TMAPIClient (User)
 
-- (void)userInfo:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)userInfo:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)dashboard:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)dashboard:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)likes:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)likes:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)following:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)following:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)follow:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)follow:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)unfollow:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)unfollow:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)like:(NSString *)postID reblogKey:(NSString *)reblogKey success:(TMAPICallback)success
-       error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)like:(NSString *)postID reblogKey:(NSString *)reblogKey success:(TMAPICallback)success
+                    error:(TMAPIErrorCallback)error;
 
-- (void)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey success:(TMAPICallback)success
-         error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey success:(TMAPICallback)success
+                      error:(TMAPIErrorCallback)error;
 
 @end
