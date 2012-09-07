@@ -52,20 +52,22 @@ NSString * const TMAPIResponseKeyResponse = @"response";
     return self;
 }
 
-- (void)get:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-      error:(TMAPIErrorCallback)error {
+- (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                   error:(TMAPIErrorCallback)error {
     JXHTTPOperation *request = [JXHTTPOperation withURLString:[TMAPIBaseURL stringByAppendingString:path]
                                               queryParameters:parameters];
     
     [self sendRequest:request success:success error:error];
+    return request;
 }
 
-- (void)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+- (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
        error:(TMAPIErrorCallback)error {
     JXHTTPOperation *request = [JXHTTPOperation withURLString:[TMAPIBaseURL stringByAppendingString:path]];
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:parameters];
 
     [self sendRequest:request success:success error:error];
+    return request;
 }
 
 - (void)sendRequest:(JXHTTPOperation *)request {

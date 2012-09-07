@@ -10,18 +10,18 @@
 
 @implementation TMAPIClient (Blog)
 
-- (void)blogInfo:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName]
-   parameters:@{ TMAPIParameterAPIKey : self.OAuthConsumerKey } success:success error:error];
+- (JXHTTPOperation *)blogInfo:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
+    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName]
+          parameters:@{ TMAPIParameterAPIKey : self.OAuthConsumerKey } success:success error:error];
 }
 
-- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-            error:(TMAPIErrorCallback)error {
-    [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters success:success
-        error:error];
+- (JXHTTPOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                         error:(TMAPIErrorCallback)error {
+    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters success:success
+               error:error];
 }
 
-- (void)avatar:(NSString *)blogName size:(int)size success:(TMAPIDataCallback)success error:(TMAPIErrorCallback)error {
+- (JXHTTPOperation *)avatar:(NSString *)blogName size:(int)size success:(TMAPIDataCallback)success error:(TMAPIErrorCallback)error {
     NSString *URLString = [TMAPIBaseURL stringByAppendingString:[NSString stringWithFormat:@"blog/%@.tumblr.com/avatar/%d",
                                                                  blogName, size]];
     
@@ -40,36 +40,38 @@
     };
     
     [self sendRequest:request];
+    
+    return request;
 }
 
-- (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-      success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
+- (JXHTTPOperation *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                   success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
     NSString *path = [NSString stringWithFormat:@"blog/%@.tumblr.com/posts", blogName];
     if (type) path = [path stringByAppendingFormat:@"/%@", type];
     
     NSMutableDictionary *mutableParameters = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters]
-            : [NSMutableDictionary dictionary];
+    : [NSMutableDictionary dictionary];
     mutableParameters[TMAPIParameterAPIKey] = self.OAuthConsumerKey;
     
-    [self get:path parameters:mutableParameters success:success error:error];
+    return [self get:path parameters:mutableParameters success:success error:error];
 }
 
-- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-        error:(TMAPIErrorCallback)error {
-    [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters
-      success:success error:error];
+- (JXHTTPOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                     error:(TMAPIErrorCallback)error {
+    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters
+             success:success error:error];
 }
 
-- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-         error:(TMAPIErrorCallback)error {
-    [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters
-      success:success error:error];
+- (JXHTTPOperation *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                      error:(TMAPIErrorCallback)error {
+    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters
+             success:success error:error];
 }
 
-- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-              error:(TMAPIErrorCallback)error {
-    [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters
-      success:success error:error];
+- (JXHTTPOperation *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                           error:(TMAPIErrorCallback)error {
+    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters
+             success:success error:error];
 }
 
 @end

@@ -10,23 +10,23 @@
 
 @interface TMAPIClient (Blog)
 
-- (void)blogInfo:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)blogInfo:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-            error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                         error:(TMAPIErrorCallback)error;
 
-- (void)avatar:(NSString *)blogName size:(int)size success:(TMAPIDataCallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)avatar:(NSString *)blogName size:(int)size success:(TMAPIDataCallback)success error:(TMAPIErrorCallback)error;
 
-- (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-      success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                   success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
 
-- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-        error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                     error:(TMAPIErrorCallback)error;
 
-- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-         error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                      error:(TMAPIErrorCallback)error;
 
-- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-              error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                           error:(TMAPIErrorCallback)error;
 
 @end
