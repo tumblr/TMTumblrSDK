@@ -10,14 +10,14 @@
 
 @implementation TMAPIClient (Tagging)
 
-- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-         error:(TMAPIErrorCallback)error {
+- (JXHTTPOperation *)tagged:(NSString *)tag parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                      error:(TMAPIErrorCallback)error {
     NSMutableDictionary *mutableParameters = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters]
             : [NSMutableDictionary dictionary];
     mutableParameters[TMAPIParameterTag] = tag;
     mutableParameters[TMAPIParameterAPIKey] = self.OAuthConsumerKey;
     
-    [self get:@"tagged" parameters:mutableParameters success:success error:error];
+    return [self get:@"tagged" parameters:mutableParameters success:success error:error];
 }
 
 @end

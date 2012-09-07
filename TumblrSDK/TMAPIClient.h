@@ -32,11 +32,11 @@ extern NSString * const TMAPIParameterType;
 
 + (TMAPIClient *)sharedInstance;
 
-- (void)get:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-      error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                   error:(TMAPIErrorCallback)error;
 
-- (void)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-       error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
+                    error:(TMAPIErrorCallback)error;
 
 - (void)sendRequest:(JXHTTPOperation *)request;
 
