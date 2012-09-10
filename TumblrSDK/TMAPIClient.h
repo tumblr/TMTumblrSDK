@@ -14,15 +14,6 @@ typedef void (^TMAPIErrorCallback)(NSError *);
 
 extern NSString * const TMAPIBaseURL;
 
-extern NSString * const TMAPIParameterAPIKey;
-extern NSString * const TMAPIParameterLimit;
-extern NSString * const TMAPIParameterOffset;
-extern NSString * const TMAPIParameterTag;
-extern NSString * const TMAPIParameterURL;
-extern NSString * const TMAPIParameterPostID;
-extern NSString * const TMAPIParameterReblogKey;
-extern NSString * const TMAPIParameterType;
-
 @interface TMAPIClient : NSObject
 
 @property (nonatomic, copy) NSString *OAuthConsumerKey;

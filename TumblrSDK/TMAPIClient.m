@@ -11,7 +11,6 @@
 
 NSString * const TMAPIBaseURL = @"http://api.tumblr.com/v2/";
 
-NSString * const TMAPIParameterAPIKey = @"api_key";
 NSString * const TMAPIParameterLimit = @"limit";
 NSString * const TMAPIParameterOffset = @"offset";
 NSString * const TMAPIParameterTag = @"tag";
@@ -54,8 +53,11 @@ NSString * const TMAPIResponseKeyResponse = @"response";
 
 - (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
                    error:(TMAPIErrorCallback)error {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    
     JXHTTPOperation *request = [JXHTTPOperation withURLString:[TMAPIBaseURL stringByAppendingString:path]
-                                              queryParameters:parameters];
+                                              queryParameters:mutableParameters];
     
     [self sendRequest:request success:success error:error];
     return request;
@@ -63,8 +65,11 @@ NSString * const TMAPIResponseKeyResponse = @"response";
 
 - (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
        error:(TMAPIErrorCallback)error {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    
     JXHTTPOperation *request = [JXHTTPOperation withURLString:[TMAPIBaseURL stringByAppendingString:path]];
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:parameters];
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
 
     [self sendRequest:request success:success error:error];
     return request;

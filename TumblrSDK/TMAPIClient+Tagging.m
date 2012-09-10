@@ -12,12 +12,7 @@
 
 - (JXHTTPOperation *)tagged:(NSString *)tag parameters:(NSDictionary *)parameters success:(TMAPICallback)success
                       error:(TMAPIErrorCallback)error {
-    NSMutableDictionary *mutableParameters = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters]
-            : [NSMutableDictionary dictionary];
-    mutableParameters[TMAPIParameterTag] = tag;
-    mutableParameters[TMAPIParameterAPIKey] = self.OAuthConsumerKey;
-    
-    return [self get:@"tagged" parameters:mutableParameters success:success error:error];
+    return [self get:@"tagged" parameters:parameters success:success error:error];
 }
 
 @end
