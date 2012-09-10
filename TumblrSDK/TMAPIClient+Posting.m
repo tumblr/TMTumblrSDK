@@ -21,7 +21,7 @@
                         success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
     NSMutableDictionary *mutableParameters = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters]
             : [NSMutableDictionary dictionary];
-    mutableParameters[TMAPIParameterType] = type;
+    mutableParameters[@"type"] = type;
     
     return [self post:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName] parameters:mutableParameters
               success:success error:error];
@@ -44,7 +44,7 @@
 
 - (JXHTTPOperation *)deletePost:(NSString *)blogName id:(NSString *)postID success:(TMAPICallback)success
                           error:(TMAPIErrorCallback)error {
-    return [self post:@"post/delete" parameters:@{ TMAPIParameterPostID : postID } success:success error:error];
+    return [self post:@"post/delete" parameters:@{ @"id" : postID } success:success error:error];
 }
 
 - (JXHTTPOperation *)text:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success

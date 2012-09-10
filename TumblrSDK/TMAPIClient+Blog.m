@@ -11,8 +11,8 @@
 @implementation TMAPIClient (Blog)
 
 - (JXHTTPOperation *)blogInfo:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName]
-          parameters:@{ TMAPIParameterAPIKey : self.OAuthConsumerKey } success:success error:error];
+    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName] parameters:nil success:success
+               error:error];
 }
 
 - (JXHTTPOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
@@ -49,11 +49,7 @@
     NSString *path = [NSString stringWithFormat:@"blog/%@.tumblr.com/posts", blogName];
     if (type) path = [path stringByAppendingFormat:@"/%@", type];
     
-    NSMutableDictionary *mutableParameters = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters]
-    : [NSMutableDictionary dictionary];
-    mutableParameters[TMAPIParameterAPIKey] = self.OAuthConsumerKey;
-    
-    return [self get:path parameters:mutableParameters success:success error:error];
+    return [self get:path parameters:parameters success:success error:error];
 }
 
 - (JXHTTPOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
