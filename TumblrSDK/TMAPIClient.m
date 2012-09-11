@@ -19,10 +19,6 @@ NSString * const TMAPIParameterPostID = @"id";
 NSString * const TMAPIParameterReblogKey = @"reblog_key";
 NSString * const TMAPIParameterType = @"type";
 
-NSString * const TMAPIResponseKeyMeta = @"meta";
-NSString * const TMAPIResponseKeyStatus = @"status";
-NSString * const TMAPIResponseKeyResponse = @"response";
-
 
 @interface TMAPIClient() {
     JXHTTPOperationQueue *_queue;
@@ -85,7 +81,7 @@ NSString * const TMAPIResponseKeyResponse = @"response";
     
     [request setValue:authorizationHeaderValue forRequestHeader:@"Authorization"];
     
-    [_queue addOperation:request]; 
+    [_queue addOperation:request];
 }
 
 #pragma mark - Class extension
@@ -95,12 +91,12 @@ NSString * const TMAPIResponseKeyResponse = @"response";
     
     request.completionBlock = ^ {
         NSDictionary *response = blockRequest.responseJSON;
-        int statusCode = response[TMAPIResponseKeyMeta] ? [response[TMAPIResponseKeyMeta][TMAPIResponseKeyStatus] intValue] : 0;
+        int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
         
         if (statusCode == 200) {
             if (success) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    success(response[TMAPIResponseKeyResponse]);
+                    success(response[@"response"]);
                 });
             }
         } else {
