@@ -12,7 +12,10 @@
 
 - (JXHTTPOperation *)tagged:(NSString *)tag parameters:(NSDictionary *)parameters success:(TMAPICallback)success
                       error:(TMAPIErrorCallback)error {
-    return [self get:@"tagged" parameters:parameters success:success error:error];
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"tag"] = tag;
+    
+    return [self get:@"tagged" parameters:mutableParameters success:success error:error];
 }
 
 @end
