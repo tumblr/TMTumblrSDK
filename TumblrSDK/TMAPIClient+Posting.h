@@ -10,34 +10,27 @@
 
 @interface TMAPIClient (Posting)
 
-- (JXHTTPOperation *)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                        error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                          error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)deletePost:(NSString *)blogName id:(NSString *)postID success:(TMAPICallback)success
-                          error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)createPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                       callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)text:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                    error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)link:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                    error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)chat:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                    error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)audio:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)video:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)photo:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+
+- (JXHTTPOperation *)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 @end

@@ -8,79 +8,57 @@
 
 #import "TMAPIClient+Posting.h"
 
-@interface TMAPIClient (_Posting)
-
-- (JXHTTPOperation *)createPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                        success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
-
-@end
-
-@implementation TMAPIClient (_Posting)
-
-- (JXHTTPOperation *)createPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                        success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    NSMutableDictionary *mutableParameters = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters]
-            : [NSMutableDictionary dictionary];
-    mutableParameters[@"type"] = type;
-    
-    return [self post:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName] parameters:mutableParameters
-              success:success error:error];
-}
-
-@end
-
-
 @implementation TMAPIClient (Posting)
 
-- (JXHTTPOperation *)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                        error:(TMAPIErrorCallback)error {
-    return [self post:@"post/edit" parameters:parameters success:success error:error];
+- (NSOperation *)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self post:@"post/edit" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                          error:(TMAPIErrorCallback)error {
-    return [self post:@"post/reblog" parameters:parameters success:success error:error];
+- (NSOperation *)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self post:@"post/reblog" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)deletePost:(NSString *)blogName id:(NSString *)postID success:(TMAPICallback)success
-                          error:(TMAPIErrorCallback)error {
-    return [self post:@"post/delete" parameters:@{ @"id" : postID } success:success error:error];
+- (NSOperation *)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
+    return [self post:@"post/delete" parameters:@{ TMAPIParameterPostID : postID } callback:callback];
 }
 
-- (JXHTTPOperation *)text:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                    error:(TMAPIErrorCallback)error {
-    return [self createPost:blogName type:@"text" parameters:parameters success:success error:error];
+- (NSOperation *)createPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                   callback:(TMAPICallback)callback {
+    NSMutableDictionary *mutableParameters = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters]
+    : [NSMutableDictionary dictionary];
+    mutableParameters[TMAPIParameterType] = type;
+    
+    return [self post:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName] parameters:mutableParameters
+             callback:callback];
 }
 
-- (JXHTTPOperation *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error {
-    return [self createPost:blogName type:@"quote" parameters:parameters success:success error:error];
+- (NSOperation *)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self createPost:blogName type:@"text" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)link:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                    error:(TMAPIErrorCallback)error {
-    return [self createPost:blogName type:@"link" parameters:parameters success:success error:error];
+- (NSOperation *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self createPost:blogName type:@"quote" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)chat:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                    error:(TMAPIErrorCallback)error {
-    return [self createPost:blogName type:@"chat" parameters:parameters success:success error:error];
+- (NSOperation *)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self createPost:blogName type:@"link" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)audio:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error {
+- (NSOperation *)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self createPost:blogName type:@"chat" parameters:parameters callback:callback];
+}
+
+- (NSOperation *)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     // TODO
     return nil;
 }
 
-- (JXHTTPOperation *)video:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error {
+- (NSOperation *)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     // TODO
     return nil;
 }
 
-- (JXHTTPOperation *)photo:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error {
+- (NSOperation *)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     // TODO
     return nil;
 }
