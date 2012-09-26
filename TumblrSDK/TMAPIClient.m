@@ -7,10 +7,10 @@
 //
 
 #import "TMAPIClient.h"
+
 #import "TMOAuth.h"
 
-NSString * const TMAPIBaseURL = @"http://api.tumblr.com/v2/";
-
+NSString * const TMAPIParameterAPIKey = @"api_key";
 NSString * const TMAPIParameterLimit = @"limit";
 NSString * const TMAPIParameterOffset = @"offset";
 NSString * const TMAPIParameterTag = @"tag";
@@ -19,15 +19,13 @@ NSString * const TMAPIParameterPostID = @"id";
 NSString * const TMAPIParameterReblogKey = @"reblog_key";
 NSString * const TMAPIParameterType = @"type";
 
-
 @interface TMAPIClient() {
     JXHTTPOperationQueue *_queue;
 }
 
-- (void)sendRequest:(JXHTTPOperation *)request success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+NSString *URLWithPath(NSString *path);
 
 @end
-
 
 @implementation TMAPIClient
 
@@ -47,27 +45,18 @@ NSString * const TMAPIParameterType = @"type";
     return self;
 }
 
-- (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                   error:(TMAPIErrorCallback)error {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+- (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:parameters];
+    [self sendRequest:request callback:callback];
     
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:[TMAPIBaseURL stringByAppendingString:path]
-                                              queryParameters:mutableParameters];
-    
-    [self sendRequest:request success:success error:error];
     return request;
 }
 
-- (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-       error:(TMAPIErrorCallback)error {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+- (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:parameters];
+    [self sendRequest:request callback:callback];
     
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:[TMAPIBaseURL stringByAppendingString:path]];
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
-
-    [self sendRequest:request success:success error:error];
     return request;
 }
 
@@ -81,37 +70,37 @@ NSString * const TMAPIParameterType = @"type";
     
     [request setValue:authorizationHeaderValue forRequestHeader:@"Authorization"];
     
-    [_queue addOperation:request];
+    [_queue addOperation:request]; 
 }
 
-#pragma mark - Class extension
-
-- (void)sendRequest:(JXHTTPOperation *)request success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
+- (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
     __block JXHTTPOperation *blockRequest = request;
     
     request.completionBlock = ^ {
         NSDictionary *response = blockRequest.responseJSON;
         int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
         
-        if (statusCode == 200) {
-            if (success) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    success(response[@"response"]);
-                });
-            }
-        } else {
-            NSLog(@"%@", blockRequest.requestURL);
+        if (callback) {
+            NSError *error = nil;
             
-            if (error) {
-                // TODO: Pass blog or user errors from server in user info dictionary
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    error([NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil]);
-                });
+            if (statusCode != 200) {
+                error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
+                NSLog(@"%@", blockRequest.requestURL);
             }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                callback(response[@"response"], error);
+            });
         }
     };
 
     [self sendRequest:request];
+}
+
+#pragma mark - Helper function
+
+NSString *URLWithPath(NSString *path) {
+    return [@"http://api.tumblr.com/v2/" stringByAppendingString:path];
 }
 
 #pragma mark - Memory management

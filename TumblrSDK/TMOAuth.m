@@ -90,7 +90,7 @@
     return [NSString stringWithFormat:@"OAuth %@", [components componentsJoinedByString:@","]];
 }
 
-#pragma mark - Convenience functions
+#pragma mark - Helper functions
 
 static inline NSString *URLDecode(NSString *string) {
     return [(NSString *)CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")) autorelease];

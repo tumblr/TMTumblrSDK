@@ -10,42 +10,40 @@
 
 @implementation TMAPIClient (User)
 
-- (JXHTTPOperation *)userInfo:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    return [self get:@"user/info" parameters:nil success:success error:error];
+- (NSOperation *)userInfo:(TMAPICallback)callback {
+    return [self get:@"user/info" parameters:nil callback:callback];
 }
 
-- (JXHTTPOperation *)dashboard:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    return [self get:@"user/dashboard" parameters:parameters success:success error:error];
+- (NSOperation *)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self get:@"user/dashboard" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)likes:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    return [self get:@"user/likes" parameters:parameters success:success error:error];
+- (NSOperation *)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self get:@"user/likes" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)following:(NSDictionary *)parameters success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    return [self get:@"user/following" parameters:parameters success:success error:error];
+- (NSOperation *)following:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self get:@"user/following" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)follow:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    return [self post:@"/user/follow" parameters:@{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }
-              success:success error:error];
+- (NSOperation *)follow:(NSString *)blogName callback:(TMAPICallback)callback {
+    return [self post:@"/user/follow" parameters:@{ TMAPIParameterURL : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }
+             callback:callback];
 }
 
-- (JXHTTPOperation *)unfollow:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    return [self post:@"/user/unfollow" parameters:@{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }
-              success:success error:error];
+- (NSOperation *)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
+    return [self post:@"/user/unfollow" parameters:@{ TMAPIParameterURL : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }
+             callback:callback];
 }
 
-- (JXHTTPOperation *)like:(NSString *)postID reblogKey:(NSString *)reblogKey success:(TMAPICallback)success
-                    error:(TMAPIErrorCallback)error {
-    return [self post:@"/user/like" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey } success:success
-                error:error];
+- (NSOperation *)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
+    return [self post:@"/user/like" parameters:@{ TMAPIParameterPostID : postID, TMAPIParameterReblogKey : reblogKey }
+             callback:callback];
 }
 
-- (JXHTTPOperation *)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey success:(TMAPICallback)success
-                      error:(TMAPIErrorCallback)error {
-    return [self post:@"/user/unlike" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey } success:success
-                error:error];
+- (NSOperation *)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
+    return [self post:@"/user/unlike" parameters:@{ TMAPIParameterPostID : postID, TMAPIParameterReblogKey : reblogKey }
+             callback:callback];
 }
 
 @end
