@@ -10,32 +10,32 @@
 
 @implementation TMAPIClient (Blog)
 
-- (JXHTTPOperation *)blogInfo:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
-    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName] parameters:nil success:success
-               error:error];
+- (NSOperation *)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
+    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName]
+          parameters:@{ TMAPIParameterAPIKey : self.OAuthConsumerKey } callback:callback];
 }
 
-- (JXHTTPOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                         error:(TMAPIErrorCallback)error {
-    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters success:success
-               error:error];
+- (NSOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters
+            callback:callback];
 }
 
-- (JXHTTPOperation *)avatar:(NSString *)blogName size:(int)size success:(TMAPIDataCallback)success error:(TMAPIErrorCallback)error {
-    NSString *URLString = [TMAPIBaseURL stringByAppendingString:[NSString stringWithFormat:@"blog/%@.tumblr.com/avatar/%d",
-                                                                 blogName, size]];
-    
+- (NSOperation *)avatar:(NSString *)blogName size:(int)size callback:(TMAPIDataCallback)callback {
+    NSString *URLString = [NSString stringWithFormat:@"http://api.tumblr.com/v2/blog/%@.tumblr.com/avatar/%d", blogName,
+                           size];
     __block JXHTTPOperation *request = [JXHTTPOperation withURLString:URLString];
     
     request.completionBlock = ^ {
-        if (request.responseStatusCode == 200) {
-            if (success) {
+        if (callback) {
+            if (request.responseStatusCode == 200) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    success(request.responseData);
+                    callback(request.responseData, nil);
+                });
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    callback(nil, [NSError errorWithDomain:@"Request failed" code:request.responseStatusCode userInfo:nil]);
                 });
             }
-        } else {
-            error([NSError errorWithDomain:@"Request failed" code:request.responseStatusCode userInfo:nil]);
         }
     };
     
@@ -44,30 +44,32 @@
     return request;
 }
 
-- (JXHTTPOperation *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                   success:(TMAPICallback)success error:(TMAPIErrorCallback)error {
+- (NSOperation *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                   callback:(TMAPICallback)callback {
     NSString *path = [NSString stringWithFormat:@"blog/%@.tumblr.com/posts", blogName];
     if (type) path = [path stringByAppendingFormat:@"/%@", type];
     
-    return [self get:path parameters:parameters success:success error:error];
+    NSMutableDictionary *mutableParameters = parameters
+            ? [NSMutableDictionary dictionaryWithDictionary:parameters]
+            : [NSMutableDictionary dictionary];
+    mutableParameters[TMAPIParameterAPIKey] = self.OAuthConsumerKey;
+    
+    return [self get:path parameters:mutableParameters callback:callback];
 }
 
-- (JXHTTPOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error {
+- (NSOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters
-             success:success error:error];
+             callback:callback];
 }
 
-- (JXHTTPOperation *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                      error:(TMAPIErrorCallback)error {
+- (NSOperation *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters
-             success:success error:error];
+             callback:callback];
 }
 
-- (JXHTTPOperation *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                           error:(TMAPIErrorCallback)error {
+- (NSOperation *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters
-             success:success error:error];
+             callback:callback];
 }
 
 @end

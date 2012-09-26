@@ -8,25 +8,23 @@
 
 #import "TMAPIClient.h"
 
+typedef void (^TMAPIDataCallback)(NSData *, NSError *error);
+
 @interface TMAPIClient (Blog)
 
-- (JXHTTPOperation *)blogInfo:(NSString *)blogName success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                         error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)avatar:(NSString *)blogName size:(int)size success:(TMAPIDataCallback)success error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)avatar:(NSString *)blogName size:(int)size callback:(TMAPIDataCallback)callback;
 
 - (JXHTTPOperation *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                   success:(TMAPICallback)success error:(TMAPIErrorCallback)error;
+                   callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                     error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                      error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                           error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 @end

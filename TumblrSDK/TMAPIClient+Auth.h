@@ -10,6 +10,6 @@
 
 @interface TMAPIClient (Auth)
 
-- (void)xAuthRequest:(NSString *)userName password:(NSString *)password;
+- (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback;
 
 @end

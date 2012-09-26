@@ -6,13 +6,17 @@
 //  Copyright (c) 2012 Bryan Irace. All rights reserved.
 //
 
-#import "JXHTTP.h"
+typedef void (^TMAPICallback)(id, NSError *error);
 
-typedef void (^TMAPICallback)(id);
-typedef void (^TMAPIDataCallback)(NSData *);
-typedef void (^TMAPIErrorCallback)(NSError *);
-
-extern NSString * const TMAPIBaseURL;
+// TODO: Evaluate the usefulness of these
+extern NSString * const TMAPIParameterAPIKey;
+extern NSString * const TMAPIParameterLimit;
+extern NSString * const TMAPIParameterOffset;
+extern NSString * const TMAPIParameterTag;
+extern NSString * const TMAPIParameterURL;
+extern NSString * const TMAPIParameterPostID;
+extern NSString * const TMAPIParameterReblogKey;
+extern NSString * const TMAPIParameterType;
 
 @interface TMAPIClient : NSObject
 
@@ -23,12 +27,12 @@ extern NSString * const TMAPIBaseURL;
 
 + (TMAPIClient *)sharedInstance;
 
-- (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                   error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters success:(TMAPICallback)success
-                    error:(TMAPIErrorCallback)error;
+- (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 - (void)sendRequest:(JXHTTPOperation *)request;
+
+- (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback;
 
 @end
