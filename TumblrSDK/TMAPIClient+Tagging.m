@@ -11,13 +11,7 @@
 @implementation TMAPIClient (Tagging)
 
 - (NSOperation *)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    NSMutableDictionary *mutableParameters = parameters
-            ? [NSMutableDictionary dictionaryWithDictionary:parameters]
-            : [NSMutableDictionary dictionary];
-    mutableParameters[TMAPIParameterTag] = tag;
-    mutableParameters[TMAPIParameterAPIKey] = self.OAuthConsumerKey;
-    
-    return [self get:@"tagged" parameters:mutableParameters callback:callback];
+    return [self get:@"tagged" parameters:parameters callback:callback];
 }
 
 @end
