@@ -9,7 +9,6 @@
 typedef void (^TMAPICallback)(id, NSError *error);
 
 // TODO: Evaluate the usefulness of these
-extern NSString * const TMAPIParameterAPIKey;
 extern NSString * const TMAPIParameterLimit;
 extern NSString * const TMAPIParameterOffset;
 extern NSString * const TMAPIParameterTag;
