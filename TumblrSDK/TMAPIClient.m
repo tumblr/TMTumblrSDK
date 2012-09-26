@@ -10,7 +10,6 @@
 
 #import "TMOAuth.h"
 
-NSString * const TMAPIParameterAPIKey = @"api_key";
 NSString * const TMAPIParameterLimit = @"limit";
 NSString * const TMAPIParameterOffset = @"offset";
 NSString * const TMAPIParameterTag = @"tag";
@@ -46,15 +45,21 @@ NSString *URLWithPath(NSString *path);
 }
 
 - (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:parameters];
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
     [self sendRequest:request callback:callback];
     
     return request;
 }
 
 - (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:parameters];
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
     [self sendRequest:request callback:callback];
     
     return request;
