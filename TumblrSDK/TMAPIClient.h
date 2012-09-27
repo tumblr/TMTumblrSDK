@@ -24,6 +24,8 @@ extern NSString * const TMAPIParameterType;
 @property (nonatomic, copy) NSString *OAuthToken;
 @property (nonatomic, copy) NSString *OAuthTokenSecret;
 
+@property (nonatomic, readonly) JXHTTPOperationQueue *queue;
+
 + (TMAPIClient *)sharedInstance;
 
 - (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;

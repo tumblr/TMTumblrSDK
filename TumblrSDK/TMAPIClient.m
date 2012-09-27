@@ -18,13 +18,8 @@ NSString * const TMAPIParameterPostID = @"id";
 NSString * const TMAPIParameterReblogKey = @"reblog_key";
 NSString * const TMAPIParameterType = @"type";
 
-@interface TMAPIClient() {
-    JXHTTPOperationQueue *_queue;
-}
-
 NSString *URLWithPath(NSString *path);
 
-@end
 
 @implementation TMAPIClient
 
@@ -38,7 +33,6 @@ NSString *URLWithPath(NSString *path);
 - (id)init {
     if (self = [super init]) {
         _queue = [[JXHTTPOperationQueue alloc] init];
-        _queue.maxConcurrentOperationCount = 1;
     }
     
     return self;
