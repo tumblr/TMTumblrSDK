@@ -15,12 +15,12 @@
 
 @implementation TMOAuth
 
-+ (NSString *)authorizationHeaderForRequest:(JXHTTPOperation *)request nonce:(NSString *)nonce
-                                consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
-                                      token:(NSString *)token tokenSecret:(NSString *)tokenSecret {
++ (NSString *)authorizationHeaderForRequest:(JXHTTPOperation *)request consumerKey:(NSString *)consumerKey
+                             consumerSecret:(NSString *)consumerSecret token:(NSString *)token
+                                tokenSecret:(NSString *)tokenSecret {
     NSMutableDictionary *headerParameters = [[@{
         @"oauth_timestamp" : UNIXTimestamp([NSDate date]),
-        @"oauth_nonce" : nonce,
+        @"oauth_nonce" : request.uniqueIDString,
         @"oauth_version" : @"1.0",
         @"oauth_signature_method" : @"HMAC-SHA1",
         @"oauth_consumer_key" : consumerKey,
