@@ -18,7 +18,6 @@
 + (NSString *)authorizationHeaderForRequest:(JXHTTPOperation *)request nonce:(NSString *)nonce
                                 consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
                                       token:(NSString *)token tokenSecret:(NSString *)tokenSecret {
-    // TODO: Ensure this works without OAuthToken, OAuthTokenSecret
     NSMutableDictionary *headerParameters = [[@{
         @"oauth_timestamp" : UNIXTimestamp([NSDate date]),
         @"oauth_nonce" : nonce,
@@ -34,16 +33,14 @@
 
     NSString *queryString = request.requestURL.query;
     
-    if (queryString) {
+    if (queryString)
         [signatureParameters addEntriesFromDictionary:queryStringToDictionary(queryString)];
-    }
     
     // Assuming body format application/x-www-form-urlencoded
     NSDictionary *postBodyParameters = ((JXHTTPFormEncodedBody *)request.requestBody).dictionary;
     
-    for (NSString *key in postBodyParameters) {
+    for (NSString *key in postBodyParameters)
         signatureParameters[key] = URLEncode(postBodyParameters[key]);
-    }
     
     NSMutableArray *parameters = [NSMutableArray array];
     
@@ -55,9 +52,8 @@
         id value = signatureParameters[key];
         
         if ([value isKindOfClass:[NSArray class]]) {
-            for (id arrayValue in (NSArray *)value) {
+            for (id arrayValue in (NSArray *)value)
                 addParameter(key, arrayValue);
-            }
         } else {
             addParameter(key, value);
         }
@@ -83,9 +79,8 @@
     
     NSMutableArray *components = [NSMutableArray array];
     
-    for (NSString *key in headerParameters) {  
+    for (NSString *key in headerParameters)
         [components addObject:[NSString stringWithFormat:@"%@=\"%@\"", key, URLEncode(headerParameters[key])]];
-    }
     
     return [NSString stringWithFormat:@"OAuth %@", [components componentsJoinedByString:@","]];
 }
@@ -111,11 +106,10 @@ static inline NSDictionary *queryStringToDictionary(NSString *query) {
     
     for (NSString *parameter in parameters) {
         NSArray *keyValuePair = [parameter componentsSeparatedByString:@"="];
-        
-        if (keyValuePair.count != 2) {
-            // TODO: Possible for a parameter to have only a key and no value?
+
+        // TODO: Possible for a parameter to have only a key and no value?
+        if (keyValuePair.count != 2)
             continue;
-        }
         
         [mutableParameterDictionary setObject:URLDecode(keyValuePair[1]) forKey:URLDecode(keyValuePair[0])];
     }
