@@ -13,7 +13,6 @@ See the official [Tumblr API documentation](http://www.tumblr.com/docs/en/api/v2
 
 Import **TMTumblrSDK.h**. Configure `[TMAPIClient sharedInstance]` with your:
 
-* Tumblr API key
 * OAuth token
 * OAuth token secret
 * OAuth consumer key
@@ -25,7 +24,6 @@ A full unit test suite can be found in **Tests/TumblrSDKTests.m** and can be run
 
 To run the tests, set the `defaultBlogName` property in TumblrSDKTests.m and update **Tests/Credentials.plist** with your:
 
-* Tumblr API key
 * OAuth token
 * OAuth token secret
 * OAuth consumer key
