@@ -87,6 +87,9 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID;
 - (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback;
 
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters;
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+
 - (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
