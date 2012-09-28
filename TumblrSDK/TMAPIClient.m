@@ -13,9 +13,9 @@
 
 @interface TMAPIClient()
 
-- (JXHTTPOperation *)getRequest:(NSString *)path parameters:(NSDictionary *)parameters;
+- (JXHTTPOperation *)getRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters;
 
-- (JXHTTPOperation *)postRequest:(NSString *)path parameters:(NSDictionary *)parameters;
+- (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters;
 
 - (void)setAuthorizationHeader:(JXHTTPOperation *)request;
 
@@ -67,9 +67,11 @@
 
 - (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password {
     JXHTTPOperation *request = [JXHTTPOperation withURLString:@"https://www.tumblr.com/oauth/access_token"];
+    request.requestMethod = @"POST";
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:@{ @"x_auth_username" : userName,
-        @"x_auth_password" : password, @"x_auth_mode" : @"client_auth"
-    }];
+                           @"x_auth_password" : password, @"x_auth_mode" : @"client_auth", @"api_key" :
+                           self.OAuthConsumerKey }];
+    [self setAuthorizationHeader:request];
     
     return request;
 }
@@ -107,7 +109,7 @@
 #pragma mark - User
 
 - (JXHTTPOperation *)userInfoRequest {
-    return [self getRequest:@"user/info" parameters:nil];
+    return [self getRequestWithPath:@"user/info" parameters:nil];
 }
 
 - (void)userInfo:(TMAPICallback)callback {
@@ -115,7 +117,7 @@
 }
 
 - (JXHTTPOperation *)dashboardRequest:(NSDictionary *)parameters {
-    return [self getRequest:@"user/dashboard" parameters:parameters];
+    return [self getRequestWithPath:@"user/dashboard" parameters:parameters];
 }
 
 - (void)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -123,7 +125,7 @@
 }
 
 - (JXHTTPOperation *)likesRequest:(NSDictionary *)parameters {
-    return [self getRequest:@"user/likes" parameters:parameters];
+    return [self getRequestWithPath:@"user/likes" parameters:parameters];
 }
 
 - (void)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -131,7 +133,7 @@
 }
 
 - (JXHTTPOperation *)followingRequest:(NSDictionary *)parameters {
-    return [self getRequest:@"user/following" parameters:parameters];
+    return [self getRequestWithPath:@"user/following" parameters:parameters];
 }
 
 - (void)following:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -139,7 +141,8 @@
 }
 
 - (JXHTTPOperation *)followRequest:(NSString *)blogName {
-    return [self postRequest:@"/user/follow" parameters:@{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
+    return [self postRequestWithPath:@"/user/follow" parameters:
+            @{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
 }
 
 - (void)follow:(NSString *)blogName callback:(TMAPICallback)callback {
@@ -147,7 +150,8 @@
 }
 
 - (JXHTTPOperation *)unfollowRequest:(NSString *)blogName {
-    return [self postRequest:@"/user/unfollow" parameters:@{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
+    return [self postRequestWithPath:@"/user/unfollow" parameters:
+            @{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
 }
 
 - (void)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
@@ -155,7 +159,7 @@
 }
 
 - (JXHTTPOperation *)likeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey {
-    return [self postRequest:@"/user/like" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
+    return [self postRequestWithPath:@"/user/like" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
 }
 
 - (void)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
@@ -163,7 +167,7 @@
 }
 
 - (JXHTTPOperation *)unlikeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey {
-    return [self postRequest:@"/user/unlike" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
+    return [self postRequestWithPath:@"/user/unlike" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
 }
 
 - (void)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
@@ -173,7 +177,7 @@
 #pragma mark - Blog
 
 - (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName {
-    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName] parameters:nil];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName] parameters:nil];
 }
 
 - (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
@@ -181,7 +185,7 @@
 }
 
 - (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters];
 }
 
 - (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -189,8 +193,8 @@
 }
 
 - (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size {
-    return [self getRequest:[NSString stringWithFormat:@"http://api.tumblr.com/v2/blog/%@.tumblr.com/avatar/%d", blogName, size]
-                 parameters:nil];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"http://api.tumblr.com/v2/blog/%@.tumblr.com/avatar/%d",
+                                     blogName, size] parameters:nil];
 }
 
 - (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
@@ -220,7 +224,7 @@
     NSString *path = [NSString stringWithFormat:@"blog/%@.tumblr.com/posts", blogName];
     if (type) path = [path stringByAppendingFormat:@"/%@", type];
     
-    return [self getRequest:path parameters:parameters];
+    return [self getRequestWithPath:path parameters:parameters];
 }
 
 - (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -228,7 +232,7 @@
 }
 
 - (JXHTTPOperation *)queueRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters];
 }
 
 - (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -236,7 +240,7 @@
 }
 
 - (JXHTTPOperation *)draftsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters];
 }
 
 - (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -244,7 +248,7 @@
 }
 
 - (JXHTTPOperation *)submissionsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters];
 }
 
 - (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -254,7 +258,7 @@
 #pragma mark - Posting
 
 - (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequest:@"post/edit" parameters:parameters];
+    return [self postRequestWithPath:@"post/edit" parameters:parameters];
 }
 
 - (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -262,7 +266,7 @@
 }
 
 - (JXHTTPOperation *)reblogPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequest:@"post/reblog" parameters:parameters];
+    return [self postRequestWithPath:@"post/reblog" parameters:parameters];
 }
 
 - (void)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -270,22 +274,26 @@
 }
 
 - (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID {
-    return [self postRequest:@"post/delete" parameters:@{ @"id" : postID }];
+    return [self postRequestWithPath:@"post/delete" parameters:@{ @"id" : postID }];
 }
 
 - (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
     [self sendRequest:[self deletePostRequest:blogName id:postID] callback:callback];
 }
 
-- (JXHTTPOperation *)createPostRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"type"] = type;
     
-    return [self postRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName] parameters:mutableParameters];
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName] parameters:mutableParameters];
+}
+
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self postRequest:blogName type:type parameters:parameters] callback:callback];
 }
 
 - (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self createPostRequest:blogName type:@"text" parameters:parameters];
+    return [self postRequest:blogName type:@"text" parameters:parameters];
 }
 
 - (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -293,7 +301,7 @@
 }
 
 - (JXHTTPOperation *)quoteRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self createPostRequest:blogName type:@"quote" parameters:parameters];
+    return [self postRequest:blogName type:@"quote" parameters:parameters];
 }
 
 - (void)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -301,7 +309,7 @@
 }
 
 - (JXHTTPOperation *)linkRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self createPostRequest:blogName type:@"link" parameters:parameters];
+    return [self postRequest:blogName type:@"link" parameters:parameters];
 }
 
 - (void)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -309,7 +317,7 @@
 }
 
 - (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self createPostRequest:blogName type:@"chat" parameters:parameters];
+    return [self postRequest:blogName type:@"chat" parameters:parameters];
 }
 
 - (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -318,7 +326,7 @@
 
 - (JXHTTPOperation *)audioRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
     // TODO
-    return [self createPostRequest:blogName type:@"audio" parameters:parameters];
+    return [self postRequest:blogName type:@"audio" parameters:parameters];
 }
 
 - (void)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -327,7 +335,7 @@
 
 - (JXHTTPOperation *)videoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
     // TODO
-    return [self createPostRequest:blogName type:@"video" parameters:parameters];
+    return [self postRequest:blogName type:@"video" parameters:parameters];
 }
 
 - (void)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -336,7 +344,7 @@
 
 - (JXHTTPOperation *)photoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
     // TODO
-    return [self createPostRequest:blogName type:@"photo" parameters:parameters];
+    return [self postRequest:blogName type:@"photo" parameters:parameters];
 }
 
 - (void)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -346,7 +354,7 @@
 #pragma mark - Tagging
 
 - (JXHTTPOperation *)taggedRequest:(NSString *)tag parameters:(NSDictionary *)parameters {
-    return [self getRequest:@"tagged" parameters:parameters];
+    return [self getRequestWithPath:@"tagged" parameters:parameters];
 }
 
 - (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -355,7 +363,7 @@
 
 #pragma mark - Class extension
 
-- (JXHTTPOperation *)getRequest:(NSString *)path parameters:(NSDictionary *)parameters {
+- (JXHTTPOperation *)getRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
@@ -365,7 +373,7 @@
     return request;
 }
 
-- (JXHTTPOperation *)postRequest:(NSString *)path parameters:(NSDictionary *)parameters {
+- (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
