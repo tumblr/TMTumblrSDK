@@ -7,16 +7,6 @@
 //
 
 typedef void (^TMAPICallback)(id, NSError *error);
-typedef void (^TMAPIDataCallback)(NSData *, NSError *error);
-
-// TODO: Evaluate the usefulness of these
-extern NSString * const TMAPIParameterLimit;
-extern NSString * const TMAPIParameterOffset;
-extern NSString * const TMAPIParameterTag;
-extern NSString * const TMAPIParameterURL;
-extern NSString * const TMAPIParameterPostID;
-extern NSString * const TMAPIParameterReblogKey;
-extern NSString * const TMAPIParameterType;
 
 @interface TMAPIClient : NSObject
 
@@ -29,76 +19,98 @@ extern NSString * const TMAPIParameterType;
 
 + (TMAPIClient *)sharedInstance;
 
-- (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
-
-- (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
-
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback;
 
-// Authentication
+/** @name Authentication */
 
-- (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password;
+- (void)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback;
 
-// User
+/** @name User */
 
-- (JXHTTPOperation *)userInfo:(TMAPICallback)callback;
+- (JXHTTPOperation *)userInfoRequest;
+- (void)userInfo:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)dashboardRequest:(NSDictionary *)parameters;
+- (void)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)likesRequest:(NSDictionary *)parameters;
+- (void)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)following:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)followingRequest:(NSDictionary *)parameters;
+- (void)following:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)follow:(NSString *)blogName callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)followRequest:(NSString *)blogName;
+- (void)follow:(NSString *)blogName callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)unfollow:(NSString *)blogName callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)unfollowRequest:(NSString *)blogName;
+- (void)unfollow:(NSString *)blogName callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)likeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey;
+- (void)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)unlikeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey;
+- (void)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback;
 
-// Blog
+/** @name Blog */
 
-- (JXHTTPOperation *)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName;
+- (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)avatar:(NSString *)blogName size:(int)size callback:(TMAPIDataCallback)callback;
+// TODO: Document that this result will be NSData
+- (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size;
+- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters;
+- (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)queueRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)draftsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)submissionsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-// Posting
+/** @name Posting */
 
-- (JXHTTPOperation *)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)reblogPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)createPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID;
+- (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)quoteRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)linkRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)audioRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)videoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+/** @name Tagging */
 
-// Tagging
-
-- (JXHTTPOperation *)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)taggedRequest:(NSString *)tag parameters:(NSDictionary *)parameters;
+- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 @end

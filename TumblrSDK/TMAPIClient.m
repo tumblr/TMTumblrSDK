@@ -11,22 +11,18 @@
 #import "NSData+Base64.h"
 #import "TMOAuth.h"
 
-NSString * const TMAPIParameterLimit = @"limit";
-NSString * const TMAPIParameterOffset = @"offset";
-NSString * const TMAPIParameterTag = @"tag";
-NSString * const TMAPIParameterURL = @"url";
-NSString * const TMAPIParameterPostID = @"id";
-NSString * const TMAPIParameterReblogKey = @"reblog_key";
-NSString * const TMAPIParameterType = @"type";
+@interface TMAPIClient()
+
+- (JXHTTPOperation *)getRequest:(NSString *)path parameters:(NSDictionary *)parameters;
+
+- (JXHTTPOperation *)postRequest:(NSString *)path parameters:(NSDictionary *)parameters;
+
+- (void)setAuthorizationHeader:(JXHTTPOperation *)request;
+
+@end
+
 
 @implementation TMAPIClient
-
-+ (id)sharedInstance {
-    static TMAPIClient *instance;
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{ instance = [[TMAPIClient alloc] init]; });
-    return instance;
-}
 
 - (id)init {
     if (self = [super init]) {
@@ -36,37 +32,11 @@ NSString * const TMAPIParameterType = @"type";
     return self;
 }
 
-- (JXHTTPOperation *)get:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
-    
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
-    [self sendRequest:request callback:callback];
-    
-    return request;
-}
-
-- (JXHTTPOperation *)post:(NSString *)path parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
-    
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
-    [self sendRequest:request callback:callback];
-    
-    return request;
-}
-
-- (void)sendRequest:(JXHTTPOperation *)request {
-    NSString *authorizationHeaderValue = [TMOAuth authorizationHeaderForRequest:request
-                                                                    consumerKey:self.OAuthConsumerKey
-                                                                 consumerSecret:self.OAuthConsumerSecret
-                                                                          token:self.OAuthToken
-                                                                    tokenSecret:self.OAuthTokenSecret];
-    
-    [request setValue:authorizationHeaderValue forRequestHeader:@"Authorization"];
-    
-    [_queue addOperation:request]; 
++ (id)sharedInstance {
+    static TMAPIClient *instance;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{ instance = [[TMAPIClient alloc] init]; });
+    return instance;
 }
 
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
@@ -90,25 +60,25 @@ NSString * const TMAPIParameterType = @"type";
         }
     };
 
-    [self sendRequest:request];
+    [_queue addOperation:request];
 }
 
 #pragma mark - Authentication
 
-- (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback {
-    __block JXHTTPOperation *request = [JXHTTPOperation withURLString:@"https://www.tumblr.com/oauth/access_token"];
-    request.requestMethod = @"POST";
+- (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password {
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:@"https://www.tumblr.com/oauth/access_token"];
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:@{ @"x_auth_username" : userName,
+        @"x_auth_password" : password, @"x_auth_mode" : @"client_auth"
+    }];
     
-    NSDictionary *parameters = @{
-        @"x_auth_username" : userName,
-        @"x_auth_password" : password,
-        @"x_auth_mode" : @"client_auth"
-    };
+    return request;
+}
+
+- (void)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback {
+    __block JXHTTPOperation *request = [self xAuthRequest:userName password:password];
     
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:parameters];
-    
-    request.completionBlock = ^ {
-        if (callback) {
+    if (callback) {
+        request.completionBlock = ^{
             if (request.responseStatusCode == 200) {
                 NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
                 
@@ -116,184 +86,303 @@ NSString * const TMAPIParameterType = @"type";
                 
                 for (NSString *parameterString in parameterStrings) {
                     NSArray *parameterComponents = [parameterString componentsSeparatedByString:@"="];
-                    NSString *key = URLDecode(parameterComponents[0]);
-                    NSString *value = URLDecode(parameterComponents[1]);
-                    
-                    parameterDictionary[key] = value;
+                    parameterDictionary[URLDecode(parameterComponents[0])] = URLDecode(parameterComponents[1]);
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     callback(parameterDictionary, nil);
                 });
             } else {
-                callback(nil, [NSError errorWithDomain:@"Authentication request failed" code:request.responseStatusCode
-                                              userInfo:nil]);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    callback(nil, [NSError errorWithDomain:@"Authentication request failed" code:request.responseStatusCode
+                                                  userInfo:nil]);
+                });
             }
-        }
-    };
+        };
+    }
     
-    [self sendRequest:request];
-    
-    return request;
+    [_queue addOperation:request];
 }
 
 #pragma mark - User
 
-- (NSOperation *)userInfo:(TMAPICallback)callback {
-    return [self get:@"user/info" parameters:nil callback:callback];
+- (JXHTTPOperation *)userInfoRequest {
+    return [self getRequest:@"user/info" parameters:nil];
 }
 
-- (NSOperation *)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self get:@"user/dashboard" parameters:parameters callback:callback];
+- (void)userInfo:(TMAPICallback)callback {
+    [self sendRequest:[self userInfoRequest] callback:callback];
 }
 
-- (NSOperation *)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self get:@"user/likes" parameters:parameters callback:callback];
+- (JXHTTPOperation *)dashboardRequest:(NSDictionary *)parameters {
+    return [self getRequest:@"user/dashboard" parameters:parameters];
 }
 
-- (NSOperation *)following:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self get:@"user/following" parameters:parameters callback:callback];
+- (void)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self dashboardRequest:parameters] callback:callback];
 }
 
-- (NSOperation *)follow:(NSString *)blogName callback:(TMAPICallback)callback {
-    return [self post:@"/user/follow" parameters:@{ TMAPIParameterURL : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }
-             callback:callback];
+- (JXHTTPOperation *)likesRequest:(NSDictionary *)parameters {
+    return [self getRequest:@"user/likes" parameters:parameters];
 }
 
-- (NSOperation *)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
-    return [self post:@"/user/unfollow" parameters:@{ TMAPIParameterURL : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }
-             callback:callback];
+- (void)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self likesRequest:parameters] callback:callback];
 }
 
-- (NSOperation *)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
-    return [self post:@"/user/like" parameters:@{ TMAPIParameterPostID : postID, TMAPIParameterReblogKey : reblogKey }
-             callback:callback];
+- (JXHTTPOperation *)followingRequest:(NSDictionary *)parameters {
+    return [self getRequest:@"user/following" parameters:parameters];
 }
 
-- (NSOperation *)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
-    return [self post:@"/user/unlike" parameters:@{ TMAPIParameterPostID : postID, TMAPIParameterReblogKey : reblogKey }
-             callback:callback];
+- (void)following:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self followingRequest:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)followRequest:(NSString *)blogName {
+    return [self postRequest:@"/user/follow" parameters:@{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
+}
+
+- (void)follow:(NSString *)blogName callback:(TMAPICallback)callback {
+    [self sendRequest:[self followRequest:blogName] callback:callback];
+}
+
+- (JXHTTPOperation *)unfollowRequest:(NSString *)blogName {
+    return [self postRequest:@"/user/unfollow" parameters:@{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
+}
+
+- (void)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
+    [self sendRequest:[self unfollowRequest:blogName] callback:callback];
+}
+
+- (JXHTTPOperation *)likeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey {
+    return [self postRequest:@"/user/like" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
+}
+
+- (void)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
+    [self sendRequest:[self likeRequest:postID reblogKey:reblogKey] callback:callback];
+}
+
+- (JXHTTPOperation *)unlikeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey {
+    return [self postRequest:@"/user/unlike" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
+}
+
+- (void)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
+    [self sendRequest:[self unlikeRequest:postID reblogKey:reblogKey] callback:callback];
 }
 
 #pragma mark - Blog
 
-- (NSOperation *)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
-    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName] parameters:nil callback:callback];
+- (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName {
+    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName] parameters:nil];
 }
 
-- (NSOperation *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters
-            callback:callback];
+- (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
+    [self sendRequest:[self blogInfoRequest:blogName] callback:callback];
 }
 
-- (NSOperation *)avatar:(NSString *)blogName size:(int)size callback:(TMAPIDataCallback)callback {
-    NSString *URLString = [NSString stringWithFormat:@"http://api.tumblr.com/v2/blog/%@.tumblr.com/avatar/%d", blogName,
-                           size];
-    __block JXHTTPOperation *request = [JXHTTPOperation withURLString:URLString];
+- (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters];
+}
+
+- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self followersRequest:blogName parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size {
+    return [self getRequest:[NSString stringWithFormat:@"http://api.tumblr.com/v2/blog/%@.tumblr.com/avatar/%d", blogName, size]
+                 parameters:nil];
+}
+
+- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
+    __block JXHTTPOperation *request = [self avatarRequest:blogName size:size];
     
-    request.completionBlock = ^ {
-        if (callback) {
-            if (request.responseStatusCode == 200) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    callback(request.responseData, nil);
-                });
-            } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    callback(nil, [NSError errorWithDomain:@"Request failed" code:request.responseStatusCode userInfo:nil]);
-                });
+    if (callback) {
+        request.completionBlock = ^{
+            if (callback) {
+                if (request.responseStatusCode == 200) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        callback(request.responseData, nil);
+                    });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        callback(nil, [NSError errorWithDomain:@"Request failed" code:request.responseStatusCode
+                                                      userInfo:nil]);
+                    });
+                }
             }
-        }
-    };
+        };
+    }
     
-    [self sendRequest:request];
-    
-    return request;
+    [_queue addOperation:request];
 }
 
-- (NSOperation *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+- (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
     NSString *path = [NSString stringWithFormat:@"blog/%@.tumblr.com/posts", blogName];
     if (type) path = [path stringByAppendingFormat:@"/%@", type];
     
-    return [self get:path parameters:parameters callback:callback];
+    return [self getRequest:path parameters:parameters];
 }
 
-- (NSOperation *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters
-            callback:callback];
+- (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self postsRequest:blogName type:type parameters:parameters] callback:callback];
 }
 
-- (NSOperation *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters
-            callback:callback];
+- (JXHTTPOperation *)queueRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters];
 }
 
-- (NSOperation *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self get:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters
-            callback:callback];
+- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self queueRequest:blogName parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)draftsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters];
+}
+
+- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self draftsRequest:blogName parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)submissionsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self getRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters];
+}
+
+- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self submissionsRequest:blogName parameters:parameters] callback:callback];
 }
 
 #pragma mark - Posting
 
-- (NSOperation *)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self post:@"post/edit" parameters:parameters callback:callback];
+- (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self postRequest:@"post/edit" parameters:parameters];
 }
 
-- (NSOperation *)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self post:@"post/reblog" parameters:parameters callback:callback];
+- (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self editPostRequest:blogName parameters:parameters] callback:callback];
 }
 
-- (NSOperation *)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
-    return [self post:@"post/delete" parameters:@{ TMAPIParameterPostID : postID } callback:callback];
+- (JXHTTPOperation *)reblogPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self postRequest:@"post/reblog" parameters:parameters];
 }
 
-- (NSOperation *)createPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                   callback:(TMAPICallback)callback {
-    NSMutableDictionary *mutableParameters = parameters
-        ? [NSMutableDictionary dictionaryWithDictionary:parameters]
-        : [NSMutableDictionary dictionary];
-    mutableParameters[TMAPIParameterType] = type;
+- (void)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self sendRequest:[self reblogPostRequest:blogName parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID {
+    return [self postRequest:@"post/delete" parameters:@{ @"id" : postID }];
+}
+
+- (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
+    [self sendRequest:[self deletePostRequest:blogName id:postID] callback:callback];
+}
+
+- (JXHTTPOperation *)createPostRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"type"] = type;
     
-    return [self post:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName] parameters:mutableParameters
-             callback:callback];
+    return [self postRequest:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName] parameters:mutableParameters];
 }
 
-- (NSOperation *)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self createPost:blogName type:@"text" parameters:parameters callback:callback];
+- (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self createPostRequest:blogName type:@"text" parameters:parameters];
 }
 
-- (NSOperation *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self createPost:blogName type:@"quote" parameters:parameters callback:callback];
+- (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self textRequest:blogName parameters:parameters] callback:callback];
 }
 
-- (NSOperation *)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self createPost:blogName type:@"link" parameters:parameters callback:callback];
+- (JXHTTPOperation *)quoteRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self createPostRequest:blogName type:@"quote" parameters:parameters];
 }
 
-- (NSOperation *)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self createPost:blogName type:@"chat" parameters:parameters callback:callback];
+- (void)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self quoteRequest:blogName parameters:parameters] callback:callback];
 }
 
-- (NSOperation *)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+- (JXHTTPOperation *)linkRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self createPostRequest:blogName type:@"link" parameters:parameters];
+}
+
+- (void)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self linkRequest:blogName parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self createPostRequest:blogName type:@"chat" parameters:parameters];
+}
+
+- (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self chatRequest:blogName parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)audioRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
     // TODO
-    return nil;
+    return [self createPostRequest:blogName type:@"audio" parameters:parameters];
 }
 
-- (NSOperation *)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    // TODO
-    return nil;
+- (void)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self audioRequest:blogName parameters:parameters] callback:callback];
 }
 
-- (NSOperation *)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+- (JXHTTPOperation *)videoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
     // TODO
-    return nil;
+    return [self createPostRequest:blogName type:@"video" parameters:parameters];
+}
+
+- (void)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self videoRequest:blogName parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    // TODO
+    return [self createPostRequest:blogName type:@"photo" parameters:parameters];
+}
+
+- (void)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self photoRequest:blogName parameters:parameters] callback:callback];
 }
 
 #pragma mark - Tagging
 
-- (NSOperation *)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self get:@"tagged" parameters:parameters callback:callback];
+- (JXHTTPOperation *)taggedRequest:(NSString *)tag parameters:(NSDictionary *)parameters {
+    return [self getRequest:@"tagged" parameters:parameters];
 }
 
+- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self taggedRequest:tag parameters:parameters] callback:callback];
+}
+
+#pragma mark - Class extension
+
+- (JXHTTPOperation *)getRequest:(NSString *)path parameters:(NSDictionary *)parameters {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
+    [self setAuthorizationHeader:request];
+    
+    return request;
+}
+
+- (JXHTTPOperation *)postRequest:(NSString *)path parameters:(NSDictionary *)parameters {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
+    [self setAuthorizationHeader:request];
+    
+    return request;
+}
+
+- (void)setAuthorizationHeader:(JXHTTPOperation *)request {
+    [request setValue:[TMOAuth authorizationHeaderForRequest:request
+                                                 consumerKey:self.OAuthConsumerKey
+                                              consumerSecret:self.OAuthConsumerSecret
+                                                       token:self.OAuthToken
+                                                 tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
+}
 
 #pragma mark - Helper function
 
