@@ -9,7 +9,7 @@
 The Tumblr SDK for iOS is built on Justin Ouellette's lightweight [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Usage
-See the official [Tumblr API documentation](http://www.tumblr.com/docs/en/api/v2) for usage instructions.
+The Tumblr iOS SDK is unopinionated and flexible, indended to allow you to easily integrate Tumblr data into your application however you see fit. See the official [Tumblr API documentation](http://www.tumblr.com/docs/en/api/v2) for API usage instructions.
 
 Import **TMTumblrSDK.h**. Configure `[TMAPIClient sharedInstance]` with your:
 
