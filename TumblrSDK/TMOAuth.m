@@ -30,11 +30,8 @@
         headerParameters[@"oauth_token"] = token;
     
     NSMutableDictionary *signatureParameters = [NSMutableDictionary dictionaryWithDictionary:headerParameters];
-
-    NSString *queryString = request.requestURL.query;
     
-    if (queryString)
-        [signatureParameters addEntriesFromDictionary:queryStringToDictionary(queryString)];
+    [signatureParameters addEntriesFromDictionary:queryStringToDictionary(request.requestURL.query)];
     
     // Assuming body format application/x-www-form-urlencoded
     NSDictionary *postBodyParameters = ((JXHTTPFormEncodedBody *)request.requestBody).dictionary;
@@ -52,8 +49,10 @@
         id value = signatureParameters[key];
         
         if ([value isKindOfClass:[NSArray class]]) {
+            NSString *arrayKey = [key stringByAppendingString:@"[]"];
+            
             for (id arrayValue in (NSArray *)value)
-                addParameter(key, arrayValue);
+                addParameter(arrayKey, arrayValue);
         } else {
             addParameter(key, value);
         }
@@ -107,7 +106,6 @@ static inline NSDictionary *queryStringToDictionary(NSString *query) {
     for (NSString *parameter in parameters) {
         NSArray *keyValuePair = [parameter componentsSeparatedByString:@"="];
 
-        // TODO: Possible for a parameter to have only a key and no value?
         if (keyValuePair.count != 2)
             continue;
         
