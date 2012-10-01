@@ -354,7 +354,10 @@
 #pragma mark - Tagging
 
 - (JXHTTPOperation *)taggedRequest:(NSString *)tag parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:@"tagged" parameters:parameters];
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"tag"] = tag;
+
+    return [self getRequestWithPath:@"tagged" parameters:mutableParameters];
 }
 
 - (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -375,7 +378,7 @@
 
 - (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-//    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
