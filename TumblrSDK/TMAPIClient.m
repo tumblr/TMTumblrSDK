@@ -141,7 +141,7 @@
 }
 
 - (JXHTTPOperation *)followRequest:(NSString *)blogName {
-    return [self postRequestWithPath:@"/user/follow" parameters:
+    return [self postRequestWithPath:@"user/follow" parameters:
             @{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
 }
 
@@ -150,7 +150,7 @@
 }
 
 - (JXHTTPOperation *)unfollowRequest:(NSString *)blogName {
-    return [self postRequestWithPath:@"/user/unfollow" parameters:
+    return [self postRequestWithPath:@"user/unfollow" parameters:
             @{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
 }
 
@@ -159,7 +159,7 @@
 }
 
 - (JXHTTPOperation *)likeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey {
-    return [self postRequestWithPath:@"/user/like" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
+    return [self postRequestWithPath:@"user/like" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
 }
 
 - (void)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
@@ -167,7 +167,7 @@
 }
 
 - (JXHTTPOperation *)unlikeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey {
-    return [self postRequestWithPath:@"/user/unlike" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
+    return [self postRequestWithPath:@"user/unlike" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
 }
 
 - (void)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
@@ -375,10 +375,11 @@
 
 - (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+//    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
+    request.requestMethod = @"POST";
     [self setAuthorizationHeader:request];
     
     return request;
