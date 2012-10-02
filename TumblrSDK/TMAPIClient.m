@@ -258,7 +258,8 @@
 #pragma mark - Posting
 
 - (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequestWithPath:@"post/edit" parameters:parameters];
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post/edit", blogName]
+                          parameters:parameters];
 }
 
 - (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -266,7 +267,8 @@
 }
 
 - (JXHTTPOperation *)reblogPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequestWithPath:@"post/reblog" parameters:parameters];
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post/reblog", blogName]
+                          parameters:parameters];
 }
 
 - (void)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -274,7 +276,8 @@
 }
 
 - (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID {
-    return [self postRequestWithPath:@"post/delete" parameters:@{ @"id" : postID }];
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post/delete", blogName]
+                          parameters:@{ @"id" : postID }];
 }
 
 - (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
