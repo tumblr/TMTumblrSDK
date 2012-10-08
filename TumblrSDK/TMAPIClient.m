@@ -151,7 +151,7 @@
 
 - (JXHTTPOperation *)unfollowRequest:(NSString *)blogName {
     return [self postRequestWithPath:@"user/unfollow" parameters:
-            @{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
+            @{ @"url" : [NSString stringWithFormat:@"%@.tumblr.com", blogName] }];
 }
 
 - (void)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
