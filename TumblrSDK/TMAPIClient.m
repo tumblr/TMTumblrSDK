@@ -42,7 +42,7 @@
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
     __block JXHTTPOperation *blockRequest = request;
     
-    request.completionBlock = ^ {
+    request.completionBlock = ^{
         NSDictionary *response = blockRequest.responseJSON;
         int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
         
@@ -58,6 +58,12 @@
                 callback(response[@"response"], error);
             });
         }
+    };
+    
+    request.didFailBlock = ^(JXHTTPOperation *operation) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback(nil, operation.error);
+        });
     };
 
     [_queue addOperation:request];
@@ -101,6 +107,12 @@
                                                   userInfo:nil]);
                 });
             }
+        };
+        
+        request.didFailBlock = ^(JXHTTPOperation *operation) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                callback(nil, operation.error);
+            });
         };
     }
     
