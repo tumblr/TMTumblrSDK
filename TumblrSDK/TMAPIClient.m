@@ -82,14 +82,14 @@
 }
 
 - (void)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback {
-    __block JXHTTPOperation *request = [self xAuthRequest:userName password:password];
+    JXHTTPOperation *request = [self xAuthRequest:userName password:password];
     
     if (callback) {
-        request.completionBlock = ^{
-            if (request.responseStatusCode == 200) {
+        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+            if (operation.responseStatusCode == 200) {
                 NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
                 
-                NSArray *parameterStrings = [request.responseString componentsSeparatedByString:@"&"];
+                NSArray *parameterStrings = [operation.responseString componentsSeparatedByString:@"&"];
                 
                 for (NSString *parameterString in parameterStrings) {
                     NSArray *parameterComponents = [parameterString componentsSeparatedByString:@"="];
@@ -101,7 +101,7 @@
                 });
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    callback(nil, [NSError errorWithDomain:@"Authentication request failed" code:request.responseStatusCode
+                    callback(nil, [NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
                                                   userInfo:nil]);
                 });
             }
@@ -209,24 +209,30 @@
 }
 
 - (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
-    __block JXHTTPOperation *request = [self avatarRequest:blogName size:size];
+    JXHTTPOperation *request = [self avatarRequest:blogName size:size];
     
     if (callback) {
-        request.completionBlock = ^{
+        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
             if (callback) {
-                if (request.responseStatusCode == 200) {
+                if (operation.responseStatusCode == 200) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        callback(request.responseData, nil);
+                        callback(operation.responseData, nil);
                     });
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        callback(nil, [NSError errorWithDomain:@"Request failed" code:request.responseStatusCode
+                        callback(nil, [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
                                                       userInfo:nil]);
                     });
                 }
             }
         };
     }
+    
+    request.didFailBlock = ^(JXHTTPOperation *operation) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback(nil, operation.error);
+        });
+    };
     
     [_queue addOperation:request];
 }
