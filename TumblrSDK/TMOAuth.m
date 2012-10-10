@@ -20,7 +20,7 @@
                                 tokenSecret:(NSString *)tokenSecret {
     NSMutableDictionary *headerParameters = [[@{
         @"oauth_timestamp" : UNIXTimestamp([NSDate date]),
-        @"oauth_nonce" : request.uniqueIDString,
+        @"oauth_nonce" : request.uniqueString,
         @"oauth_version" : @"1.0",
         @"oauth_signature_method" : @"HMAC-SHA1",
         @"oauth_consumer_key" : consumerKey,
