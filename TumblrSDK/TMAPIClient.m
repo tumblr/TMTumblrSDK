@@ -40,10 +40,8 @@
 }
 
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
-    __block JXHTTPOperation *blockRequest = request;
-    
-    request.completionBlock = ^{
-        NSDictionary *response = blockRequest.responseJSON;
+    request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+        NSDictionary *response = operation.responseJSON;
         int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
         
         if (callback) {
@@ -51,7 +49,7 @@
             
             if (statusCode != 200) {
                 error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
-                NSLog(@"%@", blockRequest.requestURL);
+                NSLog(@"%@", operation.requestURL);
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
