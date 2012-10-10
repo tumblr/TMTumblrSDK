@@ -71,6 +71,7 @@
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:@{ @"x_auth_username" : userName,
                            @"x_auth_password" : password, @"x_auth_mode" : @"client_auth", @"api_key" :
                            self.OAuthConsumerKey }];
+    request.continuesInAppBackground = YES;
     [self setAuthorizationHeader:request];
     
     return request;
@@ -374,6 +375,7 @@
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
+    request.continuesInAppBackground = YES;
     [self setAuthorizationHeader:request];
     
     return request;
@@ -386,6 +388,7 @@
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
     request.requestMethod = @"POST";
+    request.continuesInAppBackground = YES;
     [self setAuthorizationHeader:request];
     
     return request;
