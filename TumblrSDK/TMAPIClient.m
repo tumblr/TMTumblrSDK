@@ -60,7 +60,9 @@
     
     request.didFailBlock = ^(JXHTTPOperation *operation) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            callback(nil, operation.error);
+            if (callback) {
+                callback(nil, operation.error);
+            }
         });
     };
 
@@ -109,7 +111,9 @@
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                callback(nil, operation.error);
+                if (callback) {
+                    callback(nil, operation.error);
+                }
             });
         };
     }
@@ -230,7 +234,9 @@
     
     request.didFailBlock = ^(JXHTTPOperation *operation) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            callback(nil, operation.error);
+            if (callback) {
+                callback(nil, operation.error);
+            }
         });
     };
     
