@@ -93,7 +93,7 @@
             NSError *error = nil;
             
             if (operation.responseStatusCode == 200) {
-                NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
+                parameterDictionary = [NSMutableDictionary dictionary];
                 
                 NSArray *parameterStrings = [operation.responseString componentsSeparatedByString:@"&"];
                 
