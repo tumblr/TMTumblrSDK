@@ -40,11 +40,12 @@
 }
 
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
-    request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-        NSDictionary *response = operation.responseJSON;
-        int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
-        
-        if (callback) {
+    
+    if (callback) {
+        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+            NSDictionary *response = operation.responseJSON;
+            int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
+            
             NSError *error = nil;
             
             if (statusCode != 200) {
@@ -53,18 +54,18 @@
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                callback(response[@"response"], error);
+                if (!operation.isCancelled)
+                    callback(response[@"response"], error);
             });
-        }
-    };
-    
-    request.didFailBlock = ^(JXHTTPOperation *operation) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (callback) {
-                callback(nil, operation.error);
-            }
-        });
-    };
+        };
+        
+        request.didFailBlock = ^(JXHTTPOperation *operation) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!operation.isCancelled)
+                    callback(nil, operation.error);
+            });
+        };
+    }
 
     [_queue addOperation:request];
 }
@@ -88,6 +89,9 @@
     
     if (callback) {
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+            NSMutableDictionary *parameterDictionary = nil;
+            NSError *error = nil;
+            
             if (operation.responseStatusCode == 200) {
                 NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
                 
@@ -97,23 +101,21 @@
                     NSArray *parameterComponents = [parameterString componentsSeparatedByString:@"="];
                     parameterDictionary[URLDecode(parameterComponents[0])] = URLDecode(parameterComponents[1]);
                 }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    callback(parameterDictionary, nil);
-                });
             } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    callback(nil, [NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
-                                                  userInfo:nil]);
-                });
+                error = [NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
+                                        userInfo:nil];
             }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!operation.isCancelled)
+                    callback(parameterDictionary, error);
+            });
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (callback) {
+                if (!operation.isCancelled)
                     callback(nil, operation.error);
-                }
             });
         };
     }
@@ -217,28 +219,29 @@
     
     if (callback) {
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-            if (callback) {
-                if (operation.responseStatusCode == 200) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        callback(operation.responseData, nil);
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        callback(nil, [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
-                                                      userInfo:nil]);
-                    });
-                }
+            id response = nil;
+            NSError *error = nil;
+            
+            if (operation.responseStatusCode == 200) {
+                response = operation.responseData;
+            } else {
+                error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
+                                        userInfo:nil];
             }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!operation.isCancelled)
+                    callback(response, error);
+            });
+        };
+        
+        request.didFailBlock = ^(JXHTTPOperation *operation) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!operation.isCancelled)
+                    callback(nil, operation.error);
+            });
         };
     }
-    
-    request.didFailBlock = ^(JXHTTPOperation *operation) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (callback) {
-                callback(nil, operation.error);
-            }
-        });
-    };
     
     [_queue addOperation:request];
 }
