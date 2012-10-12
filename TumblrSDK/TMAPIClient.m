@@ -159,7 +159,7 @@
 
 - (JXHTTPOperation *)followRequest:(NSString *)blogName {
     return [self postRequestWithPath:@"user/follow" parameters:
-            @{ @"url" : [NSString stringWithFormat:@"blog/%@.tumblr.com", blogName] }];
+            @{ @"url" : [NSString stringWithFormat:@"%@.tumblr.com", blogName] }];
 }
 
 - (void)follow:(NSString *)blogName callback:(TMAPICallback)callback {
