@@ -48,7 +48,7 @@
             
             NSError *error = nil;
             
-            if (statusCode != 200) {
+            if (statusCode/100 != 2) {
                 error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
                 NSLog(@"%@", operation.requestURL);
             }
@@ -68,6 +68,14 @@
     }
 
     [_queue addOperation:request];
+}
+
+- (void)setAuthorizationHeader:(JXHTTPOperation *)request {
+    [request setValue:[TMOAuth authorizationHeaderForRequest:request
+                                                 consumerKey:self.OAuthConsumerKey
+                                              consumerSecret:self.OAuthConsumerSecret
+                                                       token:self.OAuthToken
+                                                 tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
 }
 
 #pragma mark - Authentication
@@ -222,7 +230,7 @@
             id response = nil;
             NSError *error = nil;
             
-            if (operation.responseStatusCode == 200) {
+            if (operation.responseStatusCode/100 == 2) {
                 response = operation.responseData;
             } else {
                 error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
@@ -417,14 +425,6 @@
     [self setAuthorizationHeader:request];
     
     return request;
-}
-
-- (void)setAuthorizationHeader:(JXHTTPOperation *)request {
-    [request setValue:[TMOAuth authorizationHeaderForRequest:request
-                                                 consumerKey:self.OAuthConsumerKey
-                                              consumerSecret:self.OAuthConsumerSecret
-                                                       token:self.OAuthToken
-                                                 tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
 }
 
 #pragma mark - Helper function
