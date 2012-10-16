@@ -92,7 +92,7 @@
     return request;
 }
 
-- (void)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback {
+- (JXHTTPOperation *)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback {
     JXHTTPOperation *request = [self xAuthRequest:userName password:password];
     
     if (callback) {
@@ -129,6 +129,8 @@
     }
     
     [_queue addOperation:request];
+    
+    return request;
 }
 
 #pragma mark - User
