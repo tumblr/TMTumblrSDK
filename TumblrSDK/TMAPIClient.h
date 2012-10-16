@@ -26,7 +26,7 @@ typedef void (^TMAPICallback)(id, NSError *error);
 /** @name Authentication */
 
 - (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password;
-- (void)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback;
 
 /** @name User */
 
