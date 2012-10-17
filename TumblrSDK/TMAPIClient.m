@@ -40,7 +40,6 @@
 }
 
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
-    
     if (callback) {
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
             NSDictionary *response = operation.responseJSON;
@@ -67,15 +66,10 @@
         };
     }
 
-    [_queue addOperation:request];
-}
-
-- (void)setAuthorizationHeader:(JXHTTPOperation *)request {
-    [request setValue:[TMOAuth authorizationHeaderForRequest:request
-                                                 consumerKey:self.OAuthConsumerKey
-                                              consumerSecret:self.OAuthConsumerSecret
-                                                       token:self.OAuthToken
-                                                 tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        [self setAuthorizationHeader:request];
+        [_queue addOperation:request];
+    });
 }
 
 #pragma mark - Authentication
@@ -87,7 +81,6 @@
                            @"x_auth_password" : password, @"x_auth_mode" : @"client_auth", @"api_key" :
                            self.OAuthConsumerKey }];
     request.continuesInAppBackground = YES;
-    [self setAuthorizationHeader:request];
     
     return request;
 }
@@ -128,7 +121,10 @@
         };
     }
     
-    [_queue addOperation:request];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        [self setAuthorizationHeader:request];
+        [_queue addOperation:request];
+    });
     
     return request;
 }
@@ -253,7 +249,10 @@
         };
     }
     
-    [_queue addOperation:request];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        [self setAuthorizationHeader:request];
+        [_queue addOperation:request];
+    });
 }
 
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
@@ -411,7 +410,6 @@
     
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
     request.continuesInAppBackground = YES;
-    [self setAuthorizationHeader:request];
     
     return request;
 }
@@ -424,9 +422,16 @@
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
-    [self setAuthorizationHeader:request];
     
     return request;
+}
+
+- (void)setAuthorizationHeader:(JXHTTPOperation *)request {
+    [request setValue:[TMOAuth authorizationHeaderForRequest:request
+                                                 consumerKey:self.OAuthConsumerKey
+                                              consumerSecret:self.OAuthConsumerSecret
+                                                       token:self.OAuthToken
+                                                 tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
 }
 
 #pragma mark - Helper function
