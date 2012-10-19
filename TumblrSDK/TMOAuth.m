@@ -94,7 +94,7 @@ static inline NSString *URLEncode(NSString *string) {
 }
 
 static inline NSString *UNIXTimestamp(NSDate *date) {
-    return [NSString stringWithFormat:@"%d", (int)[date timeIntervalSince1970]];
+    return [NSString stringWithFormat:@"%f", round([date timeIntervalSince1970])];
 }
 
 static inline NSDictionary *queryStringToDictionary(NSString *query) {
