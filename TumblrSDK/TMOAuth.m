@@ -36,8 +36,7 @@
     // Assuming body format application/x-www-form-urlencoded
     NSDictionary *postBodyParameters = ((JXHTTPFormEncodedBody *)request.requestBody).dictionary;
     
-    for (NSString *key in postBodyParameters)
-        signatureParameters[key] = URLEncode(postBodyParameters[key]);
+    [signatureParameters addEntriesFromDictionary:postBodyParameters];
     
     NSMutableArray *parameters = [NSMutableArray array];
     
