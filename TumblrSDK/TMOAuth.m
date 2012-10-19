@@ -42,7 +42,7 @@
     NSMutableArray *parameters = [NSMutableArray array];
     
     void (^addParameter)(NSString *key, id value) = ^(NSString *key, id value) {
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, value]];
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, URLEncode(value)]];
     };
     
     for (NSString *key in [[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
