@@ -17,7 +17,7 @@
 
 - (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters;
 
-- (void)setAuthorizationHeader:(JXHTTPOperation *)request;
+- (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters;
 
 @end
 
@@ -66,27 +66,44 @@
         };
     }
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-        [self setAuthorizationHeader:request];
-        [_queue addOperation:request];
-    });
+    [_queue addOperation:request];
 }
 
 #pragma mark - Authentication
 
-- (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password {
+/*- (void)authenticate:(void(^)(NSString *, NSString *))callback {
     JXHTTPOperation *request = [JXHTTPOperation withURLString:@"https://www.tumblr.com/oauth/access_token"];
-    request.requestMethod = @"POST";
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:@{ @"x_auth_username" : userName,
-                           @"x_auth_password" : password, @"x_auth_mode" : @"client_auth", @"api_key" :
-                           self.OAuthConsumerKey }];
-    request.continuesInAppBackground = YES;
     
-    return request;
-}
+    request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+        if (callback) {
+            NSDictionary *response = operation.responseJSON;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSURL *OAuthURL = [NSString stringWithFormat:@"https://api.twitter.com/oauth/authorize?oauth_token=%@",
+                                   response[@"oauth_token"]];
+                
+                [[UIApplication sharedApplication] openURL:OAuthURL];
+            });
+        }
+    };
+    
+    [_queue addOperation:request];
+}*/
 
 - (JXHTTPOperation *)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback {
-    JXHTTPOperation *request = [self xAuthRequest:userName password:password];
+    NSDictionary *parameters = @{
+        @"x_auth_username" : userName,
+        @"x_auth_password" : password,
+        @"x_auth_mode" : @"client_auth", @"api_key" :
+        self.OAuthConsumerKey
+    };
+    
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:@"https://www.tumblr.com/oauth/access_token"];
+    request.requestMethod = @"POST";
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:parameters];
+    request.continuesInAppBackground = YES;
+    
+    [self signRequest:request withParameters:parameters];
     
     if (callback) {
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
@@ -121,10 +138,7 @@
         };
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-        [self setAuthorizationHeader:request];
-        [_queue addOperation:request];
-    });
+    [_queue addOperation:request];
     
     return request;
 }
@@ -249,10 +263,7 @@
         };
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-        [self setAuthorizationHeader:request];
-        [_queue addOperation:request];
-    });
+    [_queue addOperation:request];
 }
 
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
@@ -320,14 +331,26 @@
 }
 
 - (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"type"] = type;
-    
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName] parameters:mutableParameters];
+    return [self postRequest:blogName type:type parameters:parameters data:nil filePath:nil contentType:nil];
 }
 
 - (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     [self sendRequest:[self postRequest:blogName type:type parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"type"] = type;
+    
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
+                          parameters:mutableParameters data:data filePath:filePath contentType:contentType];
+}
+
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
+    filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback {
+    [self sendRequest:[self postRequest:blogName type:type parameters:parameters data:data filePath:filePath
+                            contentType:contentType] callback:callback];
 }
 
 - (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
@@ -386,6 +409,8 @@
 }
 
 - (void)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    
+    
     [self sendRequest:[self photoRequest:blogName parameters:parameters] callback:callback];
 }
 
@@ -411,27 +436,43 @@
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
     request.continuesInAppBackground = YES;
     
+    [self signRequest:request withParameters:mutableParameters];
+    
     return request;
 }
 
 - (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
+    return [self postRequestWithPath:path parameters:parameters data:nil filePath:nil contentType:nil];
+}
+
+- (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters data:(NSData *)data
+                                filePath:(NSString *)filePath contentType:(NSString *)contentType {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
+    
+    if (data) {
+        JXHTTPMultipartBody *multipartBody = [JXHTTPMultipartBody withDictionary:mutableParameters];
+        [multipartBody addData:data forKey:@"data" contentType:contentType fileName:@"foo.bar"];
+        
+        request.requestBody = multipartBody;
+        
+    } else {
+        request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
+    }
+    
+    [self signRequest:request withParameters:mutableParameters];
     
     return request;
 }
 
-- (void)setAuthorizationHeader:(JXHTTPOperation *)request {
-    [request setValue:[TMOAuth authorizationHeaderForRequest:request
-                                                 consumerKey:self.OAuthConsumerKey
-                                              consumerSecret:self.OAuthConsumerSecret
-                                                       token:self.OAuthToken
-                                                 tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
+- (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters {
+    [request setValue:[TMOAuth headerForURL:request.requestURL method:request.requestMethod postParameters:parameters
+                                      nonce:request.uniqueString consumerKey:self.OAuthConsumerKey consumerSecret:self.OAuthConsumerSecret
+                                      token:self.OAuthToken tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
 }
 
 #pragma mark - Helper function
