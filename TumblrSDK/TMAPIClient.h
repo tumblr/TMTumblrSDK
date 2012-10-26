@@ -23,7 +23,8 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /** @name Authentication */
 
-- (JXHTTPOperation *)xAuthRequest:(NSString *)userName password:(NSString *)password;
+/*- (void)authenticate:(void(^)(NSString *, NSString *))callback;*/
+
 - (JXHTTPOperation *)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback;
 
 /** @name User */
@@ -89,6 +90,11 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 - (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters;
 - (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType;
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
+ filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback;
 
 - (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
