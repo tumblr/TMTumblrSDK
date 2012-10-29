@@ -85,7 +85,16 @@ static inline NSString *URLDecode(NSString *string) {
     return [(NSString *)CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")) autorelease];
 }
 
-static inline NSString *URLEncode(NSString *string) {
+static inline NSString *URLEncode(id value) {
+    NSString *string;
+    
+    if ([value isKindOfClass:[NSString class]]) {
+        string = (NSString *)value;
+        
+    } else {
+        string = [value stringValue];
+    }
+    
     return [(NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL, CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8) autorelease];
 }
 
