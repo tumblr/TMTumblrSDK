@@ -1,0 +1,3 @@
+[submodule "JXHTTP"]
+	path = JXHTTP
+	url = git@github.com:jstn/JXHTTP.git
