@@ -454,12 +454,18 @@
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     
-    if (data) {
+    if (data || filePath) {
         JXHTTPMultipartBody *multipartBody = [JXHTTPMultipartBody withDictionary:mutableParameters];
-        [multipartBody addData:data forKey:@"data" contentType:contentType fileName:@"foo.bar"];
+        
+        if (data) {
+            [multipartBody addData:data forKey:@"data" contentType:contentType fileName:@"foo.bar"];
+            
+        } else {
+            [multipartBody addFile:filePath forKey:@"data" contentType:contentType fileName:@"foo.bar"];
+        }
         
         request.requestBody = multipartBody;
-        
+
     } else {
         request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
     }
