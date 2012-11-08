@@ -10,8 +10,8 @@
 
 @interface TMOAuth : NSObject
 
-+ (NSString *)authorizationHeaderForRequest:(JXHTTPOperation *)request consumerKey:(NSString *)consumerKey
-                             consumerSecret:(NSString *)consumerSecret token:(NSString *)token
-                                tokenSecret:(NSString *)tokenSecret;
++ (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
+                     nonce:(NSString *)nonce consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
+                     token:(NSString *)token tokenSecret:(NSString *)tokenSecret;
 
 @end
