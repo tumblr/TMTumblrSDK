@@ -57,13 +57,11 @@
     
     NSString *parameterString = URLEncode([parameters componentsJoinedByString:@"&"]);
     
-    NSURL *baseURL = [[NSURL alloc] initWithScheme:URL.scheme host:URL.host path:URL.path];
+    NSString *baseURLString = [[[URL absoluteString] componentsSeparatedByString:@"?"] firstObject];
     
     NSMutableString *rawSignature = [NSString stringWithFormat:@"%@&%@&%@", method,
-                                     URLEncode([baseURL absoluteString]),
+                                     URLEncode(baseURLString),
                                      parameterString];
-    
-    [baseURL release];
     
     // Hash the raw signature string into an encrypted signature
     NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret ? tokenSecret : @""];
