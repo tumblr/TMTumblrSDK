@@ -15,12 +15,12 @@
 
 @implementation TMOAuth
 
-+ (NSString *)authorizationHeaderForRequest:(JXHTTPOperation *)request consumerKey:(NSString *)consumerKey
-                             consumerSecret:(NSString *)consumerSecret token:(NSString *)token
-                                tokenSecret:(NSString *)tokenSecret {
++ (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
+                     nonce:(NSString *)nonce consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
+                     token:(NSString *)token tokenSecret:(NSString *)tokenSecret {
     NSMutableDictionary *headerParameters = [[@{
         @"oauth_timestamp" : UNIXTimestamp([NSDate date]),
-        @"oauth_nonce" : request.uniqueString,
+        @"oauth_nonce" : nonce,
         @"oauth_version" : @"1.0",
         @"oauth_signature_method" : @"HMAC-SHA1",
         @"oauth_consumer_key" : consumerKey,
@@ -31,12 +31,10 @@
     
     NSMutableDictionary *signatureParameters = [NSMutableDictionary dictionaryWithDictionary:headerParameters];
     
-    [signatureParameters addEntriesFromDictionary:queryStringToDictionary(request.requestURL.query)];
+    [signatureParameters addEntriesFromDictionary:queryStringToDictionary(URL.query)];
     
     // Assuming body format application/x-www-form-urlencoded
-    NSDictionary *postBodyParameters = ((JXHTTPFormEncodedBody *)request.requestBody).dictionary;
-    
-    [signatureParameters addEntriesFromDictionary:postBodyParameters];
+    [signatureParameters addEntriesFromDictionary:postParameters];
     
     NSMutableArray *parameters = [NSMutableArray array];
     
@@ -59,11 +57,9 @@
     
     NSString *parameterString = URLEncode([parameters componentsJoinedByString:@"&"]);
     
-    NSURL *URL = request.requestURL;
-    
     NSURL *baseURL = [[NSURL alloc] initWithScheme:URL.scheme host:URL.host path:URL.path];
     
-    NSMutableString *rawSignature = [NSString stringWithFormat:@"%@&%@&%@", request.requestMethod,
+    NSMutableString *rawSignature = [NSString stringWithFormat:@"%@&%@&%@", method,
                                      URLEncode([baseURL absoluteString]),
                                      parameterString];
     
@@ -89,7 +85,16 @@ static inline NSString *URLDecode(NSString *string) {
     return [(NSString *)CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")) autorelease];
 }
 
-static inline NSString *URLEncode(NSString *string) {
+static inline NSString *URLEncode(id value) {
+    NSString *string;
+    
+    if ([value isKindOfClass:[NSString class]]) {
+        string = (NSString *)value;
+        
+    } else {
+        string = [value stringValue];
+    }
+    
     return [(NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL, CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8) autorelease];
 }
 
