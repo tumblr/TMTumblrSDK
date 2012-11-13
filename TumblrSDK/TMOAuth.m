@@ -57,9 +57,9 @@
     
     NSString *parameterString = URLEncode([parameters componentsJoinedByString:@"&"]);
     
-    NSString *baseURLString = [[[request.requestURL absoluteString] componentsSeparatedByString:@"?"] firstObject];
+    NSString *baseURLString = [[[URL absoluteString] componentsSeparatedByString:@"?"] firstObject];
     
-    NSMutableString *rawSignature = [NSString stringWithFormat:@"%@&%@&%@", request.requestMethod,
+    NSMutableString *rawSignature = [NSString stringWithFormat:@"%@&%@&%@", method,
                                      URLEncode(baseURLString),
                                      parameterString];
     
