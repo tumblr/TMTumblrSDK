@@ -30,30 +30,13 @@
         headerParameters[@"oauth_token"] = token;
     
     NSMutableDictionary *signatureParameters = [NSMutableDictionary dictionaryWithDictionary:headerParameters];
-    
     [signatureParameters addEntriesFromDictionary:queryStringToDictionary(URL.query)];
-    
-    // Assuming body format application/x-www-form-urlencoded
     [signatureParameters addEntriesFromDictionary:postParameters];
     
-    NSMutableArray *parameters = [NSMutableArray array];
-    
-    void (^addParameter)(NSString *key, id value) = ^(NSString *key, id value) {
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, URLEncode(value)]];
-    };
-    
-    for (NSString *key in [[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
-        id value = signatureParameters[key];
-        
-        if ([value isKindOfClass:[NSArray class]]) {
-            NSString *arrayKey = [key stringByAppendingString:@"[]"];
-            
-            for (id arrayValue in (NSArray *)value)
-                addParameter(arrayKey, arrayValue);
-        } else {
-            addParameter(key, value);
-        }
-    }
+    NSArray *parameters = [[[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]
+                           transformedArrayUsingBlock:^id(NSString *key) {
+                               return [NSString stringWithFormat:@"%@=%@", key, URLEncode(signatureParameters[key])];
+                           }];
     
     NSString *parameterString = URLEncode([parameters componentsJoinedByString:@"&"]);
     

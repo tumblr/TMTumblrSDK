@@ -436,7 +436,7 @@
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
     request.continuesInAppBackground = YES;
     
-    [self signRequest:request withParameters:mutableParameters];
+    [self signRequest:request withParameters:nil];
     
     return request;
 }
