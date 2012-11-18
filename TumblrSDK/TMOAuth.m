@@ -33,14 +33,14 @@
     [signatureParameters addEntriesFromDictionary:queryStringToDictionary(URL.query)];
     [signatureParameters addEntriesFromDictionary:postParameters];
     
-    NSArray *parameters = [[[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]
-                           transformedArrayUsingBlock:^id(NSString *key) {
-                               return [NSString stringWithFormat:@"%@=%@", key, URLEncode(signatureParameters[key])];
-                           }];
+    NSMutableArray *parameters = [NSMutableArray array];
+
+    for (NSString *key in [[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)])
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, URLEncode(signatureParameters[key])]];
     
     NSString *parameterString = URLEncode([parameters componentsJoinedByString:@"&"]);
     
-    NSString *baseURLString = [[[URL absoluteString] componentsSeparatedByString:@"?"] firstObject];
+    NSString *baseURLString = [[URL absoluteString] componentsSeparatedByString:@"?"][0];
     
     NSMutableString *rawSignature = [NSString stringWithFormat:@"%@&%@&%@", method,
                                      URLEncode(baseURLString),
