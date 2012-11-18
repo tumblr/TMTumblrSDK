@@ -14,6 +14,7 @@
 		936C7FDD15E72D8C00C0ED53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936C7FCA15E72D8C00C0ED53 /* Foundation.framework */; };
 		936C7FE015E72D8C00C0ED53 /* libTumblrSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 936C7FC715E72D8C00C0ED53 /* libTumblrSDK.a */; };
 		936C7FE915E72D8C00C0ED53 /* TMTumblrSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 936C7FE815E72D8C00C0ED53 /* TMTumblrSDKTests.m */; };
+		937772EA16585C4900CF6173 /* burrito.png in Resources */ = {isa = PBXBuildFile; fileRef = 937772E916585C4900CF6173 /* burrito.png */; };
 		9387D76515E7346600E2876E /* JXHTTPDataBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74A15E7346600E2876E /* JXHTTPDataBody.m */; };
 		9387D76615E7346600E2876E /* JXHTTPDataBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74A15E7346600E2876E /* JXHTTPDataBody.m */; };
 		9387D76715E7346600E2876E /* JXHTTPFileBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 9387D74C15E7346600E2876E /* JXHTTPFileBody.m */; };
@@ -80,6 +81,7 @@
 		936C7FD915E72D8C00C0ED53 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		936C7FE715E72D8C00C0ED53 /* TMTumblrSDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMTumblrSDKTests.h; sourceTree = "<group>"; };
 		936C7FE815E72D8C00C0ED53 /* TMTumblrSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMTumblrSDKTests.m; sourceTree = "<group>"; };
+		937772E916585C4900CF6173 /* burrito.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = burrito.png; sourceTree = "<group>"; };
 		9387D74815E7346600E2876E /* JXHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTP.h; sourceTree = "<group>"; };
 		9387D74915E7346600E2876E /* JXHTTPDataBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHTTPDataBody.h; sourceTree = "<group>"; };
 		9387D74A15E7346600E2876E /* JXHTTPDataBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHTTPDataBody.m; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 		93E2760515EC79B50080E2B3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				937772E916585C4900CF6173 /* burrito.png */,
 				93E2760815EC7A890080E2B3 /* Credentials.plist */,
 				93E2760615EC79CC0080E2B3 /* TumblrSDKTests-Info.plist */,
 			);
@@ -340,6 +343,7 @@
 			files = (
 				9387D77D15E7346600E2876E /* README.md in Resources */,
 				93E2760915EC7A890080E2B3 /* Credentials.plist in Resources */,
+				937772EA16585C4900CF6173 /* burrito.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

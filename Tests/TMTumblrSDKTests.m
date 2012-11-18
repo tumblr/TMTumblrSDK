@@ -12,175 +12,274 @@
 
 @interface TMTumblrSDKTests()
 
-@property (nonatomic, copy) NSString *defaultBlogName;
-@property (nonatomic, copy) TMAPICallback defaultSuccessCallback;
-@property (nonatomic, copy) TMAPIErrorCallback defaultErrorCallback;
+@property (nonatomic, copy) NSString *blogName;
+@property (nonatomic, copy) NSString *emailAddress;
+@property (nonatomic, copy) NSString *password;
+@property (nonatomic, copy) TMAPICallback defaultCallback;
 @property (nonatomic, assign) BOOL receivedAsynchronousCallback;
 @property (nonatomic, retain) TMAPIClient *client;
-
-- (void)performAsynchronousTest:(void(^)(void))testCode;
 
 @end
 
 @implementation TMTumblrSDKTests
 
-#pragma mark - Tests
+#pragma mark - Authentication
 
-// Blog methods
-
-- (void)testBlogInfo {
+/*
+ xAuth is not enabled by default but you can request it for your app: http://www.tumblr.com/oauth/apps
+ 
+- (void)testXAuth {
     [self performAsynchronousTest:^ {
-        [_client blogInfo:_defaultBlogName
-                  success:_defaultSuccessCallback error:_defaultErrorCallback];
+        [self.client xAuth:self.emailAddress password:self.password callback:self.defaultCallback];
     }];
 }
+ */
 
-- (void)testFollowers {
-    [self performAsynchronousTest:^ {
-        [_client followers:_defaultBlogName parameters:nil
-                   success:_defaultSuccessCallback error:_defaultErrorCallback];
-    }];
-}
-
-- (void)testAvatar {
-    [self performAsynchronousTest:^ {
-        [_client avatar:_defaultBlogName size:64
-                success:^ (NSData *data) {
-                    STAssertNotNil(data, @"Data cannot be nil");
-                    
-                    self.receivedAsynchronousCallback = YES;
-                } error:_defaultErrorCallback];
-    }];
-}
-
-- (void)testPosts {
-    [self performAsynchronousTest:^ {
-        [_client posts:_defaultBlogName type:nil parameters:nil
-               success:_defaultSuccessCallback error:_defaultErrorCallback];
-    }];
-}
-
-- (void)testQueue {
-    [self performAsynchronousTest:^ {
-        [_client queue:_defaultBlogName parameters:nil
-               success:_defaultSuccessCallback error:_defaultErrorCallback];
-    }];
-}
-
-- (void)testDrafts {
-    [self performAsynchronousTest:^ {
-        [_client drafts:_defaultBlogName parameters:nil
-                success:_defaultSuccessCallback error:_defaultErrorCallback];
-    }];
-}
-
-- (void)testSubmissions {
-    [self performAsynchronousTest:^ {
-        [_client submissions:_defaultBlogName parameters:nil
-                     success:_defaultSuccessCallback error:_defaultErrorCallback];
-    }];
-}
-
-// User methods
+#pragma mark - User
 
 - (void)testUserInfo {
     [self performAsynchronousTest:^ {
-        [_client userInfo:_defaultSuccessCallback error:_defaultErrorCallback];
+        [self.client userInfo:self.defaultCallback];
     }];
 }
 
 - (void)testDashboard {
     [self performAsynchronousTest:^ {
-        [_client dashboard:nil
-                   success:_defaultSuccessCallback error:_defaultErrorCallback];
+        [self.client dashboard:nil callback:self.defaultCallback];
     }];
 }
 
 - (void)testLikes {
     [self performAsynchronousTest:^ {
-        [_client likes:nil
-               success:_defaultSuccessCallback error:_defaultErrorCallback];
+        [self.client likes:nil callback:self.defaultCallback];
     }];
 }
 
 - (void)testFollowing {
     [self performAsynchronousTest:^ {
-        [_client following:nil
-                   success:_defaultSuccessCallback error:_defaultErrorCallback];
+        [self.client following:nil callback:self.defaultCallback];
     }];
 }
 
-// Tag methods
+/*
+ Non-idempodent:
+ 
+- (void)testFollow {
+    [self performAsynchronousTest:^{
+        [self.client follow:@"eatsleepdraw" callback:self.defaultCallback];
+    }];
+}
+
+- (void)testUnfollow {
+    [self performAsynchronousTest:^{
+        [self.client unfollow:@"eatsleepdraw" callback:self.defaultCallback];
+    }];
+}
+
+- (void)testLike {
+    [self performAsynchronousTest:^{
+        [self.client like:@"35942407679" reblogKey:@"In225E1x" callback:self.defaultCallback];
+    }];
+}
+
+- (void)testUnlike {
+    [self performAsynchronousTest:^{
+        [self.client unlike:@"35942407679" reblogKey:@"In225E1x" callback:self.defaultCallback];
+    }];
+}
+ */
+
+#pragma mark - Blog
+
+- (void)testBlogInfo {
+    [self performAsynchronousTest:^ {
+        [self.client blogInfo:self.blogName callback:self.defaultCallback];
+    }];
+}
+
+- (void)testFollowers {
+    [self performAsynchronousTest:^ {
+        [self.client followers:self.blogName parameters:nil callback:self.defaultCallback];
+    }];
+}
+
+- (void)testAvatar {
+    [self performAsynchronousTest:^ {
+        [self.client avatar:self.blogName size:64 callback:self.defaultCallback];
+    }];
+}
+
+- (void)testPosts {
+    [self performAsynchronousTest:^ {
+        [self.client posts:self.blogName type:nil parameters:nil callback:self.defaultCallback];
+    }];
+}
+
+- (void)testQueue {
+    [self performAsynchronousTest:^ {
+        [self.client queue:self.blogName parameters:nil callback:self.defaultCallback];
+    }];
+}
+
+- (void)testDrafts {
+    [self performAsynchronousTest:^ {
+        [self.client drafts:self.blogName parameters:nil callback:self.defaultCallback];
+    }];
+}
+
+- (void)testSubmissions {
+    [self performAsynchronousTest:^ {
+        [self.client submissions:self.blogName parameters:nil callback:self.defaultCallback];
+    }];
+}
+
+- (void)testBlogLikes {
+    [self performAsynchronousTest:^ {
+        [self.client likes:@"bryan" parameters:nil callback:self.defaultCallback];
+    }];
+}
+
+#pragma mark - Posting
+
+/*
+ Non-idempodent:
+- (void)testEditPost {
+    [self performAsynchronousTest:^{
+        [self.client editPost:self.blogName parameters:
+         @{ @"id" : @"35929255756", @"description" : @"Test description (edited)"} callback:self.defaultCallback];
+    }];
+}
+
+- (void)testReblogPost {
+    [self performAsynchronousTest:^{
+        [self.client reblogPost:self.blogName parameters:
+         @{ @"id" : @"35942407679", @"reblog_key" : @"In225E1x", @"comment" : @"Test comment" }
+                       callback:self.defaultCallback];
+    }];
+}
+
+- (void)testDeletePost {
+    [self performAsynchronousTest:^{
+        [self.client deletePost:self.blogName id:@"35928836726" callback:self.defaultCallback];
+    }];
+}
+ 
+- (void)testTextPost {
+    [self performAsynchronousTest:^ {
+        [self.client text:self.blogName parameters:@{ @"title" : @"Test title", @"body" : @"Test body" }
+                 callback:self.defaultCallback];
+    }];
+}
+
+- (void)testQuotePost {
+    [self performAsynchronousTest:^ {
+        [self.client quote:self.blogName parameters:@{ @"quote" : @"Test quote", @"source" : @"Test source" }
+                 callback:self.defaultCallback];
+    }];
+}
+
+- (void)testLinkPost {
+    [self performAsynchronousTest:^ {
+        [self.client link:self.blogName parameters:@{ @"title" : @"Test title", @"url" : @"http://bryan.io",
+         @"description" : @"Test description" } callback:self.defaultCallback];
+    }];
+}
+
+- (void)testChatPost {
+    [self performAsynchronousTest:^ {
+        [self.client chat:self.blogName parameters:@{ @"title" : @"Test title", @"conversation" : @"Bryan: It worked!" }
+                 callback:self.defaultCallback];
+    }];
+}
+ */
+/*
+- (void)testPhotoPostFromData {
+    [self performAsynchronousTest:^{
+        NSData *data = [NSData dataWithContentsOfFile:
+                        [[NSBundle bundleForClass:[TMTumblrSDKTests class]] pathForResource:@"burrito" ofType:@"png"]];
+        
+        [self.client photo:self.blogName data:data contentType:@"image/png" parameters:
+         @{ @"caption" : @"Yum (from data)" } callback:self.defaultCallback];
+    }];
+}
+ */
+- (void)testPhotoPostFromFile {
+    [self performAsynchronousTest:^{
+        NSString *filePath = [[NSBundle bundleForClass:[TMTumblrSDKTests class]] pathForResource:@"burrito" ofType:@"png"];
+        
+        [self.client photo:self.blogName filePath:filePath contentType:@"image/png" parameters:
+         @{ @"caption" : @"Yum (from file)" } callback:self.defaultCallback];
+    }];
+}
+
+#warning Audio
+#warning Video
+#warning Photoset
+
+#pragma mark - Tags
 
 - (void)testTagged {
     [self performAsynchronousTest:^ {
-        [_client tagged:@"lol" parameters:nil
-                success:_defaultSuccessCallback error:_defaultErrorCallback];
+        [self.client tagged:@"lol" parameters:nil callback:self.defaultCallback];
     }];
 }
-
-//// Auth. methods
-//
-//- (void)testXAuth {
-//    [self performAsynchronousTest:^ {
-//        [_client xAuthRequest:@"bryan" password:@"nonp0Ont"];
-//    }];
-//}
 
 #pragma mark - Common
 
 - (void)setUp {
     [super setUp];
-    
-    self.defaultBlogName = @"brydev";
-    
+        
     __block TMTumblrSDKTests *blockSelf = self;
     
-    self.defaultSuccessCallback = ^ (id result) {
-        NSLog(@"%@", result);
-        
-        STAssertNotNil(result, @"Response cannot be nil");
-        
-        blockSelf.receivedAsynchronousCallback = YES;
-    };
-    
-    self.defaultErrorCallback = ^ (NSError *error) {
-        NSLog(@"%@", error);
-        
-        STFail(@"Request failed");
+    self.defaultCallback = ^ (id result, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+            STFail(@"Request failed");
+        } else {
+            STAssertNotNil(result, @"Response cannot be nil");
+        }
         
         blockSelf.receivedAsynchronousCallback = YES;
     };
     
     self.client = [TMAPIClient sharedInstance];
     
-    static dispatch_once_t predicate;
+    NSDictionary *credentials = [[NSDictionary alloc] initWithContentsOfFile:
+                                 [[NSBundle bundleForClass:[TMTumblrSDKTests class]] pathForResource:@"Credentials"
+                                                                                              ofType:@"plist"]];
     
-    dispatch_once(&predicate, ^ {
-        NSDictionary *credentials = [[NSDictionary alloc] initWithContentsOfFile:
-                                     [[NSBundle bundleForClass:[TMTumblrSDKTests class]] pathForResource:@"Credentials"
-                                                                                                  ofType:@"plist"]];
-        
-        NSString *OAuthConsumerKey = credentials[@"OAuthConsumerKey"];
-        NSString *OAuthConsumerSecret = credentials[@"OAuthConsumerSecret"];
-        NSString *OAuthToken = credentials[@"OAuthToken"];
-        NSString *OAuthTokenSecret = credentials[@"OAuthTokenSecret"];
-        
-        STAssertTrue(OAuthConsumerKey.length, @"OAuthConsumerKey required in Credentials.plist");
-        STAssertTrue(OAuthConsumerSecret.length, @"OAuthConsumerSecret required in Credentials.plist");
-        STAssertTrue(OAuthToken.length, @"OAuthToken required in Credentials.plist");
-        STAssertTrue(OAuthTokenSecret.length, @"OAuthTokenSecret required in Credentials.plist");
-        
-        [TMAPIClient sharedInstance].OAuthConsumerKey = OAuthConsumerKey;
-        [TMAPIClient sharedInstance].OAuthConsumerSecret = OAuthConsumerSecret;
-        [TMAPIClient sharedInstance].OAuthToken = OAuthToken;
-        [TMAPIClient sharedInstance].OAuthTokenSecret = OAuthTokenSecret;
-        
-        [credentials release];
-    });
+    NSString *OAuthConsumerKey = credentials[@"OAuthConsumerKey"];
+    NSString *OAuthConsumerSecret = credentials[@"OAuthConsumerSecret"];
+    NSString *OAuthToken = credentials[@"OAuthToken"];
+    NSString *OAuthTokenSecret = credentials[@"OAuthTokenSecret"];
+    NSString *emailAddress = credentials[@"EmailAddress"];
+    NSString *password = credentials[@"Password"];
+    NSString *blogName = credentials[@"BlogName"];
+    
+    STAssertTrue(OAuthConsumerKey.length, @"OAuthConsumerKey required in Credentials.plist");
+    STAssertTrue(OAuthConsumerSecret.length, @"OAuthConsumerSecret required in Credentials.plist");
+    STAssertTrue(OAuthToken.length, @"OAuthToken required in Credentials.plist");
+    STAssertTrue(OAuthTokenSecret.length, @"OAuthTokenSecret required in Credentials.plist");
+    
+    /*
+    STAssertTrue(emailAddress.length, @"EmailAddress required in Credentials.plist");
+    STAssertTrue(password.length, @"Password required in Credentials.plist");
+    STAssertTrue(blogName.length, @"BlogName required in Credentials.plist");
+     */
+    
+    self.client.OAuthConsumerKey = OAuthConsumerKey;
+    self.client.OAuthConsumerSecret = OAuthConsumerSecret;
+    self.client.OAuthToken = OAuthToken;
+    self.client.OAuthTokenSecret = OAuthTokenSecret;
+    
+    self.emailAddress = emailAddress;
+    self.password = password;
+    self.blogName = blogName;
+    
+    [credentials release];
 }
 
-- (void)performAsynchronousTest:(void(^)(void))testCode {    
+- (void)performAsynchronousTest:(void(^)(void))testCode {
     self.receivedAsynchronousCallback = NO;
     
     testCode();

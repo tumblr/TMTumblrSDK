@@ -11,26 +11,19 @@
 #import "NSData+Base64.h"
 #import "TMOAuth.h"
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_2_0
+#import <UIKit/UIKit.h>
+#else
+#import <AppKit/AppKit.h>
+#endif
+
 @interface TMAPIClient()
 
-- (JXHTTPOperation *)getRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters;
-
-- (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters;
-
-- (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters;
+@property (nonatomic, copy) TMAPIAuthenticationCallback authCallback;
 
 @end
 
-
 @implementation TMAPIClient
-
-- (id)init {
-    if (self = [super init]) {
-        _queue = [[JXHTTPOperationQueue alloc] init];
-    }
-    
-    return self;
-}
 
 + (id)sharedInstance {
     static TMAPIClient *instance;
@@ -39,101 +32,138 @@
     return instance;
 }
 
-- (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
-    if (callback) {
-        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-            NSDictionary *response = operation.responseJSON;
-            int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
-            
-            NSError *error = nil;
-            
-            if (statusCode/100 != 2) {
-                error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
-                NSLog(@"%@", operation.requestURL);
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (!operation.isCancelled)
-                    callback(response[@"response"], error);
-            });
-        };
-        
-        request.didFailBlock = ^(JXHTTPOperation *operation) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (!operation.isCancelled)
-                    callback(nil, operation.error);
-            });
-        };
-    }
-
-    [_queue addOperation:request];
-}
-
 #pragma mark - Authentication
 
-/*- (void)authenticate:(void(^)(NSString *, NSString *))callback {
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:@"https://www.tumblr.com/oauth/access_token"];
-    
+- (void)authenticate:(NSString *)URLScheme callback:(TMAPIAuthenticationCallback)callback {    
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:@"http://www.tumblr.com/oauth/request_token"];
+    request.continuesInAppBackground = YES;
+    [self signRequest:request withParameters:nil];
+
     request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-        if (callback) {
-            NSDictionary *response = operation.responseJSON;
+        if (operation.responseStatusCode == 200) {
+            self.authCallback = callback;
+            
+            NSString *token = queryStringToDictionary(operation.responseString)[@"oauth_token"];
+            
+            NSString *callbackURL = URLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme]);
+            
+            NSURL *authURL = [NSURL URLWithString:
+                              [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@&oauth_callback=%@",
+                               token, callbackURL]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSURL *OAuthURL = [NSString stringWithFormat:@"https://api.twitter.com/oauth/authorize?oauth_token=%@",
-                                   response[@"oauth_token"]];
-                
-                [[UIApplication sharedApplication] openURL:OAuthURL];
+                [[UIApplication sharedApplication] openURL:authURL];
+                // TODO: OS X support -- [[NSWorkspace sharedWorkspace] openURL:authURL];
             });
+            
+        } else {
+            if (callback)
+                callback([NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
+                                         userInfo:nil]);
         }
     };
     
+    request.didFailBlock = ^(JXHTTPOperation *operation) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (callback)
+                callback(operation.error);
+        });
+    };
+    
     [_queue addOperation:request];
-}*/
+}
 
-- (JXHTTPOperation *)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback {
-    NSDictionary *parameters = @{
-        @"x_auth_username" : userName,
+- (BOOL)handleOpenURL:(NSURL *)url {
+    if (![url.host isEqualToString:@"tumblr-authorize"]) return NO;
+    
+    NSDictionary *URLParameters = queryStringToDictionary(url.query);
+    
+    // TODO: Handle case where user denied access
+    
+    self.OAuthToken = URLParameters[@"oauth_token"];
+    
+    NSDictionary *requestParameters = @{ @"oauth_verifier" : URLParameters[@"oauth_verifier"] };
+    
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:@"http://www.tumblr.com/oauth/access_token"];
+    request.requestMethod = @"POST";
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:requestParameters];
+    request.continuesInAppBackground = YES;
+    [self signRequest:request withParameters:requestParameters];
+    
+    // TODO: This signature does not work - no idea why
+    
+    request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+        if (operation.responseStatusCode == 200) {
+            NSDictionary *responseParameters = queryStringToDictionary(operation.responseString);
+            self.OAuthToken = responseParameters[@"oauth_token"];
+            self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
+    
+            if (self.authCallback)
+                self.authCallback(nil);
+            
+        } else {
+            self.OAuthToken = nil;
+
+            if (self.authCallback)
+                self.authCallback([NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
+                                                  userInfo:nil]);
+        }
+        
+        self.authCallback = nil;
+    };
+    
+    request.didFailBlock = ^(JXHTTPOperation *operation) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.authCallback)
+                self.authCallback(operation.error);
+            
+            self.authCallback = nil;
+        });
+    };
+    
+    [_queue addOperation:request];
+    
+    return YES;
+}
+
+- (JXHTTPOperation *)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAPIAuthenticationCallback)callback {
+    NSDictionary *requestParameters = @{
+        @"x_auth_username" : emailAddress,
         @"x_auth_password" : password,
-        @"x_auth_mode" : @"client_auth", @"api_key" :
-        self.OAuthConsumerKey
+        @"x_auth_mode" : @"client_auth",
+        @"api_key" : self.OAuthConsumerKey
     };
     
     JXHTTPOperation *request = [JXHTTPOperation withURLString:@"https://www.tumblr.com/oauth/access_token"];
     request.requestMethod = @"POST";
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:parameters];
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:requestParameters];
     request.continuesInAppBackground = YES;
-    
-    [self signRequest:request withParameters:parameters];
+    [self signRequest:request withParameters:requestParameters];
     
     if (callback) {
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-            NSMutableDictionary *parameterDictionary = nil;
             NSError *error = nil;
             
             if (operation.responseStatusCode == 200) {
-                parameterDictionary = [NSMutableDictionary dictionary];
+                NSDictionary *responseParameters = queryStringToDictionary(operation.responseString);
+                self.OAuthToken = responseParameters[@"oauth_token"];
+                self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
                 
-                NSArray *parameterStrings = [operation.responseString componentsSeparatedByString:@"&"];
+                callback(nil);
                 
-                for (NSString *parameterString in parameterStrings) {
-                    NSArray *parameterComponents = [parameterString componentsSeparatedByString:@"="];
-                    parameterDictionary[URLDecode(parameterComponents[0])] = URLDecode(parameterComponents[1]);
-                }
             } else {
-                error = [NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
-                                        userInfo:nil];
+                callback([NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
+                                         userInfo:nil]);
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (!operation.isCancelled)
-                    callback(parameterDictionary, error);
+                callback(error);
             });
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (!operation.isCancelled)
-                    callback(nil, operation.error);
+                callback(operation.error);
             });
         };
     }
@@ -230,8 +260,7 @@
 }
 
 - (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"http://api.tumblr.com/v2/blog/%@.tumblr.com/avatar/%d",
-                                     blogName, size] parameters:nil];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/avatar/%d", blogName, size] parameters:nil];
 }
 
 - (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
@@ -250,15 +279,13 @@
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (!operation.isCancelled)
-                    callback(response, error);
+                callback(response, error);
             });
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (!operation.isCancelled)
-                    callback(nil, operation.error);
+                callback(nil, operation.error);
             });
         };
     }
@@ -301,6 +328,14 @@
     [self sendRequest:[self submissionsRequest:blogName parameters:parameters] callback:callback];
 }
 
+- (JXHTTPOperation *)likesRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/likes", blogName] parameters:parameters];
+}
+
+- (void)likes:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self likesRequest:blogName parameters:parameters] callback:callback];
+}
+
 #pragma mark - Posting
 
 - (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
@@ -328,29 +363,6 @@
 
 - (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
     [self sendRequest:[self deletePostRequest:blogName id:postID] callback:callback];
-}
-
-- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
-    return [self postRequest:blogName type:type parameters:parameters data:nil filePath:nil contentType:nil];
-}
-
-- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self postRequest:blogName type:type parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"type"] = type;
-    
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
-                          parameters:mutableParameters data:data filePath:filePath contentType:contentType];
-}
-
-- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
-    filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback {
-    [self sendRequest:[self postRequest:blogName type:type parameters:parameters data:data filePath:filePath
-                            contentType:contentType] callback:callback];
 }
 
 - (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
@@ -385,33 +397,26 @@
     [self sendRequest:[self chatRequest:blogName parameters:parameters] callback:callback];
 }
 
-- (JXHTTPOperation *)audioRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    // TODO
-    return [self postRequest:blogName type:@"audio" parameters:parameters];
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName data:(NSData *)data contentType:(NSString *)contentType
+                       parameters:(NSDictionary *)parameters {
+    return [self postRequest:blogName type:@"photo" parameters:parameters data:data filePath:nil contentType:contentType];
 }
 
-- (void)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self audioRequest:blogName parameters:parameters] callback:callback];
+- (void)photo:(NSString *)blogName data:(NSData *)data contentType:(NSString *)contentType
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self photoRequest:blogName data:data contentType:contentType parameters:parameters]
+             callback:callback];
 }
 
-- (JXHTTPOperation *)videoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    // TODO
-    return [self postRequest:blogName type:@"video" parameters:parameters];
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+                       parameters:(NSDictionary *)parameters {
+    return [self postRequest:blogName type:@"photo" parameters:parameters data:nil filePath:filePath contentType:contentType];
 }
 
-- (void)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self videoRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    // TODO
-    return [self postRequest:blogName type:@"photo" parameters:parameters];
-}
-
-- (void)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    
-    
-    [self sendRequest:[self photoRequest:blogName parameters:parameters] callback:callback];
+- (void)photo:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self photoRequest:blogName filePath:filePath contentType:contentType parameters:parameters]
+             callback:callback];
 }
 
 #pragma mark - Tagging
@@ -427,7 +432,30 @@
     [self sendRequest:[self taggedRequest:tag parameters:parameters] callback:callback];
 }
 
-#pragma mark - Class extension
+#pragma mark - Private
+
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
+    return [self postRequest:blogName type:type parameters:parameters data:nil filePath:nil contentType:nil];
+}
+
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self postRequest:blogName type:type parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"type"] = type;
+    
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
+                          parameters:mutableParameters data:data filePath:filePath contentType:contentType];
+}
+
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
+    filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback {
+    [self sendRequest:[self postRequest:blogName type:type parameters:parameters data:data filePath:filePath
+                            contentType:contentType] callback:callback];
+}
 
 - (JXHTTPOperation *)getRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
@@ -477,11 +505,38 @@
 
 - (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters {
     [request setValue:[TMOAuth headerForURL:request.requestURL method:request.requestMethod postParameters:parameters
-                                      nonce:request.uniqueString consumerKey:self.OAuthConsumerKey consumerSecret:self.OAuthConsumerSecret
-                                      token:self.OAuthToken tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
+                                      nonce:request.uniqueString consumerKey:self.OAuthConsumerKey
+                             consumerSecret:self.OAuthConsumerSecret token:self.OAuthToken
+                                tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
 }
 
-#pragma mark - Helper function
+- (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
+    if (callback) {
+        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+            NSDictionary *response = operation.responseJSON;
+            int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
+            
+            NSError *error = nil;
+            
+            if (statusCode/100 != 2) {
+                error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
+                NSLog(@"%@", operation.requestURL);
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                callback(response[@"response"], error);
+            });
+        };
+        
+        request.didFailBlock = ^(JXHTTPOperation *operation) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                callback(nil, operation.error);
+            });
+        };
+    }
+    
+    [_queue addOperation:request];
+}
 
 static inline NSString *URLWithPath(NSString *path) {
     return [@"http://api.tumblr.com/v2/" stringByAppendingString:path];
@@ -491,9 +546,29 @@ static inline NSString *URLDecode(NSString *string) {
     return [(NSString *)CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")) autorelease];
 }
 
+static inline NSString *URLEncode(NSString *string) {
+    return [(NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
+                                                                CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8)
+            autorelease];
+}
+
+static inline NSDictionary *queryStringToDictionary(NSString *string) {
+    NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
+    
+    NSArray *parameterStrings = [string componentsSeparatedByString:@"&"];
+    
+    for (NSString *parameterString in parameterStrings) {
+        NSArray *parameterComponents = [parameterString componentsSeparatedByString:@"="];
+        parameterDictionary[URLDecode(parameterComponents[0])] = URLDecode(parameterComponents[1]);
+    }
+    
+    return parameterDictionary;
+}
+
 #pragma mark - Memory management
 
 - (void)dealloc {
+    self.authCallback = nil;
     self.OAuthConsumerKey = nil;
     self.OAuthConsumerSecret = nil;
     self.OAuthToken = nil;
@@ -502,6 +577,16 @@ static inline NSString *URLDecode(NSString *string) {
     [_queue release];
     
     [super dealloc];
+}
+
+#pragma mark - NSObject
+
+- (id)init {
+    if (self = [super init]) {
+        _queue = [[JXHTTPOperationQueue alloc] init];
+    }
+    
+    return self;
 }
 
 @end

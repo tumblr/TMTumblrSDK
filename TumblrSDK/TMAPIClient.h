@@ -6,7 +6,10 @@
 //  Copyright (c) 2012 Bryan Irace. All rights reserved.
 //
 
+#import "JXHTTP.h"
+
 typedef void (^TMAPICallback)(id, NSError *error);
+typedef void (^TMAPIAuthenticationCallback)(NSError *error);
 
 @interface TMAPIClient : NSObject
 
@@ -23,9 +26,11 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /** @name Authentication */
 
-/*- (void)authenticate:(void(^)(NSString *, NSString *))callback;*/
+- (void)authenticate:(NSString *)URLScheme callback:(TMAPIAuthenticationCallback)callback;
 
-- (JXHTTPOperation *)xAuth:(NSString *)userName password:(NSString *)password callback:(TMAPICallback)callback;
+- (BOOL)handleOpenURL:(NSURL *)url;
+
+- (JXHTTPOperation *)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAPIAuthenticationCallback)callback;
 
 /** @name User */
 
@@ -61,7 +66,6 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-// TODO: Document that this result will be NSData
 - (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size;
 - (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback;
 
@@ -77,6 +81,9 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (JXHTTPOperation *)submissionsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
+- (JXHTTPOperation *)likesRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)likes:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+
 /** @name Posting */
 
 - (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
@@ -87,14 +94,6 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 - (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID;
 - (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback;
-
-- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters;
-- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
-
-- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType;
-- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
- filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback;
 
 - (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
@@ -108,14 +107,15 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)audioRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
-- (void)audio:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName data:(NSData *)data contentType:(NSString *)contentType
+                       parameters:(NSDictionary *)parameters;
+- (void)photo:(NSString *)blogName data:(NSData *)data contentType:(NSString *)contentType
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)videoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
-- (void)video:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
-
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
-- (void)photo:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+                       parameters:(NSDictionary *)parameters;
+- (void)photo:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /** @name Tagging */
 
