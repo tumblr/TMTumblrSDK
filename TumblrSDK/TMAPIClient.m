@@ -43,13 +43,14 @@
         if (operation.responseStatusCode == 200) {
             self.authCallback = callback;
             
-            NSString *token = queryStringToDictionary(operation.responseString)[@"oauth_token"];
-            
+            NSDictionary *responseParameters = queryStringToDictionary(operation.responseString);
+            self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
+	            
             NSString *callbackURL = URLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme]);
             
             NSURL *authURL = [NSURL URLWithString:
                               [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@&oauth_callback=%@",
-                               token, callbackURL]];
+                               responseParameters[@"oauth_token"], callbackURL]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[UIApplication sharedApplication] openURL:authURL];
@@ -90,8 +91,6 @@
     request.continuesInAppBackground = YES;
     [self signRequest:request withParameters:requestParameters];
     
-    // TODO: This signature does not work - no idea why
-    
     request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
         if (operation.responseStatusCode == 200) {
             NSDictionary *responseParameters = queryStringToDictionary(operation.responseString);
@@ -103,6 +102,7 @@
             
         } else {
             self.OAuthToken = nil;
+            self.OAuthTokenSecret = nil;
 
             if (self.authCallback)
                 self.authCallback([NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
