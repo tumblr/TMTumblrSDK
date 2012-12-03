@@ -34,15 +34,13 @@ The SDK proxies to the [TumblrAuthentication](https://github.com/tumblr/tumblr-i
 
 The API client provides two ways of hitting the API:
 
-* `void` methods for immediate requests, preferable when the caller does not need a reference to the underlying request options:
-
+	// void methods for immediate requests, preferable when the caller does not need a reference to the underlying request options:
 
 	[[TMAPIClient sharedInstance] userInfo:^(id result, NSError *error) {
 		if (!error) NSLog(@"Got some user info");
 	}];
 
-* Methods that return configured, signed `JXHTTPOperation` instances and require the client to explicitly send the request separately.
-
+	// Methods that return configured, signed JXHTTPOperation instances and require the client to explicitly send the request separately.
 
 	JXHTTPOperation *likesRequest = [[TMAPIClient sharedInstance] likesRequest:@"bryan" parameters:nil];
 
