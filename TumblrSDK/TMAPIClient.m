@@ -8,14 +8,7 @@
 
 #import "TMAPIClient.h"
 
-#import "NSData+Base64.h"
 #import "TMOAuth.h"
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_2_0
-#import <UIKit/UIKit.h>
-#else
-#import <AppKit/AppKit.h>
-#endif
 
 @interface TMAPIClient()
 
@@ -44,6 +37,22 @@
 
 - (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback {
     return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password callback:callback];
+}
+
+- (void)setOAuthConsumerKey:(NSString *)OAuthConsumerKey {
+    [TMTumblrAuthenticator sharedInstance].OAuthConsumerKey = OAuthConsumerKey;
+}
+
+- (NSString *)OAuthConsumerKey {
+    return [TMTumblrAuthenticator sharedInstance].OAuthConsumerKey;
+}
+
+- (void)setOAuthConsumerSecret:(NSString *)OAuthConsumerSecret {
+    [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret = OAuthConsumerSecret;
+}
+
+- (NSString *)OAuthConsumerSecret {
+    return [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret;
 }
 
 #pragma mark - User
