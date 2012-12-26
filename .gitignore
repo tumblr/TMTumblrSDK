@@ -5,3 +5,7 @@
 *pbxuser
 project.xcworkspace/
 xcuserdata/
+
+Podfile.lock
+Pods/
+*.xcworkspace

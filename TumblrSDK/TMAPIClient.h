@@ -7,9 +7,9 @@
 //
 
 #import "JXHTTP.h"
+#import "TMTumblrAuthenticator.h"
 
 typedef void (^TMAPICallback)(id, NSError *error);
-typedef void (^TMAPIAuthenticationCallback)(NSError *error);
 
 @interface TMAPIClient : NSObject
 
@@ -27,11 +27,11 @@ typedef void (^TMAPIAuthenticationCallback)(NSError *error);
 
 /** @name Authentication */
 
-- (void)authenticate:(NSString *)URLScheme callback:(TMAPIAuthenticationCallback)callback;
+- (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback;
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 
-- (JXHTTPOperation *)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAPIAuthenticationCallback)callback;
+- (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback;
 
 /** @name User */
 
