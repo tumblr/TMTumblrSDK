@@ -17,6 +17,7 @@ typedef void (^TMAPIAuthenticationCallback)(NSError *error);
 @property (nonatomic, copy) NSString *OAuthConsumerSecret;
 @property (nonatomic, copy) NSString *OAuthToken;
 @property (nonatomic, copy) NSString *OAuthTokenSecret;
+@property (nonatomic, copy) NSDictionary *customHeaders;
 
 @property (nonatomic, readonly) JXHTTPOperationQueue *queue;
 
