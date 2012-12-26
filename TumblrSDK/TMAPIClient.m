@@ -19,7 +19,7 @@
 
 @interface TMAPIClient()
 
-@property (nonatomic, copy) TMAPIAuthenticationCallback authCallback;
+@property (nonatomic, copy) TMAuthenticationCallback authCallback;
 
 @end
 
@@ -34,143 +34,16 @@
 
 #pragma mark - Authentication
 
-- (void)authenticate:(NSString *)URLScheme callback:(TMAPIAuthenticationCallback)callback {    
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:@"http://www.tumblr.com/oauth/request_token"];
-    request.continuesInAppBackground = YES;
-    [self signRequest:request withParameters:nil];
-
-    request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-        if (operation.responseStatusCode == 200) {
-            self.authCallback = callback;
-            
-            NSDictionary *responseParameters = queryStringToDictionary(operation.responseString);
-            self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
-	            
-            NSString *callbackURL = URLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme]);
-            
-            NSURL *authURL = [NSURL URLWithString:
-                              [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@&oauth_callback=%@",
-                               responseParameters[@"oauth_token"], callbackURL]];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[UIApplication sharedApplication] openURL:authURL];
-                // TODO: OS X support -- [[NSWorkspace sharedWorkspace] openURL:authURL];
-            });
-            
-        } else {
-            if (callback)
-                callback([NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
-                                         userInfo:nil]);
-        }
-    };
-    
-    request.didFailBlock = ^(JXHTTPOperation *operation) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (callback)
-                callback(operation.error);
-        });
-    };
-    
-    [_queue addOperation:request];
+- (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
+    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme callback:callback];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-    if (![url.host isEqualToString:@"tumblr-authorize"]) return NO;
-    
-    NSDictionary *URLParameters = queryStringToDictionary(url.query);
-    
-    // TODO: Handle case where user denied access
-    
-    self.OAuthToken = URLParameters[@"oauth_token"];
-    
-    NSDictionary *requestParameters = @{ @"oauth_verifier" : URLParameters[@"oauth_verifier"] };
-    
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:@"http://www.tumblr.com/oauth/access_token"];
-    request.requestMethod = @"POST";
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:requestParameters];
-    request.continuesInAppBackground = YES;
-    [self signRequest:request withParameters:requestParameters];
-    
-    request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-        if (operation.responseStatusCode == 200) {
-            NSDictionary *responseParameters = queryStringToDictionary(operation.responseString);
-            self.OAuthToken = responseParameters[@"oauth_token"];
-            self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
-    
-            if (self.authCallback)
-                self.authCallback(nil);
-            
-        } else {
-            self.OAuthToken = nil;
-            self.OAuthTokenSecret = nil;
-
-            if (self.authCallback)
-                self.authCallback([NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
-                                                  userInfo:nil]);
-        }
-        
-        self.authCallback = nil;
-    };
-    
-    request.didFailBlock = ^(JXHTTPOperation *operation) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.authCallback)
-                self.authCallback(operation.error);
-            
-            self.authCallback = nil;
-        });
-    };
-    
-    [_queue addOperation:request];
-    
-    return YES;
+    return [[TMTumblrAuthenticator sharedInstance] handleOpenURL:url];
 }
 
-- (JXHTTPOperation *)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAPIAuthenticationCallback)callback {
-    NSDictionary *requestParameters = @{
-        @"x_auth_username" : emailAddress,
-        @"x_auth_password" : password,
-        @"x_auth_mode" : @"client_auth",
-        @"api_key" : self.OAuthConsumerKey
-    };
-    
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:@"https://www.tumblr.com/oauth/access_token"];
-    request.requestMethod = @"POST";
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:requestParameters];
-    request.continuesInAppBackground = YES;
-    [self signRequest:request withParameters:requestParameters];
-    
-    if (callback) {
-        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-            NSError *error = nil;
-            
-            if (operation.responseStatusCode == 200) {
-                NSDictionary *responseParameters = queryStringToDictionary(operation.responseString);
-                self.OAuthToken = responseParameters[@"oauth_token"];
-                self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
-                
-                callback(nil);
-                
-            } else {
-                callback([NSError errorWithDomain:@"Authentication request failed" code:operation.responseStatusCode
-                                         userInfo:nil]);
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                callback(error);
-            });
-        };
-        
-        request.didFailBlock = ^(JXHTTPOperation *operation) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                callback(operation.error);
-            });
-        };
-    }
-    
-    [_queue addOperation:request];
-    
-    return request;
+- (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback {
+    return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password callback:callback];
 }
 
 #pragma mark - User
