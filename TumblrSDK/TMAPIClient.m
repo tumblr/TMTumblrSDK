@@ -8,14 +8,7 @@
 
 #import "TMAPIClient.h"
 
-#import "NSData+Base64.h"
 #import "TMOAuth.h"
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_2_0
-#import <UIKit/UIKit.h>
-#else
-#import <AppKit/AppKit.h>
-#endif
 
 @interface TMAPIClient()
 

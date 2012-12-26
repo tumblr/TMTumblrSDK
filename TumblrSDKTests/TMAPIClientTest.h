@@ -1,5 +1,5 @@
 //
-//  TMTumblrSDKTests.h
+//  TMAPIClientTest.h
 //  TumblrSDK
 //
 //  Created by Bryan Irace on 8/23/12.
@@ -8,6 +8,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface TMTumblrSDKTests : SenTestCase
+@interface TMAPIClientTest : SenTestCase
 
 @end

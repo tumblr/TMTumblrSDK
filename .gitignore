@@ -9,3 +9,4 @@ xcuserdata/
 Podfile.lock
 Pods/
 *.xcworkspace
+TumblrSDKTests/Credentials.plist

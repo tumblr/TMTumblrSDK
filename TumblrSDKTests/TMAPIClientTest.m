@@ -1,16 +1,16 @@
 //
-//  TMTumblrSDKTests.m
+//  TMAPIClientTest.m
 //  TumblrSDK
 //
 //  Created by Bryan Irace on 8/23/12.
 //  Copyright (c) 2012 Bryan Irace. All rights reserved.
 //
 
-#import "TMTumblrSDKTests.h"
+#import "TMAPIClientTest.h"
 
-#import "TMTumblrSDK.h"
+#import "TMAPIClient.h"
 
-@interface TMTumblrSDKTests()
+@interface TMAPIClientTest()
 
 @property (nonatomic, copy) NSString *blogName;
 @property (nonatomic, copy) NSString *emailAddress;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation TMTumblrSDKTests
+@implementation TMAPIClientTest
 
 #pragma mark - Authentication
 
@@ -205,7 +205,7 @@
  */
 - (void)testPhotoPostFromFile {
     [self performAsynchronousTest:^{
-        NSString *filePath = [[NSBundle bundleForClass:[TMTumblrSDKTests class]] pathForResource:@"burrito" ofType:@"png"];
+        NSString *filePath = [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"burrito" ofType:@"png"];
         
         [self.client photo:self.blogName filePath:filePath contentType:@"image/png" parameters:
          @{ @"caption" : @"Yum (from file)" } callback:self.defaultCallback];
@@ -229,7 +229,7 @@
 - (void)setUp {
     [super setUp];
         
-    __block TMTumblrSDKTests *blockSelf = self;
+    __block TMAPIClientTest *blockSelf = self;
     
     self.defaultCallback = ^ (id result, NSError *error) {
         if (error) {
@@ -245,8 +245,8 @@
     self.client = [TMAPIClient sharedInstance];
     
     NSDictionary *credentials = [[NSDictionary alloc] initWithContentsOfFile:
-                                 [[NSBundle bundleForClass:[TMTumblrSDKTests class]] pathForResource:@"Credentials"
-                                                                                              ofType:@"plist"]];
+                                 [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"Credentials"
+                                                                                             ofType:@"plist"]];
     
     NSString *OAuthConsumerKey = credentials[@"OAuthConsumerKey"];
     NSString *OAuthConsumerSecret = credentials[@"OAuthConsumerSecret"];
