@@ -211,6 +211,29 @@
 
 #pragma mark - Posting
 
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
+    return [self postRequest:blogName type:type parameters:parameters data:nil filePath:nil contentType:nil];
+}
+
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self postRequest:blogName type:type parameters:parameters] callback:callback];
+}
+
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"type"] = type;
+    
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
+                          parameters:mutableParameters data:data filePath:filePath contentType:contentType];
+}
+
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
+    filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback {
+    [self sendRequest:[self postRequest:blogName type:type parameters:parameters data:data filePath:filePath
+                            contentType:contentType] callback:callback];
+}
+
 - (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
     return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post/edit", blogName]
                           parameters:parameters];
@@ -306,29 +329,6 @@
 }
 
 #pragma mark - Private
-
-- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
-    return [self postRequest:blogName type:type parameters:parameters data:nil filePath:nil contentType:nil];
-}
-
-- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self postRequest:blogName type:type parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"type"] = type;
-    
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
-                          parameters:mutableParameters data:data filePath:filePath contentType:contentType];
-}
-
-- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
-    filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback {
-    [self sendRequest:[self postRequest:blogName type:type parameters:parameters data:data filePath:filePath
-                            contentType:contentType] callback:callback];
-}
 
 - (JXHTTPOperation *)getRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];

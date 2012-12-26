@@ -87,6 +87,14 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /** @name Posting */
 
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters;
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+
+- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType;
+- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
+    filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback;
+
 - (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
@@ -95,6 +103,8 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 - (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID;
 - (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback;
+
+/** @name Posting - convenience */
 
 - (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
