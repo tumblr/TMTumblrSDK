@@ -504,6 +504,9 @@
 }
 
 - (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters {
+    for (NSString *header in self.customHeaders)
+        [request setValue:self.customHeaders[header] forRequestHeader:header];
+    
     [request setValue:[TMOAuth headerForURL:request.requestURL method:request.requestMethod postParameters:parameters
                                       nonce:request.uniqueString consumerKey:self.OAuthConsumerKey
                              consumerSecret:self.OAuthConsumerSecret token:self.OAuthToken
