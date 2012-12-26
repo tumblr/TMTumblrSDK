@@ -46,6 +46,22 @@
     return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password callback:callback];
 }
 
+- (void)setOAuthConsumerKey:(NSString *)OAuthConsumerKey {
+    [TMTumblrAuthenticator sharedInstance].OAuthConsumerKey = OAuthConsumerKey;
+}
+
+- (NSString *)OAuthConsumerKey {
+    return [TMTumblrAuthenticator sharedInstance].OAuthConsumerKey;
+}
+
+- (void)setOAuthConsumerSecret:(NSString *)OAuthConsumerSecret {
+    [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret = OAuthConsumerSecret;
+}
+
+- (NSString *)OAuthConsumerSecret {
+    return [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret;
+}
+
 #pragma mark - User
 
 - (JXHTTPOperation *)userInfoRequest {
