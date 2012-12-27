@@ -28,9 +28,9 @@ Import `TMAPIClient.h`. Configure the `[TMAPIClient sharedInstance]` singleton w
     [TMAPIClient sharedInstance].OAuthConsumerKey = @"ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd";
     [TMAPIClient sharedInstance].OAuthConsumerSecret = @"MGI39kdasdoka3240989ASFjoiajsfomdasd39129ASDAPDOJa";
 
-The API client proxies to [TumblrAuthentication](https://github.com/tumblr/tumblr-ios-authentication) to provide both three-legged OAuth and xAuth flows. Please see the TumblrAuthentication [documentation](https://github.com/tumblr/tumblr-ios-authentication#usage) for usage instructions. Use the `[TMAPIClient sharedInstance]` singleton instead of `[TMTumblrAuthenticator sharedInstance]` directly.
+The API client proxies to [TumblrAuthentication](https://github.com/tumblr/tumblr-ios-authentication) to provide both three-legged OAuth and xAuth flows. Please see the TumblrAuthentication [documentation](https://github.com/tumblr/tumblr-ios-authentication#usage) for usage instructions but opt to use `[TMAPIClient sharedInstance]` instead of `[TMTumblrAuthenticator sharedInstance]` directly.
 
-There are two ways of hitting the API:
+There are two ways of retrieving data from the API:
 
 	// void methods for immediate requests, preferable when the caller does not need a reference to the underlying request options:
 
@@ -61,6 +61,9 @@ By default, non-idempotent tests (e.g. creating a post, liking a post, following
 	<string>oiajsfomdasd39129ASDAPDOJaMGI39kdasdoka3240989ASFj</string>
 	<key>BlogName</key>
 	<string>brydev</string>
+
+## Contact
+[Bryan Irace](http://github.com/irace)
 
 ## License
 Copyright 2012 Tumblr, Inc.
