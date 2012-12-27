@@ -13,7 +13,7 @@ An unopinionated and flexible library for easily integrating Tumblr data into yo
 Built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Getting started
-[CocoaPods](http://cocoapods.org) is the recommended way to add the Tumblr iOS SDK to your project. You can simply create a [podfile](https://github.com/CocoaPods/CocoaPods/wiki/A-Podfile) that looks as follows:
+[CocoaPods](http://cocoapods.org) is the recommended way to add TumblrSDK to your project. You can simply create a [podfile](https://github.com/CocoaPods/CocoaPods/wiki/A-Podfile) that looks as follows:
 
     platform :ios, '5.0'
 
