@@ -10,7 +10,7 @@ Unopinionated and flexible SDK for easily integrating Tumblr data into your appl
 		NSLog(@"Blog description: %@", result[@"description"]);
     }];
     
-Built on top of Justin Ouellette's lightweight [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
+Built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Getting started
 [CocoaPods](http://cocoapods.org) is the recommended way to add the Tumblr iOS SDK to your project. You can simply create a [podfile](https://github.com/CocoaPods/CocoaPods/wiki/A-Podfile) that looks as follows:
@@ -20,19 +20,17 @@ Built on top of Justin Ouellette's lightweight [JXHTTP](https://github.com/jstn/
     pod 'TumblrSDK', '0.1.0'
 
 ## Usage
-Import `TMTumblrSDK.h`. Configure the `[TMAPIClient sharedInstance]` singleton with your app’s Tumblr consumer key and secret:
+
+`TMAPIClient` is a full wrapper for the [Tumblr API](http://www.tumblr.com/docs/en/api/v2). Please view the API documetation for usage instructions, available parameters, etc.
+
+Import `TMAPIClient.h`. Configure the `[TMAPIClient sharedInstance]` singleton with your app’s Tumblr consumer key and secret:
 
     [TMAPIClient sharedInstance].OAuthConsumerKey = @"ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd";
     [TMAPIClient sharedInstance].OAuthConsumerSecret = @"MGI39kdasdoka3240989ASFjoiajsfomdasd39129ASDAPDOJa";
 
-### Authentication
-The SDK proxies to the [TumblrAuthentication](https://github.com/tumblr/tumblr-ios-authentication) module to provide both three-legged OAuth and xAuth flows. Please see the TumblrAuthentication [documentation](https://github.com/tumblr/tumblr-ios-authentication#usage) for usage instructions. Use the `[TMAPIClient sharedInstance]` singleton instead of `[TMTumblrAuthenticator sharedInstance]`.
+The API client proxies to [TumblrAuthentication](https://github.com/tumblr/tumblr-ios-authentication) to provide both three-legged OAuth and xAuth flows. Please see the TumblrAuthentication [documentation](https://github.com/tumblr/tumblr-ios-authentication#usage) for usage instructions. Use the `[TMAPIClient sharedInstance]` singleton instead of `[TMTumblrAuthenticator sharedInstance]` directly.
 
-### API client
-
-`TMAPIClient` is a full wrapper for the [Tumblr API](http://www.tumblr.com/docs/en/api/v2). Please view the API documetation for usage instructions, available parameters, etc.
-
-The API client provides two ways of hitting the API:
+There are two ways of hitting the API:
 
 	// void methods for immediate requests, preferable when the caller does not need a reference to the underlying request options:
 
