@@ -90,11 +90,6 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters;
 - (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                            data:(NSData *)data filePath:(NSString *)filePath contentType:(NSString *)contentType;
-- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters data:(NSData *)data
-    filePath:(NSString *)filePath contentType:(NSString *)contentType callback:(TMAPICallback)callback;
-
 - (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
@@ -118,15 +113,15 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName data:(NSData *)data contentType:(NSString *)contentType
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName dataArray:(NSArray *)dataArrayOrNil
+                    filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArray
                        parameters:(NSDictionary *)parameters;
-- (void)photo:(NSString *)blogName data:(NSData *)data contentType:(NSString *)contentType
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (void)photo:(NSString *)blogName dataArray:(NSArray *)dataArrayOrNil filePathArray:(NSArray *)filePathArrayOrNil
+contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
-                       parameters:(NSDictionary *)parameters;
-- (void)photo:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters dataArray:(NSArray *)dataArrayOrNil
+                                      filePathArray:(NSArray *)filePathArrayOrNil
+                                   contentTypeArray:(NSArray *)contentTypeArray;
 
 /** @name Tagging */
 
