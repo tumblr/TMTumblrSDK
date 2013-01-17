@@ -374,7 +374,6 @@ contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)paramete
     
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
     request.continuesInAppBackground = YES;
-    request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
     
     [self signRequest:request withParameters:nil];
     
@@ -388,6 +387,7 @@ contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)paramete
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
+    request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
     
     [self signRequest:request withParameters:mutableParameters];
     
