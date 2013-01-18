@@ -290,29 +290,6 @@
 - (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     [self sendRequest:[self chatRequest:blogName parameters:parameters] callback:callback];
 }
-/*
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName data:(NSData *)data contentType:(NSString *)contentType
-                       parameters:(NSDictionary *)parameters {
-    return [self postRequest:blogName type:@"photo" parameters:parameters data:data filePath:nil contentType:contentType];
-}
-
-- (void)photo:(NSString *)blogName data:(NSData *)data contentType:(NSString *)contentType
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self photoRequest:blogName data:data contentType:contentType parameters:parameters]
-             callback:callback];
-}
-
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
-                       parameters:(NSDictionary *)parameters {
-    return [self postRequest:blogName type:@"photo" parameters:parameters data:nil filePath:filePath contentType:contentType];
-}
-
-- (void)photo:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self photoRequest:blogName filePath:filePath contentType:contentType parameters:parameters]
-             callback:callback];
-}
-*/
 
 - (JXHTTPOperation *)photoRequest:(NSString *)blogName dataArray:(NSArray *)dataArrayOrNil
                     filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArray
@@ -331,6 +308,27 @@
 contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     [self sendRequest:[self photoRequest:blogName dataArray:dataArrayOrNil filePathArray:filePathArrayOrNil
                         contentTypeArray:contentTypeArray parameters:parameters] callback:(TMAPICallback)callback];
+}
+
+- (JXHTTPOperation *)videoRequest:(NSString *)blogName data:(NSData *)dataOrNil filePath:(NSString *)filePathOrNil
+                      contentType:(NSString *)contentType parameters:(NSDictionary *)parameters {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"type"] = @"video";
+    
+    JXHTTPMultipartBody *body = [self multipartBodyForParameters:mutableParameters
+                                                       dataArray:dataOrNil ? @[dataOrNil] : nil
+                                                   filePathArray:filePathOrNil ? @[filePathOrNil] : nil
+                                                contentTypeArray:@[contentType]];
+    
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
+                          parameters:parameters body:body];
+}
+
+- (void)video:(NSString *)blogName data:(NSData *)dataOrNil filePath:(NSString *)filePathOrNil
+  contentType:(NSString *)contentType parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self videoRequest:blogName data:dataOrNil filePath:filePathOrNil contentType:contentType
+                              parameters:parameters] callback:(TMAPICallback)callback];
+
 }
 
 - (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters dataArray:(NSArray *)dataArrayOrNil
