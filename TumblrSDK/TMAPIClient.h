@@ -119,6 +119,11 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (void)photo:(NSString *)blogName dataArray:(NSArray *)dataArrayOrNil filePathArray:(NSArray *)filePathArrayOrNil
 contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
+- (JXHTTPOperation *)videoRequest:(NSString *)blogName data:(NSData *)dataOrNil filePath:(NSString *)filePathOrNil
+                      contentType:(NSString *)contentType parameters:(NSDictionary *)parameters;
+- (void)video:(NSString *)blogName data:(NSData *)dataOrNil filePath:(NSString *)filePathOrNil
+  contentType:(NSString *)contentType parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+
 - (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters dataArray:(NSArray *)dataArrayOrNil
                                       filePathArray:(NSArray *)filePathArrayOrNil
                                    contentTypeArray:(NSArray *)contentTypeArray;
