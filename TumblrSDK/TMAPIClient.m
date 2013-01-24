@@ -338,13 +338,21 @@ contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)paramete
     
     JXHTTPMultipartBody *multipartBody = [JXHTTPMultipartBody withDictionary:mutableParameters];
     
+    BOOL multiple = filePathArrayOrNil ? [filePathArrayOrNil count] > 1 : [dataArrayOrNil count] > 1;
+    
+    NSString *(^keyForIndex)(int) = ^ (int index) {
+        return multiple ? [NSString stringWithFormat:@"data[%d]", index] : @"data";
+    };
+    
+    NSString *fileName = @"foo.bar"; // Should be using something better here?
+    
     if (filePathArrayOrNil) {
         [filePathArrayOrNil enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
-            [multipartBody addFile:path forKey:@"data" contentType:contentTypeArray[index] fileName:@"foo.bar"];
+            [multipartBody addFile:path forKey:keyForIndex(index) contentType:contentTypeArray[index] fileName:fileName];
         }];
     } else if (dataArrayOrNil) {
         [dataArrayOrNil enumerateObjectsUsingBlock:^(NSData *data, NSUInteger index, BOOL *stop) {
-            [multipartBody addData:data forKey:@"data" contentType:contentTypeArray[index] fileName:@"foo.bar"];
+            [multipartBody addData:data forKey:keyForIndex(index) contentType:contentTypeArray[index] fileName:fileName];
         }];
     }
     
