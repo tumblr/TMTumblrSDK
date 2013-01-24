@@ -291,70 +291,56 @@
     [self sendRequest:[self chatRequest:blogName parameters:parameters] callback:callback];
 }
 
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName dataArray:(NSArray *)dataArrayOrNil
-                    filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArray
-                       parameters:(NSDictionary *)parameters {
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArray
+                 contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"type"] = @"photo";
     
-    JXHTTPMultipartBody *body = [self multipartBodyForParameters:mutableParameters dataArray:dataArrayOrNil
-                                                   filePathArray:filePathArrayOrNil contentTypeArray:contentTypeArray];
+    JXHTTPMultipartBody *body = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
+                                                contentTypeArray:contentTypeArray];
     
     return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
                           parameters:parameters body:body];
 }
 
-- (void)photo:(NSString *)blogName dataArray:(NSArray *)dataArrayOrNil filePathArray:(NSArray *)filePathArrayOrNil
-contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self photoRequest:blogName dataArray:dataArrayOrNil filePathArray:filePathArrayOrNil
-                        contentTypeArray:contentTypeArray parameters:parameters] callback:(TMAPICallback)callback];
+- (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self photoRequest:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray parameters:parameters]
+             callback:(TMAPICallback)callback];
 }
 
-- (JXHTTPOperation *)videoRequest:(NSString *)blogName data:(NSData *)dataOrNil filePath:(NSString *)filePathOrNil
-                      contentType:(NSString *)contentType parameters:(NSDictionary *)parameters {
+- (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+                       parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"type"] = @"video";
     
-    JXHTTPMultipartBody *body = [self multipartBodyForParameters:mutableParameters
-                                                       dataArray:dataOrNil ? @[dataOrNil] : nil
-                                                   filePathArray:filePathOrNil ? @[filePathOrNil] : nil
+    JXHTTPMultipartBody *body = [self multipartBodyForParameters:mutableParameters filePathArray:@[filePath]
                                                 contentTypeArray:@[contentType]];
     
     return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
                           parameters:parameters body:body];
 }
 
-- (void)video:(NSString *)blogName data:(NSData *)dataOrNil filePath:(NSString *)filePathOrNil
-  contentType:(NSString *)contentType parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self videoRequest:blogName data:dataOrNil filePath:filePathOrNil contentType:contentType
+- (void)video:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self videoRequest:blogName filePath:filePath contentType:contentType
                               parameters:parameters] callback:(TMAPICallback)callback];
 
 }
 
-- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters dataArray:(NSArray *)dataArrayOrNil
-                                      filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArray {
+- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters filePathArray:(NSArray *)filePathArray
+                                   contentTypeArray:(NSArray *)contentTypeArray {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
     JXHTTPMultipartBody *multipartBody = [JXHTTPMultipartBody withDictionary:mutableParameters];
     
-    BOOL multiple = filePathArrayOrNil ? [filePathArrayOrNil count] > 1 : [dataArrayOrNil count] > 1;
+    BOOL multiple = [filePathArray count] > 1;
     
-    NSString *(^keyForIndex)(int) = ^ (int index) {
-        return multiple ? [NSString stringWithFormat:@"data[%d]", index] : @"data";
-    };
-    
-    NSString *fileName = @"foo.bar"; // Should be using something better here?
-    
-    if (filePathArrayOrNil) {
-        [filePathArrayOrNil enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
-            [multipartBody addFile:path forKey:keyForIndex(index) contentType:contentTypeArray[index] fileName:fileName];
-        }];
-    } else if (dataArrayOrNil) {
-        [dataArrayOrNil enumerateObjectsUsingBlock:^(NSData *data, NSUInteger index, BOOL *stop) {
-            [multipartBody addData:data forKey:keyForIndex(index) contentType:contentTypeArray[index] fileName:fileName];
-        }];
-    }
+    [filePathArray enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
+        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%d]", index] : @"data"
+                   contentType:contentTypeArray[index] fileName:@"foo.bar"];
+    }];
     
     return multipartBody;
 }

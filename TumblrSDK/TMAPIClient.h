@@ -113,19 +113,17 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName dataArray:(NSArray *)dataArrayOrNil
-                    filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArray
-                       parameters:(NSDictionary *)parameters;
-- (void)photo:(NSString *)blogName dataArray:(NSArray *)dataArrayOrNil filePathArray:(NSArray *)filePathArrayOrNil
-contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArray
+                 contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters;
+- (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)videoRequest:(NSString *)blogName data:(NSData *)dataOrNil filePath:(NSString *)filePathOrNil
+- (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePath
                       contentType:(NSString *)contentType parameters:(NSDictionary *)parameters;
-- (void)video:(NSString *)blogName data:(NSData *)dataOrNil filePath:(NSString *)filePathOrNil
-  contentType:(NSString *)contentType parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+- (void)video:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters dataArray:(NSArray *)dataArrayOrNil
-                                      filePathArray:(NSArray *)filePathArrayOrNil
+- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters filePathArray:(NSArray *)filePathArray
                                    contentTypeArray:(NSArray *)contentTypeArray;
 
 /** @name Tagging */
