@@ -13,13 +13,13 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 @interface TMAPIClient : NSObject
 
-@property (nonatomic, copy) NSString *OAuthConsumerKey;
-@property (nonatomic, copy) NSString *OAuthConsumerSecret;
-@property (nonatomic, copy) NSString *OAuthToken;
-@property (nonatomic, copy) NSString *OAuthTokenSecret;
-@property (nonatomic, copy) NSDictionary *customHeaders;
+@property (copy) NSString *OAuthConsumerKey;
+@property (copy) NSString *OAuthConsumerSecret;
+@property (copy) NSString *OAuthToken;
+@property (copy) NSString *OAuthTokenSecret;
+@property (copy) NSDictionary *customHeaders;
 
-@property (nonatomic, readonly) JXHTTPOperationQueue *queue;
+@property (strong, readonly) JXHTTPOperationQueue *queue;
 
 + (TMAPIClient *)sharedInstance;
 
@@ -122,9 +122,6 @@ typedef void (^TMAPICallback)(id, NSError *error);
                       contentType:(NSString *)contentType parameters:(NSDictionary *)parameters;
 - (void)video:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
-
-- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters filePathArray:(NSArray *)filePathArray
-                                   contentTypeArray:(NSArray *)contentTypeArray;
 
 /** @name Tagging */
 
