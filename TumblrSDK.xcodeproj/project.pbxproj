@@ -338,6 +338,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38831AA3C424017B5DF52F4 /* Pods.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/TumblrSDK.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TumblrSDK/TumblrSDK-Prefix.pch";
@@ -354,6 +355,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F38831AA3C424017B5DF52F4 /* Pods.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/TumblrSDK.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TumblrSDK/TumblrSDK-Prefix.pch";
