@@ -10,12 +10,6 @@
 
 #import "TMOAuth.h"
 
-@interface TMAPIClient()
-
-@property (nonatomic, copy) TMAuthenticationCallback authCallback;
-
-@end
-
 @implementation TMAPIClient
 
 + (id)sharedInstance {
@@ -443,40 +437,12 @@ static inline NSString *URLWithPath(NSString *path) {
 }
 
 static inline NSString *URLDecode(NSString *string) {
-    return [(NSString *)CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")) autorelease];
+    return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")));
 }
 
 static inline NSString *URLEncode(NSString *string) {
-    return [(NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
-                                                                CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8)
-            autorelease];
-}
-
-static inline NSDictionary *queryStringToDictionary(NSString *string) {
-    NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
-    
-    NSArray *parameterStrings = [string componentsSeparatedByString:@"&"];
-    
-    for (NSString *parameterString in parameterStrings) {
-        NSArray *parameterComponents = [parameterString componentsSeparatedByString:@"="];
-        parameterDictionary[URLDecode(parameterComponents[0])] = URLDecode(parameterComponents[1]);
-    }
-    
-    return parameterDictionary;
-}
-
-#pragma mark - Memory management
-
-- (void)dealloc {
-    self.authCallback = nil;
-    self.OAuthConsumerKey = nil;
-    self.OAuthConsumerSecret = nil;
-    self.OAuthToken = nil;
-    self.OAuthTokenSecret = nil;
-    
-    [_queue release];
-    
-    [super dealloc];
+    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
+                                                                CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
 }
 
 #pragma mark - NSObject
