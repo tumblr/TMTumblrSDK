@@ -128,7 +128,8 @@
 }
 
 - (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName]
+                         parameters:parameters];
 }
 
 - (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -136,7 +137,8 @@
 }
 
 - (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/avatar/%d", blogName, size] parameters:nil];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/avatar/%d", blogName, size]
+                         parameters:nil];
 }
 
 - (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
@@ -181,7 +183,8 @@
 }
 
 - (JXHTTPOperation *)queueRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName]
+                         parameters:parameters];
 }
 
 - (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -189,7 +192,8 @@
 }
 
 - (JXHTTPOperation *)draftsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName]
+                         parameters:parameters];
 }
 
 - (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -197,7 +201,8 @@
 }
 
 - (JXHTTPOperation *)submissionsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName]
+                         parameters:parameters];
 }
 
 - (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -205,7 +210,8 @@
 }
 
 - (JXHTTPOperation *)likesRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/likes", blogName] parameters:parameters];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/likes", blogName]
+                         parameters:parameters];
 }
 
 - (void)likes:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
@@ -257,6 +263,8 @@
     return [self postRequest:blogName type:@"text" parameters:parameters];
 }
 
+#pragma mark -  Posting (convenience)
+
 - (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     [self sendRequest:[self textRequest:blogName parameters:parameters] callback:callback];
 }
@@ -287,32 +295,20 @@
 
 - (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArray
                  contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"type"] = @"photo";
-    
-    JXHTTPMultipartBody *body = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
-                                                contentTypeArray:contentTypeArray];
-    
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
-                          parameters:parameters body:body];
+    return [self multipartPostRequest:blogName type:@"photo" parameters:parameters filePathArray:filePathArray
+                     contentTypeArray:contentTypeArray];
 }
 
 - (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self photoRequest:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray parameters:parameters]
-             callback:(TMAPICallback)callback];
+    [self sendRequest:[self photoRequest:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray
+                              parameters:parameters] callback:(TMAPICallback)callback];
 }
 
 - (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
                        parameters:(NSDictionary *)parameters {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"type"] = @"video";
-    
-    JXHTTPMultipartBody *body = [self multipartBodyForParameters:mutableParameters filePathArray:@[filePath]
-                                                contentTypeArray:@[contentType]];
-    
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
-                          parameters:parameters body:body];
+    return [self multipartPostRequest:blogName type:@"video" parameters:parameters filePathArray:@[filePath]
+                     contentTypeArray:@[contentType]];
 }
 
 - (void)video:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
@@ -320,23 +316,6 @@
     [self sendRequest:[self videoRequest:blogName filePath:filePath contentType:contentType
                               parameters:parameters] callback:(TMAPICallback)callback];
 
-}
-
-- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters filePathArray:(NSArray *)filePathArray
-                                   contentTypeArray:(NSArray *)contentTypeArray {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
-    
-    JXHTTPMultipartBody *multipartBody = [JXHTTPMultipartBody withDictionary:mutableParameters];
-    
-    BOOL multiple = [filePathArray count] > 1;
-    
-    [filePathArray enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
-        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%d]", index] : @"data"
-                   contentType:contentTypeArray[index] fileName:@"foo.bar"];
-    }];
-    
-    return multipartBody;
 }
 
 #pragma mark - Tagging
@@ -380,18 +359,39 @@
     return request;
 }
 
-- (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters
-                                    body:(id <JXHTTPRequestBody>) body {
+- (JXHTTPOperation *)multipartPostRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                            filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
-    
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
+    mutableParameters[@"type"] = @"type";
+
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:
+                                URLWithPath([NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName])];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
-    request.requestBody = body;
+    request.requestBody = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
+                                          contentTypeArray:contentTypeArray];
+    
     [self signRequest:request withParameters:mutableParameters];
     
     return request;
+}
+
+- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters filePathArray:(NSArray *)filePathArray
+                                   contentTypeArray:(NSArray *)contentTypeArray {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    
+    JXHTTPMultipartBody *multipartBody = [JXHTTPMultipartBody withDictionary:mutableParameters];
+    
+    BOOL multiple = [filePathArray count] > 1;
+    
+    [filePathArray enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
+        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%d]", index] : @"data"
+                   contentType:contentTypeArray[index] fileName:@"foo.bar"];
+    }];
+    
+    return multipartBody;
 }
 
 - (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters {
