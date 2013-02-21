@@ -49,7 +49,7 @@ There are two ways of retrieving data from the API:
 	}];
 
 ## Unit tests
-By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `Tests/Credentials.plist` file with the following properties:
+The SDK contains a full integration test suite. By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `Tests/Credentials.plist` file with the following properties:
 
 	<key>OAuthToken</key>
 	<string>ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd</string>
