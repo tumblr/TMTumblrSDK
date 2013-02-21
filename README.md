@@ -1,5 +1,5 @@
 # TumblrSDK
-An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application, however you see fit.
+An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application, however you see fit. The library uses ARC and requires iOS 5 or OS X 10.7.
 
     [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result, NSError *error) {
       if (error) {
