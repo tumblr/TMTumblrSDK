@@ -318,6 +318,18 @@
 
 }
 
+- (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePath
+                      contentType:(NSString *)contentType parameters:(NSDictionary *)parameters {
+    return [self multipartPostRequest:blogName type:@"audio" parameters:parameters filePathArray:@[filePath]
+                     contentTypeArray:@[contentType]];
+}
+
+- (void)audio:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self audioRequest:blogName filePath:filePath contentType:contentType
+                              parameters:parameters] callback:(TMAPICallback)callback];
+}
+
 #pragma mark - Tagging
 
 - (JXHTTPOperation *)taggedRequest:(NSString *)tag parameters:(NSDictionary *)parameters {
@@ -363,7 +375,7 @@
                             filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
-    mutableParameters[@"type"] = @"type";
+    mutableParameters[@"type"] = type;
 
     JXHTTPOperation *request = [JXHTTPOperation withURLString:
                                 URLWithPath([NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName])];
