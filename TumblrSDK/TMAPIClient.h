@@ -113,19 +113,19 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArray
-                 contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters;
-- (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil
+                 contentTypeArray:(NSArray *)contentTypeArrayOrNil parameters:(NSDictionary *)parameters;
+- (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePath
-                      contentType:(NSString *)contentType parameters:(NSDictionary *)parameters;
-- (void)video:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+- (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
+                      contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters;
+- (void)video:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-- (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePath
-                      contentType:(NSString *)contentType parameters:(NSDictionary *)parameters;
-- (void)audio:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+- (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
+                      contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters;
+- (void)audio:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /** @name Tagging */

@@ -293,40 +293,40 @@
     [self sendRequest:[self chatRequest:blogName parameters:parameters] callback:callback];
 }
 
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArray
-                 contentTypeArray:(NSArray *)contentTypeArray parameters:(NSDictionary *)parameters {
-    return [self multipartPostRequest:blogName type:@"photo" parameters:parameters filePathArray:filePathArray
-                     contentTypeArray:contentTypeArray];
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil
+                 contentTypeArray:(NSArray *)contentTypeArrayOrNil parameters:(NSDictionary *)parameters {
+    return [self multipartPostRequest:blogName type:@"photo" parameters:parameters filePathArray:filePathArrayOrNil
+                     contentTypeArray:contentTypeArrayOrNil];
 }
 
-- (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray
+- (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self photoRequest:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray
+    [self sendRequest:[self photoRequest:blogName filePathArray:filePathArrayOrNil contentTypeArray:contentTypeArrayOrNil
                               parameters:parameters] callback:(TMAPICallback)callback];
 }
 
-- (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
-                       parameters:(NSDictionary *)parameters {
-    return [self multipartPostRequest:blogName type:@"video" parameters:parameters filePathArray:@[filePath]
-                     contentTypeArray:@[contentType]];
+- (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
+                      contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters {
+    return [self multipartPostRequest:blogName type:@"video" parameters:parameters filePathArray:filePathOrNil ? @[filePathOrNil] : nil
+                     contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil];
 }
 
-- (void)video:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+- (void)video:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self videoRequest:blogName filePath:filePath contentType:contentType
+    [self sendRequest:[self videoRequest:blogName filePath:filePathOrNil contentType:contentTypeOrNil
                               parameters:parameters] callback:(TMAPICallback)callback];
 
 }
 
-- (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePath
-                      contentType:(NSString *)contentType parameters:(NSDictionary *)parameters {
-    return [self multipartPostRequest:blogName type:@"audio" parameters:parameters filePathArray:@[filePath]
-                     contentTypeArray:@[contentType]];
+- (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
+                      contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters {
+    return [self multipartPostRequest:blogName type:@"audio" parameters:parameters filePathArray:filePathOrNil ? @[filePathOrNil] : nil
+                     contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil];
 }
 
-- (void)audio:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+- (void)audio:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self audioRequest:blogName filePath:filePath contentType:contentType
+    [self sendRequest:[self audioRequest:blogName filePath:filePathOrNil contentType:contentTypeOrNil
                               parameters:parameters] callback:(TMAPICallback)callback];
 }
 

@@ -12,6 +12,7 @@
 
 @interface TMAPIClientTest()
 
+@property (copy) NSString *blogName;
 @property (copy) TMAPICallback defaultCallback;
 @property (assign) BOOL receivedAsynchronousCallback;
 @property (strong) TMAPIClient *client;
@@ -178,30 +179,46 @@
     }];
 }
 
-- (void)testPhotoPost {
+- (void)testPhotoPostFromFile {
     [self performAsynchronousTest:^{
-        NSString *filePath = [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"burrito" ofType:@"png"];
-        
-        [self.client photo:self.blogName filePathArray:@[filePath] contentTypeArray:@[@"image/png"]
+        [self.client photo:self.blogName filePathArray:@[bundleFilePath(@"burrito", @"png")] contentTypeArray:@[@"image/png"]
                 parameters:@{ @"caption" : @"Photo caption" } callback:self.defaultCallback];
     }];
 }
- 
-- (void)testVideoPost {
+
+- (void)testPhotoPostFromSource {
     [self performAsynchronousTest:^{
-        NSString *filePath = [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"sample" ofType:@"m4v"];
-        
-        [self.client video:self.blogName filePath:filePath contentType:@"video/mp4"
+        [self.client photo:self.blogName filePathArray:nil contentTypeArray:nil parameters:
+         @{ @"source" : @"http://www.tacobell.com/static_files/TacoBell/StaticAssets/images/menuItems/pdp/pdp_mexican_pizza.png",
+         @"caption" : @"Audio caption" } callback:self.defaultCallback];
+    }];
+}
+
+- (void)testVideoPostFromFile {
+    [self performAsynchronousTest:^{
+        [self.client video:self.blogName filePath:bundleFilePath(@"sample", @"m4v") contentType:@"video/mp4"
                 parameters:@{ @"caption" : @"Video caption" } callback:self.defaultCallback];
     }];
 }
- 
-- (void)testAudioPost {
+
+- (void)testVideoPostFromEmbed {
     [self performAsynchronousTest:^{
-        NSString *filePath = [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"sample" ofType:@"mp3"];
-        
-        [self.client audio:self.blogName filePath:filePath contentType:@"audio/mp3"
+        [self.client video:self.blogName filePath:nil contentType:nil parameters:
+         @{ @"embed" : @"http://vimeo.com/48324900", @"caption" : @"Audio caption" } callback:self.defaultCallback];
+    }];
+}
+ 
+- (void)testAudioPostFromFile {
+    [self performAsynchronousTest:^{
+        [self.client audio:self.blogName filePath:bundleFilePath(@"sample", @"mp3") contentType:@"audio/mp3"
                 parameters:@{ @"caption" : @"Audio caption" } callback:self.defaultCallback];
+    }];
+}
+
+- (void)testAudioPostFromExternalURL {
+    [self performAsynchronousTest:^{
+        [self.client audio:self.blogName filePath:nil contentType:nil parameters:
+         @{ @"external_url" : @"https://soundcloud.com/muxtape/july_4th", @"caption" : @"Muxtape" } callback:self.defaultCallback];
     }];
 }
  */
@@ -219,12 +236,12 @@
 - (void)setUp {
     [super setUp];
         
-    __block TMAPIClientTest *blockSelf = self;
+    __weak TMAPIClientTest *blockSelf = self;
     
     self.defaultCallback = ^ (id result, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
-            STFail(@"Request failed");
+            [blockSelf fail];
             
         } else
             STAssertNotNil(result, @"Response cannot be nil");
@@ -234,26 +251,34 @@
     
     self.client = [TMAPIClient sharedInstance];
     
-    NSDictionary *credentials = [[NSDictionary alloc] initWithContentsOfFile:
-                                 [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"Credentials"
-                                                                                             ofType:@"plist"]];
+    NSDictionary *credentials = [[NSDictionary alloc] initWithContentsOfFile:bundleFilePath(@"Credentials", @"plist")];
     
     NSString *OAuthConsumerKey = credentials[@"OAuthConsumerKey"];
     NSString *OAuthConsumerSecret = credentials[@"OAuthConsumerSecret"];
     NSString *OAuthToken = credentials[@"OAuthToken"];
     NSString *OAuthTokenSecret = credentials[@"OAuthTokenSecret"];
+    NSString *blogName = credentials[@"BlogName"];
     
     STAssertTrue(OAuthConsumerKey.length, @"OAuthConsumerKey required in Credentials.plist");
     STAssertTrue(OAuthConsumerSecret.length, @"OAuthConsumerSecret required in Credentials.plist");
     STAssertTrue(OAuthToken.length, @"OAuthToken required in Credentials.plist");
     STAssertTrue(OAuthTokenSecret.length, @"OAuthTokenSecret required in Credentials.plist");
+    STAssertTrue(blogName.length, @"BlogName required in Credentials.plist");
 
     self.client.OAuthConsumerKey = OAuthConsumerKey;
     self.client.OAuthConsumerSecret = OAuthConsumerSecret;
     self.client.OAuthToken = OAuthToken;
     self.client.OAuthTokenSecret = OAuthTokenSecret;
     
-    [credentials release];
+    self.blogName = blogName;
+}
+
+- (void)fail {
+    STFail(@"Request failed");
+}
+
+NSString *bundleFilePath(NSString *name, NSString *extension) {
+    return [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:name ofType:extension];
 }
 
 - (void)performAsynchronousTest:(void(^)(void))testCode {
