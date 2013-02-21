@@ -123,6 +123,11 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (void)video:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
+- (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePath
+                      contentType:(NSString *)contentType parameters:(NSDictionary *)parameters;
+- (void)audio:(NSString *)blogName filePath:(NSString *)filePath contentType:(NSString *)contentType
+   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+
 /** @name Tagging */
 
 - (JXHTTPOperation *)taggedRequest:(NSString *)tag parameters:(NSDictionary *)parameters;

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9335AB9216D6C2F3005CE9D7 /* sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9335AB9116D6C2F3005CE9D7 /* sample.mp3 */; };
+		9335AB9416D6C5A9005CE9D7 /* sample.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 9335AB9316D6C5A9005CE9D7 /* sample.m4v */; };
 		93E52A74168BB43700E5471A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A73168BB43700E5471A /* Foundation.framework */; };
 		93E52A83168BB43700E5471A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A82168BB43700E5471A /* SenTestingKit.framework */; };
 		93E52A85168BB43700E5471A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A84168BB43700E5471A /* UIKit.framework */; };
@@ -43,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		4027A38887244210991EA792 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9335AB9116D6C2F3005CE9D7 /* sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample.mp3; sourceTree = "<group>"; };
+		9335AB9316D6C5A9005CE9D7 /* sample.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.m4v; sourceTree = "<group>"; };
 		93E52A70168BB43700E5471A /* libTumblrSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTumblrSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E52A73168BB43700E5471A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93E52A77168BB43700E5471A /* TumblrSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TumblrSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 			isa = PBXGroup;
 			children = (
 				93E52AAC168BB50300E5471A /* burrito.png */,
+				9335AB9116D6C2F3005CE9D7 /* sample.mp3 */,
+				9335AB9316D6C5A9005CE9D7 /* sample.m4v */,
 				93E52AAD168BB50300E5471A /* Credentials.plist */,
 				93E52A8C168BB43700E5471A /* TumblrSDKTests-Info.plist */,
 			);
@@ -226,6 +232,8 @@
 			files = (
 				93E52AAE168BB50300E5471A /* burrito.png in Resources */,
 				93E52AAF168BB50300E5471A /* Credentials.plist in Resources */,
+				9335AB9216D6C2F3005CE9D7 /* sample.mp3 in Resources */,
+				9335AB9416D6C5A9005CE9D7 /* sample.m4v in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

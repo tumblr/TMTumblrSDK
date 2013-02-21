@@ -12,28 +12,13 @@
 
 @interface TMAPIClientTest()
 
-@property (nonatomic, copy) NSString *blogName;
-@property (nonatomic, copy) NSString *emailAddress;
-@property (nonatomic, copy) NSString *password;
-@property (nonatomic, copy) TMAPICallback defaultCallback;
-@property (nonatomic, assign) BOOL receivedAsynchronousCallback;
-@property (nonatomic, retain) TMAPIClient *client;
+@property (copy) TMAPICallback defaultCallback;
+@property (assign) BOOL receivedAsynchronousCallback;
+@property (strong) TMAPIClient *client;
 
 @end
 
 @implementation TMAPIClientTest
-
-#pragma mark - Authentication
-
-/*
- xAuth is not enabled by default but you can request it for your app: http://www.tumblr.com/oauth/apps
- 
-- (void)testXAuth {
-    [self performAsynchronousTest:^ {
-        [self.client xAuth:self.emailAddress password:self.password callback:self.defaultCallback];
-    }];
-}
- */
 
 #pragma mark - User
 
@@ -143,6 +128,7 @@
 
 /*
  Non-idempodent:
+ 
 - (void)testEditPost {
     [self performAsynchronousTest:^{
         [self.client editPost:self.blogName parameters:
@@ -191,30 +177,34 @@
                  callback:self.defaultCallback];
     }];
 }
- */
-/*
-- (void)testPhotoPostFromData {
-    [self performAsynchronousTest:^{
-        NSData *data = [NSData dataWithContentsOfFile:
-                        [[NSBundle bundleForClass:[TMTumblrSDKTests class]] pathForResource:@"burrito" ofType:@"png"]];
-        
-        [self.client photo:self.blogName data:data contentType:@"image/png" parameters:
-         @{ @"caption" : @"Yum (from data)" } callback:self.defaultCallback];
-    }];
-}
- */
-- (void)testPhotoPostFromFile {
+
+- (void)testPhotoPost {
     [self performAsynchronousTest:^{
         NSString *filePath = [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"burrito" ofType:@"png"];
         
-        [self.client photo:self.blogName filePath:filePath contentType:@"image/png" parameters:
-         @{ @"caption" : @"Yum (from file)" } callback:self.defaultCallback];
+        [self.client photo:self.blogName filePathArray:@[filePath] contentTypeArray:@[@"image/png"]
+                parameters:@{ @"caption" : @"Photo caption" } callback:self.defaultCallback];
     }];
 }
-
-#warning Audio
-#warning Video
-#warning Photoset
+ 
+- (void)testVideoPost {
+    [self performAsynchronousTest:^{
+        NSString *filePath = [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"sample" ofType:@"m4v"];
+        
+        [self.client video:self.blogName filePath:filePath contentType:@"video/mp4"
+                parameters:@{ @"caption" : @"Video caption" } callback:self.defaultCallback];
+    }];
+}
+ 
+- (void)testAudioPost {
+    [self performAsynchronousTest:^{
+        NSString *filePath = [[NSBundle bundleForClass:[TMAPIClientTest class]] pathForResource:@"sample" ofType:@"mp3"];
+        
+        [self.client audio:self.blogName filePath:filePath contentType:@"audio/mp3"
+                parameters:@{ @"caption" : @"Audio caption" } callback:self.defaultCallback];
+    }];
+}
+ */
 
 #pragma mark - Tags
 
@@ -235,9 +225,9 @@
         if (error) {
             NSLog(@"%@", error);
             STFail(@"Request failed");
-        } else {
+            
+        } else
             STAssertNotNil(result, @"Response cannot be nil");
-        }
         
         blockSelf.receivedAsynchronousCallback = YES;
     };
@@ -252,29 +242,16 @@
     NSString *OAuthConsumerSecret = credentials[@"OAuthConsumerSecret"];
     NSString *OAuthToken = credentials[@"OAuthToken"];
     NSString *OAuthTokenSecret = credentials[@"OAuthTokenSecret"];
-    NSString *emailAddress = credentials[@"EmailAddress"];
-    NSString *password = credentials[@"Password"];
-    NSString *blogName = credentials[@"BlogName"];
     
     STAssertTrue(OAuthConsumerKey.length, @"OAuthConsumerKey required in Credentials.plist");
     STAssertTrue(OAuthConsumerSecret.length, @"OAuthConsumerSecret required in Credentials.plist");
     STAssertTrue(OAuthToken.length, @"OAuthToken required in Credentials.plist");
     STAssertTrue(OAuthTokenSecret.length, @"OAuthTokenSecret required in Credentials.plist");
-    
-    /*
-    STAssertTrue(emailAddress.length, @"EmailAddress required in Credentials.plist");
-    STAssertTrue(password.length, @"Password required in Credentials.plist");
-    STAssertTrue(blogName.length, @"BlogName required in Credentials.plist");
-     */
-    
+
     self.client.OAuthConsumerKey = OAuthConsumerKey;
     self.client.OAuthConsumerSecret = OAuthConsumerSecret;
     self.client.OAuthToken = OAuthToken;
     self.client.OAuthTokenSecret = OAuthTokenSecret;
-    
-    self.emailAddress = emailAddress;
-    self.password = password;
-    self.blogName = blogName;
     
     [credentials release];
 }
