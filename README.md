@@ -62,8 +62,11 @@ The SDK contains a full integration test suite. By default, non-idempotent tests
 	<key>BlogName</key>
 	<string>brydev</string>
 
+## Roadmap
+I'm using this project's [wiki](https://github.com/tumblr/tumblr-ios-sdk/wiki) page to keep track of a rough roadmap for the SDK. If you have any feature requests, please let me know by creating an issue or submitting a pull request.
+
 ## Contact
-[Bryan Irace](http://github.com/irace)
+[Bryan Irace](http://irace.me)
 
 ## License
 Copyright 2012 Tumblr, Inc.
