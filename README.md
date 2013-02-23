@@ -2,12 +2,12 @@
 An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application, however you see fit. The library uses ARC and requires iOS 5 or OS X 10.7.
 
     [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result, NSError *error) {
-      if (error) {
-	        NSLog(@"Bummer, dude: %@", error);
-	        return;    		
-    	}
+        if (error) {
+          NSLog(@"Bummer, dude: %@", error);
+          return;         
+        }
 
-		NSLog(@"Blog description: %@", result[@"description"]);
+        NSLog(@"Blog description: %@", result[@"description"]);
     }];
     
 Built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
@@ -32,35 +32,35 @@ The API client proxies to [TumblrAuthentication](https://github.com/tumblr/tumbl
 
 There are two ways of retrieving data from the API:
 
-	// void methods for immediate requests, preferable when the caller does not need a reference to the underlying request options:
+    // void methods for immediate requests, preferable when the caller does not need a reference to the underlying request options:
 
-	[[TMAPIClient sharedInstance] userInfo:^(id result, NSError *error) {
-		if (!error) NSLog(@"Got some user info");
-	}];
+    [[TMAPIClient sharedInstance] userInfo:^(id result, NSError *error) {
+        if (!error) NSLog(@"Got some user info");
+    }];
 
-	// Methods that return configured, signed JXHTTPOperation instances and require the client to explicitly send the request separately.
+    // Methods that return configured, signed JXHTTPOperation instances and require the client to explicitly send the request separately.
 
-	JXHTTPOperation *likesRequest = [[TMAPIClient sharedInstance] likesRequest:@"bryan" parameters:nil];
+    JXHTTPOperation *likesRequest = [[TMAPIClient sharedInstance] likesRequest:@"bryan" parameters:nil];
 
-	// TODO: Observe some properties, store the request in an instance variable so it can be cancelled if the view controller is deallocated, etc.
+    // TODO: Observe some properties, store the request in an instance variable so it can be cancelled if the view controller is deallocated, etc.
 
-	[[TMAPIClient sharedInstance] sendRequest:likesRequest callback:^(id result, NSError *error) {
-		if (!error) NSLog(@"Got some liked posts");
-	}];
+    [[TMAPIClient sharedInstance] sendRequest:likesRequest callback:^(id result, NSError *error) {
+        if (!error) NSLog(@"Got some liked posts");
+    }];
 
 ## Unit tests
 The SDK contains a full integration test suite. By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `Tests/Credentials.plist` file with the following properties:
 
-	<key>OAuthToken</key>
-	<string>ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd</string>
-	<key>OAuthTokenSecret</key>
-	<string>MGI39kdasdoka3240989ASFjoiajsfomdasd39129ASDAPDOJa</string>
-	<key>OAuthConsumerKey</key>
-	<string>d9238jdk92djasdjASDaoijsdADISJdadsoj2dj38dj29dj38j</string>
-	<key>OAuthConsumerSecret</key>
-	<string>oiajsfomdasd39129ASDAPDOJaMGI39kdasdoka3240989ASFj</string>
-	<key>BlogName</key>
-	<string>brydev</string>
+    <key>OAuthToken</key>
+    <string>ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd</string>
+    <key>OAuthTokenSecret</key>
+    <string>MGI39kdasdoka3240989ASFjoiajsfomdasd39129ASDAPDOJa</string>
+    <key>OAuthConsumerKey</key>
+    <string>d9238jdk92djasdjASDaoijsdADISJdadsoj2dj38dj29dj38j</string>
+    <key>OAuthConsumerSecret</key>
+    <string>oiajsfomdasd39129ASDAPDOJaMGI39kdasdoka3240989ASFj</string>
+    <key>BlogName</key>
+    <string>brydev</string>
 
 ## Roadmap
 I'm using this project's [wiki](https://github.com/tumblr/tumblr-ios-sdk/wiki) page to keep track of a rough roadmap for the SDK. If you have any feature requests, please let me know by creating an issue or submitting a pull request.
