@@ -21,6 +21,8 @@ Built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Usage
 
+### API client
+
 `TMAPIClient` is a full wrapper for the [Tumblr API](http://www.tumblr.com/docs/en/api/v2). Please view the API documetation for usage instructions, available parameters, etc.
 
 Import `TMAPIClient.h`. Configure the `[TMAPIClient sharedInstance]` singleton with your app’s Tumblr consumer key and secret:
@@ -48,8 +50,8 @@ There are two ways of retrieving data from the API:
         if (!error) NSLog(@"Got some liked posts");
     }];
 
-## Unit tests
-The SDK contains a full integration test suite. By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `Tests/Credentials.plist` file with the following properties:
+#### Tests
+The API client contains a full integration test suite. By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `Tests/Credentials.plist` file with the following properties:
 
     <key>OAuthToken</key>
     <string>ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd</string>
@@ -61,6 +63,10 @@ The SDK contains a full integration test suite. By default, non-idempotent tests
     <string>oiajsfomdasd39129ASDAPDOJaMGI39kdasdoka3240989ASFj</string>
     <key>BlogName</key>
     <string>brydev</string>
+
+### Inter-app communication
+
+The SDK includes [TumblrAppClient](https://github.com/tumblr/tumblr-ios-app-client), a module for interacting with [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the user has it installed.
 
 ## Roadmap
 I'm using this project's [wiki](https://github.com/tumblr/tumblr-ios-sdk/wiki) page to keep track of a rough roadmap for the SDK. If you have any feature requests, please let me know by creating an issue or submitting a pull request.
