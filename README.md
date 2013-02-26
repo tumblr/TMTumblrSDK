@@ -6,10 +6,9 @@ An unopinionated and flexible library for easily integrating Tumblr data into yo
           NSLog(@"Bummer, dude: %@", error);
           return;         
         }
-
         NSLog(@"Blog description: %@", result[@"description"]);
     }];
-    
+
 Built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Getting started
