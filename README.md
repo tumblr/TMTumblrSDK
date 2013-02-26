@@ -66,7 +66,7 @@ The API client contains a full integration test suite. By default, non-idempoten
 
 ### Inter-app communication
 
-The SDK includes [TumblrAppClient](https://github.com/tumblr/tumblr-ios-app-client), a module for interacting with [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the user has it installed.
+The SDK includes [TumblrAppClient](https://github.com/tumblr/tumblr-ios-app-client), a module for interacting with [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the user has it installed. Please see the TumblrAppClient [documentation](https://github.com/tumblr/tumblr-ios-app-client#usage) for usage instructions.
 
 ## Roadmap
 I'm using this project's [wiki](https://github.com/tumblr/tumblr-ios-sdk/wiki) page to keep track of a rough roadmap for the SDK. If you have any feature requests, please let me know by creating an issue or submitting a pull request.
