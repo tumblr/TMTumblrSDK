@@ -2,14 +2,13 @@
 An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application, however you see fit.
 
     [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result, NSError *error) {
-      if (error) {
-	        NSLog(@"Bummer, dude: %@", error);
-	        return;    		
-    	}
-
-		NSLog(@"Blog description: %@", result[@"description"]);
+        if (error) {
+	          NSLog(@"Bummer, dude: %@", error);
+	          return;
+        }
+        NSLog(@"Blog description: %@", result[@"description"]);
     }];
-    
+
 Built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Getting started
