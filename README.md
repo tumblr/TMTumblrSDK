@@ -3,8 +3,8 @@ An unopinionated and flexible library for easily integrating Tumblr data into yo
 
     [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result, NSError *error) {
         if (error) {
-	          NSLog(@"Bummer, dude: %@", error);
-	          return;
+            NSLog(@"Bummer, dude: %@", error);
+            return;
         }
         NSLog(@"Blog description: %@", result[@"description"]);
     }];
