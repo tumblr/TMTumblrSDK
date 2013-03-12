@@ -12,13 +12,13 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 @interface TMAPIClient : NSObject
 
-@property (copy) NSString *OAuthConsumerKey;
-@property (copy) NSString *OAuthConsumerSecret;
-@property (copy) NSString *OAuthToken;
-@property (copy) NSString *OAuthTokenSecret;
-@property (copy) NSDictionary *customHeaders;
+@property (nonatomic, copy) NSString *OAuthConsumerKey;
+@property (nonatomic, copy) NSString *OAuthConsumerSecret;
+@property (nonatomic, copy) NSString *OAuthToken;
+@property (nonatomic, copy) NSString *OAuthTokenSecret;
+@property (nonatomic, copy) NSDictionary *customHeaders;
 
-@property (strong, readonly) JXHTTPOperationQueue *queue;
+@property (nonatomic, strong, readonly) JXHTTPOperationQueue *queue;
 
 + (TMAPIClient *)sharedInstance;
 
