@@ -426,7 +426,6 @@
             
             if (statusCode/100 != 2) {
                 error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
-                NSLog(@"%@", operation.requestURL);
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
