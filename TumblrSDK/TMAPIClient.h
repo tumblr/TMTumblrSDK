@@ -7,7 +7,6 @@
 //
 
 #import "JXHTTP.h"
-#import "TMTumblrAuthenticator.h"
 
 typedef void (^TMAPICallback)(id, NSError *error);
 
@@ -27,11 +26,11 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /** @name Authentication */
 
-- (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback;
+- (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))error;
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 
-- (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback;
+- (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(void(^)(NSError *))error;
 
 /** @name User */
 

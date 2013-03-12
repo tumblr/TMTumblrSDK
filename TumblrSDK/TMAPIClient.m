@@ -9,6 +9,7 @@
 #import "TMAPIClient.h"
 
 #import "TMOAuth.h"
+#import "TMTumblrAuthenticator.h"
 
 @implementation TMAPIClient
 
@@ -21,16 +22,28 @@
 
 #pragma mark - Authentication
 
-- (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
-    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme callback:callback];
+- (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))callback {
+    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
+                                                callback:^(NSString *token, NSString *secret, NSError *error) {
+        self.OAuthToken = token;
+        self.OAuthTokenSecret = secret;
+        
+        callback(error);
+    }];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
     return [[TMTumblrAuthenticator sharedInstance] handleOpenURL:url];
 }
 
-- (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback {
-    return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password callback:callback];
+- (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(void(^)(NSError *))callback {
+    return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password
+                                                callback:^(NSString *token, NSString *secret, NSError *error) {
+        self.OAuthToken = token;
+        self.OAuthTokenSecret = secret;
+        
+        callback(error);
+    }];
 }
 
 - (void)setOAuthConsumerKey:(NSString *)OAuthConsumerKey {
