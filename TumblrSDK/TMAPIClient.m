@@ -133,7 +133,10 @@
 #pragma mark - Blog
 
 - (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/info", blogName] parameters:nil];
+    if ([blogName rangeOfString:@"."].location == NSNotFound)
+        blogName = [blogName stringByAppendingString:@".tumblr.com"];
+    
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/info", blogName] parameters:nil];
 }
 
 - (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
