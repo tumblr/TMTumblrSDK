@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9335AB9216D6C2F3005CE9D7 /* sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9335AB9116D6C2F3005CE9D7 /* sample.mp3 */; };
 		9335AB9416D6C5A9005CE9D7 /* sample.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 9335AB9316D6C5A9005CE9D7 /* sample.m4v */; };
-		9351835616F89F1A00052F5E /* TMTumlbrActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351835516F89F1A00052F5E /* TMTumlbrActivity.m */; };
 		93E52A74168BB43700E5471A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A73168BB43700E5471A /* Foundation.framework */; };
 		93E52A83168BB43700E5471A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A82168BB43700E5471A /* SenTestingKit.framework */; };
 		93E52A85168BB43700E5471A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A84168BB43700E5471A /* UIKit.framework */; };
@@ -48,12 +47,6 @@
 		4027A38887244210991EA792 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9335AB9116D6C2F3005CE9D7 /* sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample.mp3; sourceTree = "<group>"; };
 		9335AB9316D6C5A9005CE9D7 /* sample.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.m4v; sourceTree = "<group>"; };
-		9351835416F89F1A00052F5E /* TMTumlbrActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTumlbrActivity.h; sourceTree = "<group>"; };
-		9351835516F89F1A00052F5E /* TMTumlbrActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTumlbrActivity.m; sourceTree = "<group>"; };
-		9351835716F8A6B100052F5E /* UIActivityTumblr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIActivityTumblr.png; sourceTree = "<group>"; };
-		9351835816F8A6B100052F5E /* UIActivityTumblr@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr@2x.png"; sourceTree = "<group>"; };
-		9351835916F8A6B100052F5E /* UIActivityTumblr@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr@2x~ipad.png"; sourceTree = "<group>"; };
-		9351835A16F8A6B100052F5E /* UIActivityTumblr~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr~ipad.png"; sourceTree = "<group>"; };
 		93E52A70168BB43700E5471A /* libTumblrSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTumblrSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E52A73168BB43700E5471A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93E52A77168BB43700E5471A /* TumblrSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TumblrSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -130,8 +123,6 @@
 			children = (
 				93E52A9F168BB47100E5471A /* TMAPIClient.h */,
 				93E52AA0168BB47100E5471A /* TMAPIClient.m */,
-				9351835416F89F1A00052F5E /* TMTumlbrActivity.h */,
-				9351835516F89F1A00052F5E /* TMTumlbrActivity.m */,
 				93E52A76168BB43700E5471A /* Supporting Files */,
 			);
 			path = TumblrSDK;
@@ -140,10 +131,6 @@
 		93E52A76168BB43700E5471A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9351835716F8A6B100052F5E /* UIActivityTumblr.png */,
-				9351835816F8A6B100052F5E /* UIActivityTumblr@2x.png */,
-				9351835916F8A6B100052F5E /* UIActivityTumblr@2x~ipad.png */,
-				9351835A16F8A6B100052F5E /* UIActivityTumblr~ipad.png */,
 				93E52A77168BB43700E5471A /* TumblrSDK-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -288,7 +275,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				93E52AA1168BB47100E5471A /* TMAPIClient.m in Sources */,
-				9351835616F89F1A00052F5E /* TMTumlbrActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
