@@ -1,12 +1,10 @@
 .DS_Store
 *~
 
+*.xcuserdata
 *.xcuserstate
-*pbxuser
-project.xcworkspace/
-xcuserdata/
+*.xcworkspace
+*.pbxuser
 
 Podfile.lock
 Pods/
-*.xcworkspace
-TumblrSDKTests/Credentials.plist
