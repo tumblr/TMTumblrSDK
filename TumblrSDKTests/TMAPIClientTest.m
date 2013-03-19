@@ -240,11 +240,12 @@
     
     self.defaultCallback = ^ (id result, NSError *error) {
         if (error) {
-            NSLog(@"%@", error);
-            [blockSelf fail];
-            
+            NSString *errString = [[NSString alloc] initWithFormat:@"%@", error];
+            [blockSelf failWith:errString];
         } else
-            STAssertNotNil(result, @"Response cannot be nil");
+            if (result == nil) {
+                [blockSelf failWith:@"Response was nil"];
+            }
         
         blockSelf.receivedAsynchronousCallback = YES;
     };
@@ -273,8 +274,8 @@
     self.blogName = blogName;
 }
 
-- (void)fail {
-    STFail(@"Request failed");
+- (void)failWith:(NSString*)desc {
+    STFail(desc);
 }
 
 NSString *bundleFilePath(NSString *name, NSString *extension) {
