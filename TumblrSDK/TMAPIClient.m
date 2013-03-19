@@ -150,7 +150,7 @@
 }
 
 - (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%/avatar/%d", FullBlogName(blogName), size]
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/avatar/%d", FullBlogName(blogName), size]
                          parameters:nil];
 }
 
