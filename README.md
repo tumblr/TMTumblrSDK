@@ -1,10 +1,11 @@
 # TumblrSDK
+
 An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application, however you see fit. The library uses ARC and requires iOS 5 or OS X 10.7.
 
     [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result, NSError *error) {
         if (error) {
           NSLog(@"Bummer, dude: %@", error);
-          return;         
+          return;
         }
         NSLog(@"Blog description: %@", result[@"description"]);
     }];
@@ -59,7 +60,8 @@ There are two ways of retrieving data from the API:
 Additional questions can be answered on the [Tumblr developer Google group](https://groups.google.com/group/tumblr-api/).
 
 #### Tests
-The API client contains a full integration test suite. By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `Tests/Credentials.plist` file with the following properties:
+
+The API client contains a full integration test suite. By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `TumblrSDKTests/Credentials.plist` file with the following properties:
 
     <key>OAuthToken</key>
     <string>ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd</string>
@@ -79,12 +81,15 @@ The SDK includes [TumblrAppClient](https://github.com/tumblr/tumblr-ios-app-clie
 The app client library also includes a `UIActivity` stub for including Tumblr in a standard `UIActivityViewController`. The repository includes a [full sample application](https://github.com/tumblr/tumblr-ios-app-client/tree/master/TumblrAppClientSample) which shows all of the application's hooks in action, as well as how to share photos and videos using Apple's standard [`UIDocumentInteractionController`](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
 
 ## Roadmap
+
 I'm using this project's [wiki](https://github.com/tumblr/tumblr-ios-sdk/wiki) page to keep track of a rough roadmap for the SDK. If you have any feature requests, please let me know by creating an issue or submitting a pull request.
 
 ## Contact
+
 [Bryan Irace](http://github.com/irace)
 
 ## License
+
 Copyright 2012 Tumblr, Inc.
 
 Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License. You may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
