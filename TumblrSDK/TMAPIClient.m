@@ -97,8 +97,7 @@
 }
 
 - (JXHTTPOperation *)followRequest:(NSString *)blogName {
-    return [self postRequestWithPath:@"user/follow" parameters:
-            @{ @"url" : [NSString stringWithFormat:@"%@.tumblr.com", blogName] }];
+    return [self postRequestWithPath:@"user/follow" parameters:@{ @"url" : FullBlogName(blogName) }];
 }
 
 - (void)follow:(NSString *)blogName callback:(TMAPICallback)callback {
@@ -106,8 +105,7 @@
 }
 
 - (JXHTTPOperation *)unfollowRequest:(NSString *)blogName {
-    return [self postRequestWithPath:@"user/unfollow" parameters:
-            @{ @"url" : [NSString stringWithFormat:@"%@.tumblr.com", blogName] }];
+    return [self postRequestWithPath:@"user/unfollow" parameters:@{ @"url" : FullBlogName(blogName) }];
 }
 
 - (void)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
