@@ -381,8 +381,7 @@
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     mutableParameters[@"type"] = type;
 
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:
-                                URLWithPath([NSString stringWithFormat:@"blog/%@/post", FullBlogName(blogName)])];
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(BlogPath(@"post", blogName))];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     request.requestBody = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
