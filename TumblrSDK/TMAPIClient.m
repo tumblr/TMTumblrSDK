@@ -133,10 +133,7 @@
 #pragma mark - Blog
 
 - (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName {
-    if ([blogName rangeOfString:@"."].location == NSNotFound)
-        blogName = [blogName stringByAppendingString:@".tumblr.com"];
-    
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/info", blogName] parameters:nil];
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/info", FullBlogName(blogName)] parameters:nil];
 }
 
 - (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
@@ -144,7 +141,7 @@
 }
 
 - (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/followers", blogName]
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/followers", FullBlogName(blogName)]
                          parameters:parameters];
 }
 
@@ -153,7 +150,7 @@
 }
 
 - (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/avatar/%d", blogName, size]
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%/avatar/%d", FullBlogName(blogName), size]
                          parameters:nil];
 }
 
@@ -188,7 +185,7 @@
 }
 
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
-    NSString *path = [NSString stringWithFormat:@"blog/%@.tumblr.com/posts", blogName];
+    NSString *path = [NSString stringWithFormat:@"blog/%@/posts", FullBlogName(blogName)];
     if (type) path = [path stringByAppendingFormat:@"/%@", type];
     
     return [self getRequestWithPath:path parameters:parameters];
@@ -199,7 +196,7 @@
 }
 
 - (JXHTTPOperation *)queueRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/queue", blogName]
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/posts/queue", FullBlogName(blogName)]
                          parameters:parameters];
 }
 
@@ -208,7 +205,7 @@
 }
 
 - (JXHTTPOperation *)draftsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/draft", blogName]
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/posts/draft", FullBlogName(blogName)]
                          parameters:parameters];
 }
 
@@ -217,7 +214,7 @@
 }
 
 - (JXHTTPOperation *)submissionsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/posts/submission", blogName]
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/posts/submission", FullBlogName(blogName)]
                          parameters:parameters];
 }
 
@@ -226,7 +223,7 @@
 }
 
 - (JXHTTPOperation *)likesRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/likes", blogName]
+    return [self getRequestWithPath:[NSString stringWithFormat:@"blog/%@/likes", FullBlogName(blogName)]
                          parameters:parameters];
 }
 
@@ -240,7 +237,7 @@
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"type"] = type;
     
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName]
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@/post", FullBlogName(blogName)]
                           parameters:mutableParameters];
 }
 
@@ -249,7 +246,7 @@
 }
 
 - (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post/edit", blogName]
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@/post/edit", FullBlogName(blogName)]
                           parameters:parameters];
 }
 
@@ -258,7 +255,7 @@
 }
 
 - (JXHTTPOperation *)reblogPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post/reblog", blogName]
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@/post/reblog", FullBlogName(blogName)]
                           parameters:parameters];
 }
 
@@ -267,7 +264,7 @@
 }
 
 - (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID {
-    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@.tumblr.com/post/delete", blogName]
+    return [self postRequestWithPath:[NSString stringWithFormat:@"blog/%@/post/delete", FullBlogName(blogName)]
                           parameters:@{ @"id" : postID }];
 }
 
@@ -394,7 +391,7 @@
     mutableParameters[@"type"] = type;
 
     JXHTTPOperation *request = [JXHTTPOperation withURLString:
-                                URLWithPath([NSString stringWithFormat:@"blog/%@.tumblr.com/post", blogName])];
+                                URLWithPath([NSString stringWithFormat:@"blog/%@/post", FullBlogName(blogName)])];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     request.requestBody = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
@@ -457,6 +454,13 @@
     }
     
     [_queue addOperation:request];
+}
+
+static inline NSString* FullBlogName(NSString *blogName) {
+    if ([blogName rangeOfString:@"."].location == NSNotFound) {
+        return blogName = [blogName stringByAppendingString:@".tumblr.com"];
+    }
+    return blogName;
 }
 
 static inline NSString *URLWithPath(NSString *path) {
