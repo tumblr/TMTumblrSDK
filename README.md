@@ -57,6 +57,8 @@ There are two ways of retrieving data from the API:
         if (!error) NSLog(@"Got some liked posts");
     }];
 
+Additional questions can be answered on the [Tumblr developer Google group](https://groups.google.com/group/tumblr-api/).
+
 #### Tests
 The API client contains a full integration test suite. By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `Tests/Credentials.plist` file with the following properties:
 
