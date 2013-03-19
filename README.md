@@ -10,6 +10,13 @@ An unopinionated and flexible library for easily integrating Tumblr data into yo
         NSLog(@"Blog description: %@", result[@"description"]);
     }];
 
+The primary features of the SDK currently include:
+
+* xAuth and three-legged OAuth implementations
+* [An full API client](#api-client)
+* A `UIActivity` stub (for displaying a Tumblr button in a standard `UIActivityViewController`)
+* [Inter-app communication support (if the user has the Tumblr iOS app installed)](#inter-app-communication)
+
 Built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Getting started
@@ -66,7 +73,9 @@ The API client contains a full integration test suite. By default, non-idempoten
 
 ### Inter-app communication
 
-The SDK includes [TumblrAppClient](https://github.com/tumblr/tumblr-ios-app-client), a module for interacting with [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the user has it installed. Please see the TumblrAppClient [documentation](https://github.com/tumblr/tumblr-ios-app-client#usage) for usage instructions.
+The SDK includes [TumblrAppClient](https://github.com/tumblr/tumblr-ios-app-client), a library for interacting with [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the user has it installed. Please see the TumblrAppClient [documentation](https://github.com/tumblr/tumblr-ios-app-client#usage) for usage instructions.
+
+The app client library also includes a `UIActivity` stub for including Tumblr in a standard `UIActivityViewController`. The repository includes a [full sample application](https://github.com/tumblr/tumblr-ios-app-client/tree/master/TumblrAppClientSample) which shows all of the application's hooks in action, as well as how to share photos and videos using Apple's standard [`UIDocumentInteractionController`](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
 
 ## Roadmap
 I'm using this project's [wiki](https://github.com/tumblr/tumblr-ios-sdk/wiki) page to keep track of a rough roadmap for the SDK. If you have any feature requests, please let me know by creating an issue or submitting a pull request.
