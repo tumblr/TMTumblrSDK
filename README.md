@@ -59,21 +59,6 @@ There are two ways of retrieving data from the API:
 
 Additional questions can be answered on the [Tumblr developer Google group](https://groups.google.com/group/tumblr-api/).
 
-#### Tests
-
-The API client contains a full integration test suite. By default, non-idempotent tests (e.g. creating a post, liking a post, following a user) are commented out. To run the test target, create a `TumblrSDKTests/Credentials.plist` file with the following properties:
-
-    <key>OAuthToken</key>
-    <string>ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd</string>
-    <key>OAuthTokenSecret</key>
-    <string>MGI39kdasdoka3240989ASFjoiajsfomdasd39129ASDAPDOJa</string>
-    <key>OAuthConsumerKey</key>
-    <string>d9238jdk92djasdjASDaoijsdADISJdadsoj2dj38dj29dj38j</string>
-    <key>OAuthConsumerSecret</key>
-    <string>oiajsfomdasd39129ASDAPDOJaMGI39kdasdoka3240989ASFj</string>
-    <key>BlogName</key>
-    <string>brydev</string>
-
 ### Inter-app communication
 
 The SDK includes [TumblrAppClient](https://github.com/tumblr/tumblr-ios-app-client), a library for interacting with [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the user has it installed. Please see the TumblrAppClient [documentation](https://github.com/tumblr/tumblr-ios-app-client#usage) for usage instructions.
