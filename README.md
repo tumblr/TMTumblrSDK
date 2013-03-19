@@ -16,7 +16,7 @@ The primary features of the SDK currently include:
 * A `UIActivity` stub (for displaying a Tumblr button in a standard `UIActivityViewController`)
 * [Inter-app communication support (if the user has the Tumblr iOS app installed)](#inter-app-communication)
 
-Built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
+This SDK is built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
 
 ## Getting started
 [CocoaPods](http://cocoapods.org) is the recommended way to add TumblrSDK to your project. You can simply create a [podfile](https://github.com/CocoaPods/CocoaPods/wiki/A-Podfile) that looks as follows:
@@ -80,7 +80,7 @@ The app client library also includes a `UIActivity` stub for including Tumblr in
 I'm using this project's [wiki](https://github.com/tumblr/tumblr-ios-sdk/wiki) page to keep track of a rough roadmap for the SDK. If you have any feature requests, please let me know by creating an issue or submitting a pull request.
 
 ## Contact
-[Bryan Irace](http://irace.me)
+[Bryan Irace](http://github.com/irace)
 
 ## License
 Copyright 2012 Tumblr, Inc.
