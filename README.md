@@ -15,12 +15,12 @@ The primary features of the SDK currently include:
 
 * [Authentication](#authentication) (both three-legged OAuth and xAuth)
 * [A full API client](#api-client)
-* [Inter-app communication support](#inter-app-communication) (if the user has the Tumblr iOS app installed)
-* A UIActivity stub (for displaying a Tumblr button in a standard UIActivityViewController)
+* [Inter-app communication](#inter-app-communication) (if the user has the Tumblr iOS app installed)
+* [A UIActivity stub](https://github.com/tumblr/tumblr-ios-sdk/blob/master/TMTumblrSDK/TMTumblrActivity.h) (for displaying a Tumblr button in a UIActivityViewController)
 
 Additional questions can be answered on our [discussion group](https://groups.google.com/group/tumblr-api/). Please use the Tumblr API [responsibly](http://www.tumblr.com/docs/en/api_agreement) and [let us know](mailto:api@tumblr.com) what you think.
 
-If you have any feature requests, please let me know by creating an issue or submitting a pull request.
+If you have any feature requests, please let us know by creating an issue or submitting a pull request.
 
 ## Getting started
 
@@ -30,7 +30,7 @@ If you have any feature requests, please let me know by creating an issue or sub
 
     pod 'TumblrSDK', '1.0.0'
 
-The SDK includes a [UIActivity subclass](https://github.com/tumblr/tumblr-ios-sdk/blob/master/TMTumblrSDK/TMTumblrActivity.h) for including Tumblr in a standard UIActivityViewController. For now it only provides the activity icon and title, but you can hook it up however you see fit and we may provide a more integrated solution in the future.
+The SDK includes a UIActivity subclass for including Tumblr in a standard UIActivityViewController. It currently provides only the activity icon and title, but you can hook it up however you see fit and we may provide a more integrated solution in the future.
 
 ## Authentication
 
@@ -101,7 +101,8 @@ There are two ways of retrieving data from the API:
     // `void` methods for immediate requests, preferable when the caller does not need a reference to an actual request object:
 
     [[TMAPIClient sharedInstance] userInfo:^(id result, NSError *error) {
-        if (!error) NSLog(@"Got some user info");
+        if (!error) 
+            NSLog(@"Got some user info");
     }];
 
     // Methods that return configured, signed `JXHTTPOperation` instances and require the client to explicitly send the request separately.
@@ -119,7 +120,7 @@ The API client is built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) n
 
 ## Inter-app communication
 
-[Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) exposes actions using the [x-callback-url](http://x-callback-url.com/) specification. The app only supports a few basic endpoints right now but hopefully will be fleshed out in the near future:
+[Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) exposes actions using the [x-callback-url](http://x-callback-url.com/) specification. The app only supports a few basic endpoints right now but will be added to in the near future:
 
     TMTumblrAppClient *client = [TMTumblrAppClient client];
     
@@ -143,7 +144,7 @@ If you don't want to use this library and would rather hit the app's URLs direct
     tumblr://x-callback-url/blog?blogName=bryan
     tumblr://x-callback-url/blog?blogName=bryan&postID=43724939726
 
-Additionally, photos and videos using Apple's standard [`UIDocumentInteractionController`](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
+Additionally, photos and videos can be passed to Tumblr for iOS using Apple's standard [UIDocumentInteractionController](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
 
 If you're only interested in the app client, the `TumblrSDK/AppClient` sub-pod can be installed by itself.
 
