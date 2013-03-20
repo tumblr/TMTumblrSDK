@@ -14,11 +14,11 @@ An unopinionated and flexible library for easily integrating Tumblr data into yo
 The primary features of the SDK currently include:
 
 * [Authentication (both xAuth and three-legged OAuth)](#authentication)
-* [Anfull API client](#api-client)
-* [Inter-app communication support (if the user has the Tumblr iOS app installed)](#inter-app-communication)
+* [A full API client](#api-client)
+* [Inter-app communication support](#inter-app-communication) (if the user has the Tumblr iOS app installed)
 * A `UIActivity` stub (for displaying a Tumblr button in a standard `UIActivityViewController`)
 
-Additional questions can be answered on the [Tumblr developer Google group](https://groups.google.com/group/tumblr-api/).
+Additional questions can be answered on our [discussion group](https://groups.google.com/group/tumblr-api/). Please use the Tumblr API [responsibly](http://www.tumblr.com/docs/en/api_agreement) and [let us know](mailto:api@tumblr.com) what you think.
 
 ## Getting started
 
@@ -36,6 +36,8 @@ Import `TMAPIClient.h`. Configure the `[TMAPIClient sharedInstance]` singleton w
 
     [TMAPIClient sharedInstance].OAuthConsumerKey = @"ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd";
     [TMAPIClient sharedInstance].OAuthConsumerSecret = @"MGI39kdasdoka3240989ASFjoiajsfomdasd39129ASDAPDOJa";
+
+If you don't already have a consumer key/secret you can register [here](http://www.tumblr.com/oauth/apps).
 
 ### OAuth
 In your app’s `Info.plist`, specify a custom URL scheme that the browser can use to return to your application once the user has permitted or denied access to Tumblr:
