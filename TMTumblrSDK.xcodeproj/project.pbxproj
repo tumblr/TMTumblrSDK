@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491CDDF916FA0B6700C657BF /* libPods-test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 491CDDF816FA0B6700C657BF /* libPods-test.a */; };
 		493A4E7816F93EC800C3CEF6 /* TMAPIClientUnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 493A4E7716F93EC800C3CEF6 /* TMAPIClientUnitTest.m */; };
+		499CAE6D16FA309300D2975E /* TMAPIClientUserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE6C16FA309300D2975E /* TMAPIClientUserTest.m */; };
+		499CAE7016FA314900D2975E /* TMAPIClientBlogTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE6F16FA314900D2975E /* TMAPIClientBlogTest.m */; };
+		499CAE7316FA320B00D2975E /* TMAPIClientPostTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE7216FA320B00D2975E /* TMAPIClientPostTest.m */; };
+		499CAE7616FA327700D2975E /* TMAPIClientTagTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE7516FA327700D2975E /* TMAPIClientTagTest.m */; };
 		9330592E16F9281500868C9C /* TMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9330592D16F9281500868C9C /* TMAPIClient.m */; };
 		9330593216F9295800868C9C /* TMTumblrActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9330593116F9295800868C9C /* TMTumblrActivity.m */; };
 		93E52A74168BB43700E5471A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A73168BB43700E5471A /* Foundation.framework */; };
@@ -45,8 +50,17 @@
 
 /* Begin PBXFileReference section */
 		4027A38887244210991EA792 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		491CDDF816FA0B6700C657BF /* libPods-test.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-test.a"; path = "Pods/build/Release-iphoneos/libPods-test.a"; sourceTree = "<group>"; };
 		493A4E7616F93EC800C3CEF6 /* TMAPIClientUnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClientUnitTest.h; sourceTree = "<group>"; };
 		493A4E7716F93EC800C3CEF6 /* TMAPIClientUnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientUnitTest.m; sourceTree = "<group>"; };
+		499CAE6B16FA309300D2975E /* TMAPIClientUserTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClientUserTest.h; sourceTree = "<group>"; };
+		499CAE6C16FA309300D2975E /* TMAPIClientUserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientUserTest.m; sourceTree = "<group>"; };
+		499CAE6E16FA314900D2975E /* TMAPIClientBlogTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClientBlogTest.h; sourceTree = "<group>"; };
+		499CAE6F16FA314900D2975E /* TMAPIClientBlogTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientBlogTest.m; sourceTree = "<group>"; };
+		499CAE7116FA320B00D2975E /* TMAPIClientPostTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClientPostTest.h; sourceTree = "<group>"; };
+		499CAE7216FA320B00D2975E /* TMAPIClientPostTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientPostTest.m; sourceTree = "<group>"; };
+		499CAE7416FA327700D2975E /* TMAPIClientTagTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClientTagTest.h; sourceTree = "<group>"; };
+		499CAE7516FA327700D2975E /* TMAPIClientTagTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientTagTest.m; sourceTree = "<group>"; };
 		9330592C16F9281500868C9C /* TMAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClient.h; sourceTree = "<group>"; };
 		9330592D16F9281500868C9C /* TMAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClient.m; sourceTree = "<group>"; };
 		9330593016F9295800868C9C /* TMTumblrActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTumblrActivity.h; sourceTree = "<group>"; };
@@ -85,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				491CDDF916FA0B6700C657BF /* libPods-test.a in Frameworks */,
 				93E52A83168BB43700E5471A /* SenTestingKit.framework in Frameworks */,
 				93E52A85168BB43700E5471A /* UIKit.framework in Frameworks */,
 				93E52A86168BB43700E5471A /* Foundation.framework in Frameworks */,
@@ -131,6 +146,7 @@
 				93E52A73168BB43700E5471A /* Foundation.framework */,
 				93E52A82168BB43700E5471A /* SenTestingKit.framework */,
 				93E52A84168BB43700E5471A /* UIKit.framework */,
+				491CDDF816FA0B6700C657BF /* libPods-test.a */,
 				4027A38887244210991EA792 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -167,6 +183,14 @@
 				493A4E7616F93EC800C3CEF6 /* TMAPIClientUnitTest.h */,
 				493A4E7716F93EC800C3CEF6 /* TMAPIClientUnitTest.m */,
 				93E52A8B168BB43700E5471A /* Supporting Files */,
+				499CAE6E16FA314900D2975E /* TMAPIClientBlogTest.h */,
+				499CAE6F16FA314900D2975E /* TMAPIClientBlogTest.m */,
+				499CAE6B16FA309300D2975E /* TMAPIClientUserTest.h */,
+				499CAE6C16FA309300D2975E /* TMAPIClientUserTest.m */,
+				499CAE7116FA320B00D2975E /* TMAPIClientPostTest.h */,
+				499CAE7216FA320B00D2975E /* TMAPIClientPostTest.m */,
+				499CAE7416FA327700D2975E /* TMAPIClientTagTest.h */,
+				499CAE7516FA327700D2975E /* TMAPIClientTagTest.m */,
 			);
 			path = TMTumblrSDKTests;
 			sourceTree = "<group>";
@@ -325,6 +349,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				493A4E7816F93EC800C3CEF6 /* TMAPIClientUnitTest.m in Sources */,
+				499CAE6D16FA309300D2975E /* TMAPIClientUserTest.m in Sources */,
+				499CAE7016FA314900D2975E /* TMAPIClientBlogTest.m in Sources */,
+				499CAE7316FA320B00D2975E /* TMAPIClientPostTest.m in Sources */,
+				499CAE7616FA327700D2975E /* TMAPIClientTagTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
