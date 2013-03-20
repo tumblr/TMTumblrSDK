@@ -152,7 +152,7 @@ If you're only interested in the app client, the `TMTumblrSDK/AppClient` sub-pod
 
 The repository includes a [sample application](https://github.com/tumblr/tumblr-ios-sdk/tree/master/Examples/AppClientExample) showing all of the inter-app hooks in action, as well as how to share to Tumblr for iOS using a UIActivityViewController or UIDocumentInteractionController.
 
-![Screenshot of Tumblr activity icon](https://raw.github.com/tumblr/tumblr-ios-app-client/master/screenshots/uiactivity.png?login=irace&token=ce8dcbc58abd03f1a6006a7fd7abf35e)
+![Screenshot of Tumblr activity icon](https://raw.github.com/tumblr/tumblr-ios-sdk/master/Examples/AppClientExample/screenshot.png?login=irace&token=09357ae38144aa48767c7b2219f23265)
 
 ## Contact
 
