@@ -1,8 +1,8 @@
 # Tumblr SDK for iOS
 
 An unopinionated and flexible library for easily integrating Tumblr data into
-your iOS or OS X application, however you see fit. The library uses ARC and
-requires iOS 5 or OS X 10.7.
+your iOS or OS X application. The library uses ARC and requires iOS 5 or
+OS X 10.7.
 
 ``` objectivec
 [[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result, NSError *error) {
@@ -18,7 +18,7 @@ requires iOS 5 or OS X 10.7.
 The primary features of the SDK currently include:
 
 * [Authentication](#authentication) (both three-legged OAuth and xAuth)
-* [A full API client](#api-client)
+* [A full API client](#api-client) for V2 of the Tumblr API
 * [Inter-app communication](#inter-app-communication) (if the user has the Tumblr iOS app installed)
 * [A UIActivity stub](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/TMTumblrActivity.h) (for displaying a Tumblr button in a UIActivityViewController)
 
@@ -149,13 +149,6 @@ There are two ways of retrieving data from the API:
 // Methods that return configured, signed `JXHTTPOperation` instances and require the client to explicitly send the request separately.
 
 JXHTTPOperation *likesRequest = [[TMAPIClient sharedInstance] likesRequest:@"bryan" parameters:nil];
-
-// TODO: Observe some properties, store the request in an instance variable so it can be cancelled if the view controller is deallocated, etc.
-
-[[TMAPIClient sharedInstance] sendRequest:likesRequest callback:^(id result, NSError *error) {
-    if (!error)
-        NSLog(@"Got some liked posts");
-}];
 ```
 
 The API client is built on top of the
@@ -205,7 +198,7 @@ the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.
 
 ### Example
 
-The repository includes a [sample application](https://github.com/tumblr/TMTumblrSDK/tree/master/Examples/AppClientExample)
+The repository also includes a [sample application](https://github.com/tumblr/TMTumblrSDK/tree/master/Examples/AppClientExample)
 showing all of the inter-app hooks in action, as well as how to share to Tumblr
 for iOS using a UIActivityViewController or UIDocumentInteractionController.
 
