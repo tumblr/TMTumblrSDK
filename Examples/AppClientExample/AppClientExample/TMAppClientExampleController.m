@@ -17,10 +17,6 @@ typedef enum {
     TMAppClientActionViewTag,
     TMAppClientActionViewBlog,
     TMAppClientActionViewPost,
-    TMAppClientActionCreateTextPost,
-    TMAppClientActionCreateLinkPost,
-    TMAppClientActionCreateQuotePost,
-    TMAppClientActionCreateChatPost,
     TMAppClientActionCount
 } TMAppClientActions;
 
@@ -107,22 +103,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
             cell.textLabel.text = @"View GIF tag";
             break;
         case TMAppClientActionViewBlog:
-            cell.textLabel.text = @"View Bryan's blog";
+            cell.textLabel.text = @"View Tumblr developers blog";
             break;
         case TMAppClientActionViewPost:
-            cell.textLabel.text = @"View Bryan's dog pictures";
-            break;
-        case TMAppClientActionCreateTextPost:
-            cell.textLabel.text = @"Create text post";
-            break;
-        case TMAppClientActionCreateLinkPost:
-            cell.textLabel.text = @"Create link post";
-            break;
-        case TMAppClientActionCreateQuotePost:
-            cell.textLabel.text = @"Create quote post";
-            break;
-        case TMAppClientActionCreateChatPost:
-            cell.textLabel.text = @"Create chat post";
+            cell.textLabel.text = @"View Tumblr developers blog post";
             break;
     }
     
@@ -145,22 +129,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
             [client viewTag:@"gif"];
             break;
         case TMAppClientActionViewBlog:
-            [client viewBlog:@"bryan"];
+            [client viewBlog:@"developers"];
             break;
         case TMAppClientActionViewPost:
-            [client viewPost:@"43724939726" blogName:@"bryan"];
-            break;
-        case TMAppClientActionCreateTextPost:
-            [client createTextPost:@"Title" body:@"Body"];
-            break;
-        case TMAppClientActionCreateLinkPost:
-            [client createLinkPost:@"Tumblr" URL:@"http://tumblr.com" description:@"Follow the world's creators"];
-            break;
-        case TMAppClientActionCreateQuotePost:
-            [client createQuotePost:@"Fellas, don't drink that coffee! You'd never guess. There was a fish... in the percolator! Sorry..." source:@"Pete"];
-            break;
-        case TMAppClientActionCreateChatPost:
-            [client createChatPost:@"Chat" body:@"Peter: I'm like a sweet peach on a hot summer day.\nMegan: You're like a sour pickle on a windy day."];
+            [client viewPost:@"43515916425" blogName:@"developers"];
             break;
     }
     

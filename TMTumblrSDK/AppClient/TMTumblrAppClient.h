@@ -24,12 +24,4 @@
 
 - (void)viewPost:(NSString *)postID blogName:(NSString *)blogName;
 
-- (void)createTextPost:(NSString *)title body:(NSString *)body;
-
-- (void)createQuotePost:(NSString *)quote source:(NSString *)source;
-
-- (void)createLinkPost:(NSString *)title URL:(NSString *)URL description:(NSString *)description;
-
-- (void)createChatPost:(NSString *)title body:(NSString *)body;
-
 @end
