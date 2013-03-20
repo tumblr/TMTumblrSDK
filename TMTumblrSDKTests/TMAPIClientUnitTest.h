@@ -23,7 +23,7 @@
 - (void) assertMultipartBody:(JXHTTPOperation*)op is:(NSString*)expected;
 - (void) assertBody:(JXHTTPOperation*)op is:(NSDictionary*)expected;
 - (void) assertQuery:(JXHTTPOperation*)op is:(NSString*)expected;
--(void) assertPath:(JXHTTPOperation*)op is:(NSString*)expected;
--(void) assertMethod:(JXHTTPOperation*)op is:(NSString*)expected;
+- (void) assertPath:(JXHTTPOperation*)op is:(NSString*)expected;
+- (void) assertMethod:(JXHTTPOperation*)op is:(NSString*)expected;
 
 @end
