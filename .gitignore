@@ -2,6 +2,7 @@
 *~
 
 *.xcuserdata
+*.xcuserdatad
 *.xcuserstate
 *.xcworkspace
 *.pbxuser
