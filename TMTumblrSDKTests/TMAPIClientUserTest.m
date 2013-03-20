@@ -20,9 +20,10 @@
 }
 
 - (void) testUserInfo {
+    JXHTTPOperation *op = [client userInfoRequest];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
         [mClient userInfo:check];
-    }];
+    } andVerify:op];
 }
 
 - (void) testDashboardRequest {
@@ -33,9 +34,11 @@
 }
 
 - (void) testDashboard {
+    NSDictionary *params = @{@"url": @"1"};
+    JXHTTPOperation *op = [client dashboardRequest:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient dashboard:@{ @"limit": @"1" } callback:check];
-    }];
+        [mClient dashboard:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testLikesRequest {
@@ -46,9 +49,11 @@
 }
 
 - (void) testLikes {
+    NSDictionary *params = @{@"url": @"1"};
+    JXHTTPOperation *op = [client likesRequest:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient likes:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient likes:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testFollowingRequest {
@@ -59,9 +64,11 @@
 }
 
 - (void) testFollowing {
+    NSDictionary *params = @{@"url": @"1"};
+    JXHTTPOperation *op = [client followingRequest:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient following:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient following:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testFollowRequest {
@@ -72,9 +79,11 @@
 }
 
 - (void) testFollow {
+    NSString *blogName = @"b.n";
+    JXHTTPOperation *op = [client followRequest:blogName];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient follow:@"b.n" callback:check];
-    }];
+        [mClient follow:blogName callback:check];
+    } andVerify:op];
 }
 
 - (void) testUnfollowRequest {
@@ -85,9 +94,11 @@
 }
 
 - (void) testUnfollow {
+    NSString *blogName = @"b.n";
+    JXHTTPOperation *op = [client unfollowRequest:blogName];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
         [mClient unfollow:@"b.n" callback:check];
-    }];
+    } andVerify:op];
 }
 
 - (void) testLikeRequest {
@@ -98,9 +109,12 @@
 }
 
 - (void) testLike {
+    NSString *postId = @"123";
+    NSString *reblogKey = @"key";
+    JXHTTPOperation *op = [client likeRequest:postId reblogKey:reblogKey];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient like:@"123" reblogKey:@"key" callback:check];
-    }];
+        [mClient like:postId reblogKey:reblogKey callback:check];
+    } andVerify:op];
 }
 
 - (void) testUnlikeRequest {
@@ -111,9 +125,12 @@
 }
 
 - (void) testUnlike {
+    NSString *postId = @"123";
+    NSString *reblogKey = @"key";
+    JXHTTPOperation *op = [client unlikeRequest:postId reblogKey:reblogKey];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
         [mClient unlike:@"123" reblogKey:@"key" callback:check];
-    }];
+    } andVerify:op];
 }
 
 @end

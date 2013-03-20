@@ -21,10 +21,6 @@
  Test Helpers
 */
 
-- (void) assertCallback:(void(^)(id, TMAPICallback))action {
-    [self assertCallback:action andVerify:nil];
-}
-
 - (void) assertCallback:(void(^)(id, TMAPICallback))action andVerify:(JXHTTPOperation*)op {
     // Create a partial mock
     id mClient = [OCMockObject partialMockForObject:self.client];
@@ -39,7 +35,7 @@
         cbk(expectation, nil);
 
         if (op != nil) {
-            JXHTTPOperation *oop;
+            __unsafe_unretained JXHTTPOperation *oop;
             [invoc getArgument:&oop atIndex:2];
             [self assertSimilarRequest:op to:oop];
         }
@@ -54,8 +50,7 @@
     action(mClient, check);
     // Chill
     while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW)) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
     }
 }
 
@@ -70,9 +65,10 @@
     }
 
     // Conditional body check
-    JXHTTPFormEncodedBody *obody = (JXHTTPFormEncodedBody *) [op2 requestBody];
-    if (obody != nil) {
+    if ([[op2 requestBody] isKindOfClass:[JXHTTPFormEncodedBody class]]) {
+        JXHTTPFormEncodedBody *obody = (JXHTTPFormEncodedBody *) [op2 requestBody];
         NSDictionary *odict = [obody dictionary];
+
         if (odict != nil) {
             [self assertBody:op1 is:odict];
         }
