@@ -14,6 +14,16 @@
 
 @interface TMAPIClientUnitTest : SenTestCase
 
-@property TMAPIClient *client;
+@property(nonatomic, retain) TMAPIClient *client;
+
+- (void) setUp;
+
+- (void) assertCallback:(void(^)(id, TMAPICallback))action;
+- (void) assertSimilarRequest:(JXHTTPOperation*)op1 to:(JXHTTPOperation*)op2;
+- (void) assertMultipartBody:(JXHTTPOperation*)op is:(NSString*)expected;
+- (void) assertBody:(JXHTTPOperation*)op is:(NSDictionary*)expected;
+- (void) assertQuery:(JXHTTPOperation*)op is:(NSString*)expected;
+-(void) assertPath:(JXHTTPOperation*)op is:(NSString*)expected;
+-(void) assertMethod:(JXHTTPOperation*)op is:(NSString*)expected;
 
 @end
