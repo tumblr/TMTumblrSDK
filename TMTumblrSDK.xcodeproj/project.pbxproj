@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		493A4E7816F93EC800C3CEF6 /* TMAPIClientUnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 493A4E7716F93EC800C3CEF6 /* TMAPIClientUnitTest.m */; };
 		9330592E16F9281500868C9C /* TMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9330592D16F9281500868C9C /* TMAPIClient.m */; };
 		9330593216F9295800868C9C /* TMTumblrActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9330593116F9295800868C9C /* TMTumblrActivity.m */; };
 		93E52A74168BB43700E5471A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A73168BB43700E5471A /* Foundation.framework */; };
@@ -44,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		4027A38887244210991EA792 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		493A4E7616F93EC800C3CEF6 /* TMAPIClientUnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClientUnitTest.h; sourceTree = "<group>"; };
+		493A4E7716F93EC800C3CEF6 /* TMAPIClientUnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientUnitTest.m; sourceTree = "<group>"; };
 		9330592C16F9281500868C9C /* TMAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClient.h; sourceTree = "<group>"; };
 		9330592D16F9281500868C9C /* TMAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClient.m; sourceTree = "<group>"; };
 		9330593016F9295800868C9C /* TMTumblrActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTumblrActivity.h; sourceTree = "<group>"; };
@@ -161,6 +164,8 @@
 		93E52A8A168BB43700E5471A /* TMTumblrSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				493A4E7616F93EC800C3CEF6 /* TMAPIClientUnitTest.h */,
+				493A4E7716F93EC800C3CEF6 /* TMAPIClientUnitTest.m */,
 				93E52A8B168BB43700E5471A /* Supporting Files */,
 			);
 			path = TMTumblrSDKTests;
@@ -319,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493A4E7816F93EC800C3CEF6 /* TMAPIClientUnitTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
