@@ -19,6 +19,7 @@ typedef void (^TMAPICallback)(id, NSError *error);
 @property (nonatomic, copy) NSDictionary *customHeaders;
 
 @property (nonatomic, strong, readonly) JXHTTPOperationQueue *queue;
+@property (nonatomic, strong) NSOperationQueue *callbackQueue;
 
 + (TMAPIClient *)sharedInstance;
 
