@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.7'
   s.frameworks   = 'Foundation'
 
-  s.subspec 'APIClient' do |api|
-    api.source_files = 'TMTumblrSDK/APIClient'
-    api.dependency   'JXHTTP', :git => "git@github.com:tumblr/JXHTTP.git"
-    api.dependency   'Authentication'
+  s.subspec 'APIClient' do |apiclient|
+    apiclient.source_files = 'TMTumblrSDK/APIClient'
+    apiclient.dependency   'JXHTTP', :git => "git@github.com:tumblr/JXHTTP.git"
+    apiclient.dependency   'Authentication'
   end
 
   s.subspec 'Authentication' do |auth|
@@ -22,10 +22,10 @@ Pod::Spec.new do |s|
     auth.dependency   'NSData+Base64', '1.0'
   end
 
-  s.subspec 'AppClient' do |tac|
-    tac.platform     = :ios, '5.0'
-    tac.source_files = 'TMTumblrSDK/AppClient'
-    tac.dependency   'InterAppCommunication', '1.0'
+  s.subspec 'AppClient' do |appclient|
+    appclient.platform     = :ios, '5.0'
+    appclient.source_files = 'TMTumblrSDK/AppClient'
+    appclient.dependency   'InterAppCommunication', '1.0'
   end
 
 end
