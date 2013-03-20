@@ -12,12 +12,14 @@ An unopinionated and flexible library for easily integrating Tumblr data into yo
 
 The primary features of the SDK currently include:
 
-* [Authentication (both xAuth and three-legged OAuth)](#authentication)
+* [Authentication](#authentication) (both three-legged OAuth and xAuth)
 * [A full API client](#api-client)
 * [Inter-app communication support](#inter-app-communication) (if the user has the Tumblr iOS app installed)
-* A `UIActivity` stub (for displaying a Tumblr button in a standard `UIActivityViewController`)
+* A UIActivity stub (for displaying a Tumblr button in a standard UIActivityViewController)
 
 Additional questions can be answered on our [discussion group](https://groups.google.com/group/tumblr-api/). Please use the Tumblr API [responsibly](http://www.tumblr.com/docs/en/api_agreement) and [let us know](mailto:api@tumblr.com) what you think.
+
+If you have any feature requests, please let me know by creating an issue or submitting a pull request.
 
 ## Getting started
 
@@ -27,7 +29,7 @@ Additional questions can be answered on our [discussion group](https://groups.go
 
     pod 'TumblrSDK', '1.0.0'
 
-The SDK includes a [`UIActivity` stub](https://github.com/tumblr/tumblr-ios-sdk/blob/master/TMTumblrSDK/TMTumblrActivity.h) for including Tumblr in a standard `UIActivityViewController`. For now it only provides the activity icon and title, but you can hook it up however you see fit and we may provide a more integrated solution in the future.
+The SDK includes a [UIActivity subclass](https://github.com/tumblr/tumblr-ios-sdk/blob/master/TMTumblrSDK/TMTumblrActivity.h) for including Tumblr in a standard UIActivityViewController. For now it only provides the activity icon and title, but you can hook it up however you see fit and we may provide a more integrated solution in the future.
 
 ## Authentication
 
@@ -91,7 +93,7 @@ If you're only interested in authentication, the `TumblrSDK/Authentication` sub-
 
 ## API client
 
-`TMAPIClient` is a full wrapper for the [Tumblr API](http://www.tumblr.com/docs/en/api/v2). The API client is built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library. Please view the API documetation for usage instructions, available parameters, etc.
+Please view the [API documentation]((http://www.tumblr.com/docs/en/api/v2) for full usage instructions.
 
 There are two ways of retrieving data from the API:
 
@@ -112,7 +114,7 @@ There are two ways of retrieving data from the API:
             NSLog(@"Got some liked posts");
     }];
 
-If you're only interested in the API client, the `TumblrSDK/APIClient` sub-pod can be installed by itself.
+The API client is built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library. If you're only interested in the API client, the `TumblrSDK/APIClient` sub-pod can be installed by itself.
 
 ## Inter-app communication
 
@@ -146,13 +148,9 @@ If you're only interested in the app client, the `TumblrSDK/AppClient` sub-pod c
 
 ### Example
 
-The repository includes a [full sample application](https://github.com/tumblr/tumblr-ios-sdk/tree/master/Examples/AppClientExample) which shows all of the inter-app communication hooks in action, as well as how to share to Tumblr for iOS using `UIActivityViewController` or `UIDocumentInteractionController`.
+The repository includes a [sample application](https://github.com/tumblr/tumblr-ios-sdk/tree/master/Examples/AppClientExample) showing all of the inter-app hooks in action, as well as how to share to Tumblr for iOS using a UIActivityViewController or UIDocumentInteractionController.
 
 ![Screenshot of Tumblr activity icon](https://raw.github.com/tumblr/tumblr-ios-app-client/master/screenshots/uiactivity.png?login=irace&token=ce8dcbc58abd03f1a6006a7fd7abf35e)
-
-## Roadmap
-
-I'm using this project's [wiki](https://github.com/tumblr/tumblr-ios-sdk/wiki) page to keep track of a rough roadmap for the SDK. If you have any feature requests, please let me know by creating an issue or submitting a pull request.
 
 ## Contact
 
