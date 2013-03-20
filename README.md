@@ -27,7 +27,7 @@ If you have any feature requests, please let us know by creating an issue or sub
 
     platform :ios, '5.0'
 
-    pod 'TumblrSDK', '1.0.0'
+    pod 'TMTumblrSDK', '1.0.0'
 
 The SDK includes a UIActivity subclass for including Tumblr in a standard UIActivityViewController. It currently provides only the activity icon and title, but you can hook it up however you see fit and we may provide a more integrated solution in the future.
 
@@ -89,7 +89,7 @@ Use the `TMAPIClient` singleton to retrieve an OAuth token and secret given a us
         // You are now authenticated (if !error)
     }];
 
-If you're only interested in authentication, the `TumblrSDK/Authentication` sub-pod can be installed by itself.
+If you're only interested in authentication, the `TMTumblrSDK/Authentication` sub-pod can be installed by itself.
 
 ## API client
 
@@ -115,7 +115,7 @@ There are two ways of retrieving data from the API:
             NSLog(@"Got some liked posts");
     }];
 
-The API client is built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library. If you're only interested in the API client, the `TumblrSDK/APIClient` sub-pod can be installed by itself.
+The API client is built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library. If you're only interested in the API client, the `TMTumblrSDK/APIClient` sub-pod can be installed by itself.
 
 ## Inter-app communication
 
@@ -145,7 +145,7 @@ If you don't want to use this library and would rather hit the app's URLs direct
 
 Additionally, photos and videos can be passed to Tumblr for iOS using Apple's standard [UIDocumentInteractionController](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
 
-If you're only interested in the app client, the `TumblrSDK/AppClient` sub-pod can be installed by itself.
+If you're only interested in the app client, the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.
 
 ### Example
 
