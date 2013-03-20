@@ -11,6 +11,13 @@
 #import "TMOAuth.h"
 #import "TMTumblrAuthenticator.h"
 
+@interface TMAPIClient()
+
+@property (nonatomic, strong) JXHTTPOperationQueue *queue;
+
+@end
+
+
 @implementation TMAPIClient
 
 + (id)sharedInstance {
@@ -167,19 +174,19 @@
                                         userInfo:nil];
             }
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [self.callbackQueue addOperationWithBlock:^{
                 callback(response, error);
-            });
+            }];
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [self.callbackQueue addOperationWithBlock:^{
                 callback(nil, operation.error);
-            });
+            }];
         };
     }
     
-    [_queue addOperation:request];
+    [self.queue addOperation:request];
 }
 
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
@@ -425,23 +432,22 @@
             
             NSError *error = nil;
             
-            if (statusCode/100 != 2) {
+            if (statusCode/100 != 2)
                 error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
-            }
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [self.callbackQueue addOperationWithBlock:^{
                 callback(response[@"response"], error);
-            });
+            }];
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [self.callbackQueue addOperationWithBlock:^{
                 callback(nil, operation.error);
-            });
+            }];
         };
     }
     
-    [_queue addOperation:request];
+    [self.queue addOperation:request];
 }
 
 static inline NSString *blogPath(NSString *ext, NSString *blogName) {
@@ -472,7 +478,8 @@ static inline NSString *URLEncode(NSString *string) {
 
 - (id)init {
     if (self = [super init]) {
-        _queue = [[JXHTTPOperationQueue alloc] init];
+        self.queue = [[JXHTTPOperationQueue alloc] init];
+        self.callbackQueue = [NSOperationQueue mainQueue];
     }
     
     return self;
