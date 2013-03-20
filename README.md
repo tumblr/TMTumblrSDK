@@ -1,4 +1,4 @@
-# TumblrSDK
+# Tumblr SDK for iOS
 
 An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application, however you see fit. The library uses ARC and requires iOS 5 or OS X 10.7.
 
@@ -13,58 +13,137 @@ An unopinionated and flexible library for easily integrating Tumblr data into yo
 
 The primary features of the SDK currently include:
 
-* xAuth and three-legged OAuth implementations
-* [An full API client](#api-client)
-* A `UIActivity` stub (for displaying a Tumblr button in a standard `UIActivityViewController`)
+* [Authentication (both xAuth and three-legged OAuth)](#authentication)
+* [Anfull API client](#api-client)
 * [Inter-app communication support (if the user has the Tumblr iOS app installed)](#inter-app-communication)
+* A `UIActivity` stub (for displaying a Tumblr button in a standard `UIActivityViewController`)
 
-This SDK is built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library.
+Additional questions can be answered on the [Tumblr developer Google group](https://groups.google.com/group/tumblr-api/).
 
 ## Getting started
-[CocoaPods](http://cocoapods.org) is the recommended way to add TumblrSDK to your project. You can simply create a [podfile](https://github.com/CocoaPods/CocoaPods/wiki/A-Podfile) that looks as follows:
+
+[CocoaPods](http://cocoapods.org) is the recommended way to add the Tumblr SDK to your project. You can simply create a [podfile](https://github.com/CocoaPods/CocoaPods/wiki/A-Podfile) that looks as follows:
 
     platform :ios, '5.0'
 
-    pod 'TumblrSDK', '0.1.0'
+    pod 'TumblrSDK', '1.0.0'
 
-## Usage
+The SDK includes a [`UIActivity` stub](https://github.com/tumblr/tumblr-ios-sdk/blob/master/TMTumblrSDK/TMTumblrActivity.h) for including Tumblr in a standard `UIActivityViewController`. For now it only provides the activity icon and title, but you can hook it up however you see fit and we may provide a more integrated solution in the future.
 
-### API client
-
-`TMAPIClient` is a full wrapper for the [Tumblr API](http://www.tumblr.com/docs/en/api/v2). Please view the API documetation for usage instructions, available parameters, etc.
+## Authentication
 
 Import `TMAPIClient.h`. Configure the `[TMAPIClient sharedInstance]` singleton with your app’s Tumblr consumer key and secret:
 
     [TMAPIClient sharedInstance].OAuthConsumerKey = @"ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd";
     [TMAPIClient sharedInstance].OAuthConsumerSecret = @"MGI39kdasdoka3240989ASFjoiajsfomdasd39129ASDAPDOJa";
 
-The API client proxies to [TumblrAuthentication](https://github.com/tumblr/tumblr-ios-authentication) to provide both three-legged OAuth and xAuth flows. Please see the TumblrAuthentication [documentation](https://github.com/tumblr/tumblr-ios-authentication#usage) for usage instructions but opt to use `[TMAPIClient sharedInstance]` instead of `[TMTumblrAuthenticator sharedInstance]` directly.
+### OAuth
+In your app’s `Info.plist`, specify a custom URL scheme that the browser can use to return to your application once the user has permitted or denied access to Tumblr:
+
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>myapp</string>
+        </array>
+      </dict>
+    </array>
+
+In your app delegate, allow the `TMAPIClient` singleton to handle incoming URL requests. On iOS this looks like: 
+
+    - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication
+             annotation:(id)annotation {
+        return [[TMAPIClient sharedInstance] handleOpenURL:url];
+    }
+    
+And on OS X:
+    
+    - (void)applicationWillFinishLaunching:(NSNotification *)notification {
+        NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventManager];
+        [appleEventManager setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:)
+                             forEventClass:kInternetEventClass andEventID:kAEGetURL];
+    }
+
+    - (void)handleURLEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent {
+        NSString *calledURL = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+
+        [[TMAPIClient sharedInstance] handleOpenURL:[NSURL URLWithString:calledURL]];
+    }
+
+Initiate the three-legged OAuth flow, by specifying the URL scheme that your app will respond to:
+
+    [[TMAPIClient sharedInstance] authenticate:@"myapp" callback:^(NSError *error) {
+        // You are now authenticated (if !error)
+    }];
+
+### xAuth
+Please note that xAuth access [must be specifically requested](http://www.tumblr.com/oauth/apps) for your application.
+
+Use the `TMAPIClient` singleton to retrieve an OAuth token and secret given a user’s email address and password:
+
+    [[TMAPIClient sharedInstance] xAuth:@"foo@foo.bar" password:@"12345" callback:^(NSError *error) {
+        // You are now authenticated (if !error)
+    }];
+
+If you are only interested in the authentication bits, they can be installed by themselves as the `TumblrSDK/Authentication` sub-pod.
+
+## API client
+
+`TMAPIClient` is a full wrapper for the [Tumblr API](http://www.tumblr.com/docs/en/api/v2). The API client is built on top of the [JXHTTP](https://github.com/jstn/JXHTTP) networking library. Please view the API documetation for usage instructions, available parameters, etc.
 
 There are two ways of retrieving data from the API:
 
-    // void methods for immediate requests, preferable when the caller does not need a reference to the underlying request options:
+    // `void` methods for immediate requests, preferable when the caller does not need a reference to an actual request object:
 
     [[TMAPIClient sharedInstance] userInfo:^(id result, NSError *error) {
         if (!error) NSLog(@"Got some user info");
     }];
 
-    // Methods that return configured, signed JXHTTPOperation instances and require the client to explicitly send the request separately.
+    // Methods that return configured, signed `JXHTTPOperation` instances and require the client to explicitly send the request separately.
 
     JXHTTPOperation *likesRequest = [[TMAPIClient sharedInstance] likesRequest:@"bryan" parameters:nil];
 
     // TODO: Observe some properties, store the request in an instance variable so it can be cancelled if the view controller is deallocated, etc.
 
     [[TMAPIClient sharedInstance] sendRequest:likesRequest callback:^(id result, NSError *error) {
-        if (!error) NSLog(@"Got some liked posts");
+        if (!error) 
+            NSLog(@"Got some liked posts");
     }];
 
-Additional questions can be answered on the [Tumblr developer Google group](https://groups.google.com/group/tumblr-api/).
+## Inter-app communication
 
-### Inter-app communication
+[Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) exposes actions using the [x-callback-url](http://x-callback-url.com/) specification. The app only supports a few basic endpoints right now but hopefully will be fleshed out in the near future:
 
-The SDK includes [TumblrAppClient](https://github.com/tumblr/tumblr-ios-app-client), a library for interacting with [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the user has it installed. Please see the TumblrAppClient [documentation](https://github.com/tumblr/tumblr-ios-app-client#usage) for usage instructions.
+    TMTumblrAppClient *client = [TMTumblrAppClient client];
+    
+    if (![client isAppInstalled])
+        [client viewInAppStore];
 
-The app client library also includes a `UIActivity` stub for including Tumblr in a standard `UIActivityViewController`. The repository includes a [full sample application](https://github.com/tumblr/tumblr-ios-app-client/tree/master/TumblrAppClientSample) which shows all of the application's hooks in action, as well as how to share photos and videos using Apple's standard [`UIDocumentInteractionController`](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
+    [client viewDashboard];
+
+    [client viewTag:@"gif"];
+
+    [client viewBlog:@"bryan"];
+
+    [client viewPost:@"43724939726" blogName:@"bryan"];
+
+### URLs
+
+If you don't want to use this library and would rather hit the app's URLs directly, here they are:
+
+    tumblr://x-callback-url/dashboard
+    tumblr://x-callback-url/tag?tag=gif
+    tumblr://x-callback-url/blog?blogName=bryan
+    tumblr://x-callback-url/blog?blogName=bryan&postID=43724939726
+
+Additionally, photos and videos using Apple's standard [`UIDocumentInteractionController`](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
+
+### Example
+
+The repository includes a [full sample application](https://github.com/tumblr/tumblr-ios-sdk/tree/master/Examples/AppClientExample) which shows all of the inter-app communication hooks in action, as well as how to share to Tumblr for iOS using `UIActivityViewController` or `UIDocumentInteractionController`.
+
+![Screenshot of Tumblr activity icon](https://raw.github.com/tumblr/tumblr-ios-app-client/master/screenshots/uiactivity.png?login=irace&token=ce8dcbc58abd03f1a6006a7fd7abf35e)
 
 ## Roadmap
 
