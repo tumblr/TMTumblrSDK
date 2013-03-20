@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
 #import <OCMock/OCMock.h>
+#import <OCMock/OCMockObject.h>
+#import <OCMock/OCMArg.h>
+#import <SenTestingKit/SenTestingKit.h>
 #import "TMAPIClient.h"
 
 @interface TMAPIClientUnitTest : SenTestCase
