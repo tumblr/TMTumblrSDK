@@ -19,6 +19,7 @@
 - (void) setUp;
 
 - (void) assertCallback:(void(^)(id, TMAPICallback))action;
+- (void) assertCallback:(void(^)(id, TMAPICallback))action andVerify:(JXHTTPOperation*)op;
 - (void) assertSimilarRequest:(JXHTTPOperation*)op1 to:(JXHTTPOperation*)op2;
 - (void) assertMultipartBody:(JXHTTPOperation*)op is:(NSString*)expected;
 - (void) assertBody:(JXHTTPOperation*)op is:(NSDictionary*)expected;
