@@ -20,9 +20,11 @@
 }
 
 - (void) testBlogInfo {
+    NSString *blogName = @"b.n";
+    JXHTTPOperation *op = [client blogInfoRequest:blogName];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient blogInfo:@"b.n" callback:check];
-    }];
+        [mClient blogInfo:blogName callback:check];
+    } andVerify:op];
 }
 
 - (void) testFollowersRequest {
@@ -33,9 +35,12 @@
 }
 
 - (void) testFollowers {
+    NSString *blogName = @"b.n";
+    NSDictionary *params = @{ @"limit": @"1" };
+    JXHTTPOperation *op = [client followersRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient followers:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient followers:blogName parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testAvatarRequest {
@@ -46,9 +51,7 @@
 }
 
 - (void) testAvatar {
-    [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient avatar:@"b.n" size:64 callback:check];
-    }];
+    // TODO
 }
 
 - (void) testPostsRequest {
@@ -59,9 +62,13 @@
 }
 
 - (void) testPosts {
+    NSString *blogName = @"b.n";
+    NSString *type = nil;
+    NSDictionary *params = @{@"limit": @"1"};
+    JXHTTPOperation *op = [client postsRequest:blogName type:type parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient posts:@"b.n" type:nil parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient posts:blogName type:type parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testPosts_WithTypeRequest {
@@ -79,9 +86,12 @@
 }
 
 - (void) testQueue {
+    NSString *blogName = @"b.n";
+    NSDictionary *params = @{@"limit": @"1"};
+    JXHTTPOperation *op = [client queueRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient queue:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient queue:blogName parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testDraftsRequest {
@@ -92,9 +102,12 @@
 }
 
 - (void) testDrafts {
+    NSString *blogName = @"b.n";
+    NSDictionary *params = @{@"limit": @"1"};
+    JXHTTPOperation *op = [client draftsRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient drafts:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient drafts:blogName parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testSubmissionsRequest {
@@ -105,9 +118,12 @@
 }
 
 - (void) testSubmissions {
+    NSString *blogName = @"b.n";
+    NSDictionary *params = @{@"limit": @"1"};
+    JXHTTPOperation *op = [client submissionsRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
         [mClient submissions:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+    } andVerify:op];
 }
 
 @end

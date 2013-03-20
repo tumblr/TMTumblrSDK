@@ -20,9 +20,12 @@
 }
 
 - (void) testTagged {
+    NSString *tag = @"tag";
+    NSDictionary *params = @{ @"limit": @"1" };
+    JXHTTPOperation *op = [client taggedRequest:tag parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient tagged:@"tag" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient tagged:tag parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testTaggedRequest_NoParameters {
