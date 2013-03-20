@@ -87,7 +87,7 @@ Use the `TMAPIClient` singleton to retrieve an OAuth token and secret given a us
         // You are now authenticated (if !error)
     }];
 
-If you are only interested in the authentication bits, they can be installed by themselves as the `TumblrSDK/Authentication` sub-pod.
+If you're only interested in authentication, the `TumblrSDK/Authentication` sub-pod can be installed by itself.
 
 ## API client
 
@@ -111,6 +111,8 @@ There are two ways of retrieving data from the API:
         if (!error) 
             NSLog(@"Got some liked posts");
     }];
+
+If you're only interested in the API client, the `TumblrSDK/APIClient` sub-pod can be installed by itself.
 
 ## Inter-app communication
 
@@ -139,6 +141,8 @@ If you don't want to use this library and would rather hit the app's URLs direct
     tumblr://x-callback-url/blog?blogName=bryan&postID=43724939726
 
 Additionally, photos and videos using Apple's standard [`UIDocumentInteractionController`](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
+
+If you're only interested in the app client, the `TumblrSDK/AppClient` sub-pod can be installed by itself.
 
 ### Example
 
