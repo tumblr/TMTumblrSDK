@@ -20,9 +20,13 @@
 }
 
 - (void) testPost {
+    NSString *blogName = @"blog";
+    NSString *type = @"audio";
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client postRequest:blogName type:type parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient post:@"b.n" type:@"audio" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient post:blogName type:type parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testEditPostRequest {
@@ -33,9 +37,12 @@
 }
 
 - (void) testEditPost {
+    NSString *blogName = @"blog";
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client editPostRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient editPost:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient editPost:blogName parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testReblogPostRequest {
@@ -46,9 +53,12 @@
 }
 
 - (void) testReblogPost {
+    NSString *blogName = @"blog";
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client reblogPostRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient reblogPost:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient reblogPost:blogName parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testDeletePostRequest {
@@ -59,9 +69,12 @@
 }
 
 - (void) testDeletePost {
+    NSString *blogName = @"blog";
+    NSString *postId = @"123";
+    JXHTTPOperation *op = [client deletePostRequest:blogName id:postId];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient deletePost:@"b.n" id:@"123" callback:check];
-    }];
+        [mClient deletePost:blogName id:postId callback:check];
+    } andVerify:op];
 }
 
 - (void) testQuoteRequest {
@@ -72,9 +85,12 @@
 }
 
 - (void) testQuote {
+    NSString *blogName = @"blog";
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client quoteRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient quote:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient quote:blogName parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testLinkRequest {
@@ -85,9 +101,12 @@
 }
 
 - (void) testLink {
+    NSString *blogName = @"blog";
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client linkRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient link:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient link:blogName  parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testChatRequest {
@@ -98,9 +117,12 @@
 }
 
 - (void) testChat {
+    NSString *blogName = @"blog";
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client chatRequest:blogName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient chat:@"b.n" parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient chat:blogName parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testPhotoRequest {
@@ -111,9 +133,14 @@
 }
 
 - (void) testPhoto {
+    NSString *blogName = @"blog";
+    NSArray *filePathArray = nil;
+    NSArray *contentTypeArray = nil;
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client photoRequest:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient photo:@"b.n" filePathArray:nil contentTypeArray:nil parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient photo:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testAudioRequest {
@@ -124,9 +151,14 @@
 }
 
 - (void) testAudio {
+    NSString *blogName = @"blog";
+    NSString *filePath = nil;
+    NSString *contentType = nil;
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client audioRequest:blogName filePath:filePath contentType:contentType parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient audio:@"b.n" filePath:nil contentType:nil parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient audio:blogName filePath:filePath contentType:contentType parameters:params callback:check];
+    } andVerify:op];
 }
 
 - (void) testVideoRequest {
@@ -137,9 +169,14 @@
 }
 
 - (void) testVideo {
+    NSString *blogName = @"blog";
+    NSString *filePath = nil;
+    NSString *contentType = nil;
+    NSDictionary *params = @{@"some": @"param"};
+    JXHTTPOperation *op = [client videoRequest:blogName filePath:filePath contentType:contentType parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient video:@"b.n" filePath:nil contentType:nil parameters:@{@"limit": @"1"} callback:check];
-    }];
+        [mClient video:blogName filePath:filePath contentType:contentType parameters:params callback:check];
+    } andVerify:op];
 }
 
 @end
