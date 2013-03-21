@@ -6,27 +6,27 @@
 //  Copyright (c) 2012 Tumblr. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "IACClient.h"
 
 /**
- Convenience wrapper around the URL schemes that the Tumblr app for iOS allows other apps to communicate using.
+ Convenience wrapper around the URLs that [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404) knows how 
+ to open.
  */
 @interface TMTumblrAppClient : IACClient
 
-// Open the Tumblr app in the app store
+/// Open Tumblr for iOS in the app store
 - (void)viewInAppStore;
 
-// Open the dashboard in the Tumblr app
+/// View the authenticated user's dashboard
 - (void)viewDashboard;
 
-// View a tag in the tumblr app
+/// View a tag
 - (void)viewTag:(NSString *)tag;
 
-// View a blog in the tumblr app
+/// View a blog
 - (void)viewBlog:(NSString *)blogName;
 
-// View a post in the tumblr app (on a given blog)
+/// View a blog's post
 - (void)viewPost:(NSString *)postID blogName:(NSString *)blogName;
 
 @end

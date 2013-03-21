@@ -3,7 +3,7 @@
 //  TumblrSDK
 //
 //  Created by Bryan Irace on 8/26/12.
-//  Copyright (c) 2012 Bryan Irace. All rights reserved.
+//  Copyright (c) 2013 Tumlr. All rights reserved.
 //
 
 #import "TMAPIClient.h"
@@ -14,6 +14,8 @@
 @interface TMAPIClient()
 
 @property (nonatomic, strong) JXHTTPOperationQueue *queue;
+@property (nonatomic, copy) NSString *OAuthToken;
+@property (nonatomic, copy) NSString *OAuthTokenSecret;
 
 @end
 

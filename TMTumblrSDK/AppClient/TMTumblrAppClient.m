@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 Tumblr. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "TMTumblrAppClient.h"
+
+#import <UIKit/UIKit.h>
 
 @implementation TMTumblrAppClient
 
