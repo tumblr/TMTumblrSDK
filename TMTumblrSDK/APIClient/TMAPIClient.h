@@ -26,6 +26,7 @@ typedef void (^TMAPICallback)(id, NSError *error);
 // Send a low-level request (for methods not available directly)
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback;
 
+// Send a low-level request and specify a queue for the callback (for methods not available directly)
 - (void)sendRequest:(JXHTTPOperation *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
 
 /** @name Authentication */
@@ -75,6 +76,12 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /** @name Blog */
 
+// Get the avatar for a blog
+- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback;
+
+// Get the avatar for a blog and specify a queue for the callback
+- (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
+
 // Get information about a blog
 - (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName;
 - (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback;
@@ -82,10 +89,6 @@ typedef void (^TMAPICallback)(id, NSError *error);
 // Get the followers for a blog
 - (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
-
-// Get the avatar for a blog
-- (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size;
-- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback;
 
 // Get the posts for a blog
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters;
