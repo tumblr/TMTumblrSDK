@@ -137,6 +137,41 @@
 
 #pragma mark - Blog
 
+- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
+    [self avatar:blogName size:size queue:self.defaultCallbackQueue callback:callback];
+}
+
+- (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
+    JXHTTPOperation *request = [self getRequestWithPath:[blogPath(@"avatar", blogName) stringByAppendingFormat:@"/%d", size]
+                                             parameters:nil];
+    
+    if (callback) {
+        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+            id response = nil;
+            NSError *error = nil;
+            
+            if (operation.responseStatusCode/100 == 2) {
+                response = operation.responseData;
+            } else {
+                error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
+                                        userInfo:nil];
+            }
+            
+            [queue addOperationWithBlock:^{
+                callback(response, error);
+            }];
+        };
+        
+        request.didFailBlock = ^(JXHTTPOperation *operation) {
+            [queue addOperationWithBlock:^{
+                callback(nil, operation.error);
+            }];
+        };
+    }
+    
+    [self.queue addOperation:request];
+}
+
 - (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName {
     return [self getRequestWithPath:blogPath(@"info", blogName) parameters:nil];
 }
@@ -151,42 +186,6 @@
 
 - (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     [self sendRequest:[self followersRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size {
-    NSString *path = blogPath(@"avatar", blogName);
-    path = [path stringByAppendingFormat:@"/%d", size];
-    return [self getRequestWithPath:path parameters:nil];
-}
-
-- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
-    JXHTTPOperation *request = [self avatarRequest:blogName size:size];
-    
-    if (callback) {
-        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-            id response = nil;
-            NSError *error = nil;
-            
-            if (operation.responseStatusCode/100 == 2) {
-                response = operation.responseData;
-            } else {
-                error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
-                                        userInfo:nil];
-            }
-            
-            [self.callbackQueue addOperationWithBlock:^{
-                callback(response, error);
-            }];
-        };
-        
-        request.didFailBlock = ^(JXHTTPOperation *operation) {
-            [self.callbackQueue addOperationWithBlock:^{
-                callback(nil, operation.error);
-            }];
-        };
-    }
-    
-    [self.queue addOperation:request];
 }
 
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
@@ -425,6 +424,10 @@
 }
 
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
+    [self sendRequest:request queue:self.defaultCallbackQueue callback:callback];
+}
+
+- (void)sendRequest:(JXHTTPOperation *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
     if (callback) {
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
             NSDictionary *response = operation.responseJSON;
@@ -435,13 +438,13 @@
             if (statusCode/100 != 2)
                 error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
             
-            [self.callbackQueue addOperationWithBlock:^{
+            [queue addOperationWithBlock:^{
                 callback(response[@"response"], error);
             }];
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
-            [self.callbackQueue addOperationWithBlock:^{
+            [queue addOperationWithBlock:^{
                 callback(nil, operation.error);
             }];
         };
@@ -479,7 +482,7 @@ static inline NSString *URLEncode(NSString *string) {
 - (id)init {
     if (self = [super init]) {
         self.queue = [[JXHTTPOperationQueue alloc] init];
-        self.callbackQueue = [NSOperationQueue mainQueue];
+        self.defaultCallbackQueue = [NSOperationQueue mainQueue];
     }
     
     return self;
