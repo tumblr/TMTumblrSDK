@@ -43,13 +43,6 @@
     } andVerify:op];
 }
 
-- (void) testAvatarRequest {
-    JXHTTPOperation *op = [client avatarRequest:@"b.n" size:128];
-    [self assertMethod:op is:@"GET"];
-    [self assertPath:op   is:@"/v2/blog/b.n/avatar/128"];
-    [self assertQuery:op  is:@"api_key=consumer_key"];
-}
-
 - (void) testAvatar {
     // TODO
 }
