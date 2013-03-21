@@ -19,11 +19,13 @@ typedef void (^TMAPICallback)(id, NSError *error);
 @property (nonatomic, copy) NSDictionary *customHeaders;
 
 @property (nonatomic, strong, readonly) JXHTTPOperationQueue *queue;
-@property (nonatomic, strong) NSOperationQueue *callbackQueue;
+@property (nonatomic, strong) NSOperationQueue *defaultCallbackQueue;
 
 + (TMAPIClient *)sharedInstance;
 
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback;
+
+- (void)sendRequest:(JXHTTPOperation *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
 
 /** @name Authentication */
 
@@ -61,14 +63,15 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /** @name Blog */
 
+- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback;
+
+- (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
+
 - (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName;
 - (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback;
 
 - (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 - (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
-
-- (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size;
-- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback;
 
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters;
 - (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
