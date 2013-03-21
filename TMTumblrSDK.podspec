@@ -11,29 +11,30 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.7'
   s.frameworks   = 'Foundation'
   s.documentation = {
-      :html => 'http://tumblr.github.com/tmtumblrsdk/docs/html',
-      :appledoc => [
-        '--company-id', 'com.tumblr',
-        '--project-name', 'TMTumblrSDK',
-        '--project-company', 'Tumblr',
-        '--project-version', '1.0.0',
-        '--docset-min-xcode-version', '4.3',
-        '--docset-bundle-name', '%PROJECT',
-        '--docset-bundle-id', '%COMPANYID.%PROJECTID',
-        '--docset-bundle-filename', '%COMPANYID.%PROJECTID-%VERSIONID.docset',
-        '--docset-feed-name', '%PROJECT',
-        '--docset-feed-url', 'http://tumblr.github.com/tmtumblrsdk/docs/publish/%DOCSETATOMFILENAME',
-        '--docset-package-url', 'http://tumblr.github.com/tmtumblrsdk/docs/publish/%DOCSETPACKAGEFILENAME',
-        '--docset-fallback-url', 'http://tumblr.github.com/tmtumblrsdk/docs/html/',
-        '--ignore', '*.m',
-        '--no-repeat-first-par',
-        '--explicit-crossref',
-        '--clean-output',
-        '--keep-undocumented-objects',
-        '--keep-undocumented-members',
-        '--no-search-undocumented-doc',
-        '--no-warn-undocumented-member'
-      ]
+    :html => 'http://tumblr.github.com/tmtumblrsdk/docs/html',
+    :appledoc => [
+      '--company-id', 'com.tumblr',
+      '--project-name', 'TMTumblrSDK',
+      '--project-company', 'Tumblr',
+      '--project-version', '1.0.0',
+      '--docset-min-xcode-version', '4.3',
+      '--docset-bundle-name', '%PROJECT',
+      '--docset-bundle-id', '%COMPANYID.%PROJECTID',
+      '--docset-bundle-filename', '%COMPANYID.%PROJECTID-%VERSIONID.docset',
+      '--docset-feed-name', '%PROJECT',
+      '--docset-feed-url', 'http://tumblr.github.com/tmtumblrsdk/docs/publish/%DOCSETATOMFILENAME',
+      '--docset-package-url', 'http://tumblr.github.com/tmtumblrsdk/docs/publish/%DOCSETPACKAGEFILENAME',
+      '--docset-fallback-url', 'http://tumblr.github.com/tmtumblrsdk/docs/html/',
+      '--ignore', '*.m',
+      '--no-repeat-first-par',
+      '--explicit-crossref',
+      '--clean-output',
+      '--keep-undocumented-objects',
+      '--keep-undocumented-members',
+      '--no-search-undocumented-doc',
+      '--no-warn-undocumented-member'
+    ]
+  }
 
   s.subspec 'APIClient' do |ss|
     ss.source_files = 'TMTumblrSDK/APIClient'
