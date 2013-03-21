@@ -48,7 +48,11 @@ typedef void (^TMAPICallback)(id, NSError *error);
  */
 @property (nonatomic, strong) NSOperationQueue *defaultCallbackQueue;
 
+/** @name Singleton instance */
+
 + (TMAPIClient *)sharedInstance;
+
+/** @name Sending raw requests */
 
 /**
  Send an API request. This method should be used in conjunction with an API method below that return a `JXHTTPOperation`
