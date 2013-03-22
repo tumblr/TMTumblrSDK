@@ -15,6 +15,16 @@
 
 @property (nonatomic, strong) JXHTTPOperationQueue *queue;
 
+NSString *blogPath(NSString *ext, NSString *blogName);
+
+NSString *fullBlogName(NSString *blogName);
+
+NSString *URLWithPath(NSString *path);
+
+NSString *URLDecode(NSString *string);
+
+NSString *URLEncode(NSString *string);
+
 @end
 
 
@@ -406,7 +416,7 @@
     BOOL multiple = [filePathArray count] > 1;
     
     [filePathArray enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
-        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%ld]", (unsigned long)index] : @"data"
+        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%lu]", (unsigned long)index] : @"data"
                    contentType:contentTypeArray[index] fileName:@"foo.bar"];
     }];
     
@@ -453,26 +463,26 @@
     [self.queue addOperation:request];
 }
 
-static inline NSString *blogPath(NSString *ext, NSString *blogName) {
+NSString *blogPath(NSString *ext, NSString *blogName) {
     return [NSString stringWithFormat:@"blog/%@/%@", fullBlogName(blogName), ext];
 }
 
-static inline NSString *fullBlogName(NSString *blogName) {
+NSString *fullBlogName(NSString *blogName) {
     if ([blogName rangeOfString:@"."].location == NSNotFound)
         return blogName = [blogName stringByAppendingString:@".tumblr.com"];
     
     return blogName;
 }
 
-static inline NSString *URLWithPath(NSString *path) {
+NSString *URLWithPath(NSString *path) {
     return [@"http://api.tumblr.com/v2/" stringByAppendingString:path];
 }
 
-static inline NSString *URLDecode(NSString *string) {
+NSString *URLDecode(NSString *string) {
     return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")));
 }
 
-static inline NSString *URLEncode(NSString *string) {
+NSString *URLEncode(NSString *string) {
     return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
                                                                 CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
 }
