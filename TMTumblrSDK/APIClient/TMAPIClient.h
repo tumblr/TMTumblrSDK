@@ -22,11 +22,21 @@ typedef void (^TMAPICallback)(id, NSError *error);
 /// OAuth consumer key. Must be set prior to authenticating or making any API requests.
 @property (nonatomic, copy) NSString *OAuthConsumerSecret;
 
-/// OAuth token secret. Set by this library's OAuth/xAuth implementations.
-@property (nonatomic, copy, readonly) NSString *OAuthToken;
+/**
+ OAuth token. Initially set by this library's OAuth/xAuth implementations after authenticating.
+ 
+ The Tumblr SDK does not currently persist this value. You are responsible for storing this value and setting it on 
+ subsequent app launches prior to making any API requests.
+ */
+@property (nonatomic, copy) NSString *OAuthToken;
 
-/// OAuth token secret. Set by this library's OAuth/xAuth implementations.
-@property (nonatomic, copy, readonly) NSString *OAuthTokenSecret;
+/**
+ OAuth token secret. Initially set by this library's OAuth/xAuth implementations after authenticating.
+ 
+ The Tumblr SDK does not currently persist this value. You are responsible for storing this value and setting it on
+ subsequent app launches prior to making any API requests.
+ */
+@property (nonatomic, copy) NSString *OAuthTokenSecret;
 
 /**
  HTTP headers to be set on all requests, in addition to the `Authentication` header. These headers will be set just 

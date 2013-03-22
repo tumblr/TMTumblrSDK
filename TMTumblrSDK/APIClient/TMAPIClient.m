@@ -14,8 +14,6 @@
 @interface TMAPIClient()
 
 @property (nonatomic, strong) JXHTTPOperationQueue *queue;
-@property (nonatomic, copy) NSString *OAuthToken;
-@property (nonatomic, copy) NSString *OAuthTokenSecret;
 
 @end
 

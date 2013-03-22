@@ -63,6 +63,11 @@ with your app’s Tumblr consumer key and secret:
 If you don't already have a consumer key/secret you can
 register [here](http://www.tumblr.com/oauth/apps).
 
+The authentication methods detailed below will provide the API client with a token and token secret. The
+SDK does *not* currently persist these values; you are responsible for storing them and setting them on
+the API client on subsquent app launches, before making any API requests. This may change in a future
+release.
+
 ### OAuth
 In your app’s `Info.plist`, specify a custom URL scheme that the browser can
 use to return to your application once the user has permitted or denied
