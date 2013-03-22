@@ -448,14 +448,14 @@ of each route&rsquo;s parameters.</p>
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/OAuthToken">&nbsp;&nbsp;OAuthToken</a></code>
-		<span class="tooltip"><p>OAuth token secret. Set by this library&rsquo;s OAuth/xAuth implementations.</p></span>
+		<span class="tooltip"><p>OAuth token. Initially set by this library&rsquo;s OAuth/xAuth implementations after authenticating.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/OAuthTokenSecret">&nbsp;&nbsp;OAuthTokenSecret</a></code>
-		<span class="tooltip"><p>OAuth token secret. Set by this library&rsquo;s OAuth/xAuth implementations.</p></span>
+		<span class="tooltip"><p>OAuth token secret. Initially set by this library&rsquo;s OAuth/xAuth implementations after authenticating.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -1081,12 +1081,12 @@ for your application.</p></span>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>OAuth token secret. Set by this library&rsquo;s OAuth/xAuth implementations.</p>
+		<p>OAuth token. Initially set by this library&rsquo;s OAuth/xAuth implementations after authenticating.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, readonly) NSString *OAuthToken</code></div>
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *OAuthToken</code></div>
 
     
 	
@@ -1095,6 +1095,12 @@ for your application.</p></span>
 	
 	
 	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The Tumblr SDK does not currently persist this value. You are responsible for storing this value and setting it on<br/>
+subsequent app launches prior to making any API requests.</p>
+	</div>
 	
 	
 	
@@ -1117,12 +1123,12 @@ for your application.</p></span>
 	
 	
 	<div class="method-subsection brief-description">
-		<p>OAuth token secret. Set by this library&rsquo;s OAuth/xAuth implementations.</p>
+		<p>OAuth token secret. Initially set by this library&rsquo;s OAuth/xAuth implementations after authenticating.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, readonly) NSString *OAuthTokenSecret</code></div>
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *OAuthTokenSecret</code></div>
 
     
 	
@@ -1131,6 +1137,12 @@ for your application.</p></span>
 	
 	
 	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The Tumblr SDK does not currently persist this value. You are responsible for storing this value and setting it on<br/>
+subsequent app launches prior to making any API requests.</p>
+	</div>
 	
 	
 	

@@ -16,11 +16,11 @@
 	
 	
 	<key>DocSetFallbackURL</key>
-	<string>http://tumblr.github.com/docs/html/</string>
+	<string>http://github.tumblr.com/TMTumblrSDK/docs/html/</string>
 	<key>DocSetFeedName</key>
 	<string>TMTumblrSDK</string>
 	<key>DocSetFeedURL</key>
-	<string>http://tumblr.github.com/docs/publish/com.tumblr.TMTumblrSDK.atom</string>
+	<string>http://github.tumblr.com/TMTumblrSDK/docs/publish/com.tumblr.TMTumblrSDK.atom</string>
 	<key>DocSetMinimumXcodeVersion</key>
 	<string>4.3</string>
 	

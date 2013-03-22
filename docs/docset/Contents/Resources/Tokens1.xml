@@ -86,10 +86,10 @@ of each route&apos;s parameters.</Abstract>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setOAuthToken:</TokenIdentifier>
-			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<Abstract type="html">OAuth token. Initially set by this library&apos;s OAuth/xAuth implementations after authenticating.</Abstract>
 			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthToken</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *OAuthToken</Declaration>
 			
 			
 			<Anchor>//api/name/OAuthToken</Anchor>
@@ -98,10 +98,10 @@ of each route&apos;s parameters.</Abstract>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/OAuthToken</TokenIdentifier>
-			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<Abstract type="html">OAuth token. Initially set by this library&apos;s OAuth/xAuth implementations after authenticating.</Abstract>
 			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthToken</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *OAuthToken</Declaration>
 			
 			
 			<Anchor>//api/name/OAuthToken</Anchor>
@@ -110,10 +110,10 @@ of each route&apos;s parameters.</Abstract>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/OAuthToken</TokenIdentifier>
-			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<Abstract type="html">OAuth token. Initially set by this library&apos;s OAuth/xAuth implementations after authenticating.</Abstract>
 			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthToken</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *OAuthToken</Declaration>
 			
 			
 			<Anchor>//api/name/OAuthToken</Anchor>
@@ -122,10 +122,10 @@ of each route&apos;s parameters.</Abstract>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setOAuthTokenSecret:</TokenIdentifier>
-			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<Abstract type="html">OAuth token secret. Initially set by this library&apos;s OAuth/xAuth implementations after authenticating.</Abstract>
 			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthTokenSecret</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *OAuthTokenSecret</Declaration>
 			
 			
 			<Anchor>//api/name/OAuthTokenSecret</Anchor>
@@ -134,10 +134,10 @@ of each route&apos;s parameters.</Abstract>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/OAuthTokenSecret</TokenIdentifier>
-			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<Abstract type="html">OAuth token secret. Initially set by this library&apos;s OAuth/xAuth implementations after authenticating.</Abstract>
 			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthTokenSecret</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *OAuthTokenSecret</Declaration>
 			
 			
 			<Anchor>//api/name/OAuthTokenSecret</Anchor>
@@ -146,10 +146,10 @@ of each route&apos;s parameters.</Abstract>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/OAuthTokenSecret</TokenIdentifier>
-			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<Abstract type="html">OAuth token secret. Initially set by this library&apos;s OAuth/xAuth implementations after authenticating.</Abstract>
 			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthTokenSecret</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *OAuthTokenSecret</Declaration>
 			
 			
 			<Anchor>//api/name/OAuthTokenSecret</Anchor>
