@@ -406,7 +406,7 @@
     BOOL multiple = [filePathArray count] > 1;
     
     [filePathArray enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
-        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%d]", index] : @"data"
+        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%ld]", (unsigned long)index] : @"data"
                    contentType:contentTypeArray[index] fileName:@"foo.bar"];
     }];
     
