@@ -48,6 +48,8 @@ The SDK includes a UIActivity subclass for including Tumblr in a standard
 title, but you can hook it up however you see fit and we may provide a more
 integrated solution in the future.
 
+Appledoc for the SDK can be found [here](http://tumblr.github.com/TMTumblrSDK/docs/html/).
+
 ## Authentication
 
 Import `TMAPIClient.h`. Configure the `[TMAPIClient sharedInstance]` singleton
