@@ -14,7 +14,7 @@
 		499CAE7316FA320B00D2975E /* TMAPIClientPostTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE7216FA320B00D2975E /* TMAPIClientPostTest.m */; };
 		499CAE7616FA327700D2975E /* TMAPIClientTagTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE7516FA327700D2975E /* TMAPIClientTagTest.m */; };
 		9330592E16F9281500868C9C /* TMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9330592D16F9281500868C9C /* TMAPIClient.m */; };
-		9330593216F9295800868C9C /* TMTumblrActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9330593116F9295800868C9C /* TMTumblrActivity.m */; };
+		93A3902616FCE5C80045183F /* TMTumblrActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A3902116FCE5C80045183F /* TMTumblrActivity.m */; };
 		93E52A74168BB43700E5471A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A73168BB43700E5471A /* Foundation.framework */; };
 		93E52A83168BB43700E5471A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A82168BB43700E5471A /* SenTestingKit.framework */; };
 		93E52A85168BB43700E5471A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A84168BB43700E5471A /* UIKit.framework */; };
@@ -63,12 +63,12 @@
 		499CAE7516FA327700D2975E /* TMAPIClientTagTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientTagTest.m; sourceTree = "<group>"; };
 		9330592C16F9281500868C9C /* TMAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClient.h; sourceTree = "<group>"; };
 		9330592D16F9281500868C9C /* TMAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClient.m; sourceTree = "<group>"; };
-		9330593016F9295800868C9C /* TMTumblrActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTumblrActivity.h; sourceTree = "<group>"; };
-		9330593116F9295800868C9C /* TMTumblrActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTumblrActivity.m; sourceTree = "<group>"; };
-		9330593316F9296400868C9C /* UIActivityTumblr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIActivityTumblr.png; sourceTree = "<group>"; };
-		9330593416F9296400868C9C /* UIActivityTumblr@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr@2x.png"; sourceTree = "<group>"; };
-		9330593516F9296400868C9C /* UIActivityTumblr@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr@2x~ipad.png"; sourceTree = "<group>"; };
-		9330593616F9296400868C9C /* UIActivityTumblr~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr~ipad.png"; sourceTree = "<group>"; };
+		93A3902016FCE5C80045183F /* TMTumblrActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTumblrActivity.h; sourceTree = "<group>"; };
+		93A3902116FCE5C80045183F /* TMTumblrActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTumblrActivity.m; sourceTree = "<group>"; };
+		93A3902216FCE5C80045183F /* UIActivityTumblr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIActivityTumblr.png; sourceTree = "<group>"; };
+		93A3902316FCE5C80045183F /* UIActivityTumblr@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr@2x.png"; sourceTree = "<group>"; };
+		93A3902416FCE5C80045183F /* UIActivityTumblr@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr@2x~ipad.png"; sourceTree = "<group>"; };
+		93A3902516FCE5C80045183F /* UIActivityTumblr~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIActivityTumblr~ipad.png"; sourceTree = "<group>"; };
 		93E52A70168BB43700E5471A /* libTMTumblrSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTMTumblrSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E52A73168BB43700E5471A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93E52A77168BB43700E5471A /* TMTumblrSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TMTumblrSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -120,6 +120,19 @@
 			path = APIClient;
 			sourceTree = "<group>";
 		};
+		93A3901F16FCE5A30045183F /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				93A3902016FCE5C80045183F /* TMTumblrActivity.h */,
+				93A3902116FCE5C80045183F /* TMTumblrActivity.m */,
+				93A3902216FCE5C80045183F /* UIActivityTumblr.png */,
+				93A3902316FCE5C80045183F /* UIActivityTumblr@2x.png */,
+				93A3902416FCE5C80045183F /* UIActivityTumblr@2x~ipad.png */,
+				93A3902516FCE5C80045183F /* UIActivityTumblr~ipad.png */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
 		93E52A65168BB43600E5471A = {
 			isa = PBXGroup;
 			children = (
@@ -155,8 +168,7 @@
 		93E52A75168BB43700E5471A /* TMTumblrSDK */ = {
 			isa = PBXGroup;
 			children = (
-				9330593016F9295800868C9C /* TMTumblrActivity.h */,
-				9330593116F9295800868C9C /* TMTumblrActivity.m */,
+				93A3901F16FCE5A30045183F /* Activity */,
 				9330592B16F927F100868C9C /* API Client */,
 				93F8E38116F92191004CA7D5 /* App Client */,
 				93F8E38016F92189004CA7D5 /* Authentication */,
@@ -169,10 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				93E52A77168BB43700E5471A /* TMTumblrSDK-Prefix.pch */,
-				9330593316F9296400868C9C /* UIActivityTumblr.png */,
-				9330593416F9296400868C9C /* UIActivityTumblr@2x.png */,
-				9330593516F9296400868C9C /* UIActivityTumblr@2x~ipad.png */,
-				9330593616F9296400868C9C /* UIActivityTumblr~ipad.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -342,7 +350,7 @@
 				93F8E39016F921C6004CA7D5 /* TMOAuth.m in Sources */,
 				93F8E39116F921C6004CA7D5 /* TMTumblrAuthenticator.m in Sources */,
 				9330592E16F9281500868C9C /* TMAPIClient.m in Sources */,
-				9330593216F9295800868C9C /* TMTumblrActivity.m in Sources */,
+				93A3902616FCE5C80045183F /* TMTumblrActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -48,6 +48,8 @@ The SDK includes a UIActivity subclass for including Tumblr in a standard
 title, but you can hook it up however you see fit and we may provide a more
 integrated solution in the future.
 
+Appledoc for the SDK can be found [here](http://tumblr.github.com/TMTumblrSDK/docs/html/).
+
 ## Authentication
 
 Import `TMAPIClient.h`. Configure the `[TMAPIClient sharedInstance]` singleton
@@ -60,6 +62,11 @@ with your app’s Tumblr consumer key and secret:
 
 If you don't already have a consumer key/secret you can
 register [here](http://www.tumblr.com/oauth/apps).
+
+The authentication methods detailed below will provide the API client with a token and token secret. The
+SDK does *not* currently persist these values; you are responsible for storing them and setting them on
+the API client on subsequent app launches, before making any API requests. This may change in a future
+release.
 
 ### OAuth
 In your app’s `Info.plist`, specify a custom URL scheme that the browser can

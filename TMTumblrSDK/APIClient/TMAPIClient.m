@@ -3,7 +3,7 @@
 //  TumblrSDK
 //
 //  Created by Bryan Irace on 8/26/12.
-//  Copyright (c) 2012 Bryan Irace. All rights reserved.
+//  Copyright (c) 2013 Tumlr. All rights reserved.
 //
 
 #import "TMAPIClient.h"
@@ -14,6 +14,16 @@
 @interface TMAPIClient()
 
 @property (nonatomic, strong) JXHTTPOperationQueue *queue;
+
+NSString *blogPath(NSString *ext, NSString *blogName);
+
+NSString *fullBlogName(NSString *blogName);
+
+NSString *URLWithPath(NSString *path);
+
+NSString *URLDecode(NSString *string);
+
+NSString *URLEncode(NSString *string);
 
 @end
 
@@ -137,6 +147,41 @@
 
 #pragma mark - Blog
 
+- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
+    [self avatar:blogName size:size queue:self.defaultCallbackQueue callback:callback];
+}
+
+- (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
+    JXHTTPOperation *request = [self getRequestWithPath:[blogPath(@"avatar", blogName) stringByAppendingFormat:@"/%d", size]
+                                             parameters:nil];
+    
+    if (callback) {
+        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
+            id response = nil;
+            NSError *error = nil;
+            
+            if (operation.responseStatusCode/100 == 2) {
+                response = operation.responseData;
+            } else {
+                error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
+                                        userInfo:nil];
+            }
+            
+            [queue addOperationWithBlock:^{
+                callback(response, error);
+            }];
+        };
+        
+        request.didFailBlock = ^(JXHTTPOperation *operation) {
+            [queue addOperationWithBlock:^{
+                callback(nil, operation.error);
+            }];
+        };
+    }
+    
+    [self.queue addOperation:request];
+}
+
 - (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName {
     return [self getRequestWithPath:blogPath(@"info", blogName) parameters:nil];
 }
@@ -151,42 +196,6 @@
 
 - (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     [self sendRequest:[self followersRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)avatarRequest:(NSString *)blogName size:(int)size {
-    NSString *path = blogPath(@"avatar", blogName);
-    path = [path stringByAppendingFormat:@"/%d", size];
-    return [self getRequestWithPath:path parameters:nil];
-}
-
-- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
-    JXHTTPOperation *request = [self avatarRequest:blogName size:size];
-    
-    if (callback) {
-        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-            id response = nil;
-            NSError *error = nil;
-            
-            if (operation.responseStatusCode/100 == 2) {
-                response = operation.responseData;
-            } else {
-                error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
-                                        userInfo:nil];
-            }
-            
-            [self.callbackQueue addOperationWithBlock:^{
-                callback(response, error);
-            }];
-        };
-        
-        request.didFailBlock = ^(JXHTTPOperation *operation) {
-            [self.callbackQueue addOperationWithBlock:^{
-                callback(nil, operation.error);
-            }];
-        };
-    }
-    
-    [self.queue addOperation:request];
 }
 
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
@@ -407,7 +416,7 @@
     BOOL multiple = [filePathArray count] > 1;
     
     [filePathArray enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
-        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%d]", index] : @"data"
+        [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%lu]", (unsigned long)index] : @"data"
                    contentType:contentTypeArray[index] fileName:@"foo.bar"];
     }];
     
@@ -425,6 +434,10 @@
 }
 
 - (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
+    [self sendRequest:request queue:self.defaultCallbackQueue callback:callback];
+}
+
+- (void)sendRequest:(JXHTTPOperation *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
     if (callback) {
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
             NSDictionary *response = operation.responseJSON;
@@ -435,13 +448,13 @@
             if (statusCode/100 != 2)
                 error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
             
-            [self.callbackQueue addOperationWithBlock:^{
+            [queue addOperationWithBlock:^{
                 callback(response[@"response"], error);
             }];
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
-            [self.callbackQueue addOperationWithBlock:^{
+            [queue addOperationWithBlock:^{
                 callback(nil, operation.error);
             }];
         };
@@ -450,26 +463,26 @@
     [self.queue addOperation:request];
 }
 
-static inline NSString *blogPath(NSString *ext, NSString *blogName) {
+NSString *blogPath(NSString *ext, NSString *blogName) {
     return [NSString stringWithFormat:@"blog/%@/%@", fullBlogName(blogName), ext];
 }
 
-static inline NSString *fullBlogName(NSString *blogName) {
+NSString *fullBlogName(NSString *blogName) {
     if ([blogName rangeOfString:@"."].location == NSNotFound)
         return blogName = [blogName stringByAppendingString:@".tumblr.com"];
     
     return blogName;
 }
 
-static inline NSString *URLWithPath(NSString *path) {
+NSString *URLWithPath(NSString *path) {
     return [@"http://api.tumblr.com/v2/" stringByAppendingString:path];
 }
 
-static inline NSString *URLDecode(NSString *string) {
+NSString *URLDecode(NSString *string) {
     return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")));
 }
 
-static inline NSString *URLEncode(NSString *string) {
+NSString *URLEncode(NSString *string) {
     return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
                                                                 CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
 }
@@ -479,7 +492,7 @@ static inline NSString *URLEncode(NSString *string) {
 - (id)init {
     if (self = [super init]) {
         self.queue = [[JXHTTPOperationQueue alloc] init];
-        self.callbackQueue = [NSOperationQueue mainQueue];
+        self.defaultCallbackQueue = [NSOperationQueue mainQueue];
     }
     
     return self;
