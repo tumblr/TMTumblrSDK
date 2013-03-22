@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/TMTumblrAppClient.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/TMTumblrAppClient</TokenIdentifier>
+			<Abstract type="html">Convenience wrapper around the URLs that Tumblr for iOS knows how
+to open.</Abstract>
+			<DeclaredIn>TMTumblrAppClient.h</DeclaredIn>
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMTumblrAppClient/viewInAppStore</TokenIdentifier>
+			<Abstract type="html">Open Tumblr for iOS in the app store</Abstract>
+			<DeclaredIn>TMTumblrAppClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)viewInAppStore</Declaration>
+			
+			
+			<Anchor>//api/name/viewInAppStore</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMTumblrAppClient/viewDashboard</TokenIdentifier>
+			<Abstract type="html">View the authenticated user&apos;s dashboard</Abstract>
+			<DeclaredIn>TMTumblrAppClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)viewDashboard</Declaration>
+			
+			
+			<Anchor>//api/name/viewDashboard</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMTumblrAppClient/viewTag:</TokenIdentifier>
+			<Abstract type="html">View a tag</Abstract>
+			<DeclaredIn>TMTumblrAppClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)viewTag:(NSString *)tag</Declaration>
+			
+			
+			<Anchor>//api/name/viewTag:</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMTumblrAppClient/viewBlog:</TokenIdentifier>
+			<Abstract type="html">View a blog</Abstract>
+			<DeclaredIn>TMTumblrAppClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)viewBlog:(NSString *)blogName</Declaration>
+			
+			
+			<Anchor>//api/name/viewBlog:</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMTumblrAppClient/viewPost:blogName:</TokenIdentifier>
+			<Abstract type="html">View a blog&apos;s post</Abstract>
+			<DeclaredIn>TMTumblrAppClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)viewPost:(NSString *)postID blogName:(NSString *)blogName</Declaration>
+			
+			
+			<Anchor>//api/name/viewPost:blogName:</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+	</File>
+</Tokens>

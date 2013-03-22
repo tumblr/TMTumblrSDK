@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocSetNodes version="1.0">
+    <TOC>
+        <Node type="folder">
+            <Name>TMTumblrSDK</Name>
+            <Path>index.html</Path>
+			<Subnodes>
+                
+				
+				<Node type="folder">
+					<Name>Classes</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="1"/>
+						<NodeRef refid="2"/>
+						<NodeRef refid="3"/>
+						<NodeRef refid="4"/>
+						<NodeRef refid="5"/>
+						
+					</Subnodes>
+				</Node>
+				
+				
+				
+			</Subnodes>
+        </Node>
+    </TOC>
+	<Library>
+		
+		<Node id="1">
+			<Name>TMAPIClient</Name>
+			<Path>Classes/TMAPIClient.html</Path>
+		</Node>
+		<Node id="2">
+			<Name>TMOAuth</Name>
+			<Path>Classes/TMOAuth.html</Path>
+		</Node>
+		<Node id="3">
+			<Name>TMTumblrActivity</Name>
+			<Path>Classes/TMTumblrActivity.html</Path>
+		</Node>
+		<Node id="4">
+			<Name>TMTumblrAppClient</Name>
+			<Path>Classes/TMTumblrAppClient.html</Path>
+		</Node>
+		<Node id="5">
+			<Name>TMTumblrAuthenticator</Name>
+			<Path>Classes/TMTumblrAuthenticator.html</Path>
+		</Node>
+		
+		
+		
+	</Library>
+</DocSetNodes>

@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/TMAPIClient.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/TMAPIClient</TokenIdentifier>
+			<Abstract type="html">Full wrapper around the Tumblr API. Please see API documentation for a listing
+of each route&apos;s parameters.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setOAuthConsumerKey:</TokenIdentifier>
+			<Abstract type="html">OAuth consumer key. Must be set prior to authenticating or making any API requests.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *OAuthConsumerKey</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthConsumerKey</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/OAuthConsumerKey</TokenIdentifier>
+			<Abstract type="html">OAuth consumer key. Must be set prior to authenticating or making any API requests.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *OAuthConsumerKey</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthConsumerKey</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/OAuthConsumerKey</TokenIdentifier>
+			<Abstract type="html">OAuth consumer key. Must be set prior to authenticating or making any API requests.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *OAuthConsumerKey</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthConsumerKey</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setOAuthConsumerSecret:</TokenIdentifier>
+			<Abstract type="html">OAuth consumer key. Must be set prior to authenticating or making any API requests.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *OAuthConsumerSecret</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthConsumerSecret</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/OAuthConsumerSecret</TokenIdentifier>
+			<Abstract type="html">OAuth consumer key. Must be set prior to authenticating or making any API requests.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *OAuthConsumerSecret</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthConsumerSecret</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/OAuthConsumerSecret</TokenIdentifier>
+			<Abstract type="html">OAuth consumer key. Must be set prior to authenticating or making any API requests.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *OAuthConsumerSecret</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthConsumerSecret</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setOAuthToken:</TokenIdentifier>
+			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthToken</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthToken</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/OAuthToken</TokenIdentifier>
+			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthToken</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthToken</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/OAuthToken</TokenIdentifier>
+			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthToken</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthToken</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setOAuthTokenSecret:</TokenIdentifier>
+			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthTokenSecret</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthTokenSecret</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/OAuthTokenSecret</TokenIdentifier>
+			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthTokenSecret</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthTokenSecret</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/OAuthTokenSecret</TokenIdentifier>
+			<Abstract type="html">OAuth token secret. Set by this library&apos;s OAuth/xAuth implementations.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *OAuthTokenSecret</Declaration>
+			
+			
+			<Anchor>//api/name/OAuthTokenSecret</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setCustomHeaders:</TokenIdentifier>
+			<Abstract type="html">HTTP headers to be set on all requests, in addition to the Authentication header. These headers will be set just
+prior to the request being signed.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSDictionary *customHeaders</Declaration>
+			
+			
+			<Anchor>//api/name/customHeaders</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/customHeaders</TokenIdentifier>
+			<Abstract type="html">HTTP headers to be set on all requests, in addition to the Authentication header. These headers will be set just
+prior to the request being signed.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSDictionary *customHeaders</Declaration>
+			
+			
+			<Anchor>//api/name/customHeaders</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/customHeaders</TokenIdentifier>
+			<Abstract type="html">HTTP headers to be set on all requests, in addition to the Authentication header. These headers will be set just
+prior to the request being signed.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSDictionary *customHeaders</Declaration>
+			
+			
+			<Anchor>//api/name/customHeaders</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setQueue:</TokenIdentifier>
+			<Abstract type="html">Queue that requests sent through sendRequest:callback: or sendRequest:queue:callback: (and as such, any of the
+void API methods) will be added to.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) JXHTTPOperationQueue *queue</Declaration>
+			
+			
+			<Anchor>//api/name/queue</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/queue</TokenIdentifier>
+			<Abstract type="html">Queue that requests sent through sendRequest:callback: or sendRequest:queue:callback: (and as such, any of the
+void API methods) will be added to.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) JXHTTPOperationQueue *queue</Declaration>
+			
+			
+			<Anchor>//api/name/queue</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/queue</TokenIdentifier>
+			<Abstract type="html">Queue that requests sent through sendRequest:callback: or sendRequest:queue:callback: (and as such, any of the
+void API methods) will be added to.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) JXHTTPOperationQueue *queue</Declaration>
+			
+			
+			<Anchor>//api/name/queue</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/setDefaultCallbackQueue:</TokenIdentifier>
+			<Abstract type="html">The queue that callback blocks will be executed on by default. sendRequest:queue:callback: allows the caller to
+specify a callback queue to be used instead of this default.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSOperationQueue *defaultCallbackQueue</Declaration>
+			
+			
+			<Anchor>//api/name/defaultCallbackQueue</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/defaultCallbackQueue</TokenIdentifier>
+			<Abstract type="html">The queue that callback blocks will be executed on by default. sendRequest:queue:callback: allows the caller to
+specify a callback queue to be used instead of this default.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSOperationQueue *defaultCallbackQueue</Declaration>
+			
+			
+			<Anchor>//api/name/defaultCallbackQueue</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TMAPIClient/defaultCallbackQueue</TokenIdentifier>
+			<Abstract type="html">The queue that callback blocks will be executed on by default. sendRequest:queue:callback: allows the caller to
+specify a callback queue to be used instead of this default.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSOperationQueue *defaultCallbackQueue</Declaration>
+			
+			
+			<Anchor>//api/name/defaultCallbackQueue</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TMAPIClient/sharedInstance</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>+ (TMAPIClient *)sharedInstance</Declaration>
+			
+			
+			<Anchor>//api/name/sharedInstance</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/sendRequest:callback:</TokenIdentifier>
+			<Abstract type="html">Send an API request. This method should be used in conjunction with an API method below that return a JXHTTPOperation
+instance. These methods are provided for cases in which the calling code wants a reference to the operation in order
+to observe its properties, cancel it, etc. If the caller does not need to do this, the void API methods can be used
+instead.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/sendRequest:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/sendRequest:queue:callback:</TokenIdentifier>
+			<Abstract type="html">Send an API request and specify a queue to execute the callback block on. This method should be used in conjunction
+with an API method below that returns a JXHTTPOperation instance. These methods are provided for cases in which the
+calling code wants a reference to the operation in order to observe its properties, cancel it, etc. If the caller does
+not need to do this, the void API methods can be used instead.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)sendRequest:(JXHTTPOperation *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queue</Name>
+					<Abstract type="html">Queue to execute the callback block on.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/sendRequest:queue:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/authenticate:callback:</TokenIdentifier>
+			<Abstract type="html">Authenticate via three-legged OAuth.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)authenticate:(NSString *)URLScheme callback:(void ( ^ ) ( NSError *))error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>URLScheme</Name>
+					<Abstract type="html">a URL scheme that your application can handle requests to.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/authenticate:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/handleOpenURL:</TokenIdentifier>
+			<Abstract type="html">Authenticate via three-legged OAuth. This should be called from your UIApplicationDelegate&apos;s
+application:openURL:sourceApplication:annotation: method in order to receive the tokens.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)handleOpenURL:(NSURL *)url</Declaration>
+			
+			
+			<Anchor>//api/name/handleOpenURL:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/xAuth:password:callback:</TokenIdentifier>
+			<Abstract type="html">Authenticate via xAuth. Please note that xAuth access must be specifically requested
+for your application.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(void ( ^ ) ( NSError *))error</Declaration>
+			
+			
+			<Anchor>//api/name/xAuth:password:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/userInfoRequest</TokenIdentifier>
+			<Abstract type="html">Get information about the authenticated user</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)userInfoRequest</Declaration>
+			
+			
+			<Anchor>//api/name/userInfoRequest</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/userInfo:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)userInfo:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/userInfo:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/dashboardRequest:</TokenIdentifier>
+			<Abstract type="html">Get posts for the authenticated user&apos;s dashboard</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)dashboardRequest:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/dashboardRequest:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/dashboard:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/dashboard:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/likesRequest:</TokenIdentifier>
+			<Abstract type="html">Get posts that the authenticated user has &quot;liked&quot;</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)likesRequest:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/likesRequest:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/likes:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/likes:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/followingRequest:</TokenIdentifier>
+			<Abstract type="html">Get blogs that the authenticated user is following</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)followingRequest:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/followingRequest:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/following:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)following:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/following:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/followRequest:</TokenIdentifier>
+			<Abstract type="html">Follow a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)followRequest:(NSString *)blogName</Declaration>
+			
+			
+			<Anchor>//api/name/followRequest:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/follow:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)follow:(NSString *)blogName callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/follow:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/unfollowRequest:</TokenIdentifier>
+			<Abstract type="html">Unfollow a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)unfollowRequest:(NSString *)blogName</Declaration>
+			
+			
+			<Anchor>//api/name/unfollowRequest:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/unfollow:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)unfollow:(NSString *)blogName callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/unfollow:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/likeRequest:reblogKey:</TokenIdentifier>
+			<Abstract type="html">Like a post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)likeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey</Declaration>
+			
+			
+			<Anchor>//api/name/likeRequest:reblogKey:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/like:reblogKey:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/like:reblogKey:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/unlikeRequest:reblogKey:</TokenIdentifier>
+			<Abstract type="html">Unlike a post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)unlikeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey</Declaration>
+			
+			
+			<Anchor>//api/name/unlikeRequest:reblogKey:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/unlike:reblogKey:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/unlike:reblogKey:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/avatar:size:callback:</TokenIdentifier>
+			<Abstract type="html">Get the avatar for a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/avatar:size:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/avatar:size:queue:callback:</TokenIdentifier>
+			<Abstract type="html">Get the avatar for a blog.</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queue</Name>
+					<Abstract type="html">Queue to execute the callback block on.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/avatar:size:queue:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/blogInfoRequest:</TokenIdentifier>
+			<Abstract type="html">Get information about a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName</Declaration>
+			
+			
+			<Anchor>//api/name/blogInfoRequest:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/blogInfo:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/blogInfo:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/followersRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Get the followers for a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/followersRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/followers:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/followers:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/postsRequest:type:parameters:</TokenIdentifier>
+			<Abstract type="html">Get the posts for a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/postsRequest:type:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/posts:type:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/posts:type:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/queueRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Get the queue posts for a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)queueRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/queueRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/queue:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/queue:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/draftsRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Get the draft posts for a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)draftsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/draftsRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/drafts:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/drafts:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/submissionsRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Get the submission posts for a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)submissionsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/submissionsRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/submissions:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/submissions:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/likesRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Get the likes for a blog</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)likesRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/likesRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/likes:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)likes:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/likes:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/postRequest:type:parameters:</TokenIdentifier>
+			<Abstract type="html">Create a post of a given |type|</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/postRequest:type:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/post:type:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/post:type:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/editPostRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Edit a post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/editPostRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/editPost:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/editPost:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/reblogPostRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Reblog a post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)reblogPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/reblogPostRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/reblogPost:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/reblogPost:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/deletePostRequest:id:</TokenIdentifier>
+			<Abstract type="html">Delete a post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID</Declaration>
+			
+			
+			<Anchor>//api/name/deletePostRequest:id:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/deletePost:id:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/deletePost:id:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/textRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Create a text post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/textRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/text:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/text:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/quoteRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Create a quote post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)quoteRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/quoteRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/quote:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/quote:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/linkRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Create a link post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)linkRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/linkRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/link:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/link:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/chatRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Create a chat post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/chatRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/chat:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/chat:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/photoRequest:filePathArray:contentTypeArray:parameters:</TokenIdentifier>
+			<Abstract type="html">Create a photo post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/photoRequest:filePathArray:contentTypeArray:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/photo:filePathArray:contentTypeArray:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/photo:filePathArray:contentTypeArray:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/videoRequest:filePath:contentType:parameters:</TokenIdentifier>
+			<Abstract type="html">Create a video post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/videoRequest:filePath:contentType:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/video:filePath:contentType:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)video:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/video:filePath:contentType:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/audioRequest:filePath:contentType:parameters:</TokenIdentifier>
+			<Abstract type="html">Create an audio post</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/audioRequest:filePath:contentType:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/audio:filePath:contentType:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)audio:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/audio:filePath:contentType:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/taggedRequest:parameters:</TokenIdentifier>
+			<Abstract type="html">Get posts with a given tag</Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (JXHTTPOperation *)taggedRequest:(NSString *)tag parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/taggedRequest:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TMAPIClient/tagged:parameters:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TMAPIClient.h</DeclaredIn>			
+			
+			<Declaration>- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback</Declaration>
+			
+			
+			<Anchor>//api/name/tagged:parameters:callback:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+	</File>
+</Tokens>
