@@ -314,6 +314,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			showEnvVarsInLog = 0;
 		};
 		B5A34012BD204318BABDF5EB /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -328,6 +329,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -420,6 +422,7 @@
 				DSTROOT = /tmp/TumblrSDK.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTumblrSDK/TMTumblrSDK-Prefix.pch";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"${inherited}",
@@ -463,6 +466,7 @@
 					"${SRCROOT}/Pods/Headers",
 				);
 				INFOPLIST_FILE = "TMTumblrSDKTests/TMTumblrSDKTests-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = TMTumblrSDKTests;
 				WRAPPER_EXTENSION = octest;

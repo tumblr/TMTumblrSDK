@@ -7,5 +7,7 @@
 *.xcworkspace
 *.pbxuser
 
+build
+
 Podfile.lock
 Pods/
