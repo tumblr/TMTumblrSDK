@@ -40,7 +40,7 @@ that looks as follows:
 ``` ruby
 platform :ios, '5.0'
 
-pod 'TMTumblrSDK', '1.0.0'
+pod 'TMTumblrSDK', '1.0.1'
 ```
 
 The SDK includes a UIActivity subclass for including Tumblr in a standard
