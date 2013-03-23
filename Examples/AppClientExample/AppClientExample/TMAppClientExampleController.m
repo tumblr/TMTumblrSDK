@@ -9,7 +9,6 @@
 #import "TMAppClientExampleController.h"
 
 #import "TMTumblrAppClient.h"
-#import "TMTumblrActivity.h"
 
 typedef enum {
     TMAppClientActionViewInAppStore,
@@ -17,6 +16,10 @@ typedef enum {
     TMAppClientActionViewTag,
     TMAppClientActionViewBlog,
     TMAppClientActionViewPost,
+    TMAppClientActionCreateTextPost,
+    TMAppClientActionCreateLinkPost,
+    TMAppClientActionCreateQuotePost,
+    TMAppClientActionCreateChatPost,
     TMAppClientActionCount
 } TMAppClientActions;
 
@@ -45,42 +48,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
-    
-    self.navigationController.toolbarHidden = NO;
-    
-    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                                   target:nil action:nil];
-    
-    self.toolbarItems = @[flexibleSpace,
-                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
-                                                                        action:@selector(compose:)],
-                          flexibleSpace,
-                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-                                                                        action:@selector(action:)],
-                          flexibleSpace];
-}
-
-#pragma mark - Actions
-
-- (void)compose:(UIBarButtonItem *)item {
-    /*
-     `TMTumblrActivity` is a blank slate right now. You can subclass it and implement it however you see fit, presumably
-     using either `TMTumblrAppClient` for inter-app communcation of `TMAPIClient` from the Tumblr iOS SDK
-     (https://github.com/tumblr/tumblr-ios-sdk) for hitting our API directly.
-     */
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[]
-                                                                             applicationActivities:@[[[TMTumblrActivity alloc] init]]];
-    [self presentViewController:controller animated:YES completion:nil];
-}
-
-- (void)action:(UIBarButtonItem *)item {
-    // Tumblr can be used to open images and video files for creating photo and video posts respectively.
-    
-    NSURL *URL = [[NSBundle bundleForClass:[TMAppClientExampleController class]] URLForResource:@"tumblr" withExtension:@"png"];
-    
-    UIDocumentInteractionController *controller = [UIDocumentInteractionController interactionControllerWithURL:URL];
-    self.interactionController = controller;
-    [controller presentOpenInMenuFromBarButtonItem:item animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -107,6 +74,18 @@ static NSString *cellIdentifier = @"cellIdentifier";
             break;
         case TMAppClientActionViewPost:
             cell.textLabel.text = @"View Tumblr developers blog post";
+            break;
+        case TMAppClientActionCreateTextPost:
+            cell.textLabel.text = @"Create text post";
+            break;
+        case TMAppClientActionCreateLinkPost:
+            cell.textLabel.text = @"Create link post";
+            break;
+        case TMAppClientActionCreateQuotePost:
+            cell.textLabel.text = @"Create quote post";
+            break;
+        case TMAppClientActionCreateChatPost:
+            cell.textLabel.text = @"Create chat post";
             break;
     }
     
