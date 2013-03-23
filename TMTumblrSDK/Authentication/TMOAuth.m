@@ -13,6 +13,26 @@
 #import <sys/sysctl.h>
 #import "NSData+Base64.h"
 
+@interface TMOAuth()
+
+NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *queryParameters,
+                             NSDictionary *postParameters);
+
+NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret);
+
+NSString *URLDecode(NSString *string);
+
+NSString *URLEncode(id value);
+
+NSString *UNIXTimestamp(NSDate *date);
+
+NSDictionary *queryStringToDictionary(NSString *query);
+
+NSData *HMACSHA1(NSString *dataString, NSString *keyString);
+
+@end
+
+
 @implementation TMOAuth
 
 + (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
@@ -61,8 +81,8 @@
 
 #pragma mark - Private
 
-static inline NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers,
-                                           NSDictionary *queryParameters, NSDictionary *postParameters) {
+NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *queryParameters,
+                             NSDictionary *postParameters) {
     NSMutableDictionary *signatureParameters = [NSMutableDictionary dictionaryWithDictionary:headers];
     [signatureParameters addEntriesFromDictionary:queryParameters];
     [signatureParameters addEntriesFromDictionary:postParameters];
@@ -77,17 +97,17 @@ static inline NSString *generateBaseString(NSString *baseURL, NSString *method, 
     return [NSString stringWithFormat:@"%@&%@&%@", method, URLEncode(baseURL), parameterString];
 }
 
-static inline NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret) {
+NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret) {
     NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret ? tokenSecret : @""];
     
     return [HMACSHA1(baseString, keyString) base64EncodedString];
 }
 
-static inline NSString *URLDecode(NSString *string) {
+NSString *URLDecode(NSString *string) {
     return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")));
 }
 
-static inline NSString *URLEncode(id value) {
+NSString *URLEncode(id value) {
     NSString *string;
     
     if ([value isKindOfClass:[NSString class]])
@@ -100,11 +120,11 @@ static inline NSString *URLEncode(id value) {
                                                                                  kCFStringEncodingUTF8));
 }
 
-static inline NSString *UNIXTimestamp(NSDate *date) {
+NSString *UNIXTimestamp(NSDate *date) {
     return [NSString stringWithFormat:@"%f", round([date timeIntervalSince1970])];
 }
 
-static inline NSDictionary *queryStringToDictionary(NSString *query) {
+NSDictionary *queryStringToDictionary(NSString *query) {
     NSMutableDictionary *mutableParameterDictionary = [[NSMutableDictionary alloc] init];
     
     NSArray *parameters = [query componentsSeparatedByString:@"&"];
@@ -121,7 +141,7 @@ static inline NSDictionary *queryStringToDictionary(NSString *query) {
     return [NSDictionary dictionaryWithDictionary:mutableParameterDictionary];
 }
 
-static inline NSData *HMACSHA1(NSString *dataString, NSString *keyString) {
+NSData *HMACSHA1(NSString *dataString, NSString *keyString) {
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     NSData *key = [keyString dataUsingEncoding:NSUTF8StringEncoding];
     
