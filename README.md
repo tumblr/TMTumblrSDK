@@ -20,7 +20,7 @@ The primary features of the SDK currently include:
 * [Authentication](#authentication) (both three-legged OAuth and xAuth)
 * [A full API client](#api-client) for V2 of the Tumblr API
 * [Inter-app communication](#inter-app-communication) (if the user has the Tumblr iOS app installed)
-* [A UIActivity stub](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/TMTumblrActivity.h) (for displaying a Tumblr button in a UIActivityViewController)
+* [A UIActivity stub](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h) (for displaying a Tumblr button in a UIActivityViewController)
 
 Additional questions can be answered on
 our [discussion group](https://groups.google.com/group/tumblr-api/).
