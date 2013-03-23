@@ -36,7 +36,13 @@ typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSEr
 }
 
 - (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
-    NSMutableURLRequest *request = mutableRequestWithURLString(@"http://www.tumblr.com/oauth/request_token");
+    // Clear token secret in case authentication was previously started but not finished
+    self.OAuthTokenSecret = nil;
+    
+    NSString *tokenRequestURLString = [NSString stringWithFormat:@"http://www.tumblr.com/oauth/request_token?oauth_callback=%@",
+                                       URLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme])];
+    
+    NSMutableURLRequest *request = mutableRequestWithURLString(tokenRequestURLString);
     [self signRequest:request withParameters:nil];
     
     NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -56,9 +62,8 @@ typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSEr
             self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
             
             NSURL *authURL = [NSURL URLWithString:
-                              [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@&oauth_callback=%@",
-                               responseParameters[@"oauth_token"],
-                               URLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme])]];
+                              [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
+                               responseParameters[@"oauth_token"]]];
             
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
             [[UIApplication sharedApplication] openURL:authURL];
