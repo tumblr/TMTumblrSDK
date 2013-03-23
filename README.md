@@ -136,7 +136,7 @@ user’s email address and password:
 ```
 
 If you're only interested in authentication, the
-`TMTumblrSDK/Authentication` sub-pod can be installed by itself.
+`TMTumblrSDK/APIClient/Authentication` sub-pod can be installed by itself.
 
 ## API client
 
