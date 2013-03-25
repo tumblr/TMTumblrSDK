@@ -57,7 +57,6 @@ Pod::Spec.new do |s|
   s.subspec 'AppClient' do |ss|
     ss.platform     = :ios, '5.0'
     ss.source_files = 'TMTumblrSDK/AppClient'
-    ss.dependency   'InterAppCommunication', '1.0'
   end
 
 end

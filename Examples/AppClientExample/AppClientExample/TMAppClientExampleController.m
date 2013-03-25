@@ -95,23 +95,39 @@ static NSString *cellIdentifier = @"cellIdentifier";
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TMTumblrAppClient *client = [TMTumblrAppClient client];
+    NSURL *successURL = [NSURL URLWithString:@"tumblrappclientexample://success"];
+    NSURL *cancelURL = [NSURL URLWithString:@"tumblrappclientexample://cancelled"];
     
     switch (indexPath.row) {
         case TMAppClientActionViewInAppStore:
-            [client viewInAppStore];
+            [TMTumblrAppClient viewInAppStore];
             break;
         case TMAppClientActionViewDashboard:
-            [client viewDashboard];
+            [TMTumblrAppClient viewDashboard];
             break;
         case TMAppClientActionViewTag:
-            [client viewTag:@"gif"];
+            [TMTumblrAppClient viewTag:@"gif"];
             break;
         case TMAppClientActionViewBlog:
-            [client viewBlog:@"developers"];
+            [TMTumblrAppClient viewBlog:@"developers"];
             break;
         case TMAppClientActionViewPost:
-            [client viewPost:@"43515916425" blogName:@"developers"];
+            [TMTumblrAppClient viewPost:@"43515916425" blogName:@"developers"];
+            break;
+        case TMAppClientActionCreateTextPost:
+            [TMTumblrAppClient createTextPost:@"Title" body:@"Body" success:successURL cancel:cancelURL];
+            break;
+        case TMAppClientActionCreateLinkPost:
+            [TMTumblrAppClient createLinkPost:@"Tumblr" URLString:@"http://tumblr.com"
+                                  description:@"Follow the world's creators"  success:successURL cancel:cancelURL];
+            break;
+        case TMAppClientActionCreateQuotePost:
+            [TMTumblrAppClient createQuotePost:@"Fellas, don't drink that coffee! You'd never guess. There was a fish..."
+             "in the percolator! Sorry..." source:@"Pete"  success:successURL cancel:cancelURL];
+            break;
+        case TMAppClientActionCreateChatPost:
+            [TMTumblrAppClient createChatPost:@"Chat" body:@"Peter: I'm like a sweet peach on a hot summer day.\nMegan:"
+             "You're like a sour pickle on a windy day." success:successURL cancel:cancelURL];
             break;
     }
     
