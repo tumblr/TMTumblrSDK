@@ -206,8 +206,7 @@ the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.
 ### Example
 
 The repository also includes a [sample application](https://github.com/tumblr/TMTumblrSDK/tree/master/Examples/AppClientExample)
-showing all of the inter-app hooks in action, as well as how to share to Tumblr
-for iOS using a UIActivityViewController or UIDocumentInteractionController.
+showing all of the inter-app hooks in action.
 
 ![Screenshot of Tumblr activity icon](https://raw.github.com/tumblr/TMTumblrSDK/master/Examples/AppClientExample/screenshot.png?login=irace&token=09357ae38144aa48767c7b2219f23265)
 
