@@ -9,6 +9,7 @@
 #import "TMTumblrAuthenticator.h"
 
 #import "TMOAuth.h"
+#import "TMSDKFunctions.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>
@@ -23,6 +24,14 @@ typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSEr
 @property (nonatomic, copy) TMAuthenticationCallback authCallback;
 @property (nonatomic, copy) NSString *OAuthToken;
 @property (nonatomic, copy) NSString *OAuthTokenSecret;
+
+NSMutableURLRequest *mutableRequestWithURLString(NSString *URLString);
+
+NSError *errorWithStatusCode(int statusCode);
+
+NSString *dictionaryToQueryString(NSDictionary *dictionary);
+
+NSDictionary *formEncodedDataToDictionary(NSData *data);
 
 @end
 
@@ -40,7 +49,7 @@ typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSEr
     self.OAuthTokenSecret = nil;
     
     NSString *tokenRequestURLString = [NSString stringWithFormat:@"http://www.tumblr.com/oauth/request_token?oauth_callback=%@",
-                                       URLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme])];
+                                       TMURLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme])];
     
     NSMutableURLRequest *request = mutableRequestWithURLString(tokenRequestURLString);
     [self signRequest:request withParameters:nil];
@@ -90,7 +99,7 @@ typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSEr
         self.authCallback = nil;
     };
     
-    NSDictionary *URLParameters = queryStringToDictionary(url.query);
+    NSDictionary *URLParameters = TMQueryStringToDictionary(url.query);
     
     if ([[URLParameters allKeys] count] == 0) {
         if (self.authCallback)
@@ -194,50 +203,26 @@ typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSEr
                                 tokenSecret:self.OAuthTokenSecret] forHTTPHeaderField:@"Authorization"];
 }
 
-static inline NSMutableURLRequest *mutableRequestWithURLString(NSString *URLString) {
+NSMutableURLRequest *mutableRequestWithURLString(NSString *URLString) {
     return [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URLString]];
 }
 
-static inline NSError *errorWithStatusCode(int statusCode) {
+NSError *errorWithStatusCode(int statusCode) {
     return [NSError errorWithDomain:@"Authentication request failed" code:statusCode userInfo:nil];
 }
 
-static inline NSString *URLDecode(NSString *string) {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")));
-}
-
-static inline NSString *URLEncode(NSString *string) {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
-                                                                CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
-}
-
-static inline NSString *dictionaryToQueryString(NSDictionary *dictionary) {
+NSString *dictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
     
     for (NSString *key in [dictionary allKeys])
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", URLEncode(key), URLEncode(dictionary[key])]];
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(dictionary[key])]];
     
     return [parameters componentsJoinedByString:@"&"];
 }
 
-static inline NSDictionary *queryStringToDictionary(NSString *string) {
-    NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
-    
-    NSArray *parameterStrings = [string componentsSeparatedByString:@"&"];
-    
-    for (NSString *parameterString in parameterStrings) {
-        NSArray *parameterComponents = [parameterString componentsSeparatedByString:@"="];
-        
-        if ([parameterComponents count] == 2)
-            parameterDictionary[URLDecode(parameterComponents[0])] = URLDecode(parameterComponents[1]);
-    }
-    
-    return parameterDictionary;
-}
-
-static inline NSDictionary *formEncodedDataToDictionary(NSData *data) {
+NSDictionary *formEncodedDataToDictionary(NSData *data) {
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSDictionary *dictionary = queryStringToDictionary(string);
+    NSDictionary *dictionary = TMQueryStringToDictionary(string);
     
     return dictionary;
 }
