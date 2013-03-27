@@ -37,40 +37,46 @@
     [self performAction:@"blog" parameters:@{ @"blogName" : blogName, @"postID" : postID }];
 }
 
-+ (void)createTextPost:(NSString *)title body:(NSString *)body {
-    [self createTextPost:title body:body success:nil cancel:nil];
++ (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags {
+    [self createTextPost:title body:body tags:tags success:nil cancel:nil];
 }
 
-+ (void)createTextPost:(NSString *)title body:(NSString *)body success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
-    [self performAction:@"text" parameters:@{ @"title" : title, @"body" : body } success:successURL cancel:cancelURL];
-}
-
-+ (void)createQuotePost:(NSString *)quote source:(NSString *)source {
-    [self createQuotePost:quote source:source success:nil cancel:nil];
-}
-
-+ (void)createQuotePost:(NSString *)quote source:(NSString *)source success:(NSURL *)successURL
-                 cancel:(NSURL *)cancelURL {
-    [self performAction:@"quote" parameters:@{ @"quote" : quote, @"source" : source } success:successURL
++ (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
+                cancel:(NSURL *)cancelURL {
+    [self performAction:@"text" parameters:@{ @"title" : title, @"body" : body, @"tags" : tags } success:successURL
                  cancel:cancelURL];
 }
 
-+ (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description {
-    [self createLinkPost:title URLString:URLString description:description success:nil cancel:nil];
++ (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags {
+    [self createQuotePost:quote source:source tags:tags success:nil cancel:nil];
+}
+
++ (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags success:(NSURL *)successURL
+                 cancel:(NSURL *)cancelURL {
+    [self performAction:@"quote" parameters:@{ @"quote" : quote, @"source" : source, @"tags" : tags } success:successURL
+                 cancel:cancelURL];
 }
 
 + (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
-               success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
-    [self performAction:@"link" parameters:@{ @"title" : title, @"url" : URLString, @"description" : description }
+                  tags:(NSArray *)tags {
+    [self createLinkPost:title URLString:URLString description:description tags:tags success:nil cancel:nil];
+}
+
++ (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
+                  tags:(NSArray *)tags success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
+    [self performAction:@"link" parameters:@{ @"title" : title, @"url" : URLString, @"description" : description,
+     @"tags" : tags }
                 success:successURL cancel:cancelURL];
 }
 
-+ (void)createChatPost:(NSString *)title body:(NSString *)body {
-    [self createChatPost:title body:body success:nil cancel:nil];
++ (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags {
+    [self createChatPost:title body:body tags:tags success:nil cancel:nil];
 }
 
-+ (void)createChatPost:(NSString *)title body:(NSString *)body success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
-    [self performAction:@"chat" parameters:@{ @"title" : title, @"body" : body } success:successURL cancel:cancelURL];
++ (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags  success:(NSURL *)successURL
+                cancel:(NSURL *)cancelURL {
+    [self performAction:@"chat" parameters:@{ @"title" : title, @"body" : body, @"tags" : tags } success:successURL
+                 cancel:cancelURL];
 }
 
 #pragma mark - Private
@@ -102,8 +108,20 @@
 static inline NSString *dictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
     
-    for (NSString *key in [dictionary allKeys])
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", URLEncode(key), URLEncode(dictionary[key])]];
+    void(^addParameter)(NSString *, NSString *) = ^(NSString *value, NSString *key) {
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", URLEncode(key), URLEncode(value)]];
+    };
+    
+    for (NSString *key in [dictionary allKeys]) {
+        id value = dictionary[key];
+        
+        if ([value isKindOfClass:[NSArray class]]) {
+            for (id arrayValue in ((NSArray *)value))
+                addParameter(key, arrayValue);
+            
+        } else
+            addParameter(key, value);
+    }
     
     return [parameters componentsJoinedByString:@"&"];
 }

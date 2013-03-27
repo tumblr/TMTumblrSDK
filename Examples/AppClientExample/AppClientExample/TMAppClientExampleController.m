@@ -48,6 +48,31 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
+    
+    self.navigationController.toolbarHidden = NO;
+    
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                   target:nil action:nil];
+    
+    self.toolbarItems = @[
+        flexibleSpace,
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+                                                action:@selector(action:)],
+        flexibleSpace
+    ];
+}
+
+#pragma mark - Actions
+
+- (void)action:(UIBarButtonItem *)item {
+    // Tumblr can be used to open images and video files for creating photo and video posts respectively.
+    
+    NSURL *URL = [[NSBundle bundleForClass:[TMAppClientExampleController class]] URLForResource:@"tumblr" withExtension:@"png"];
+    
+    UIDocumentInteractionController *controller = [UIDocumentInteractionController interactionControllerWithURL:URL];
+    controller.annotation = @{ @"TumblrCaption" : @"Caption for photo or video post." };
+    self.interactionController = controller;
+    [controller presentOpenInMenuFromBarButtonItem:item animated:YES];
 }
 
 #pragma mark - UITableViewDataSource

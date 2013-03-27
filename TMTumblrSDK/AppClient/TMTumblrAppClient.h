@@ -30,22 +30,25 @@
 /// View a blog's post
 + (void)viewPost:(NSString *)postID blogName:(NSString *)blogName;
 
-+ (void)createTextPost:(NSString *)title body:(NSString *)body;
++ (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags;
 
-+ (void)createTextPost:(NSString *)title body:(NSString *)body success:(NSURL *)successURL cancel:(NSURL *)cancelURL;
++ (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
+                cancel:(NSURL *)cancelURL;
 
-+ (void)createQuotePost:(NSString *)quote source:(NSString *)source;
++ (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags;
 
-+ (void)createQuotePost:(NSString *)quote source:(NSString *)source success:(NSURL *)successURL
++ (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags success:(NSURL *)successURL
                  cancel:(NSURL *)cancelURL;
 
-+ (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description;
++ (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
+                  tags:(NSArray *)tags;
 
 + (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
-               success:(NSURL *)successURL cancel:(NSURL *)cancelURL;
+                  tags:(NSArray *)tags success:(NSURL *)successURL cancel:(NSURL *)cancelURL;
 
-+ (void)createChatPost:(NSString *)title body:(NSString *)body;
++ (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags;
 
-+ (void)createChatPost:(NSString *)title body:(NSString *)body success:(NSURL *)successURL cancel:(NSURL *)cancelURL;
++ (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
+                cancel:(NSURL *)cancelURL;
 
 @end
