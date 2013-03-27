@@ -12,6 +12,7 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import <sys/sysctl.h>
 #import "NSData+Base64.h"
+#import "TMSDKFunctions.h"
 
 @interface TMOAuth()
 
@@ -20,13 +21,7 @@ NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *
 
 NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret);
 
-NSString *URLDecode(NSString *string);
-
-NSString *URLEncode(id value);
-
 NSString *UNIXTimestamp(NSDate *date);
-
-NSDictionary *queryStringToDictionary(NSString *query);
 
 NSData *HMACSHA1(NSString *dataString, NSString *keyString);
 
@@ -58,7 +53,7 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
         if (token && token.length > 0)
             headerParameters[@"oauth_token"] = token;
         
-        NSDictionary *queryParameters = queryStringToDictionary(URL.query);
+        NSDictionary *queryParameters = TMQueryStringToDictionary(URL.query);
         
         NSString *baseURLString = [[URL absoluteString] componentsSeparatedByString:@"?"][0];
         
@@ -71,7 +66,7 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
         NSMutableArray *components = [NSMutableArray array];
         
         for (NSString *key in headerParameters)
-            [components addObject:[NSString stringWithFormat:@"%@=\"%@\"", key, URLEncode(headerParameters[key])]];
+            [components addObject:[NSString stringWithFormat:@"%@=\"%@\"", key, TMURLEncode(headerParameters[key])]];
         
         _headerString = [NSString stringWithFormat:@"OAuth %@", [components componentsJoinedByString:@","]];
     }
@@ -90,11 +85,11 @@ NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *
     NSMutableArray *parameters = [NSMutableArray array];
     
     for (NSString *key in [[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)])
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, URLEncode(signatureParameters[key])]];
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, TMURLEncode(signatureParameters[key])]];
     
-    NSString *parameterString = URLEncode([parameters componentsJoinedByString:@"&"]);
+    NSString *parameterString = TMURLEncode([parameters componentsJoinedByString:@"&"]);
     
-    return [NSString stringWithFormat:@"%@&%@&%@", method, URLEncode(baseURL), parameterString];
+    return [NSString stringWithFormat:@"%@&%@&%@", method, TMURLEncode(baseURL), parameterString];
 }
 
 NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret) {
@@ -103,42 +98,8 @@ NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSe
     return [HMACSHA1(baseString, keyString) base64EncodedString];
 }
 
-NSString *URLDecode(NSString *string) {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")));
-}
-
-NSString *URLEncode(id value) {
-    NSString *string;
-    
-    if ([value isKindOfClass:[NSString class]])
-        string = (NSString *)value;
-    else
-        string = [value stringValue];
-    
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
-                                                                                 CFSTR("!*'();:@&=+$,/?%#[]%"),
-                                                                                 kCFStringEncodingUTF8));
-}
-
 NSString *UNIXTimestamp(NSDate *date) {
     return [NSString stringWithFormat:@"%f", round([date timeIntervalSince1970])];
-}
-
-NSDictionary *queryStringToDictionary(NSString *query) {
-    NSMutableDictionary *mutableParameterDictionary = [[NSMutableDictionary alloc] init];
-    
-    NSArray *parameters = [query componentsSeparatedByString:@"&"];
-    
-    for (NSString *parameter in parameters) {
-        NSArray *keyValuePair = [parameter componentsSeparatedByString:@"="];
-        
-        if (keyValuePair.count != 2)
-            continue;
-        
-        [mutableParameterDictionary setObject:URLDecode(keyValuePair[1]) forKey:URLDecode(keyValuePair[0])];
-    }
-    
-    return [NSDictionary dictionaryWithDictionary:mutableParameterDictionary];
 }
 
 NSData *HMACSHA1(NSString *dataString, NSString *keyString) {

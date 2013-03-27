@@ -21,10 +21,6 @@ NSString *fullBlogName(NSString *blogName);
 
 NSString *URLWithPath(NSString *path);
 
-NSString *URLDecode(NSString *string);
-
-NSString *URLEncode(NSString *string);
-
 @end
 
 
@@ -476,15 +472,6 @@ NSString *fullBlogName(NSString *blogName) {
 
 NSString *URLWithPath(NSString *path) {
     return [@"http://api.tumblr.com/v2/" stringByAppendingString:path];
-}
-
-NSString *URLDecode(NSString *string) {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string, CFSTR("")));
-}
-
-NSString *URLEncode(NSString *string) {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
-                                                                CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
 }
 
 #pragma mark - NSObject
