@@ -140,19 +140,21 @@ static NSString *cellIdentifier = @"cellIdentifier";
             [TMTumblrAppClient viewPost:@"43515916425" blogName:@"developers"];
             break;
         case TMAppClientActionCreateTextPost:
-            [TMTumblrAppClient createTextPost:@"Title" body:@"Body" success:successURL cancel:cancelURL];
+            [TMTumblrAppClient createTextPost:@"Title" body:@"Body" tags:@[@"gif", @"lol"] success:successURL
+                                       cancel:cancelURL];
             break;
         case TMAppClientActionCreateLinkPost:
             [TMTumblrAppClient createLinkPost:@"Tumblr" URLString:@"http://tumblr.com"
-                                  description:@"Follow the world's creators"  success:successURL cancel:cancelURL];
+                                  description:@"Follow the world's creators" tags:@[@"gif", @"lol"] success:successURL
+                                       cancel:cancelURL];
             break;
         case TMAppClientActionCreateQuotePost:
             [TMTumblrAppClient createQuotePost:@"Fellas, don't drink that coffee! You'd never guess. There was a fish..."
-             "in the percolator! Sorry..." source:@"Pete"  success:successURL cancel:cancelURL];
+             "in the percolator! Sorry..." source:@"Pete" tags:@[@"gif", @"lol"] success:successURL cancel:cancelURL];
             break;
         case TMAppClientActionCreateChatPost:
             [TMTumblrAppClient createChatPost:@"Chat" body:@"Peter: I'm like a sweet peach on a hot summer day.\nMegan:"
-             "You're like a sour pickle on a windy day." success:successURL cancel:cancelURL];
+             "You're like a sour pickle on a windy day." tags:@[@"gif", @"lol"] success:successURL cancel:cancelURL];
             break;
     }
     

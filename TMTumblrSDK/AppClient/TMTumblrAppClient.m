@@ -9,6 +9,7 @@
 #import "TMTumblrAppClient.h"
 
 #import <UIKit/UIKit.h>
+#import "TMSDKFunctions.h"
 
 @implementation TMTumblrAppClient
 
@@ -98,37 +99,9 @@
     }
     
     NSString *URLString = [NSString stringWithFormat:@"tumblr://x-callback-url/%@?%@", action,
-                           dictionaryToQueryString(parameters)];
+                           TMDictionaryToQueryString(parameters)];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
-}
-
-// TODO: These currently exist for both the authenticator and app client. Consolidate
-
-static inline NSString *dictionaryToQueryString(NSDictionary *dictionary) {
-    NSMutableArray *parameters = [NSMutableArray array];
-    
-    void(^addParameter)(NSString *, NSString *) = ^(NSString *value, NSString *key) {
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", URLEncode(key), URLEncode(value)]];
-    };
-    
-    for (NSString *key in [dictionary allKeys]) {
-        id value = dictionary[key];
-        
-        if ([value isKindOfClass:[NSArray class]]) {
-            for (id arrayValue in ((NSArray *)value))
-                addParameter(key, arrayValue);
-            
-        } else
-            addParameter(key, value);
-    }
-    
-    return [parameters componentsJoinedByString:@"&"];
-}
-
-static inline NSString *URLEncode(NSString *string) {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
-                                                                                 CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
 }
 
 @end
