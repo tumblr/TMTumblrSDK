@@ -29,8 +29,6 @@ NSMutableURLRequest *mutableRequestWithURLString(NSString *URLString);
 
 NSError *errorWithStatusCode(int statusCode);
 
-NSString *dictionaryToQueryString(NSDictionary *dictionary);
-
 NSDictionary *formEncodedDataToDictionary(NSData *data);
 
 @end
@@ -116,7 +114,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     
     NSMutableURLRequest *request = mutableRequestWithURLString(@"http://www.tumblr.com/oauth/access_token");
     request.HTTPMethod = @"POST";
-    request.HTTPBody = [dictionaryToQueryString(requestParameters) dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = [TMDictionaryToQueryString(requestParameters) dataUsingEncoding:NSUTF8StringEncoding];
     [self signRequest:request withParameters:requestParameters];
     
     NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -157,7 +155,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     
     NSMutableURLRequest *request = mutableRequestWithURLString(@"http://www.tumblr.com/oauth/access_token");
     request.HTTPMethod = @"POST";
-    request.HTTPBody = [dictionaryToQueryString(requestParameters) dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = [TMDictionaryToQueryString(requestParameters) dataUsingEncoding:NSUTF8StringEncoding];
     [self signRequest:request withParameters:requestParameters];
 
     NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -209,15 +207,6 @@ NSMutableURLRequest *mutableRequestWithURLString(NSString *URLString) {
 
 NSError *errorWithStatusCode(int statusCode) {
     return [NSError errorWithDomain:@"Authentication request failed" code:statusCode userInfo:nil];
-}
-
-NSString *dictionaryToQueryString(NSDictionary *dictionary) {
-    NSMutableArray *parameters = [NSMutableArray array];
-    
-    for (NSString *key in [dictionary allKeys])
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(dictionary[key])]];
-    
-    return [parameters componentsJoinedByString:@"&"];
 }
 
 NSDictionary *formEncodedDataToDictionary(NSData *data) {

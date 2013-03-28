@@ -16,4 +16,6 @@ NSString *TMURLEncode(NSString *string);
 
 NSDictionary *TMQueryStringToDictionary(NSString *query);
 
+NSString *TMDictionaryToQueryString(NSDictionary *dictionary);
+
 @end
