@@ -43,11 +43,8 @@ NSDictionary *TMQueryStringToDictionary(NSString *query) {
             
             if (existingValueForKey) {
                 if ([existingValueForKey isKindOfClass:[NSMutableArray class]])
-                    // If we already have multiple values for this key, just add another
-                    [(NSMutableArray *)existingValueForKey addObject:value];
-                    
+                    [(NSMutableArray *)existingValueForKey addObject:value];                    
                 else
-                    // Create a new mutable array with the existing value and the new value
                     [mutableParameterDictionary setObject:[NSMutableArray arrayWithObjects:existingValueForKey, value, nil]
                                                    forKey:key];
             } else
@@ -61,8 +58,19 @@ NSDictionary *TMQueryStringToDictionary(NSString *query) {
 NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
     
-    for (NSString *key in [dictionary allKeys])
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(dictionary[key])]];
+    void (^addParameter)(NSString *key, NSString *value) = ^(NSString *key, NSString *value) {
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
+    };
+    
+    for (NSString *key in [dictionary allKeys]) {
+        id value = dictionary[key];
+        
+        if ([value isKindOfClass:[NSArray class]]) {
+            for (NSString *arrayValue in (NSArray *)value)
+                addParameter(key, arrayValue);
+        } else
+            addParameter(key, TMURLEncode(value));
+    }
     
     return [parameters componentsJoinedByString:@"&"];
 }
