@@ -31,7 +31,8 @@
     NSString *tag3 = @"foo=bar&baz+foo2";
 
     NSDictionary *dictionary = TMQueryStringToDictionary([NSString stringWithFormat:@"title=%@&tag=%@&tag=%@&tag=%@",
-                                                          TMURLEncode(title), TMURLEncode(tag1), TMURLEncode(tag2), TMURLEncode(tag3)]);
+                                                          TMURLEncode(title), TMURLEncode(tag1), TMURLEncode(tag2),
+                                                          TMURLEncode(tag3)]);
 
     NSArray *tags = @[tag1, tag2, tag3];
     
