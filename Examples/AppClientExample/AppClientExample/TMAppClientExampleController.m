@@ -110,7 +110,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             cell.textLabel.text = @"Create quote post";
             break;
         case TMAppClientActionCreateChatPost:
-            cell.textLabel.text = @"Create chat post";
+            cell.textLabel.text = @"Create chat post";  
             break;
     }
     

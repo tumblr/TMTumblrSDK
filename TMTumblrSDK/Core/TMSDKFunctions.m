@@ -69,7 +69,7 @@ NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
             for (NSString *arrayValue in (NSArray *)value)
                 addParameter(key, arrayValue);
         } else
-            addParameter(key, TMURLEncode(value));
+            addParameter(key, value);
     }
     
     return [parameters componentsJoinedByString:@"&"];
