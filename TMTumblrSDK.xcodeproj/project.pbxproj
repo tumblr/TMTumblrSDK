@@ -14,10 +14,9 @@
 		499CAE7316FA320B00D2975E /* TMAPIClientPostTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE7216FA320B00D2975E /* TMAPIClientPostTest.m */; };
 		499CAE7616FA327700D2975E /* TMAPIClientTagTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE7516FA327700D2975E /* TMAPIClientTagTest.m */; };
 		9330592E16F9281500868C9C /* TMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9330592D16F9281500868C9C /* TMAPIClient.m */; };
-		938272CF170934FE0025FA5C /* TMSDKFunctionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 938272CE170934FE0025FA5C /* TMSDKFunctionsTest.m */; };
+		938272D517093B600025FA5C /* TMSDKFunctionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 938272CE170934FE0025FA5C /* TMSDKFunctionsTest.m */; };
 		93A3902616FCE5C80045183F /* TMTumblrActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A3902116FCE5C80045183F /* TMTumblrActivity.m */; };
 		93BAE9501709328B00E7E490 /* TMSDKFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BAE94F1709328B00E7E490 /* TMSDKFunctions.m */; };
-		93BAE9511709328B00E7E490 /* TMSDKFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BAE94F1709328B00E7E490 /* TMSDKFunctions.m */; };
 		93E52A74168BB43700E5471A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A73168BB43700E5471A /* Foundation.framework */; };
 		93E52A83168BB43700E5471A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A82168BB43700E5471A /* SenTestingKit.framework */; };
 		93E52A85168BB43700E5471A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A84168BB43700E5471A /* UIKit.framework */; };
@@ -399,8 +398,7 @@
 				499CAE7016FA314900D2975E /* TMAPIClientBlogTest.m in Sources */,
 				499CAE7316FA320B00D2975E /* TMAPIClientPostTest.m in Sources */,
 				499CAE7616FA327700D2975E /* TMAPIClientTagTest.m in Sources */,
-				93BAE9511709328B00E7E490 /* TMSDKFunctions.m in Sources */,
-				938272CF170934FE0025FA5C /* TMSDKFunctionsTest.m in Sources */,
+				938272D517093B600025FA5C /* TMSDKFunctionsTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
