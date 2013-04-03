@@ -63,12 +63,16 @@ in your application's root directory that looks as follows:
 ``` ruby
 platform :ios, '5.0'
 
-pod 'TMTumblrSDK', '1.0.1'
+pod 'TMTumblrSDK'
 ```
 
 After running `pod install`, you'll have an Xcode workspace that includes not
 only your application but also the Tumblr SDK and its dependencies. That's really
 all there is to it.
+
+You will get the latest version of the SDK by referring to it simply by name 
+(`TMTumblrSDK`). [This guide](http://docs.cocoapods.org/guides/dependency_versioning.html)
+explains how explicit dependency versions can instead be specified.
 
 This SDK is really comprised of numerous "sub-pods." If you'd rather not import
 everything, feel free to mix and match as you see fit:
