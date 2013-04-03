@@ -70,6 +70,16 @@ After running `pod install`, you'll have an Xcode workspace that includes not
 only your application but also the Tumblr SDK and its dependencies. That's really
 all there is to it.
 
+This SDK is really comprised of numerous "sub-pods." If you'd rather not import
+everything, feel free to mix and match as you see fit:
+
+* 'TMTumblrSDK/AppClient'
+    * 'TMTumblrSDK/Authentication'
+* 'TMTumblrSDK/Activity'
+* 'TMTumblrSDK/APIClient'
+
+Each component is described in more detail throughout this README.
+
 ### Documentation
 
 Appledoc for the SDK can be found [here](http://tumblr.github.com/TMTumblrSDK/docs/html/).
@@ -243,6 +253,9 @@ The SDK includes a [UIActivity subclass](https://github.com/tumblr/TMTumblrSDK/b
 for including Tumblr in a standard `UIActivityViewController`. It currently 
 provides only the activity icon and title, but you can hook it up however you 
 see fit and we may provide a more integrated solution in the future.
+
+If you're only interested in this UIActivity subclass,
+the `TMTumblrSDK/Activity` sub-pod can be installed by itself.
 
 ### Example
 
