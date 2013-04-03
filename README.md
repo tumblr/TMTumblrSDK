@@ -73,10 +73,10 @@ all there is to it.
 This SDK is really comprised of numerous "sub-pods." If you'd rather not import
 everything, feel free to mix and match as you see fit:
 
-* 'TMTumblrSDK/AppClient'
-    * 'TMTumblrSDK/Authentication'
-* 'TMTumblrSDK/Activity'
-* 'TMTumblrSDK/APIClient'
+* `TMTumblrSDK/AppClient`
+    * `TMTumblrSDK/Authentication`
+* `TMTumblrSDK/Activity`
+* `TMTumblrSDK/APIClient`
 
 Each component is described in more detail throughout this README.
 
