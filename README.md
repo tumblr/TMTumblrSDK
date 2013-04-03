@@ -1,7 +1,7 @@
 # Tumblr SDK for iOS
 
 An unopinionated and flexible library for easily integrating Tumblr data into
-your iOS or OS X application. The library uses ARC and requires iOS 5 or
+your iOS or OS X application. The library uses ARC and requires at least iOS 5 or
 OS X 10.7.
 
 ``` objectivec
@@ -15,25 +15,48 @@ OS X 10.7.
 }];
 ```
 
-The primary features of the SDK currently include:
-
-* [Authentication](#authentication) (both three-legged OAuth and xAuth)
-* [A full API client](#api-client) for V2 of the Tumblr API
-* [Inter-app communication](#inter-app-communication) (if the user has the Tumblr iOS app installed)
-* [A UIActivity stub](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h) (for displaying a Tumblr button in a UIActivityViewController)
-
-Additional questions can be answered on
-our [discussion group](https://groups.google.com/group/tumblr-api/).
-Please use the Tumblr API [responsibly](http://www.tumblr.com/docs/en/api_agreement)
-and [let us know](mailto:api@tumblr.com) what you think.
-
 If you have any feature requests, please let us know by creating an issue or
-submitting a pull request.
+submitting a pull request. Please use the Tumblr API [responsibly](http://www.tumblr.com/docs/en/api_agreement).
+
+## Table of Contents
+
+* [Getting started](#getting-started)
+ * [CocoaPods](#cocoapods)
+ * [Documentation](#documentation)
+* [Authentication](#authentication)
+ * [OAuth](#oauth)
+ * [xAuth](#xauth)
+* [API client](#api-client)
+* [Inter-app communication](#inter-app-communication)
+ * [App client](#app-client)
+   * [URL schemes](#url-schemes)
+ * [UIDocumentInteractionController](#uidocumentinteractioncontroller)
+ * [UIActivityController](#uiactivitycontroller)
+ * [Example](#example)
+* [Contact](#contact)
+* [License](#license)
 
 ## Getting started
 
+### CocoaPods
+
 [CocoaPods](http://cocoapods.org) is the recommended way to add the Tumblr
-SDK to your project. You can simply create a
+SDK to your project. *Using CocoaPods means you don't need to worry about
+cloning or adding this repository as a git submodule.* CocoaPods is a package 
+manager like `gem` (Ruby) and `npm` (Node.js), but for Objective-C projects.
+
+Module authors create "pods", which are versioned and stored in a central 
+repository. App developers can create a "podfile" to specify their app's 
+dependencies and then use the CocoaPods command line tool to:
+
+* Fetch the dependencies specified by the app developer
+* Recursively fetch all subdependencies
+* Create an Xcode workspace that includes the pods, links any necessary libraries, 
+configures header search paths, enables ARC where appropriate, and more
+
+If you're new to CocoaPods, the website contains lots of helpful [documentation](http://docs.cocoapods.org).
+
+To install the Tumblr SDK you can simply create a
 [podfile](https://github.com/CocoaPods/CocoaPods/wiki/A-Podfile)
 that looks as follows:
 
@@ -43,12 +66,15 @@ platform :ios, '5.0'
 pod 'TMTumblrSDK', '1.0.1'
 ```
 
-The SDK includes a UIActivity subclass for including Tumblr in a standard
-`UIActivityViewController`. It currently provides only the activity icon and
-title, but you can hook it up however you see fit and we may provide a more
-integrated solution in the future.
+After running `pod install`, you'll have an Xcode workspace that includes not
+only your application but also the Tumblr SDK and its dependencies. There aren't
+any more steps!
+
+### Documentation
 
 Appledoc for the SDK can be found [here](http://tumblr.github.com/TMTumblrSDK/docs/html/).
+If you install the Tumblr SDK using CocoaPods, the docset will automatically be added
+to Xcode for you.
 
 ## Authentication
 
@@ -165,6 +191,8 @@ installed by itself.
 
 ## Inter-app communication
 
+### App client
+
 [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8)
 exposes actions using the [x-callback-url](http://x-callback-url.com/)
 specification. The app only supports a few basic endpoints right now but will
@@ -185,9 +213,12 @@ if (![client isAppInstalled])
 [client viewPost:@"43724939726" blogName:@"bryan"];
 ```
 
-### URLs
+If you're only interested in the app client,
+the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.
 
-If you don't want to use this library and would rather hit the app's URLs
+#### URL schemes
+
+If you don't want to use this SDK and would rather hit the app's URLs
 directly, here they are:
 
 ```
@@ -197,22 +228,29 @@ tumblr://x-callback-url/blog?blogName=bryan
 tumblr://x-callback-url/blog?blogName=bryan&postID=43724939726
 ```
 
-Additionally, photos and videos can be passed to Tumblr for iOS using Apple's
+### UIDocumentInteractionController
+
+Photos and videos can be passed to Tumblr for iOS using Apple's
 standard [UIDocumentInteractionController](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
 
-If you're only interested in the app client,
-the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.
+### UIActivityViewController
+
+The SDK includes a [UIActivity subclass](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h) 
+for including Tumblr in a standard `UIActivityViewController`. It currently 
+provides only the activity icon and title, but you can hook it up however you 
+see fit and we may provide a more integrated solution in the future.
 
 ### Example
 
-The repository also includes a [sample application](https://github.com/tumblr/TMTumblrSDK/tree/master/Examples/AppClientExample)
-showing all of the inter-app hooks in action.
+The repository includes a [sample application](https://github.com/tumblr/TMTumblrSDK/tree/master/Examples/AppClientExample)
+which shows all of the inter-app hooks in action.
 
 ![Screenshot of Tumblr activity icon](https://raw.github.com/tumblr/TMTumblrSDK/master/Examples/AppClientExample/screenshot.png?login=irace&token=09357ae38144aa48767c7b2219f23265)
 
 ## Contact
 
 * [Bryan Irace](http://github.com/irace)
+* [API discussion group](https://groups.google.com/group/tumblr-api/)
 
 ## License
 
