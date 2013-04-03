@@ -58,7 +58,7 @@ If you're new to CocoaPods, the website contains lots of helpful [documentation]
 
 To install the Tumblr SDK you can simply create a
 [podfile](https://github.com/CocoaPods/CocoaPods/wiki/A-Podfile)
-that looks as follows:
+in your application's root directory that looks as follows:
 
 ``` ruby
 platform :ios, '5.0'
