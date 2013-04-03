@@ -49,7 +49,7 @@ Module authors create "pods" which are versioned and stored in a central
 repository. App developers create "podfiles" to specify their apps'
 dependencies and use the CocoaPods command line tool to:
 
-* Fetch the dependencies specified by the app developer
+* Fetch the dependencies specified in their podfile
 * Recursively fetch all subdependencies
 * Create an Xcode workspace that includes the pods, links any necessary libraries, 
 configures header search paths, enables ARC where appropriate, and more
