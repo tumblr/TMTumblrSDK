@@ -45,9 +45,9 @@ SDK to your project. *Using CocoaPods means you don't need to worry about
 cloning or adding this repository as a git submodule.* CocoaPods is a package 
 manager like `gem` (Ruby) and `npm` (Node.js), but for Objective-C projects.
 
-Module authors create "pods", which are versioned and stored in a central 
-repository. App developers can create a "podfile" to specify their app's 
-dependencies and then use the CocoaPods command line tool to:
+Module authors create "pods" which are versioned and stored in a central 
+repository. App developers create "podfiles" to specify their apps'
+dependencies and use the CocoaPods command line tool to:
 
 * Fetch the dependencies specified by the app developer
 * Recursively fetch all subdependencies
@@ -67,13 +67,13 @@ pod 'TMTumblrSDK', '1.0.1'
 ```
 
 After running `pod install`, you'll have an Xcode workspace that includes not
-only your application but also the Tumblr SDK and its dependencies. There aren't
-any more steps!
+only your application but also the Tumblr SDK and its dependencies. That's really
+all there is to it.
 
 ### Documentation
 
 Appledoc for the SDK can be found [here](http://tumblr.github.com/TMTumblrSDK/docs/html/).
-If you install the Tumblr SDK using CocoaPods, the docset will automatically be added
+If you install the Tumblr SDK using CocoaPods, the docset is automatically added
 to Xcode for you.
 
 ## Authentication
@@ -193,10 +193,10 @@ installed by itself.
 
 ### App client
 
-[Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8)
-exposes actions using the [x-callback-url](http://x-callback-url.com/)
-specification. The app only supports a few basic endpoints right now but will
-be added to in the near future:
+The `TMTumblrAppClient` class provides a simple interface for interacting with
+[Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the
+user has it installed. Only a few basic endpoints are supported for now but more
+will be added in the near future:
 
 ``` objectivec
 TMTumblrAppClient *client = [TMTumblrAppClient client];
@@ -218,8 +218,9 @@ the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.
 
 #### URL schemes
 
-If you don't want to use this SDK and would rather hit the app's URLs
-directly, here they are:
+Tumblr for iOS exposes actions using the [x-callback-url](http://x-callback-url.com/)
+specification. The `TMTumblrAppClient` class merely provides a convenient 
+interface on top of the following URLs:
 
 ```
 tumblr://x-callback-url/dashboard
@@ -227,6 +228,9 @@ tumblr://x-callback-url/tag?tag=gif
 tumblr://x-callback-url/blog?blogName=bryan
 tumblr://x-callback-url/blog?blogName=bryan&postID=43724939726
 ```
+
+If you don't want to use this SDK and would rather hit these URLs directly, please go
+right ahead.
 
 ### UIDocumentInteractionController
 
