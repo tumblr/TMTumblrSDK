@@ -90,16 +90,17 @@
     if (![self isTumblrInstalled])
         return;
     
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    
+    mutableParameters[@"referrer"] = @"TMTumblrAppClient";
+    
     if (successURL || cancelURL) {
-        NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
         mutableParameters[@"x-success"] = [successURL absoluteString];
         mutableParameters[@"x-cancel"] = [cancelURL absoluteString];
-        
-        parameters = mutableParameters;
     }
     
     NSString *URLString = [NSString stringWithFormat:@"tumblr://x-callback-url/%@?%@", action,
-                           TMDictionaryToQueryString(parameters)];
+                           TMDictionaryToQueryString(mutableParameters)];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
 }
