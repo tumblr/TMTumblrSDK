@@ -42,11 +42,24 @@
 }
 
 - (void)testDictionaryToQueryWithTwoParameters {
-
+    NSString *title = @"Some $$$@#?@#9i==%&&&&title";
+    NSString *body = @"Some \n\n===+   body";
+    
+    NSString *result = [NSString stringWithFormat:@"title=%@&body=%@", TMURLEncode(title), TMURLEncode(body)];
+    
+    STAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"body" : body }), result,
+                         @"Incorrect query string");
 }
 
 - (void)testDictionaryToQueryWithRepeatedParameter {
+    NSString *title = @"Some $$$@#?@#9i==%&&&&title";
+    NSArray *tags = @[@"adioj ASD $**$*$ a8aA//&&adsijd====", @"lol", @"    foo bar baz    "];
     
+    NSString *result = [NSString stringWithFormat:@"tag=%@&tag=%@&tag=%@&title=%@", TMURLEncode(tags[0]),
+                        TMURLEncode(tags[1]), TMURLEncode(tags[2]), TMURLEncode(title)];
+    
+    STAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"tag" : tags }), result,
+                         @"Incorrect query string with repeated parameter");
 }
 
 @end
