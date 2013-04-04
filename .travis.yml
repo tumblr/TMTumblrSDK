@@ -1,4 +1,1 @@
-notifications:
-  email:
-    - bryan@irace.me
 language: objective-c
