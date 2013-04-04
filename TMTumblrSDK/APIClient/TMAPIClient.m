@@ -152,6 +152,8 @@ NSString *URLWithPath(NSString *path);
                                              parameters:nil];
     
     if (callback) {
+        __block typeof(callback) blockCallback = callback;
+        
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
             id response = nil;
             NSError *error = nil;
@@ -164,13 +166,15 @@ NSString *URLWithPath(NSString *path);
             }
             
             [queue addOperationWithBlock:^{
-                callback(response, error);
+                blockCallback(response, error);
+                blockCallback = nil;
             }];
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
             [queue addOperationWithBlock:^{
-                callback(nil, operation.error);
+                blockCallback(nil, operation.error);
+                blockCallback = nil;
             }];
         };
     }
@@ -437,6 +441,8 @@ NSString *URLWithPath(NSString *path);
 
 - (void)sendRequest:(JXHTTPOperation *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
     if (callback) {
+        __block typeof(callback) blockCallback = callback;
+        
         request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
             NSDictionary *response = operation.responseJSON;
             int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
@@ -447,13 +453,15 @@ NSString *URLWithPath(NSString *path);
                 error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
             
             [queue addOperationWithBlock:^{
-                callback(response[@"response"], error);
+                blockCallback(response[@"response"], error);
+                blockCallback = nil;
             }];
         };
         
         request.didFailBlock = ^(JXHTTPOperation *operation) {
             [queue addOperationWithBlock:^{
-                callback(nil, operation.error);
+                blockCallback(nil, operation.error);
+                blockCallback = nil;
             }];
         };
     }

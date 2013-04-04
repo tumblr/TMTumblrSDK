@@ -6,7 +6,6 @@ Pod::Spec.new do |s|
   s.homepage     = 'http://tumblr.github.com/TMTumblrSDK'
   s.license      = { :type => 'Apache 2.0', :file => 'LICENSE' }
   s.source       = { :git => 'https://github.com/tumblr/TMTumblrSDK.git', :tag => "#{s.version}" }
-  s.source_files = 'TMTumblrSDK/*.{h,m}'
   s.requires_arc = true
   s.ios.deployment_target = '5.0'
   s.osx.deployment_target = '10.7'
@@ -39,6 +38,10 @@ Pod::Spec.new do |s|
     ]
   }
 
+  s.subspec 'Core' do |ss|
+    ss.source_files = 'TMTumblrSDK/Core'
+  end
+
   s.subspec 'Activity' do |ss|
     ss.platform     = :ios, '5.0'
     ss.source_files = 'TMTumblrSDK/Activity'
@@ -52,12 +55,14 @@ Pod::Spec.new do |s|
     ss.subspec 'Authentication' do |sss|
       sss.source_files = 'TMTumblrSDK/Authentication'
       sss.dependency   'NSData+Base64', '1.0'
+      sss.dependency   'TMTumblrSDK/Core'
     end
   end
 
   s.subspec 'AppClient' do |ss|
     ss.platform     = :ios, '5.0'
     ss.source_files = 'TMTumblrSDK/AppClient'
+    ss.dependency   'TMTumblrSDK/Core'
   end
 
 end

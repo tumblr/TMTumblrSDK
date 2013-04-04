@@ -43,7 +43,7 @@ NSDictionary *TMQueryStringToDictionary(NSString *query) {
             
             if (existingValueForKey) {
                 if ([existingValueForKey isKindOfClass:[NSMutableArray class]])
-                    [(NSMutableArray *)existingValueForKey addObject:value];                    
+                    [(NSMutableArray *)existingValueForKey addObject:value];
                 else
                     [mutableParameterDictionary setObject:[NSMutableArray arrayWithObjects:existingValueForKey, value, nil]
                                                    forKey:key];
