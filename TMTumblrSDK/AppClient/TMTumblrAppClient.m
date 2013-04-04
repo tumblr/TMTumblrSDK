@@ -92,7 +92,7 @@
     
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     
-    mutableParameters[@"referrer"] = @"TMTumblrAppClient";
+    mutableParameters[@"referrer"] = @"TMTumblrSDK";
     
     if (successURL || cancelURL) {
         mutableParameters[@"x-success"] = [successURL absoluteString];
