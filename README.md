@@ -18,6 +18,8 @@ OS X 10.7.
 If you have any feature requests, please let us know by creating an issue or
 submitting a pull request. Please use the Tumblr API [responsibly](http://www.tumblr.com/docs/en/api_agreement).
 
+[![Build Status](https://travis-ci.org/tumblr/TMTumblrSDK.png)](https://travis-ci.org/tumblr/TMTumblrSDK)
+
 ## Table of Contents
 
 * [Getting started](#getting-started)
