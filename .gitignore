@@ -1,7 +1,6 @@
 .DS_Store
 *~
 
-TMTumblrSDK.xcodeproj/xcuserdata
 *.xcuserdata
 *.xcuserdatad
 *.xcuserstate
