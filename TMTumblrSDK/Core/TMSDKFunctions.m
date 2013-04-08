@@ -62,7 +62,7 @@ NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
         [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
     };
     
-    for (NSString *key in [dictionary allKeys]) {
+    for (NSString *key in [[dictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
         id value = dictionary[key];
         
         if ([value isKindOfClass:[NSArray class]]) {

@@ -82,12 +82,7 @@ NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *
     [signatureParameters addEntriesFromDictionary:queryParameters];
     [signatureParameters addEntriesFromDictionary:postParameters];
     
-    NSMutableArray *parameters = [NSMutableArray array];
-    
-    for (NSString *key in [[signatureParameters allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)])
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", key, TMURLEncode(signatureParameters[key])]];
-    
-    NSString *parameterString = TMURLEncode([parameters componentsJoinedByString:@"&"]);
+    NSString *parameterString = TMDictionaryToQueryString(signatureParameters);
     
     return [NSString stringWithFormat:@"%@&%@&%@", method, TMURLEncode(baseURL), parameterString];
 }
