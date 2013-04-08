@@ -424,6 +424,8 @@ NSString *URLWithPath(NSString *path);
 }
 
 - (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters {
+    [request setValue:@"TMTumblrSDK" forRequestHeader:@"User-Agent"];
+    
     for (NSString *header in self.customHeaders)
         [request setValue:self.customHeaders[header] forRequestHeader:header];
     

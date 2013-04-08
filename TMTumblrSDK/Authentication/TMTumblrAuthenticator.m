@@ -191,6 +191,8 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
 #pragma mark - Helpers
 
 - (void)signRequest:(NSMutableURLRequest *)request withParameters:(NSDictionary *)parameters {
+    [request setValue:@"TMTumblrSDK" forHTTPHeaderField:@"User-Agent"];
+    
     [request setValue:[TMOAuth headerForURL:request.URL
                                      method:request.HTTPMethod
                              postParameters:parameters

@@ -23,4 +23,21 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    NSString *host = url.host;
+    
+    BOOL success = [host isEqualToString:@"success"];
+    BOOL cancelled = [host isEqualToString:@"cancelled"];
+    
+    if (success || cancelled) {
+        [[[UIAlertView alloc] initWithTitle:success ? @"Posted to Tumblr" : @"Tumblr post cancelled"
+                                    message:success ? @"Your post was successful" : @"Your post was cancelled"
+                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
 @end

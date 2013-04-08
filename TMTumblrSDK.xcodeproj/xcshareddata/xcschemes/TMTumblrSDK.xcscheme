@@ -37,6 +37,23 @@
                BlueprintName = "TMTumblrSDKTests"
                ReferencedContainer = "container:TMTumblrSDK.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "TMAPIClientBlogTest">
+               </Test>
+               <Test
+                  Identifier = "TMAPIClientPostTest">
+               </Test>
+               <Test
+                  Identifier = "TMAPIClientTagTest">
+               </Test>
+               <Test
+                  Identifier = "TMAPIClientUserTest">
+               </Test>
+               <Test
+                  Identifier = "TMAPIClientUnitTest">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

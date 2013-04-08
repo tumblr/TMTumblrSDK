@@ -48,6 +48,32 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
+    
+    self.navigationController.toolbarHidden = NO;
+    
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                   target:nil action:nil];
+    
+    self.toolbarItems = @[
+        flexibleSpace,
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+                                                action:@selector(action:)],
+        flexibleSpace
+    ];
+}
+
+#pragma mark - Actions
+
+- (void)action:(UIBarButtonItem *)item {
+    // Tumblr can be used to open images and video files for creating photo and video posts respectively.
+    
+    NSURL *URL = [[NSBundle bundleForClass:[TMAppClientExampleController class]] URLForResource:@"tumblr" withExtension:@"png"];
+    
+    UIDocumentInteractionController *controller = [UIDocumentInteractionController interactionControllerWithURL:URL];
+    controller.annotation = @{ @"TumblrCaption" : @"Caption for photo or video post.", @"TumblrTags" : @[ @"foo", @"bar" ] };
+    
+    self.interactionController = controller;
+    [controller presentOpenInMenuFromBarButtonItem:item animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -85,7 +111,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             cell.textLabel.text = @"Create quote post";
             break;
         case TMAppClientActionCreateChatPost:
-            cell.textLabel.text = @"Create chat post";
+            cell.textLabel.text = @"Create chat post";  
             break;
     }
     
@@ -95,23 +121,41 @@ static NSString *cellIdentifier = @"cellIdentifier";
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TMTumblrAppClient *client = [TMTumblrAppClient client];
+    NSURL *successURL = [NSURL URLWithString:@"tumblrappclientexample://success"];
+    NSURL *cancelURL = [NSURL URLWithString:@"tumblrappclientexample://cancelled"];
     
     switch (indexPath.row) {
         case TMAppClientActionViewInAppStore:
-            [client viewInAppStore];
+            [TMTumblrAppClient viewInAppStore];
             break;
         case TMAppClientActionViewDashboard:
-            [client viewDashboard];
+            [TMTumblrAppClient viewDashboard];
             break;
         case TMAppClientActionViewTag:
-            [client viewTag:@"gif"];
+            [TMTumblrAppClient viewTag:@"gif"];
             break;
         case TMAppClientActionViewBlog:
-            [client viewBlog:@"developers"];
+            [TMTumblrAppClient viewBlog:@"developers"];
             break;
         case TMAppClientActionViewPost:
-            [client viewPost:@"43515916425" blogName:@"developers"];
+            [TMTumblrAppClient viewPost:@"43515916425" blogName:@"developers"];
+            break;
+        case TMAppClientActionCreateTextPost:
+            [TMTumblrAppClient createTextPost:@"Title" body:@"Body" tags:@[@"gif", @"lol"] success:successURL
+                                       cancel:cancelURL];
+            break;
+        case TMAppClientActionCreateLinkPost:
+            [TMTumblrAppClient createLinkPost:@"Tumblr" URLString:@"http://tumblr.com"
+                                  description:@"Follow the world's creators" tags:@[@"gif", @"lol"] success:successURL
+                                       cancel:cancelURL];
+            break;
+        case TMAppClientActionCreateQuotePost:
+            [TMTumblrAppClient createQuotePost:@"Fellas, don't drink that coffee! You'd never guess. There was a fish..."
+             "in the percolator! Sorry..." source:@"Pete" tags:@[@"gif", @"lol"] success:successURL cancel:cancelURL];
+            break;
+        case TMAppClientActionCreateChatPost:
+            [TMTumblrAppClient createChatPost:@"Chat" body:@"Peter: I'm like a sweet peach on a hot summer day.\nMegan:"
+             "You're like a sour pickle on a windy day." tags:@[@"gif", @"lol"] success:successURL cancel:cancelURL];
             break;
     }
     

@@ -51,18 +51,17 @@ Pod::Spec.new do |s|
   s.subspec 'APIClient' do |ss|
     ss.source_files = 'TMTumblrSDK/APIClient'
     ss.dependency   'JXHTTP', '1.0.0'
-    ss.dependency   'TMTumblrSDK/Core'
 
     ss.subspec 'Authentication' do |sss|
       sss.source_files = 'TMTumblrSDK/Authentication'
       sss.dependency   'NSData+Base64', '1.0'
+      sss.dependency   'TMTumblrSDK/Core'
     end
   end
 
   s.subspec 'AppClient' do |ss|
     ss.platform     = :ios, '5.0'
     ss.source_files = 'TMTumblrSDK/AppClient'
-    ss.dependency   'InterAppCommunication', '1.0'
     ss.dependency   'TMTumblrSDK/Core'
   end
 
