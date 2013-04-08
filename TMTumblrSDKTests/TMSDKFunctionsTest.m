@@ -45,7 +45,7 @@
     NSString *title = @"Some $$$@#?@#9i==%&&&&title";
     NSString *body = @"Some \n\n===+   body";
     
-    NSString *result = [NSString stringWithFormat:@"title=%@&body=%@", TMURLEncode(title), TMURLEncode(body)];
+    NSString *result = [NSString stringWithFormat:@"body=%@&title=%@", TMURLEncode(body), TMURLEncode(title)];
     
     STAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"body" : body }), result,
                          @"Incorrect query string");
