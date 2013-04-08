@@ -273,7 +273,7 @@ which shows all of the inter-app hooks in action.
 ## Contact
 
 * [Bryan Irace](http://github.com/irace)
-* [API discussion group](https://groups.google.com/group/tumblr-api/)
+* [Tumblr API discussion group](https://groups.google.com/group/tumblr-api/)
 
 ## License
 
