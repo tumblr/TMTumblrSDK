@@ -88,7 +88,7 @@ Each component is described in more detail throughout this README.
 
 ### Documentation
 
-Appledoc for the SDK can be found [here](http://tumblr.github.com/TMTumblrSDK/docs/html/).
+Appledoc for the SDK can be found [here](http://cocoadocs.org/docsets/TMTumblrSDK).
 If you install the Tumblr SDK using CocoaPods, the docset is automatically added
 to Xcode for you.
 
