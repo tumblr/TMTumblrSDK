@@ -182,7 +182,7 @@ If you're only interested in authentication, the
 
 ## API client
 
-Please view the [API documentation]((http://www.tumblr.com/docs/en/api/v2) for
+Please view the [API documentation](http://www.tumblr.com/docs/en/api/v2) for
 full usage instructions.
 
 There are two ways of retrieving data from the API:
