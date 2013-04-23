@@ -84,7 +84,7 @@ NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *
     
     NSString *parameterString = TMDictionaryToQueryString(signatureParameters);
     
-    return [NSString stringWithFormat:@"%@&%@&%@", method, TMURLEncode(baseURL), parameterString];
+    return [NSString stringWithFormat:@"%@&%@&%@", method, TMURLEncode(baseURL), TMURLEncode(parameterString)];
 }
 
 NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret) {

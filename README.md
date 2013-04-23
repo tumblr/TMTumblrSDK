@@ -182,7 +182,7 @@ If you're only interested in authentication, the
 
 ## API client
 
-Please view the [API documentation]((http://www.tumblr.com/docs/en/api/v2) for
+Please view the [API documentation](http://www.tumblr.com/docs/en/api/v2) for
 full usage instructions.
 
 There are two ways of retrieving data from the API:
@@ -273,7 +273,7 @@ which shows all of the inter-app hooks in action.
 ## Contact
 
 * [Bryan Irace](http://github.com/irace)
-* [API discussion group](https://groups.google.com/group/tumblr-api/)
+* [Tumblr API discussion group](https://groups.google.com/group/tumblr-api/)
 
 ## License
 
