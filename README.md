@@ -243,15 +243,28 @@ tumblr://x-callback-url/dashboard
 tumblr://x-callback-url/tag?tag=gif
 tumblr://x-callback-url/blog?blogName=bryan
 tumblr://x-callback-url/blog?blogName=bryan&postID=43724939726
+
+tumblr://x-callback-url/text?title=Title&body=Body&tags=gif&tags=lol
+tumblr://x-callback-url/quote?quote=Quote&source=Source
+tumblr://x-callback-url/link?title=Bryan&url=bryan.io&description=Website
+tumblr://x-callback-url/chat?title=Title&body=Body&tags=gif&tags=lol
 ```
 
 If you don't want to use this SDK and would rather hit these URLs directly, please go
 right ahead.
 
+Tumblr for iOS can also open URLs with `tmhttp` or `tmhttps` schemes, and will create
+link posts out of them. This makes it really easy to blog the URL you have open in Safari.
+
 ### UIDocumentInteractionController
 
 Photos and videos can be passed to Tumblr for iOS using Apple's
 standard [UIDocumentInteractionController](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
+
+To include a caption, set the `annotation` property on the document 
+interaction controller to an `NSDictionary` containing a `TumblrCaption` 
+key, mapped to your caption (an `NSString`). To include tags, add a 
+`TumblrTags` key to the dictionary, mapped an an `NSArray` of `NSStrings`.
 
 ### UIActivityViewController
 
@@ -270,9 +283,14 @@ which shows all of the inter-app hooks in action.
 
 ![Screenshot of Tumblr activity icon](https://raw.github.com/tumblr/TMTumblrSDK/master/Examples/AppClientExample/screenshot.png?login=irace&token=09357ae38144aa48767c7b2219f23265)
 
+## Dependencies
+
+* [JXHTTP](https://github.com/jstn/JXHTTP)
+* [NSData+Base64](https://github.com/l4u/NSData-Base64)
+
 ## Contact
 
-* [Bryan Irace](http://github.com/irace)
+* [Bryan Irace](bryan@tumblr.com)
 * [Tumblr API discussion group](https://groups.google.com/group/tumblr-api/)
 
 ## License
