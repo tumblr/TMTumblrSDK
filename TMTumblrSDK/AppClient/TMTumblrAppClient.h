@@ -30,24 +30,32 @@
 /// View a blog's post
 + (void)viewPost:(NSString *)postID blogName:(NSString *)blogName;
 
+/// Create a text post with a title, body, and tags
 + (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags;
 
+/// Create a text post with a title, body, tags, and success/cancel URLs
 + (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
                 cancel:(NSURL *)cancelURL;
 
+/// Create a quote post with a quote, source, and tags
 + (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags;
 
+/// Create a quote post with a quote, source, tags, and success/cancel URLs
 + (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags success:(NSURL *)successURL
                  cancel:(NSURL *)cancelURL;
 
+/// Create a link post with a title, URL, description, and tags
 + (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
                   tags:(NSArray *)tags;
 
+/// Create a link post with a title, URL, description, tags, and success/cancel URLs
 + (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
                   tags:(NSArray *)tags success:(NSURL *)successURL cancel:(NSURL *)cancelURL;
 
+/// Create a chat post with a title, body, and tags
 + (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags;
 
+/// Create a chat post with a title, body, tags, and success/cancel URLs
 + (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
                 cancel:(NSURL *)cancelURL;
 
