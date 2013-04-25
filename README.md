@@ -244,6 +244,8 @@ tumblr://x-callback-url/tag?tag=gif
 tumblr://x-callback-url/blog?blogName=bryan
 tumblr://x-callback-url/blog?blogName=bryan&postID=43724939726
 
+// The post URLs below also support `x-success` and `x-cancel` callback parameters
+
 tumblr://x-callback-url/text?title=Title&body=Body&tags=gif&tags=lol
 tumblr://x-callback-url/quote?quote=Quote&source=Source
 tumblr://x-callback-url/link?title=Bryan&url=bryan.io&description=Website
