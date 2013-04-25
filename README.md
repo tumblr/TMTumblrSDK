@@ -255,9 +255,6 @@ tumblr://x-callback-url/chat?title=Title&body=Body&tags=gif&tags=lol
 If you don't want to use this SDK and would rather hit these URLs directly, please go
 right ahead.
 
-Tumblr for iOS can also open URLs with `tmhttp` or `tmhttps` schemes, and will create
-link posts out of them. This makes it really easy to blog the URL you have open in Safari.
-
 ### UIDocumentInteractionController
 
 Photos and videos can be passed to Tumblr for iOS using Apple's
