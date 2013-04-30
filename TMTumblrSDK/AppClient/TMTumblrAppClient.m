@@ -80,6 +80,17 @@
                  cancel:cancelURL];
 }
 
++ (void)createPhotoPost:(NSString *)caption link:(NSString *)link photoURL:(NSString *)photoURL success:(NSURL *)successURL
+                 cancel:(NSURL *)cancelURL {
+    
+    [self performAction:@"photo" parameters:@{@"caption":caption, @"link":link, @"source":photoURL} success:successURL cancel:cancelURL];
+}
+
++ (void)createPhotoPost:(NSString *)caption link:(NSString *)link photoURL:(NSString *)photoURL tags:(NSArray *)tags success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
+    
+    [self performAction:@"photo" parameters:@{@"caption":caption, @"link":link, @"source":photoURL, @"tags" : tags} success:successURL cancel:cancelURL];
+}
+
 #pragma mark - Private
 
 + (void)performAction:(NSString *)action parameters:(NSDictionary *)parameters {
