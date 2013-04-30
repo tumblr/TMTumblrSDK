@@ -59,4 +59,12 @@
 + (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
                 cancel:(NSURL *)cancelURL;
 
+/// Create a photo post with a caption, link, source, and success/cancel URLs
++ (void)createPhotoPost:(NSString *)caption link:(NSString *)link photoURL:(NSString *)photoURL
+                success:(NSURL *)successURL cancel:(NSURL *)cancelURL;
+
+/// Create a photo post with a caption, link, source, tags, and success/cancel URLs
++ (void)createPhotoPost:(NSString *)caption link:(NSString *)link photoURL:(NSString *)photoURL tags:(NSArray *)tags
+                success:(NSURL *)successURL cancel:(NSURL *)cancelURL;
+
 @end
