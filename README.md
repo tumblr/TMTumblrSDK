@@ -79,10 +79,11 @@ explains how explicit dependency versions can instead be specified.
 This SDK is really comprised of numerous "sub-pods." If you'd rather not import
 everything, feel free to mix and match as you see fit:
 
-* `TMTumblrSDK/AppClient`
-    * `TMTumblrSDK/Authentication`
-* `TMTumblrSDK/Activity`
 * `TMTumblrSDK/APIClient`
+    * `TMTumblrSDK/APIClient/Authentication`
+* `TMTumblrSDK/AppClient`
+* `TMTumblrSDK/Activity`
+
 
 Each component is described in more detail throughout this README.
 
