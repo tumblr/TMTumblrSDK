@@ -218,7 +218,7 @@ will be added in the near future:
 ``` objectivec
 TMTumblrAppClient *client = [TMTumblrAppClient client];
 
-if (![client isAppInstalled])
+if (![client isTumblrInstalled])
     [client viewInAppStore];
 
 [client viewDashboard];
