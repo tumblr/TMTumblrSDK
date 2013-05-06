@@ -236,6 +236,11 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
    parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
+/// Create a photo post from photo URL
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (void)photo:(NSString *)blogName photoUrl:(NSString *)photoUrl
+      caption:(NSString *)caption link:(NSURL *)link callback:(TMAPICallback)callback;
+
 /// Create a video post
 - (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
                       contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters;

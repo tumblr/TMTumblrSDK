@@ -324,6 +324,16 @@ NSString *URLWithPath(NSString *path);
                               parameters:parameters] callback:(TMAPICallback)callback];
 }
 
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self postRequest:blogName type:@"photo" parameters:parameters];
+}
+
+- (void)photo:(NSString *)blogName photoUrl:(NSString *)photoUrl caption:(NSString *)caption link:(NSURL *)link callback:(TMAPICallback)callback {
+    
+    NSDictionary *parameters = @{@"source": photoUrl, @"caption": caption, @"link": link};
+    [self sendRequest:[self photoRequest:blogName parameters:parameters] callback:(TMAPICallback)callback];
+}
+
 - (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
                       contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters {
     return [self multipartPostRequest:blogName type:@"video" parameters:parameters filePathArray:filePathOrNil ? @[filePathOrNil] : nil
