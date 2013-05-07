@@ -313,38 +313,45 @@ NSString *URLWithPath(NSString *path);
 }
 
 - (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil
-                 contentTypeArray:(NSArray *)contentTypeArrayOrNil parameters:(NSDictionary *)parameters {
+                 contentTypeArray:(NSArray *)contentTypeArrayOrNil fileNameArray:(NSArray *)fileNameArrayOrNil
+                       parameters:(NSDictionary *)parameters {
     return [self multipartPostRequest:blogName type:@"photo" parameters:parameters filePathArray:filePathArrayOrNil
-                     contentTypeArray:contentTypeArrayOrNil];
+                     contentTypeArray:contentTypeArrayOrNil fileNameArray:fileNameArrayOrNil];
 }
 
 - (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     [self sendRequest:[self photoRequest:blogName filePathArray:filePathArrayOrNil contentTypeArray:contentTypeArrayOrNil
-                              parameters:parameters] callback:(TMAPICallback)callback];
+                           fileNameArray:fileNameArrayOrNil parameters:parameters] callback:(TMAPICallback)callback];
 }
 
 - (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
-                      contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters {
-    return [self multipartPostRequest:blogName type:@"video" parameters:parameters filePathArray:filePathOrNil ? @[filePathOrNil] : nil
-                     contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil];
+                      contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
+                       parameters:(NSDictionary *)parameters {
+    return [self multipartPostRequest:blogName type:@"video" parameters:parameters
+                        filePathArray:filePathOrNil ? @[filePathOrNil] : nil
+                     contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil
+                        fileNameArray:fileNameOrNil ? @[fileNameOrNil] : nil];
 }
 
 - (void)video:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self videoRequest:blogName filePath:filePathOrNil contentType:contentTypeOrNil
+     fileName:(NSString *)fileNameOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self videoRequest:blogName filePath:filePathOrNil contentType:contentTypeOrNil fileName:fileNameOrNil
                               parameters:parameters] callback:(TMAPICallback)callback];
 }
 
 - (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
-                      contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters {
-    return [self multipartPostRequest:blogName type:@"audio" parameters:parameters filePathArray:filePathOrNil ? @[filePathOrNil] : nil
-                     contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil];
+                      contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
+                       parameters:(NSDictionary *)parameters {
+    return [self multipartPostRequest:blogName type:@"audio" parameters:parameters
+                        filePathArray:filePathOrNil ? @[filePathOrNil] : nil
+                     contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil
+                        fileNameArray:fileNameOrNil ? @[fileNameOrNil] : nil];
 }
 
 - (void)audio:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self audioRequest:blogName filePath:filePathOrNil contentType:contentTypeOrNil
+     fileName:(NSString *)fileNameOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    [self sendRequest:[self audioRequest:blogName filePath:filePathOrNil contentType:contentTypeOrNil fileName:fileNameOrNil
                               parameters:parameters] callback:(TMAPICallback)callback];
 }
 
@@ -390,7 +397,8 @@ NSString *URLWithPath(NSString *path);
 }
 
 - (JXHTTPOperation *)multipartPostRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                            filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray {
+                            filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray
+                            fileNameArray:(NSArray *)fileNameArray {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     mutableParameters[@"type"] = type;
@@ -399,7 +407,7 @@ NSString *URLWithPath(NSString *path);
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     request.requestBody = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
-                                          contentTypeArray:contentTypeArray];
+                                          contentTypeArray:contentTypeArray fileNameArray:fileNameArray];
     
     [self signRequest:request withParameters:mutableParameters];
     
@@ -407,7 +415,7 @@ NSString *URLWithPath(NSString *path);
 }
 
 - (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters filePathArray:(NSArray *)filePathArray
-                                   contentTypeArray:(NSArray *)contentTypeArray {
+                                   contentTypeArray:(NSArray *)contentTypeArray fileNameArray:(NSArray *)fileNameArray {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
@@ -417,7 +425,7 @@ NSString *URLWithPath(NSString *path);
     
     [filePathArray enumerateObjectsUsingBlock:^(NSString *path, NSUInteger index, BOOL *stop) {
         [multipartBody addFile:path forKey:multiple ? [NSString stringWithFormat:@"data[%lu]", (unsigned long)index] : @"data"
-                   contentType:contentTypeArray[index] fileName:@"foo.bar"];
+                   contentType:contentTypeArray[index] fileName:fileNameArray[index]];
     }];
     
     return multipartBody;

@@ -232,21 +232,24 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /// Create a photo post
 - (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil
-                 contentTypeArray:(NSArray *)contentTypeArrayOrNil parameters:(NSDictionary *)parameters;
+                 contentTypeArray:(NSArray *)contentTypeArrayOrNil fileNameArray:(NSArray *)fileNameArrayOrNil
+                       parameters:(NSDictionary *)parameters;
 - (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /// Create a video post
 - (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
-                      contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters;
+                      contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
+                       parameters:(NSDictionary *)parameters;
 - (void)video:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+     fileName:(NSString *)fileNameOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /// Create an audio post
 - (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
-                      contentType:(NSString *)contentTypeOrNil parameters:(NSDictionary *)parameters;
+                      contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
+                       parameters:(NSDictionary *)parameters;
 - (void)audio:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
-   parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+     fileName:(NSString *)fileNameOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /** @name Tagging */
 
