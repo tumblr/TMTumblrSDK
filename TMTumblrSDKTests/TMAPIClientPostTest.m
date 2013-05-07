@@ -126,7 +126,7 @@
 }
 
 - (void) testPhotoRequest {
-    JXHTTPOperation *op = [client photoRequest:@"b.n" filePathArray:@[@"somepath"] contentTypeArray:nil parameters:@{@"name": @"test"}];
+    JXHTTPOperation *op = [client photoRequest:@"b.n" filePathArray:@[@"somepath"] contentTypeArray:nil fileNameArray:@[@"somename"] parameters:@{@"name": @"test"}];
     [self assertMethod:op        is:@"POST"];
     [self assertPath:op          is:@"/v2/blog/b.n/post"];
     [self assertMultipartBody:op is:@"TODO"];
@@ -136,15 +136,16 @@
     NSString *blogName = @"blog";
     NSArray *filePathArray = nil;
     NSArray *contentTypeArray = nil;
+    NSArray *fileNameArray = nil;
     NSDictionary *params = @{@"some": @"param"};
-    JXHTTPOperation *op = [client photoRequest:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray parameters:params];
+    JXHTTPOperation *op = [client photoRequest:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray fileNameArray:fileNameArray parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient photo:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray parameters:params callback:check];
+        [mClient photo:blogName filePathArray:filePathArray contentTypeArray:contentTypeArray fileNameArray:fileNameArray parameters:params callback:check];
     } andVerify:op];
 }
 
 - (void) testAudioRequest {
-    JXHTTPOperation *op = [client audioRequest:@"b.n" filePath:@"file" contentType:nil parameters:@{@"name": @"test"}];
+    JXHTTPOperation *op = [client audioRequest:@"b.n" filePath:@"file" contentType:nil fileName:nil parameters:@{@"name": @"test"}];
     [self assertMethod:op        is:@"POST"];
     [self assertPath:op          is:@"/v2/blog/b.n/post"];
     [self assertMultipartBody:op is:@"TODO"];
@@ -154,15 +155,16 @@
     NSString *blogName = @"blog";
     NSString *filePath = nil;
     NSString *contentType = nil;
+    NSString *fileName = nil;
     NSDictionary *params = @{@"some": @"param"};
-    JXHTTPOperation *op = [client audioRequest:blogName filePath:filePath contentType:contentType parameters:params];
+    JXHTTPOperation *op = [client audioRequest:blogName filePath:filePath contentType:contentType fileName:fileName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient audio:blogName filePath:filePath contentType:contentType parameters:params callback:check];
+        [mClient audio:blogName filePath:filePath contentType:contentType fileName:fileName parameters:params callback:check];
     } andVerify:op];
 }
 
 - (void) testVideoRequest {
-    JXHTTPOperation *op = [client videoRequest:@"b.n" filePath:@"file" contentType:nil parameters:@{@"name": @"test"}];
+    JXHTTPOperation *op = [client videoRequest:@"b.n" filePath:@"file" contentType:nil fileName:nil parameters:@{@"name": @"test"}];
     [self assertMethod:op        is:@"POST"];
     [self assertPath:op          is:@"/v2/blog/b.n/post"];
     [self assertMultipartBody:op is:@"TODO"];
@@ -172,10 +174,11 @@
     NSString *blogName = @"blog";
     NSString *filePath = nil;
     NSString *contentType = nil;
+    NSString *fileName = nil;
     NSDictionary *params = @{@"some": @"param"};
-    JXHTTPOperation *op = [client videoRequest:blogName filePath:filePath contentType:contentType parameters:params];
+    JXHTTPOperation *op = [client videoRequest:blogName filePath:filePath contentType:contentType fileName:fileName parameters:params];
     [self assertCallback:^(TMAPIClient *mClient, TMAPICallback check) {
-        [mClient video:blogName filePath:filePath contentType:contentType parameters:params callback:check];
+        [mClient video:blogName filePath:filePath contentType:contentType fileName:fileName parameters:params callback:check];
     } andVerify:op];
 }
 
