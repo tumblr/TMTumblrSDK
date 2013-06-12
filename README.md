@@ -216,18 +216,16 @@ user has it installed. Only a few basic endpoints are supported for now but more
 will be added in the near future:
 
 ``` objectivec
-TMTumblrAppClient *client = [TMTumblrAppClient client];
+if (![TMTumblrAppClient isTumblrInstalled])
+    [TMTumblrAppClient viewInAppStore];
 
-if (![client isTumblrInstalled])
-    [client viewInAppStore];
+[TMTumblrAppClient viewDashboard];
 
-[client viewDashboard];
+[TMTumblrAppClient viewTag:@"gif"];
 
-[client viewTag:@"gif"];
+[TMTumblrAppClient viewBlog:@"bryan"];
 
-[client viewBlog:@"bryan"];
-
-[client viewPost:@"43724939726" blogName:@"bryan"];
+[TMTumblrAppClient viewPost:@"43724939726" blogName:@"bryan"];
 ```
 
 If you're only interested in the app client,
