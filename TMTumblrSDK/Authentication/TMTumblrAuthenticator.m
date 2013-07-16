@@ -112,7 +112,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     
     NSDictionary *requestParameters = @{ @"oauth_verifier" : URLParameters[@"oauth_verifier"] };
     
-    NSMutableURLRequest *request = mutableRequestWithURLString(@"http://www.tumblr.com/oauth/access_token");
+    NSMutableURLRequest *request = mutableRequestWithURLString(@"https://www.tumblr.com/oauth/access_token");
     request.HTTPMethod = @"POST";
     request.HTTPBody = [TMDictionaryToQueryString(requestParameters) dataUsingEncoding:NSUTF8StringEncoding];
     [self signRequest:request withParameters:requestParameters];
@@ -153,7 +153,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
         @"api_key" : self.OAuthConsumerKey
     };
     
-    NSMutableURLRequest *request = mutableRequestWithURLString(@"http://www.tumblr.com/oauth/access_token");
+    NSMutableURLRequest *request = mutableRequestWithURLString(@"https://www.tumblr.com/oauth/access_token");
     request.HTTPMethod = @"POST";
     request.HTTPBody = [TMDictionaryToQueryString(requestParameters) dataUsingEncoding:NSUTF8StringEncoding];
     [self signRequest:request withParameters:requestParameters];
