@@ -45,6 +45,11 @@ typedef void (^TMAPICallback)(id, NSError *error);
 @property (nonatomic, copy) NSDictionary *customHeaders;
 
 /**
+ Default: 60 seconds
+ */
+@property (nonatomic) NSTimeInterval timeoutInterval;
+
+/**
  Queue that requests sent through `sendRequest:callback:` or `sendRequest:queue:callback:` (and as such, any of the 
  `void` API methods) will be added to.
  */

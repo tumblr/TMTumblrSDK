@@ -71,6 +71,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     UIDocumentInteractionController *controller = [UIDocumentInteractionController interactionControllerWithURL:URL];
     controller.annotation = @{ @"TumblrCaption" : @"Caption for photo or video post.", @"TumblrTags" : @[ @"foo", @"bar" ] };
+    controller.UTI = @"com.tumblr.photo";
     
     self.interactionController = controller;
     [controller presentOpenInMenuFromBarButtonItem:item animated:YES];

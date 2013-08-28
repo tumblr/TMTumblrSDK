@@ -11,6 +11,8 @@
 #import "TMOAuth.h"
 #import "TMTumblrAuthenticator.h"
 
+static NSTimeInterval const TMAPIClientDefaultRequestTimeoutInterval = 60;
+
 @interface TMAPIClient()
 
 @property (nonatomic, strong) JXHTTPOperationQueue *queue;
@@ -200,7 +202,10 @@ NSString *URLWithPath(NSString *path);
 
 - (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
     NSString *path = blogPath(@"posts", blogName);
-    if (type) path = [path stringByAppendingFormat:@"/%@", type];
+    
+    if (type) {
+        path = [path stringByAppendingFormat:@"/%@", type];
+    }
     
     return [self getRequestWithPath:path parameters:parameters];
 }
@@ -376,6 +381,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     
     JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
     request.continuesInAppBackground = YES;
+    request.requestTimeoutInterval = self.timeoutInterval;
     
     [self signRequest:request withParameters:nil];
     
@@ -390,6 +396,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
+    request.requestTimeoutInterval = self.timeoutInterval;
     
     [self signRequest:request withParameters:mutableParameters];
     
@@ -408,6 +415,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     request.continuesInAppBackground = YES;
     request.requestBody = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
                                           contentTypeArray:contentTypeArray fileNameArray:fileNameArray];
+    request.requestTimeoutInterval = self.timeoutInterval;
     
     [self signRequest:request withParameters:mutableParameters];
     
@@ -482,8 +490,9 @@ NSString *blogPath(NSString *ext, NSString *blogName) {
 }
 
 NSString *fullBlogName(NSString *blogName) {
-    if ([blogName rangeOfString:@"."].location == NSNotFound)
+    if ([blogName rangeOfString:@"."].location == NSNotFound) {
         return blogName = [blogName stringByAppendingString:@".tumblr.com"];
+    }
     
     return blogName;
 }
@@ -498,6 +507,7 @@ NSString *URLWithPath(NSString *path) {
     if (self = [super init]) {
         self.queue = [[JXHTTPOperationQueue alloc] init];
         self.defaultCallbackQueue = [NSOperationQueue mainQueue];
+        self.timeoutInterval = TMAPIClientDefaultRequestTimeoutInterval;
     }
     
     return self;
