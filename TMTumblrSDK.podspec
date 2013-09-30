@@ -54,7 +54,6 @@ Pod::Spec.new do |s|
 
     ss.subspec 'Authentication' do |sss|
       sss.source_files = 'TMTumblrSDK/Authentication'
-      sss.dependency   'NSData+Base64', '1.0'
       sss.dependency   'TMTumblrSDK/Core'
     end
   end
