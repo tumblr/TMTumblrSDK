@@ -11,7 +11,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonHMAC.h>
 #import <sys/sysctl.h>
-#import "NSData+Base64.h"
 #import "TMSDKFunctions.h"
 
 @interface TMOAuth()
@@ -89,8 +88,11 @@ NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *
 
 NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret) {
     NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret ? tokenSecret : @""];
+
+    NSData *hashedData = HMACSHA1(baseString, keyString);
+    NSString *base64EncodedString = [hashedData base64EncodedStringWithOptions:0];
     
-    return [HMACSHA1(baseString, keyString) base64EncodedString];
+    return base64EncodedString;
 }
 
 NSString *UNIXTimestamp(NSDate *date) {
