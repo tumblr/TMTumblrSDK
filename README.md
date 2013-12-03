@@ -284,7 +284,6 @@ which shows all of the inter-app hooks in action.
 ## Dependencies
 
 * [JXHTTP](https://github.com/jstn/JXHTTP)
-* [NSData+Base64](https://github.com/l4u/NSData-Base64)
 
 ## Contact
 
