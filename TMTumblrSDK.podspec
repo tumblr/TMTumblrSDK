@@ -12,31 +12,6 @@ Pod::Spec.new do |s|
   s.frameworks   = 'Foundation'
   s.ios.weak_frameworks   = 'UIKit'
   s.osx.weak_frameworks   = 'AppKit'
-  s.documentation = {
-    :html => 'http://tumblr.github.com/TMTumblrSDK/docs/html',
-    :appledoc => [
-      '--company-id', 'com.tumblr',
-      '--project-name', 'TMTumblrSDK',
-      '--project-company', 'Tumblr',
-      '--project-version', '1.0.0',
-      '--docset-min-xcode-version', '4.3',
-      '--docset-bundle-name', '%PROJECT',
-      '--docset-bundle-id', '%COMPANYID.%PROJECTID',
-      '--docset-bundle-filename', '%COMPANYID.%PROJECTID-%VERSIONID.docset',
-      '--docset-feed-name', '%PROJECT',
-      '--docset-feed-url', 'http://tumblr.github.com/TMTumblrSDK/docs/publish/%DOCSETATOMFILENAME',
-      '--docset-package-url', 'http://tumblr.github.com/TMTumblrSDK/docs/publish/%DOCSETPACKAGEFILENAME',
-      '--docset-fallback-url', 'http://tumblr.github.com/TMTumblrSDK/docs/html/',
-      '--ignore', '*.m',
-      '--no-repeat-first-par',
-      '--explicit-crossref',
-      '--clean-output',
-      '--keep-undocumented-objects',
-      '--keep-undocumented-members',
-      '--no-search-undocumented-doc',
-      '--no-warn-undocumented-member'
-    ]
-  }
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'TMTumblrSDK/Core'
