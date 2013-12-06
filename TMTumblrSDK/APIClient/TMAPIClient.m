@@ -8,6 +8,7 @@
 
 #import "TMAPIClient.h"
 
+#import "TMHTTPSessionManager.h"
 #import "TMOAuth.h"
 #import "TMTumblrAuthenticator.h"
 
@@ -15,7 +16,7 @@ static NSTimeInterval const TMAPIClientDefaultRequestTimeoutInterval = 60;
 
 @interface TMAPIClient()
 
-@property (nonatomic, strong) JXHTTPOperationQueue *queue;
+@property (nonatomic, strong) TMHTTPSessionManager *sessionManager;
 
 NSString *blogPath(NSString *ext, NSString *blogName);
 
@@ -40,11 +41,11 @@ NSString *URLWithPath(NSString *path);
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))callback {
     [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
                                                 callback:^(NSString *token, NSString *secret, NSError *error) {
-        self.OAuthToken = token;
-        self.OAuthTokenSecret = secret;
-        
-        callback(error);
-    }];
+                                                    self.OAuthToken = token;
+                                                    self.OAuthTokenSecret = secret;
+                                                    
+                                                    callback(error);
+                                                }];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
@@ -54,11 +55,11 @@ NSString *URLWithPath(NSString *path);
 - (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(void(^)(NSError *))callback {
     return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password
                                                 callback:^(NSString *token, NSString *secret, NSError *error) {
-        self.OAuthToken = token;
-        self.OAuthTokenSecret = secret;
-        
-        callback(error);
-    }];
+                                                    self.OAuthToken = token;
+                                                    self.OAuthTokenSecret = secret;
+                                                    
+                                                    callback(error);
+                                                }];
 }
 
 - (void)setOAuthConsumerKey:(NSString *)OAuthConsumerKey {
@@ -69,138 +70,94 @@ NSString *URLWithPath(NSString *path);
     return [TMTumblrAuthenticator sharedInstance].OAuthConsumerKey;
 }
 
-- (void)setOAuthConsumerSecret:(NSString *)OAuthConsumerSecret {
-    [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret = OAuthConsumerSecret;
-}
-
 - (NSString *)OAuthConsumerSecret {
     return [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret;
 }
 
 #pragma mark - User
 
-- (JXHTTPOperation *)userInfoRequest {
-    return [self getRequestWithPath:@"user/info" parameters:nil];
+- (NSURLSessionDataTask *)userInfo:(TMAPICallback)callback {
+    return [self.sessionManager GET:@"user/info" parameters:nil callback:callback];
 }
 
-- (void)userInfo:(TMAPICallback)callback {
-    [self sendRequest:[self userInfoRequest] callback:callback];
+- (NSURLSessionDataTask *)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self.sessionManager GET:@"user/dashboard" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)dashboardRequest:(NSDictionary *)parameters {
-    return [self getRequestWithPath:@"user/dashboard" parameters:parameters];
+- (NSURLSessionDataTask *)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self.sessionManager GET:@"user/likes" parameters:parameters callback:callback];
 }
 
-- (void)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self dashboardRequest:parameters] callback:callback];
+- (NSURLSessionDataTask *)following:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self.sessionManager GET:@"user/following" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)likesRequest:(NSDictionary *)parameters {
-    return [self getRequestWithPath:@"user/likes" parameters:parameters];
+- (NSURLSessionDataTask *)follow:(NSString *)blogName callback:(TMAPICallback)callback {
+    return [self.sessionManager POST:@"user/follow" parameters:@{ @"url" : fullBlogName(blogName) } callback:callback];
 }
 
-- (void)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self likesRequest:parameters] callback:callback];
+- (NSURLSessionDataTask *)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
+    return [self.sessionManager POST:@"user/unfollow" parameters:@{ @"url" : fullBlogName(blogName) } callback:callback];
 }
 
-- (JXHTTPOperation *)followingRequest:(NSDictionary *)parameters {
-    return [self getRequestWithPath:@"user/following" parameters:parameters];
+- (NSURLSessionDataTask *)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
+    return [self.sessionManager POST:@"user/like" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey } callback:callback];
 }
 
-- (void)following:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self followingRequest:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)followRequest:(NSString *)blogName {
-    return [self postRequestWithPath:@"user/follow" parameters:@{ @"url" : fullBlogName(blogName) }];
-}
-
-- (void)follow:(NSString *)blogName callback:(TMAPICallback)callback {
-    [self sendRequest:[self followRequest:blogName] callback:callback];
-}
-
-- (JXHTTPOperation *)unfollowRequest:(NSString *)blogName {
-    return [self postRequestWithPath:@"user/unfollow" parameters:@{ @"url" : fullBlogName(blogName) }];
-}
-
-- (void)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
-    [self sendRequest:[self unfollowRequest:blogName] callback:callback];
-}
-
-- (JXHTTPOperation *)likeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey {
-    return [self postRequestWithPath:@"user/like" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
-}
-
-- (void)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
-    [self sendRequest:[self likeRequest:postID reblogKey:reblogKey] callback:callback];
-}
-
-- (JXHTTPOperation *)unlikeRequest:(NSString *)postID reblogKey:(NSString *)reblogKey {
-    return [self postRequestWithPath:@"user/unlike" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey }];
-}
-
-- (void)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
-    [self sendRequest:[self unlikeRequest:postID reblogKey:reblogKey] callback:callback];
+- (NSURLSessionDataTask *)unlike:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
+    return [self.sessionManager POST:@"user/unlike" parameters:@{ @"id" : postID, @"reblog_key" : reblogKey } callback:callback];
 }
 
 #pragma mark - Blog
 
-- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
+- (NSURLSessionDataTask *)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
     [self avatar:blogName size:size queue:self.defaultCallbackQueue callback:callback];
 }
-
-- (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
-    JXHTTPOperation *request = [self getRequestWithPath:[blogPath(@"avatar", blogName) stringByAppendingFormat:@"/%d", size]
-                                             parameters:nil];
-    
-    if (callback) {
-        __block typeof(callback) blockCallback = callback;
-        
-        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-            id response = nil;
-            NSError *error = nil;
-            
-            if (operation.responseStatusCode/100 == 2) {
-                response = operation.responseData;
-            } else {
-                error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
-                                        userInfo:nil];
-            }
-            
-            [queue addOperationWithBlock:^{
-                blockCallback(response, error);
-                blockCallback = nil;
-            }];
-        };
-        
-        request.didFailBlock = ^(JXHTTPOperation *operation) {
-            [queue addOperationWithBlock:^{
-                blockCallback(nil, operation.error);
-                blockCallback = nil;
-            }];
-        };
-    }
-    
-    [self.queue addOperation:request];
+/*
+ - (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
+ NSURLSessionDataTask *request = [self getRequestWithPath:[blogPath(@"avatar", blogName) stringByAppendingFormat:@"/%d", size]
+ parameters:nil];
+ 
+ if (callback) {
+ __block typeof(callback) blockCallback = callback;
+ 
+ request.didFinishLoadingBlock = ^(NSURLSessionDataTask *operation) {
+ id response = nil;
+ NSError *error = nil;
+ 
+ if (operation.responseStatusCode/100 == 2) {
+ response = operation.responseData;
+ } else {
+ error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
+ userInfo:nil];
+ }
+ 
+ [queue addOperationWithBlock:^{
+ blockCallback(response, error);
+ blockCallback = nil;
+ }];
+ };
+ 
+ request.didFailBlock = ^(NSURLSessionDataTask *operation) {
+ [queue addOperationWithBlock:^{
+ blockCallback(nil, operation.error);
+ blockCallback = nil;
+ }];
+ };
+ }
+ 
+ [self.queue addOperation:request];
+ }
+ */
+- (NSURLSessionDataTask *)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
+    return [self.sessionManager GET:blogPath(@"info", blogName) parameters:nil callback:callback];
 }
 
-- (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName {
-    return [self getRequestWithPath:blogPath(@"info", blogName) parameters:nil];
+- (NSURLSessionDataTask *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self.sessionManager GET:blogPath(@"followers", blogName) parameters:parameters callback:callback];
 }
 
-- (void)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
-    [self sendRequest:[self blogInfoRequest:blogName] callback:callback];
-}
-
-- (JXHTTPOperation *)followersRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self getRequestWithPath:blogPath(@"followers", blogName) parameters:parameters];
-}
-
-- (void)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self followersRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)postsRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     NSString *path = blogPath(@"posts", blogName);
     
     if (type) {
@@ -210,214 +167,141 @@ NSString *URLWithPath(NSString *path);
     return [self getRequestWithPath:path parameters:parameters];
 }
 
-- (void)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self postsRequest:blogName type:type parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)queueRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self getRequestWithPath:blogPath(@"posts/queue", blogName) parameters:parameters];
 }
 
-- (void)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self queueRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)draftsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self getRequestWithPath:blogPath(@"posts/draft", blogName) parameters:parameters];
 }
 
-- (void)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self draftsRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)submissionsRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self getRequestWithPath:blogPath(@"posts/submission", blogName) parameters:parameters];
 }
 
-- (void)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self submissionsRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)likesRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)likes:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self getRequestWithPath:blogPath(@"likes", blogName) parameters:parameters];
-}
-
-- (void)likes:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self likesRequest:blogName parameters:parameters] callback:callback];
 }
 
 #pragma mark - Posting
 
-- (JXHTTPOperation *)postRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"type"] = type;
     
     return [self postRequestWithPath:blogPath(@"post", blogName) parameters:mutableParameters];
 }
 
-- (void)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self postRequest:blogName type:type parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)editPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self postRequestWithPath:blogPath(@"post/edit", blogName) parameters:parameters];
 }
 
-- (void)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self editPostRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)reblogPostRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     return [self postRequestWithPath:blogPath(@"post/reblog", blogName) parameters:parameters];
 }
 
-- (void)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self sendRequest:[self reblogPostRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)deletePostRequest:(NSString *)blogName id:(NSString *)postID {
+- (NSURLSessionDataTask *)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
     return [self postRequestWithPath:blogPath(@"post/delete", blogName) parameters:@{ @"id": postID }];
-}
-
-- (void)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
-    [self sendRequest:[self deletePostRequest:blogName id:postID] callback:callback];
 }
 
 #pragma mark -  Posting (convenience)
 
-- (JXHTTPOperation *)textRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequest:blogName type:@"text" parameters:parameters];
+- (NSURLSessionDataTask *)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self post:blogName type:@"text" parameters:parameters callback:callback];
 }
 
-- (void)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self textRequest:blogName parameters:parameters] callback:callback];
+- (NSURLSessionDataTask *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self post:blogName type:@"quote" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)quoteRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequest:blogName type:@"quote" parameters:parameters];
+- (NSURLSessionDataTask *)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self post:blogName type:@"link" parameters:parameters callback:callback];
 }
 
-- (void)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self quoteRequest:blogName parameters:parameters] callback:callback];
+- (NSURLSessionDataTask *)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self post:blogName type:@"chat" parameters:parameters callback:callback];
 }
 
-- (JXHTTPOperation *)linkRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequest:blogName type:@"link" parameters:parameters];
+- (NSURLSessionDataTask *)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil
+               contentTypeArray:(NSArray *)contentTypeArrayOrNil fileNameArray:(NSArray *)fileNameArrayOrNil
+                     parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self multipartPost:blogName type:@"photo" parameters:parameters filePathArray:filePathArrayOrNil
+              contentTypeArray:contentTypeArrayOrNil fileNameArray:fileNameArrayOrNil];
 }
 
-- (void)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self linkRequest:blogName parameters:parameters] callback:callback];
+- (NSURLSessionDataTask *)video:(NSString *)blogName filePath:(NSString *)filePathOrNil
+                    contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
+                     parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
+    return [self multipartPost:blogName type:@"video" parameters:parameters
+                 filePathArray:filePathOrNil ? @[filePathOrNil] : nil
+              contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil
+                 fileNameArray:fileNameOrNil ? @[fileNameOrNil] : nil];
 }
 
-- (JXHTTPOperation *)chatRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
-    return [self postRequest:blogName type:@"chat" parameters:parameters];
-}
-
-- (void)chat:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self chatRequest:blogName parameters:parameters] callback:callback];
-}
-
-- (JXHTTPOperation *)photoRequest:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil
-                 contentTypeArray:(NSArray *)contentTypeArrayOrNil fileNameArray:(NSArray *)fileNameArrayOrNil
-                       parameters:(NSDictionary *)parameters {
-    return [self multipartPostRequest:blogName type:@"photo" parameters:parameters filePathArray:filePathArrayOrNil
-                     contentTypeArray:contentTypeArrayOrNil fileNameArray:fileNameArrayOrNil];
-}
-
-- (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
-fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self photoRequest:blogName filePathArray:filePathArrayOrNil contentTypeArray:contentTypeArrayOrNil
-                           fileNameArray:fileNameArrayOrNil parameters:parameters] callback:(TMAPICallback)callback];
-}
-
-- (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
-                      contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
-                       parameters:(NSDictionary *)parameters {
-    return [self multipartPostRequest:blogName type:@"video" parameters:parameters
-                        filePathArray:filePathOrNil ? @[filePathOrNil] : nil
-                     contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil
-                        fileNameArray:fileNameOrNil ? @[fileNameOrNil] : nil];
-}
-
-- (void)video:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
-     fileName:(NSString *)fileNameOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self videoRequest:blogName filePath:filePathOrNil contentType:contentTypeOrNil fileName:fileNameOrNil
-                              parameters:parameters] callback:(TMAPICallback)callback];
-}
-
-- (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
-                      contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
-                       parameters:(NSDictionary *)parameters {
-    return [self multipartPostRequest:blogName type:@"audio" parameters:parameters
-                        filePathArray:filePathOrNil ? @[filePathOrNil] : nil
-                     contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil
-                        fileNameArray:fileNameOrNil ? @[fileNameOrNil] : nil];
-}
-
-- (void)audio:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
-     fileName:(NSString *)fileNameOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self audioRequest:blogName filePath:filePathOrNil contentType:contentTypeOrNil fileName:fileNameOrNil
-                              parameters:parameters] callback:(TMAPICallback)callback];
+- (NSURLSessionDataTask *)audio:(NSString *)blogName filePath:(NSString *)filePathOrNil
+                    contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
+                     parameters:(NSDictionary *)parameters {
+    return [self multipartPost:blogName type:@"audio" parameters:parameters
+                 filePathArray:filePathOrNil ? @[filePathOrNil] : nil
+              contentTypeArray:contentTypeOrNil ? @[contentTypeOrNil] : nil
+                 fileNameArray:fileNameOrNil ? @[fileNameOrNil] : nil];
 }
 
 #pragma mark - Tagging
 
-- (JXHTTPOperation *)taggedRequest:(NSString *)tag parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"tag"] = tag;
     
     return [self getRequestWithPath:@"tagged" parameters:mutableParameters];
 }
 
-- (void)tagged:(NSString *)tag parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    [self sendRequest:[self taggedRequest:tag parameters:parameters] callback:callback];
-}
-
 #pragma mark - Private
 
-- (JXHTTPOperation *)getRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)getRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
+    [self.sessionManager GET:path parameters:mutableParameters];
+    NSURLSessionDataTask *request = [NSURLSessionDataTask withURLString:URLWithPath(path) queryParameters:mutableParameters];
     request.continuesInAppBackground = YES;
     request.requestTimeoutInterval = self.timeoutInterval;
     
-    [self signRequest:request withParameters:nil];
+    [self sign:request withParameters:nil];
     
     return request;
 }
 
-- (JXHTTPOperation *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
+- (NSURLSessionDataTask *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
+    NSURLSessionDataTask *request = [NSURLSessionDataTask withURLString:URLWithPath(path)];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
     request.requestTimeoutInterval = self.timeoutInterval;
     
-    [self signRequest:request withParameters:mutableParameters];
+    [self sign:request withParameters:mutableParameters];
     
     return request;
 }
 
-- (JXHTTPOperation *)multipartPostRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
-                            filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray
-                            fileNameArray:(NSArray *)fileNameArray {
+- (NSURLSessionDataTask *)multipartPost:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                          filePathArray:(NSArray *)filePathArray contentTypeArray:(NSArray *)contentTypeArray
+                          fileNameArray:(NSArray *)fileNameArray {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     mutableParameters[@"type"] = type;
-
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(blogPath(@"post", blogName))];
+    
+    NSURLSessionDataTask *request = [NSURLSessionDataTask withURLString:URLWithPath(blogPath(@"post", blogName))];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     request.requestBody = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
                                           contentTypeArray:contentTypeArray fileNameArray:fileNameArray];
     request.requestTimeoutInterval = self.timeoutInterval;
     
-    [self signRequest:request withParameters:mutableParameters];
+    [self sign:request withParameters:mutableParameters];
     
     return request;
 }
@@ -439,7 +323,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     return multipartBody;
 }
 
-- (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters {
+- (void)sign:(NSURLSessionDataTask *)request withParameters:(NSDictionary *)parameters {
     [request setValue:@"TMTumblrSDK" forRequestHeader:@"User-Agent"];
     
     for (NSString *header in self.customHeaders)
@@ -451,39 +335,39 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
                                 tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
 }
 
-- (void)sendRequest:(JXHTTPOperation *)request callback:(TMAPICallback)callback {
-    [self sendRequest:request queue:self.defaultCallbackQueue callback:callback];
-}
-
-- (void)sendRequest:(JXHTTPOperation *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
-    if (callback) {
-        __block typeof(callback) blockCallback = callback;
-        
-        request.didFinishLoadingBlock = ^(JXHTTPOperation *operation) {
-            NSDictionary *response = operation.responseJSON;
-            int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
-            
-            NSError *error = nil;
-            
-            if (statusCode/100 != 2)
-                error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
-            
-            [queue addOperationWithBlock:^{
-                blockCallback(response[@"response"], error);
-                blockCallback = nil;
-            }];
-        };
-        
-        request.didFailBlock = ^(JXHTTPOperation *operation) {
-            [queue addOperationWithBlock:^{
-                blockCallback(nil, operation.error);
-                blockCallback = nil;
-            }];
-        };
-    }
-    
-    [self.queue addOperation:request];
-}
+//- (void)send:(NSURLSessionDataTask *)request callback:(TMAPICallback)callback {
+//    [self send:request queue:self.defaultCallbackQueue callback:callback];
+//}
+//
+//- (void)send:(NSURLSessionDataTask *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
+//    if (callback) {
+//        __block typeof(callback) blockCallback = callback;
+//
+//        request.didFinishLoadingBlock = ^(NSURLSessionDataTask *operation) {
+//            NSDictionary *response = operation.responseJSON;
+//            int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
+//
+//            NSError *error = nil;
+//
+//            if (statusCode/100 != 2)
+//                error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
+//
+//            [queue addOperationWithBlock:^{
+//                blockCallback(response[@"response"], error);
+//                blockCallback = nil;
+//            }];
+//        };
+//
+//        request.didFailBlock = ^(NSURLSessionDataTask *operation) {
+//            [queue addOperationWithBlock:^{
+//                blockCallback(nil, operation.error);
+//                blockCallback = nil;
+//            }];
+//        };
+//    }
+//
+//    [self.queue addOperation:request];
+//}
 
 NSString *blogPath(NSString *ext, NSString *blogName) {
     return [NSString stringWithFormat:@"blog/%@/%@", fullBlogName(blogName), ext];
@@ -505,7 +389,9 @@ NSString *URLWithPath(NSString *path) {
 
 - (id)init {
     if (self = [super init]) {
-        self.queue = [[JXHTTPOperationQueue alloc] init];
+        self.sessionManager = [[TMHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.tumblr.com/v2/"]];
+        
+        self.queue = [[NSURLSessionDataTaskQueue alloc] init];
         self.defaultCallbackQueue = [NSOperationQueue mainQueue];
         self.timeoutInterval = TMAPIClientDefaultRequestTimeoutInterval;
     }
