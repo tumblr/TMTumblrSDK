@@ -7,8 +7,7 @@
 //
 
 #import "AFHTTPSessionManager.h"
-
-#import "TMAPIClient.h"
+#import "TMAPIBlocks.h"
 
 @interface TMHTTPSessionManager : AFHTTPSessionManager
 
@@ -18,6 +17,11 @@
                      callback:(TMAPICallback)callback;
 
 - (NSURLSessionDataTask *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters
+                      callback:(TMAPICallback)callback;
+
+- (NSURLSessionDataTask *)POST:(NSString *)URLString
+                    parameters:(NSDictionary *)parameters
+     constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
                       callback:(TMAPICallback)callback;
 
 @end

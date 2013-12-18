@@ -8,20 +8,37 @@
 
 #import "TMHTTPSessionManager.h"
 
+static NSString * const TMAPIResponseKeyMeta = @"meta";
+static NSString * const TMAPIResponseKeyStatus = @"status";
+static NSString * const TMAPIResponseKeyResponse = @"response";
+
 @implementation TMHTTPSessionManager
 
 - (NSURLSessionDataTask *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters
                      callback:(TMAPICallback)callback {
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    // TODO
+//    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+//    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
-    return [super GET:URLString parameters:parameters success:[[self class] successBlockForCallback:callback]
+    return [super GET:URLString parameters:parameters
+              success:[[self class] successBlockForCallback:callback]
               failure:[[self class] failureBlockForCallback:callback]];
 }
 
 - (NSURLSessionDataTask *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters
                      callback:(TMAPICallback)callback {
-    return [super POST:URLString parameters:parameters success:[[self class] successBlockForCallback:callback]
+    return [super POST:URLString parameters:parameters
+               success:[[self class] successBlockForCallback:callback]
+               failure:[[self class] failureBlockForCallback:callback]];
+}
+
+- (NSURLSessionDataTask *)POST:(NSString *)URLString
+                    parameters:(NSDictionary *)parameters
+     constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
+                      callback:(TMAPICallback)callback {
+
+    return [super POST:URLString parameters:parameters constructingBodyWithBlock:block
+               success:[[self class] successBlockForCallback:callback]
                failure:[[self class] failureBlockForCallback:callback]];
 }
 
@@ -34,7 +51,13 @@
         successBlock = ^(NSURLSessionDataTask *task, id responseObject) {
             NSDictionary *response = responseObject;
             
-            int statusCode = response[@"meta"] ? [response[@"meta"][@"status"] intValue] : 0;
+            NSInteger statusCode = 0;
+            
+            NSDictionary *metaParameters = response[TMAPIResponseKeyMeta];
+            
+            if (metaParameters) {
+                statusCode = [metaParameters[TMAPIResponseKeyStatus] integerValue];
+            }
             
             NSError *error = nil;
             
@@ -42,14 +65,14 @@
                 error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
             }
             
-            callback(response[@"response"], error);
+            callback(response[TMAPIResponseKeyResponse], error);
         };
     }
     
     return successBlock;
 }
 
-+ (void (^)(NSURLSessionDataTask *, NSError *))failureBlockForCallback:(TMAPICallback)callback {
++ (void (^)(NSURLSessionDataTask *, NSError *))failureBlockForCallback:(void (^)(id, NSError *error))callback {
     void (^failureBlock)(NSURLSessionDataTask *, NSError *) = nil;
     
     if (callback) {

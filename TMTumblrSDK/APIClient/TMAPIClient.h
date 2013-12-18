@@ -7,9 +7,8 @@
 //
 
 #import "AFNetworking.h"
+#import "TMAPIBlocks.h"
 #import "TMHTTPSessionManager.h"
-
-typedef void (^TMAPICallback)(id, NSError *error);
 
 /**
  Full wrapper around the [Tumblr API](http://www.tumblr.com/docs/en/api/). Please see API documentation for a listing
@@ -64,29 +63,6 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 + (TMAPIClient *)sharedInstance;
 
-/** @name Sending raw requests */
-
-/**
- Send an API request. This method should be used in conjunction with an API method below that return a `JXHTTPOperation`
- instance. These methods are provided for cases in which the calling code wants a reference to the operation in order
- to observe its properties, cancel it, etc. If the caller does not need to do this, the `void` API methods can be used
- instead.
- 
- All requests sent using this method (and as such, any of the `void` API methods) will have their callback blocks
- executed on the `defaultCallbackQueue`.
- */
-//- (void)sendRequest:(NSURLSessionDataTask *)request callback:(TMAPICallback)callback;
-//
-///**
-// Send an API request and specify a queue to execute the callback block on. This method should be used in conjunction
-// with an API method below that returns a `JXHTTPOperation` instance. These methods are provided for cases in which the
-// calling code wants a reference to the operation in order to observe its properties, cancel it, etc. If the caller does
-// not need to do this, the `void` API methods can be used instead.
-// 
-// @param queue Queue to execute the callback block on.
-// */
-//- (void)sendRequest:(NSURLSessionDataTask *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
-
 /** @name Authentication */
 
 /**
@@ -131,7 +107,7 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (NSURLSessionDataTask *)dashboard:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /// Get posts that the authenticated user has "liked"
-- (NSURLSessionDataTask *)likes:(NSDictionary *)parameters;
+- (NSURLSessionDataTask *)likes:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /// Get blogs that the authenticated user is following
 - (NSURLSessionDataTask *)following:(NSDictionary *)parameters callback:(TMAPICallback)callback;
@@ -151,14 +127,7 @@ typedef void (^TMAPICallback)(id, NSError *error);
 /** @name Blog */
 
 /// Get the avatar for a blog
-- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback;
-
-/**
- Get the avatar for a blog.
- 
- @param queue Queue to execute the callback block on.
- */
-- (NSURLSessionDataTask *)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
+- (NSURLSessionDataTask *)avatar:(NSString *)blogName size:(NSInteger)size callback:(TMAPICallback)callback;
 
 /// Get information about a blog
 - (NSURLSessionDataTask *)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback;
@@ -198,10 +167,10 @@ typedef void (^TMAPICallback)(id, NSError *error);
 /** @name Posting (convenience) */
 
 /// Create a text post
-- (NSURLSessionDataTask *)text:(NSString *)blogName parameters:(NSDictionary *)parameters;
+- (NSURLSessionDataTask *)text:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /// Create a quote post
-- (NSURLSessionDataTask *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;;
+- (NSURLSessionDataTask *)quote:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
 /// Create a link post
 - (NSURLSessionDataTask *)link:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;;
