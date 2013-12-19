@@ -23,7 +23,7 @@
 }
 
 - (void)auth {
-    [[TMAPIClient sharedInstance] authenticate:@"tumblr_auth_example" callback:^(NSError *error) {
+    [[TMAPIClient sharedInstance] authenticate:@"tumblrauthexample" callback:^(NSError *error) {
         if (error)
             NSLog(@"Authentication failed: %@ %@", error, [error description]);
         else
