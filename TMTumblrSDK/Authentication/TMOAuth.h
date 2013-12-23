@@ -9,10 +9,10 @@
 @interface TMOAuth : NSObject
 
 /// Base string used to generate the OAuth signature
-@property (nonatomic, strong, readonly) NSString *baseString;
+@property (nonatomic, readonly) NSString *baseString;
 
 /// Authentication header value
-@property (nonatomic, strong, readonly) NSString *headerString;
+@property (nonatomic, readonly) NSString *headerString;
 
 /**
  Build an authentication header for a Tumblr API request.

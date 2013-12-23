@@ -13,19 +13,6 @@
 #import <sys/sysctl.h>
 #import "TMSDKFunctions.h"
 
-@interface TMOAuth()
-
-NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *parameters);
-
-NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret);
-
-NSString *UNIXTimestamp(NSDate *date);
-
-NSData *HMACSHA1(NSString *dataString, NSString *keyString);
-
-@end
-
-
 @implementation TMOAuth
 
 + (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method parameters:(NSDictionary *)parameters
@@ -41,7 +28,7 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
             token:(NSString *)token tokenSecret:(NSString *)tokenSecret {
     if (self = [super init]) {
         NSMutableDictionary *headerParameters = [[NSMutableDictionary alloc] initWithDictionary:@{
-            @"oauth_timestamp" : UNIXTimestamp([NSDate date]),
+            @"oauth_timestamp" : [NSString stringWithFormat:@"%f", round([[NSDate date] timeIntervalSince1970])],
             @"oauth_nonce" : nonce,
             @"oauth_version" : @"1.0",
             @"oauth_signature_method" : @"HMAC-SHA1",
@@ -52,18 +39,19 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
             headerParameters[@"oauth_token"] = token;
         }
         
-        NSString *baseURLString = [[URL absoluteString] componentsSeparatedByString:@"?"][0];
+        NSString *baseURLString = [[[URL absoluteString] componentsSeparatedByString:@"?"] firstObject];
         
-        NSString *baseString = generateBaseString(baseURLString, method, headerParameters, parameters);
+        NSString *baseString = TMOAuthGenerateBaseString(baseURLString, method, headerParameters, parameters);
         
         _baseString = baseString;
         
-        headerParameters[@"oauth_signature"] = sign(baseString, consumerSecret, tokenSecret);
+        headerParameters[@"oauth_signature"] = TMOAuthSign(baseString, consumerSecret, tokenSecret);
         
         NSMutableArray *components = [NSMutableArray array];
         
-        for (NSString *key in headerParameters)
+        for (NSString *key in headerParameters) {
             [components addObject:[NSString stringWithFormat:@"%@=\"%@\"", key, TMURLEncode(headerParameters[key])]];
+        }
         
         _headerString = [NSString stringWithFormat:@"OAuth %@", [components componentsJoinedByString:@","]];
     }
@@ -73,7 +61,7 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
 
 #pragma mark - Private
 
-NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *parameters) {
+static NSString *TMOAuthGenerateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *parameters) {
     NSMutableDictionary *signatureParameters = [NSMutableDictionary dictionaryWithDictionary:headers];
     [signatureParameters addEntriesFromDictionary:parameters];
     
@@ -82,20 +70,15 @@ NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *
     return [NSString stringWithFormat:@"%@&%@&%@", method, TMURLEncode(baseURL), TMURLEncode(parameterString)];
 }
 
-NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret) {
-    NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret ? tokenSecret : @""];
-    
-    NSData *hashedData = HMACSHA1(baseString, keyString);
+static NSString *TMOAuthSign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret) {
+    NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret ?: @""];
+    NSData *hashedData = TMOAuthHMACSHA1(baseString, keyString);
     NSString *base64EncodedString = [hashedData base64EncodedStringWithOptions:0];
     
     return base64EncodedString;
 }
 
-NSString *UNIXTimestamp(NSDate *date) {
-    return [NSString stringWithFormat:@"%f", round([date timeIntervalSince1970])];
-}
-
-NSData *HMACSHA1(NSString *dataString, NSString *keyString) {
+static NSData *TMOAuthHMACSHA1(NSString *dataString, NSString *keyString) {
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     NSData *key = [keyString dataUsingEncoding:NSUTF8StringEncoding];
     
