@@ -51,14 +51,6 @@
  */
 @property (nonatomic) NSTimeInterval timeoutInterval;
 
-/**
- The queue that callback blocks will be executed on by default. `sendRequest:queue:callback:` allows the caller to
- specify a callback queue to be used instead of this default.
- 
- By default, this property is set to `[NSOperationQueue mainQueue]`.
- */
-@property (nonatomic, strong) NSOperationQueue *defaultCallbackQueue;
-
 /** @name Singleton instance */
 
 + (TMAPIClient *)sharedInstance;

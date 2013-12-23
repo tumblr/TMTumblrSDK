@@ -10,11 +10,12 @@
 
 #import "TMHTTPSessionManager.h"
 #import "TMOAuth.h"
+#import "TMHTTPRequestSerializer.h"
 #import "TMTumblrAuthenticator.h"
 
 static NSTimeInterval const TMAPIClientDefaultRequestTimeoutInterval = 60;
 
-@interface TMAPIClient()
+@interface TMAPIClient() <TMHTTPSessionManagerDelegate, TMHTTPRequestSerializerDelegate>
 
 @property (nonatomic, strong) TMHTTPSessionManager *sessionManager;
 
@@ -66,6 +67,10 @@ NSString *fullBlogName(NSString *blogName);
 
 - (NSString *)OAuthConsumerKey {
     return [TMTumblrAuthenticator sharedInstance].OAuthConsumerKey;
+}
+
+- (void)setOAuthConsumerSecret:(NSString *)OAuthConsumerSecret {
+    [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret = OAuthConsumerSecret;
 }
 
 - (NSString *)OAuthConsumerSecret {
@@ -241,7 +246,8 @@ NSString *fullBlogName(NSString *blogName) {
 - (id)init {
     if (self = [super init]) {
         self.sessionManager = [[TMHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.tumblr.com/v2/"]];
-        self.defaultCallbackQueue = [NSOperationQueue mainQueue];
+        self.sessionManager.delegate = self;
+        self.sessionManager.requestSerializer = [[TMHTTPRequestSerializer alloc] initWithDelegate:self];
         self.timeoutInterval = TMAPIClientDefaultRequestTimeoutInterval;
     }
     

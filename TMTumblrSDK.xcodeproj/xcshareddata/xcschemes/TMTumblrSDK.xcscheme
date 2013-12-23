@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "93E52A80168BB43700E5471A"
-               BuildableName = "TMTumblrSDKTests.octest"
+               BlueprintIdentifier = "9338752E1868881800D392D6"
+               BuildableName = "TMTumblrSDKTests.xctest"
                BlueprintName = "TMTumblrSDKTests"
                ReferencedContainer = "container:TMTumblrSDK.xcodeproj">
             </BuildableReference>
@@ -48,10 +48,10 @@
                   Identifier = "TMAPIClientTagTest">
                </Test>
                <Test
-                  Identifier = "TMAPIClientUserTest">
+                  Identifier = "TMAPIClientUnitTest">
                </Test>
                <Test
-                  Identifier = "TMAPIClientUnitTest">
+                  Identifier = "TMAPIClientUserTest">
                </Test>
             </SkippedTests>
          </TestableReference>

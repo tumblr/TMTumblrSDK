@@ -11,16 +11,21 @@
 static NSString * const TMAPIResponseKeyMeta = @"meta";
 static NSString * const TMAPIResponseKeyStatus = @"status";
 static NSString * const TMAPIResponseKeyResponse = @"response";
+static NSString * const TMAPIResponseKeyAPIKey = @"api_key";
 
 @implementation TMHTTPSessionManager
 
 - (NSURLSessionDataTask *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters
                      callback:(TMAPICallback)callback {
-    // TODO
-//    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-//    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    NSMutableDictionary *mutableParameters = [[NSMutableDictionary alloc] initWithDictionary:parameters];
     
-    return [super GET:URLString parameters:parameters
+    NSString *consumerKey = [self.delegate OAuthConsumerKey];
+    
+    if (consumerKey) {
+        mutableParameters[TMAPIResponseKeyAPIKey] = consumerKey;
+    }
+    
+    return [super GET:URLString parameters:mutableParameters
               success:[[self class] successBlockForCallback:callback]
               failure:[[self class] failureBlockForCallback:callback]];
 }

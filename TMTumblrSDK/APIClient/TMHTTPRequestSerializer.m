@@ -1,20 +1,36 @@
 //
-//  TMOAuthRequestSerializer.m
+//  TMHTTPRequestSerializer.m
 //  TMTumblrSDK
 //
 //  Created by Bryan Irace on 12/17/13.
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
-#import "TMOAuthRequestSerializer.h"
+#import "TMHTTPRequestSerializer.h"
 #import "TMOAuth.h"
 
-@implementation TMOAuthRequestSerializer
+@interface TMHTTPRequestSerializer()
+
+@property (nonatomic, weak) id <TMHTTPRequestSerializerDelegate> delegate;
+
+@end
+
+@implementation TMHTTPRequestSerializer
+
+- (instancetype)initWithDelegate:(id <TMHTTPRequestSerializerDelegate>)delegate {
+    if (self = [super init]) {
+        _delegate = delegate;
+    }
+    
+    return self;
+}
 
 #pragma mark - AFURLRequestSerialization
 
 - (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(NSDictionary *)parameters
                                         error:(NSError *__autoreleasing *)error {
+    request = [super requestBySerializingRequest:request withParameters:parameters error:error];
+    
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
     
     NSString *authorizationHeaderValue = [TMOAuth headerForURL:[request URL]
@@ -29,21 +45,6 @@
     [mutableRequest setValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
     
     return [mutableRequest copy];
-}
-
-#pragma mark - NSCoding
-
-- (id)initWithCoder:(NSCoder *)decoder {
-    return [self init];
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-}
-
-#pragma mark - NSCopying
-
-- (id)copyWithZone:(NSZone *)zone {
-    return [[[self class] allocWithZone:zone] init];
 }
 
 @end

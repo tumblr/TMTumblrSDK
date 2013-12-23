@@ -8,8 +8,11 @@
 
 #import "AFHTTPSessionManager.h"
 #import "TMAPIBlocks.h"
+@protocol TMHTTPSessionManagerDelegate;
 
 @interface TMHTTPSessionManager : AFHTTPSessionManager
+
+@property (nonatomic, weak) id <TMHTTPSessionManagerDelegate> delegate;
 
 // TODO: Add hooks for hooking into all success/failure blocks
 
@@ -23,5 +26,11 @@
                     parameters:(NSDictionary *)parameters
      constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
                       callback:(TMAPICallback)callback;
+
+@end
+
+@protocol TMHTTPSessionManagerDelegate <NSObject>
+
+- (NSString *)OAuthConsumerKey;
 
 @end

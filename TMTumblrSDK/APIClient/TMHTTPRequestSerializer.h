@@ -7,15 +7,15 @@
 //
 
 #import "AFURLRequestSerialization.h"
-@protocol TMOAuthRequestSerializerDelegate;
+@protocol TMHTTPRequestSerializerDelegate;
 
-@interface TMOAuthRequestSerializer : NSObject <AFURLRequestSerialization>
+@interface TMHTTPRequestSerializer : AFHTTPRequestSerializer
 
-@property (nonatomic, weak) id <TMOAuthRequestSerializerDelegate> delegate;
+- (instancetype)initWithDelegate:(id <TMHTTPRequestSerializerDelegate>)delegate;
 
 @end
 
-@protocol TMOAuthRequestSerializerDelegate <NSObject>
+@protocol TMHTTPRequestSerializerDelegate <NSObject>
 
 - (NSString *)OAuthConsumerKey;
 
