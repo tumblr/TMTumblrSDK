@@ -8,9 +8,6 @@
 
 #import "TMHTTPSessionManager.h"
 
-static NSString * const TMAPIResponseKeyMeta = @"meta";
-static NSString * const TMAPIResponseKeyStatus = @"status";
-static NSString * const TMAPIResponseKeyResponse = @"response";
 static NSString * const TMAPIResponseKeyAPIKey = @"api_key";
 
 @implementation TMHTTPSessionManager
@@ -54,23 +51,7 @@ static NSString * const TMAPIResponseKeyAPIKey = @"api_key";
     
     if (callback) {
         successBlock = ^(NSURLSessionDataTask *task, id responseObject) {
-            NSDictionary *response = responseObject;
-            
-            NSInteger statusCode = 0;
-            
-            NSDictionary *metaParameters = response[TMAPIResponseKeyMeta];
-            
-            if (metaParameters) {
-                statusCode = [metaParameters[TMAPIResponseKeyStatus] integerValue];
-            }
-            
-            NSError *error = nil;
-            
-            if (statusCode/100 != 2) {
-                error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
-            }
-            
-            callback(response[TMAPIResponseKeyResponse], error);
+            callback(responseObject, nil);
         };
     }
     

@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong, readonly) TMHTTPSessionManager *sessionManager;
 
+@property (nonatomic, strong, readonly) NSURLSessionConfiguration *sessionConfiguration;
+
 /// OAuth consumer key. Must be set prior to authenticating or making any API requests.
 @property (nonatomic, copy) NSString *OAuthConsumerKey;
 
@@ -39,17 +41,6 @@
  subsequent app launches prior to making any API requests.
  */
 @property (nonatomic, copy) NSString *OAuthTokenSecret;
-
-/**
- HTTP headers to be set on all requests, in addition to the `Authentication` header. These headers will be set just
- prior to the request being signed.
- */
-@property (nonatomic, copy) NSDictionary *customHeaders;
-
-/**
- Default: 60 seconds
- */
-@property (nonatomic) NSTimeInterval timeoutInterval;
 
 /** @name Singleton instance */
 

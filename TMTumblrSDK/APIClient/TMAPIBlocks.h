@@ -6,4 +6,4 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
-typedef void (^TMAPICallback)(id, NSError *error);
+typedef void (^TMAPICallback)(NSDictionary *response, NSError *error);

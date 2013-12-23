@@ -13,11 +13,10 @@
 #import "TMHTTPRequestSerializer.h"
 #import "TMTumblrAuthenticator.h"
 
-static NSTimeInterval const TMAPIClientDefaultRequestTimeoutInterval = 60;
-
 @interface TMAPIClient() <TMHTTPSessionManagerDelegate, TMHTTPRequestSerializerDelegate>
 
 @property (nonatomic, strong) TMHTTPSessionManager *sessionManager;
+@property (nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
 
 NSString *blogPath(NSString *ext, NSString *blogName);
 
@@ -30,9 +29,28 @@ NSString *fullBlogName(NSString *blogName);
 
 + (id)sharedInstance {
     static TMAPIClient *instance;
+    
     static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{ instance = [[TMAPIClient alloc] init]; });
+    dispatch_once(&predicate, ^{
+        instance = [[TMAPIClient alloc] init];
+    });
+    
     return instance;
+}
+
+#pragma mark - NSObject
+
+- (id)init {
+    if (self = [super init]) {
+        self.sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        
+        self.sessionManager = [[TMHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.tumblr.com/v2/"]
+                                                       sessionConfiguration:nil];
+        self.sessionManager.delegate = self;
+        self.sessionManager.requestSerializer = [[TMHTTPRequestSerializer alloc] initWithDelegate:self];
+    }
+    
+    return self;
 }
 
 #pragma mark - Authentication
@@ -203,19 +221,45 @@ NSString *fullBlogName(NSString *blogName);
 - (NSURLSessionDataTask *)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil
                contentTypeArray:(NSArray *)contentTypeArrayOrNil fileNameArray:(NSArray *)fileNameArrayOrNil
                      parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self post:blogName type:@"photo" parameters:parameters constructingBodyWithBlock:nil callback:callback];
+    void(^multipartConstructor)(id<AFMultipartFormData> formData) = ^(id<AFMultipartFormData> formData) {
+        [filePathArrayOrNil enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger index, BOOL *stop) {
+            NSString *contentType = contentTypeArrayOrNil[index];
+            NSString *fileName = fileNameArrayOrNil[index];
+            
+            NSError *error = nil;
+            
+            [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:fileName fileName:fileName
+                                   mimeType:contentType error:&error];
+        }];
+    };
+    
+    return [self post:blogName type:@"photo" parameters:parameters constructingBodyWithBlock:multipartConstructor callback:callback];
 }
 
 - (NSURLSessionDataTask *)video:(NSString *)blogName filePath:(NSString *)filePathOrNil
                     contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
                      parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self post:blogName type:@"photo" parameters:parameters constructingBodyWithBlock:nil callback:callback];
+    void(^multipartConstructor)(id<AFMultipartFormData> formData) = ^(id<AFMultipartFormData> formData) {
+        NSError *error = nil;
+        
+        [formData appendPartWithFileURL:[NSURL URLWithString:filePathOrNil] name:fileNameOrNil fileName:fileNameOrNil
+                               mimeType:contentTypeOrNil error:&error];
+    };
+    
+    return [self post:blogName type:@"photo" parameters:parameters constructingBodyWithBlock:multipartConstructor callback:callback];
 }
 
 - (NSURLSessionDataTask *)audio:(NSString *)blogName filePath:(NSString *)filePathOrNil
                     contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
                      parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self post:blogName type:@"audio" parameters:parameters constructingBodyWithBlock:nil callback:callback];
+    void(^multipartConstructor)(id<AFMultipartFormData> formData) = ^(id<AFMultipartFormData> formData) {
+        NSError *error = nil;
+        
+        [formData appendPartWithFileURL:[NSURL URLWithString:filePathOrNil] name:fileNameOrNil fileName:fileNameOrNil
+                               mimeType:contentTypeOrNil error:&error];
+    };
+    
+    return [self post:blogName type:@"audio" parameters:parameters constructingBodyWithBlock:multipartConstructor callback:callback];
 }
 
 #pragma mark - Tagging
@@ -239,19 +283,6 @@ NSString *fullBlogName(NSString *blogName) {
     }
     
     return blogName;
-}
-
-#pragma mark - NSObject
-
-- (id)init {
-    if (self = [super init]) {
-        self.sessionManager = [[TMHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.tumblr.com/v2/"]];
-        self.sessionManager.delegate = self;
-        self.sessionManager.requestSerializer = [[TMHTTPRequestSerializer alloc] initWithDelegate:self];
-        self.timeoutInterval = TMAPIClientDefaultRequestTimeoutInterval;
-    }
-    
-    return self;
 }
 
 @end
