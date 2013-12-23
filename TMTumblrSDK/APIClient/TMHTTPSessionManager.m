@@ -7,31 +7,44 @@
 //
 
 #import "TMHTTPSessionManager.h"
+#import "TMHTTPRequestSerializer.h"
 
-static NSString * const TMAPIResponseKeyAPIKey = @"api_key";
+static NSString * const BaseURLString = @"http://api.tumblr.com/v2/";
+static NSString * const APIKeyParameter = @"api_key";
+static NSString * const UserAgentHeader = @"User-Agent";
+static NSString * const UserAgentSDKValue = @"TMTumblrSDK";
+
+@interface TMHTTPSessionManager() <TMHTTPRequestSerializerDelegate>
+@end
 
 @implementation TMHTTPSessionManager
+
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration {
+    if (!sessionConfiguration.HTTPAdditionalHeaders[UserAgentHeader]) {
+        NSMutableDictionary *headers = [sessionConfiguration.HTTPAdditionalHeaders mutableCopy];
+        headers[UserAgentHeader] = UserAgentSDKValue;
+        
+        sessionConfiguration.HTTPAdditionalHeaders = headers;
+    }
+    
+    if (self = [super initWithBaseURL:[NSURL URLWithString:BaseURLString] sessionConfiguration:sessionConfiguration]) {
+        self.requestSerializer = [[TMHTTPRequestSerializer alloc] initWithDelegate:self];
+    }
+    
+    return self;
+}
 
 - (NSURLSessionDataTask *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters
                      callback:(TMAPICallback)callback {
     NSMutableDictionary *mutableParameters = [[NSMutableDictionary alloc] initWithDictionary:parameters];
+    mutableParameters[APIKeyParameter] = self.OAuthConsumerKey;
     
-    NSString *consumerKey = [self.delegate OAuthConsumerKey];
-    
-    if (consumerKey) {
-        mutableParameters[TMAPIResponseKeyAPIKey] = consumerKey;
-    }
-    
-    return [super GET:URLString parameters:mutableParameters
-              success:[[self class] successBlockForCallback:callback]
-              failure:[[self class] failureBlockForCallback:callback]];
+    return [super GET:URLString parameters:mutableParameters success:TMSuccessBlockForCallback(callback) failure:TMFailureBlockForCallback(callback)];
 }
 
 - (NSURLSessionDataTask *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters
                      callback:(TMAPICallback)callback {
-    return [super POST:URLString parameters:parameters
-               success:[[self class] successBlockForCallback:callback]
-               failure:[[self class] failureBlockForCallback:callback]];
+    return [super POST:URLString parameters:parameters success:TMSuccessBlockForCallback(callback) failure:TMFailureBlockForCallback(callback)];
 }
 
 - (NSURLSessionDataTask *)POST:(NSString *)URLString
@@ -39,15 +52,16 @@ static NSString * const TMAPIResponseKeyAPIKey = @"api_key";
      constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
                       callback:(TMAPICallback)callback {
 
-    return [super POST:URLString parameters:parameters constructingBodyWithBlock:block
-               success:[[self class] successBlockForCallback:callback]
-               failure:[[self class] failureBlockForCallback:callback]];
+    return [super POST:URLString parameters:parameters constructingBodyWithBlock:block success:TMSuccessBlockForCallback(callback) failure:TMFailureBlockForCallback(callback)];
 }
 
 #pragma mark - Private
 
-+ (void (^)(NSURLSessionDataTask *, id))successBlockForCallback:(TMAPICallback)callback {
-    void (^successBlock)(NSURLSessionDataTask *, id) = nil;
+typedef void (^TMHTTPSuccessBlock)(NSURLSessionDataTask *, id);
+typedef void (^TMHTTPFailureBlock)(NSURLSessionDataTask *, NSError *error);
+
+TMHTTPSuccessBlock TMSuccessBlockForCallback(TMAPICallback callback) {
+    TMHTTPSuccessBlock successBlock = nil;
     
     if (callback) {
         successBlock = ^(NSURLSessionDataTask *task, id responseObject) {
@@ -58,8 +72,8 @@ static NSString * const TMAPIResponseKeyAPIKey = @"api_key";
     return successBlock;
 }
 
-+ (void (^)(NSURLSessionDataTask *, NSError *))failureBlockForCallback:(void (^)(id, NSError *error))callback {
-    void (^failureBlock)(NSURLSessionDataTask *, NSError *) = nil;
+TMHTTPFailureBlock TMFailureBlockForCallback(TMAPICallback callback) {
+    TMHTTPFailureBlock failureBlock = nil;
     
     if (callback) {
         failureBlock = ^(NSURLSessionDataTask *task, NSError *error) {

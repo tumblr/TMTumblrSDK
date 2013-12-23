@@ -18,33 +18,7 @@
 
 @property (nonatomic, strong, readonly) TMHTTPSessionManager *sessionManager;
 
-@property (nonatomic, strong, readonly) NSURLSessionConfiguration *sessionConfiguration;
-
-/// OAuth consumer key. Must be set prior to authenticating or making any API requests.
-@property (nonatomic, copy) NSString *OAuthConsumerKey;
-
-/// OAuth consumer key. Must be set prior to authenticating or making any API requests.
-@property (nonatomic, copy) NSString *OAuthConsumerSecret;
-
-/**
- OAuth token. Initially set by this library's OAuth/xAuth implementations after authenticating.
- 
- The Tumblr SDK does not currently persist this value. You are responsible for storing this value and setting it on
- subsequent app launches prior to maki ng any API requests.
- */
-@property (nonatomic, copy) NSString *OAuthToken;
-
-/**
- OAuth token secret. Initially set by this library's OAuth/xAuth implementations after authenticating.
- 
- The Tumblr SDK does not currently persist this value. You are responsible for storing this value and setting it on
- subsequent app launches prior to making any API requests.
- */
-@property (nonatomic, copy) NSString *OAuthTokenSecret;
-
-/** @name Singleton instance */
-
-+ (TMAPIClient *)sharedInstance;
+- (instancetype)initWithSessionManager:(TMHTTPSessionManager *)sessionManager;
 
 /** @name Authentication */
 

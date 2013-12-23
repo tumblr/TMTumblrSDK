@@ -8,11 +8,32 @@
 
 #import "AFHTTPSessionManager.h"
 #import "TMAPIBlocks.h"
-@protocol TMHTTPSessionManagerDelegate;
 
 @interface TMHTTPSessionManager : AFHTTPSessionManager
 
-@property (nonatomic, weak) id <TMHTTPSessionManagerDelegate> delegate;
+/// OAuth consumer key. Must be set prior to authenticating or making any API requests.
+@property (nonatomic, copy) NSString *OAuthConsumerKey;
+
+/// OAuth consumer key. Must be set prior to authenticating or making any API requests.
+@property (nonatomic, copy) NSString *OAuthConsumerSecret;
+
+/**
+ OAuth token. Initially set by this library's OAuth/xAuth implementations after authenticating.
+ 
+ The Tumblr SDK does not currently persist this value. You are responsible for storing this value and setting it on
+ subsequent app launches prior to making any API requests.
+ */
+@property (nonatomic, copy) NSString *OAuthToken;
+
+/**
+ OAuth token secret. Initially set by this library's OAuth/xAuth implementations after authenticating.
+ 
+ The Tumblr SDK does not currently persist this value. You are responsible for storing this value and setting it on
+ subsequent app launches prior to making any API requests.
+ */
+@property (nonatomic, copy) NSString *OAuthTokenSecret;
+
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration;
 
 // TODO: Add hooks for hooking into all success/failure blocks
 
@@ -26,11 +47,5 @@
                     parameters:(NSDictionary *)parameters
      constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
                       callback:(TMAPICallback)callback;
-
-@end
-
-@protocol TMHTTPSessionManagerDelegate <NSObject>
-
-- (NSString *)OAuthConsumerKey;
 
 @end

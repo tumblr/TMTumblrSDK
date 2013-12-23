@@ -13,41 +13,20 @@
 #import "TMHTTPRequestSerializer.h"
 #import "TMTumblrAuthenticator.h"
 
-@interface TMAPIClient() <TMHTTPSessionManagerDelegate, TMHTTPRequestSerializerDelegate>
+@interface TMAPIClient()
 
 @property (nonatomic, strong) TMHTTPSessionManager *sessionManager;
-@property (nonatomic, strong) NSURLSessionConfiguration *sessionConfiguration;
-
-NSString *blogPath(NSString *ext, NSString *blogName);
-
-NSString *fullBlogName(NSString *blogName);
 
 @end
 
 
 @implementation TMAPIClient
 
-+ (id)sharedInstance {
-    static TMAPIClient *instance;
-    
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        instance = [[TMAPIClient alloc] init];
-    });
-    
-    return instance;
-}
-
 #pragma mark - NSObject
 
-- (id)init {
+- (instancetype)initWithSessionManager:(TMHTTPSessionManager *)sessionManager {
     if (self = [super init]) {
-        self.sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        
-        self.sessionManager = [[TMHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.tumblr.com/v2/"]
-                                                       sessionConfiguration:nil];
-        self.sessionManager.delegate = self;
-        self.sessionManager.requestSerializer = [[TMHTTPRequestSerializer alloc] initWithDelegate:self];
+        self.sessionManager = sessionManager;
     }
     
     return self;
@@ -56,13 +35,14 @@ NSString *fullBlogName(NSString *blogName);
 #pragma mark - Authentication
 
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))callback {
-    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
-                                                callback:^(NSString *token, NSString *secret, NSError *error) {
-                                                    self.OAuthToken = token;
-                                                    self.OAuthTokenSecret = secret;
-                                                    
-                                                    callback(error);
-                                                }];
+    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme callback:^(NSString *token, NSString *secret, NSError *error) {
+        self.sessionManager.OAuthToken = token;
+        self.sessionManager.OAuthTokenSecret = secret;
+       
+        if (callback) {
+            callback(error);
+        }
+    }];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
@@ -70,29 +50,14 @@ NSString *fullBlogName(NSString *blogName);
 }
 
 - (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(void(^)(NSError *))callback {
-    return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password
-                                                callback:^(NSString *token, NSString *secret, NSError *error) {
-                                                    self.OAuthToken = token;
-                                                    self.OAuthTokenSecret = secret;
-                                                    
-                                                    callback(error);
-                                                }];
-}
-
-- (void)setOAuthConsumerKey:(NSString *)OAuthConsumerKey {
-    [TMTumblrAuthenticator sharedInstance].OAuthConsumerKey = OAuthConsumerKey;
-}
-
-- (NSString *)OAuthConsumerKey {
-    return [TMTumblrAuthenticator sharedInstance].OAuthConsumerKey;
-}
-
-- (void)setOAuthConsumerSecret:(NSString *)OAuthConsumerSecret {
-    [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret = OAuthConsumerSecret;
-}
-
-- (NSString *)OAuthConsumerSecret {
-    return [TMTumblrAuthenticator sharedInstance].OAuthConsumerSecret;
+    return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password callback:^(NSString *token, NSString *secret, NSError *error) {
+        self.sessionManager.OAuthToken = token;
+        self.sessionManager.OAuthTokenSecret = secret;
+        
+        if (callback) {
+            callback(error);
+        }
+    }];
 }
 
 #pragma mark - User
@@ -114,11 +79,11 @@ NSString *fullBlogName(NSString *blogName);
 }
 
 - (NSURLSessionDataTask *)follow:(NSString *)blogName callback:(TMAPICallback)callback {
-    return [self.sessionManager POST:@"user/follow" parameters:@{ @"url" : fullBlogName(blogName) } callback:callback];
+    return [self.sessionManager POST:@"user/follow" parameters:@{ @"url" : TMFullyQualifiedBlogHost(blogName) } callback:callback];
 }
 
 - (NSURLSessionDataTask *)unfollow:(NSString *)blogName callback:(TMAPICallback)callback {
-    return [self.sessionManager POST:@"user/unfollow" parameters:@{ @"url" : fullBlogName(blogName) } callback:callback];
+    return [self.sessionManager POST:@"user/unfollow" parameters:@{ @"url" : TMFullyQualifiedBlogHost(blogName) } callback:callback];
 }
 
 - (NSURLSessionDataTask *)like:(NSString *)postID reblogKey:(NSString *)reblogKey callback:(TMAPICallback)callback {
@@ -132,20 +97,20 @@ NSString *fullBlogName(NSString *blogName);
 #pragma mark - Blog
 
 - (NSURLSessionDataTask *)avatar:(NSString *)blogName size:(NSInteger)size callback:(TMAPICallback)callback {
-    return [self.sessionManager GET:[blogPath(@"avatar", blogName) stringByAppendingFormat:@"/%d", size]
+    return [self.sessionManager GET:[TMBlogPath(@"avatar", blogName) stringByAppendingFormat:@"/%d", size]
                          parameters:nil callback:callback];
 }
 
 - (NSURLSessionDataTask *)blogInfo:(NSString *)blogName callback:(TMAPICallback)callback {
-    return [self.sessionManager GET:blogPath(@"info", blogName) parameters:nil callback:callback];
+    return [self.sessionManager GET:TMBlogPath(@"info", blogName) parameters:nil callback:callback];
 }
 
 - (NSURLSessionDataTask *)followers:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self.sessionManager GET:blogPath(@"followers", blogName) parameters:parameters callback:callback];
+    return [self.sessionManager GET:TMBlogPath(@"followers", blogName) parameters:parameters callback:callback];
 }
 
 - (NSURLSessionDataTask *)posts:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    NSString *path = blogPath(@"posts", blogName);
+    NSString *path = TMBlogPath(@"posts", blogName);
     
     if (type) {
         path = [path stringByAppendingFormat:@"/%@", type];
@@ -155,19 +120,19 @@ NSString *fullBlogName(NSString *blogName);
 }
 
 - (NSURLSessionDataTask *)queue:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self.sessionManager GET:blogPath(@"posts/queue", blogName) parameters:parameters callback:callback];
+    return [self.sessionManager GET:TMBlogPath(@"posts/queue", blogName) parameters:parameters callback:callback];
 }
 
 - (NSURLSessionDataTask *)drafts:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self.sessionManager GET:blogPath(@"posts/draft", blogName) parameters:parameters callback:callback];
+    return [self.sessionManager GET:TMBlogPath(@"posts/draft", blogName) parameters:parameters callback:callback];
 }
 
 - (NSURLSessionDataTask *)submissions:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self.sessionManager GET:blogPath(@"posts/submission", blogName) parameters:parameters callback:callback];
+    return [self.sessionManager GET:TMBlogPath(@"posts/submission", blogName) parameters:parameters callback:callback];
 }
 
 - (NSURLSessionDataTask *)likes:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self.sessionManager GET:blogPath(@"likes", blogName) parameters:parameters callback:callback];
+    return [self.sessionManager GET:TMBlogPath(@"likes", blogName) parameters:parameters callback:callback];
 }
 
 #pragma mark - Posting
@@ -176,7 +141,7 @@ NSString *fullBlogName(NSString *blogName);
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"type"] = type;
     
-    return [self.sessionManager POST:blogPath(@"post", blogName) parameters:mutableParameters callback:callback];
+    return [self.sessionManager POST:TMBlogPath(@"post", blogName) parameters:mutableParameters callback:callback];
 }
 
 - (NSURLSessionDataTask *)post:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
@@ -184,20 +149,19 @@ NSString *fullBlogName(NSString *blogName);
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"type"] = type;
     
-    return [self.sessionManager POST:blogPath(@"post", blogName) parameters:mutableParameters
-           constructingBodyWithBlock:block callback:callback];
+    return [self.sessionManager POST:TMBlogPath(@"post", blogName) parameters:mutableParameters constructingBodyWithBlock:block callback:callback];
 }
 
 - (NSURLSessionDataTask *)editPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self.sessionManager POST:blogPath(@"post/edit", blogName) parameters:parameters callback:callback];
+    return [self.sessionManager POST:TMBlogPath(@"post/edit", blogName) parameters:parameters callback:callback];
 }
 
 - (NSURLSessionDataTask *)reblogPost:(NSString *)blogName parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback {
-    return [self.sessionManager POST:blogPath(@"post/reblog", blogName) parameters:parameters callback:callback];
+    return [self.sessionManager POST:TMBlogPath(@"post/reblog", blogName) parameters:parameters callback:callback];
 }
 
 - (NSURLSessionDataTask *)deletePost:(NSString *)blogName id:(NSString *)postID callback:(TMAPICallback)callback {
-    return [self.sessionManager POST:blogPath(@"post/delete", blogName) parameters:@{ @"id": postID } callback:callback];
+    return [self.sessionManager POST:TMBlogPath(@"post/delete", blogName) parameters:@{ @"id": postID } callback:callback];
 }
 
 #pragma mark -  Posting (convenience)
@@ -228,8 +192,7 @@ NSString *fullBlogName(NSString *blogName);
             
             NSError *error = nil;
             
-            [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:fileName fileName:fileName
-                                   mimeType:contentType error:&error];
+            [formData appendPartWithFileURL:[NSURL URLWithString:filePath] name:@"photo" fileName:fileName mimeType:contentType error:&error];
         }];
     };
     
@@ -242,8 +205,7 @@ NSString *fullBlogName(NSString *blogName);
     void(^multipartConstructor)(id<AFMultipartFormData> formData) = ^(id<AFMultipartFormData> formData) {
         NSError *error = nil;
         
-        [formData appendPartWithFileURL:[NSURL URLWithString:filePathOrNil] name:fileNameOrNil fileName:fileNameOrNil
-                               mimeType:contentTypeOrNil error:&error];
+        [formData appendPartWithFileURL:[NSURL URLWithString:filePathOrNil] name:@"video" fileName:fileNameOrNil mimeType:contentTypeOrNil error:&error];
     };
     
     return [self post:blogName type:@"photo" parameters:parameters constructingBodyWithBlock:multipartConstructor callback:callback];
@@ -255,8 +217,7 @@ NSString *fullBlogName(NSString *blogName);
     void(^multipartConstructor)(id<AFMultipartFormData> formData) = ^(id<AFMultipartFormData> formData) {
         NSError *error = nil;
         
-        [formData appendPartWithFileURL:[NSURL URLWithString:filePathOrNil] name:fileNameOrNil fileName:fileNameOrNil
-                               mimeType:contentTypeOrNil error:&error];
+        [formData appendPartWithFileURL:[NSURL URLWithString:filePathOrNil] name:@"audio" fileName:fileNameOrNil mimeType:contentTypeOrNil error:&error];
     };
     
     return [self post:blogName type:@"audio" parameters:parameters constructingBodyWithBlock:multipartConstructor callback:callback];
@@ -273,11 +234,11 @@ NSString *fullBlogName(NSString *blogName);
 
 #pragma mark - Private
 
-NSString *blogPath(NSString *ext, NSString *blogName) {
-    return [NSString stringWithFormat:@"blog/%@/%@", fullBlogName(blogName), ext];
+static NSString *TMBlogPath(NSString *path, NSString *blogName) {
+    return [NSString stringWithFormat:@"blog/%@/%@", TMFullyQualifiedBlogHost(blogName), path];
 }
 
-NSString *fullBlogName(NSString *blogName) {
+static NSString *TMFullyQualifiedBlogHost(NSString *blogName) {
     if ([blogName rangeOfString:@"."].location == NSNotFound) {
         return blogName = [blogName stringByAppendingString:@".tumblr.com"];
     }

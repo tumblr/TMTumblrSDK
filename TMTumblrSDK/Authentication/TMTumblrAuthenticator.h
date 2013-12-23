@@ -13,10 +13,10 @@ typedef void (^TMAuthenticationCallback)(NSString *, NSString *, NSError *);
  */
 @interface TMTumblrAuthenticator : NSObject
 
-/// OAuth consumer key. Must be set prior to authenticating or making any API requests.
+/// OAuth consumer key. Must be set prior to authenticating.
 @property (nonatomic, copy) NSString *OAuthConsumerKey;
 
-/// OAuth consumer key. Must be set prior to authenticating or making any API requests.
+/// OAuth consumer key. Must be set prior to authenticating.
 @property (nonatomic, copy) NSString *OAuthConsumerSecret;
 
 + (TMTumblrAuthenticator *)sharedInstance;
