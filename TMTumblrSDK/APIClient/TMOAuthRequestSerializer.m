@@ -19,7 +19,7 @@
     
     NSString *authorizationHeaderValue = [TMOAuth headerForURL:[request URL]
                                                         method:[request HTTPMethod]
-                                                postParameters:parameters
+                                                    parameters:parameters
                                                          nonce:[[NSProcessInfo processInfo] globallyUniqueString]
                                                    consumerKey:[self.delegate OAuthConsumerKey]
                                                 consumerSecret:[self.delegate OAuthConsumerSecret]

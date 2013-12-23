@@ -185,9 +185,6 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
 }
 
-#pragma mark - NSObject
-
-
 #pragma mark - Helpers
 
 - (void)signRequest:(NSMutableURLRequest *)request withParameters:(NSDictionary *)parameters {
@@ -195,7 +192,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     
     [request setValue:[TMOAuth headerForURL:request.URL
                                      method:request.HTTPMethod
-                             postParameters:parameters
+                                 parameters:parameters
                                       nonce:[[NSProcessInfo processInfo] globallyUniqueString]
                                 consumerKey:self.OAuthConsumerKey
                              consumerSecret:self.OAuthConsumerSecret

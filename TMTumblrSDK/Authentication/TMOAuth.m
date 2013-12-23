@@ -15,8 +15,7 @@
 
 @interface TMOAuth()
 
-NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *queryParameters,
-                             NSDictionary *postParameters);
+NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *parameters);
 
 NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSecret);
 
@@ -29,34 +28,33 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
 
 @implementation TMOAuth
 
-+ (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
++ (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method parameters:(NSDictionary *)parameters
                      nonce:(NSString *)nonce consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
                      token:(NSString *)token tokenSecret:(NSString *)tokenSecret {
-    TMOAuth *auth = [[TMOAuth alloc] initWithURL:URL method:method postParameters:postParameters nonce:nonce
+    TMOAuth *auth = [[TMOAuth alloc] initWithURL:URL method:method parameters:parameters nonce:nonce
                                      consumerKey:consumerKey consumerSecret:consumerSecret token:token tokenSecret:tokenSecret];
     return auth.headerString;
 }
 
-- (id)initWithURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
+- (id)initWithURL:(NSURL *)URL method:(NSString *)method parameters:(NSDictionary *)parameters
             nonce:(NSString *)nonce consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
             token:(NSString *)token tokenSecret:(NSString *)tokenSecret {
     if (self = [super init]) {
         NSMutableDictionary *headerParameters = [[NSMutableDictionary alloc] initWithDictionary:@{
-                                                 @"oauth_timestamp" : UNIXTimestamp([NSDate date]),
-                                                 @"oauth_nonce" : nonce,
-                                                 @"oauth_version" : @"1.0",
-                                                 @"oauth_signature_method" : @"HMAC-SHA1",
-                                                 @"oauth_consumer_key" : consumerKey,
-                                                 }];
+            @"oauth_timestamp" : UNIXTimestamp([NSDate date]),
+            @"oauth_nonce" : nonce,
+            @"oauth_version" : @"1.0",
+            @"oauth_signature_method" : @"HMAC-SHA1",
+            @"oauth_consumer_key" : consumerKey,
+        }];
         
-        if (token && token.length > 0)
+        if (token && token.length > 0) {
             headerParameters[@"oauth_token"] = token;
-        
-        NSDictionary *queryParameters = TMQueryStringToDictionary(URL.query);
+        }
         
         NSString *baseURLString = [[URL absoluteString] componentsSeparatedByString:@"?"][0];
         
-        NSString *baseString = generateBaseString(baseURLString, method, headerParameters, queryParameters, postParameters);
+        NSString *baseString = generateBaseString(baseURLString, method, headerParameters, parameters);
         
         _baseString = baseString;
         
@@ -75,11 +73,9 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
 
 #pragma mark - Private
 
-NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *queryParameters,
-                             NSDictionary *postParameters) {
+NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *parameters) {
     NSMutableDictionary *signatureParameters = [NSMutableDictionary dictionaryWithDictionary:headers];
-    [signatureParameters addEntriesFromDictionary:queryParameters];
-    [signatureParameters addEntriesFromDictionary:postParameters];
+    [signatureParameters addEntriesFromDictionary:parameters];
     
     NSString *parameterString = TMDictionaryToQueryString(signatureParameters);
     

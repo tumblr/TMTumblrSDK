@@ -26,12 +26,12 @@
  @param token OAuth user token
  @param tokenSecret OAuth user secret
  */
-- (id)initWithURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
+- (id)initWithURL:(NSURL *)URL method:(NSString *)method parameters:(NSDictionary *)parameters
             nonce:(NSString *)nonce consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
             token:(NSString *)token tokenSecret:(NSString *)tokenSecret;
 
 /// Convenience method for generating an OAuth header string
-+ (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
++ (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method parameters:(NSDictionary *)parameters
                      nonce:(NSString *)nonce consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
                      token:(NSString *)token tokenSecret:(NSString *)tokenSecret;
 
