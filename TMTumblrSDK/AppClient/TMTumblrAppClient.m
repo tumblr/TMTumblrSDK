@@ -27,15 +27,27 @@
 }
 
 + (void)viewTag:(NSString *)tag {
-    [self performAction:@"tag" parameters:@{ @"tag" : tag }];
+    if (tag) {
+        [self performAction:@"tag" parameters:@{ @"tag" : tag }];
+    }
 }
 
 + (void)viewBlog:(NSString *)blogName {
-    [self performAction:@"blog" parameters:@{ @"blogName" : blogName }];
+    if (blogName) {
+        [self performAction:@"blog" parameters:@{ @"blogName" : blogName }];
+    }
 }
 
 + (void)viewPost:(NSString *)postID blogName:(NSString *)blogName {
-    [self performAction:@"blog" parameters:@{ @"blogName" : blogName, @"postID" : postID }];
+    if (blogName) {
+        NSMutableDictionary *params = [@{ @"blogName" : blogName } mutableCopy];
+        
+        if (postID) {
+            params[@"postID"] = postID;
+        }
+        
+        [self performAction:@"blog" parameters:params];
+    }
 }
 
 + (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags {
@@ -44,8 +56,21 @@
 
 + (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
                 cancel:(NSURL *)cancelURL {
-    [self performAction:@"text" parameters:@{ @"title" : title, @"body" : body, @"tags" : tags } success:successURL
-                 cancel:cancelURL];
+    NSMutableDictionary *params = [@{} mutableCopy];
+    
+    if (title) {
+        [params setValue:title forKey:@"title"];
+    }
+    
+    if (body) {
+        [params setValue:body forKey:@"body"];
+    }
+    
+    if (tags) {
+        [params setValue:tags forKey:@"tags"];
+    }
+    
+    [self performAction:@"text" parameters:params success:successURL cancel:cancelURL];
 }
 
 + (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags {
@@ -54,8 +79,21 @@
 
 + (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags success:(NSURL *)successURL
                  cancel:(NSURL *)cancelURL {
-    [self performAction:@"quote" parameters:@{ @"quote" : quote, @"source" : source, @"tags" : tags } success:successURL
-                 cancel:cancelURL];
+    NSMutableDictionary *params = [@{} mutableCopy];
+    
+    if (quote) {
+        [params setValue:quote forKey:@"quote"];
+    }
+    
+    if (source) {
+        [params setValue:source forKey:@"source"];
+    }
+    
+    if (tags) {
+        [params setValue:tags forKey:@"tags"];
+    }
+
+    [self performAction:@"quote" parameters:params success:successURL cancel:cancelURL];
 }
 
 + (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
@@ -65,9 +103,25 @@
 
 + (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
                   tags:(NSArray *)tags success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
-    [self performAction:@"link" parameters:@{ @"title" : title, @"url" : URLString, @"description" : description,
-     @"tags" : tags }
-                success:successURL cancel:cancelURL];
+    NSMutableDictionary *params = [@{} mutableCopy];
+    
+    if (title) {
+        [params setValue:title forKey:@"title"];
+    }
+    
+    if (URLString) {
+        [params setValue:URLString forKey:@"url"];
+    }
+
+    if (description) {
+        [params setValue:description forKey:@"description"];
+    }
+    
+    if (tags) {
+        [params setValue:tags forKey:@"tags"];
+    }
+    
+    [self performAction:@"link" parameters:params success:successURL cancel:cancelURL];
 }
 
 + (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags {
@@ -76,8 +130,21 @@
 
 + (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags  success:(NSURL *)successURL
                 cancel:(NSURL *)cancelURL {
-    [self performAction:@"chat" parameters:@{ @"title" : title, @"body" : body, @"tags" : tags } success:successURL
-                 cancel:cancelURL];
+    NSMutableDictionary *params = [@{} mutableCopy];
+    
+    if (title) {
+        [params setValue:title forKey:@"title"];
+    }
+
+    if (body) {
+        [params setValue:body forKey:@"body"];
+    }
+    
+    if (tags) {
+        [params setValue:tags forKey:@"tags"];
+    }
+    
+    [self performAction:@"chat" parameters:params success:successURL cancel:cancelURL];
 }
 
 #pragma mark - Private
@@ -87,22 +154,24 @@
 }
 
 + (void)performAction:(NSString *)action parameters:(NSDictionary *)parameters success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
-    if (![self isTumblrInstalled])
-        return;
-    
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    
-    mutableParameters[@"referrer"] = @"TMTumblrSDK";
-    
-    if (successURL || cancelURL) {
-        mutableParameters[@"x-success"] = [successURL absoluteString];
-        mutableParameters[@"x-cancel"] = [cancelURL absoluteString];
+    if ([self isTumblrInstalled]) {
+        NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+        
+        mutableParameters[@"referrer"] = @"TMTumblrSDK";
+        
+        if (successURL) {
+            mutableParameters[@"x-success"] = [successURL absoluteString];
+        }
+        
+        if (cancelURL) {
+            mutableParameters[@"x-cancel"] = [cancelURL absoluteString];
+        }
+        
+        NSString *URLString = [NSString stringWithFormat:@"tumblr://x-callback-url/%@?%@", action,
+                               TMDictionaryToQueryString(mutableParameters)];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
     }
-    
-    NSString *URLString = [NSString stringWithFormat:@"tumblr://x-callback-url/%@?%@", action,
-                           TMDictionaryToQueryString(mutableParameters)];
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
 }
 
 @end
