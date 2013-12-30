@@ -42,8 +42,6 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     return instance;
 }
 
-#ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
-
 - (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
     // Clear token secret in case authentication was previously started but not finished
     self.threeLeggedOAuthTokenSecret = nil;
@@ -76,7 +74,54 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
                               [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
                                responseParameters[@"oauth_token"]]];
             
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+            [[UIApplication sharedApplication] openURL:authURL];
+#else
             [[NSWorkspace sharedWorkspace] openURL:authURL];
+#endif
+            
+        } else {
+            if (callback) {
+                callback(nil, nil, errorWithStatusCode(statusCode));
+            }
+        }
+    };
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
+}
+
+- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(TMAuthenticationCallback)callback {
+    // Clear token secret in case authentication was previously started but not finished
+    self.threeLeggedOAuthTokenSecret = nil;
+    
+    NSString *tokenRequestURLString = [NSString stringWithFormat:@"https://www.tumblr.com/oauth/request_token?oauth_callback=%@",
+                                       TMURLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme])];
+
+    NSMutableURLRequest *request = mutableRequestWithURLString(tokenRequestURLString);
+    [[self class] signRequest:request withParameters:nil consumerKey:self.OAuthConsumerKey
+               consumerSecret:self.OAuthConsumerSecret token:nil tokenSecret:nil];
+
+    NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error) {
+            if (callback)
+                callback(nil, nil, error);
+            
+            return;
+        }
+        
+        int statusCode = ((NSHTTPURLResponse *)response).statusCode;
+        
+        if (statusCode == 200) {
+            self.threeLeggedOAuthCallback = callback;
+
+            NSDictionary *responseParameters = formEncodedDataToDictionary(data);
+            self.threeLeggedOAuthTokenSecret = responseParameters[@"oauth_token_secret"];
+            
+            NSURL *authURL = [NSURL URLWithString:
+                              [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
+                               responseParameters[@"oauth_token"]]];
+
+            [webView loadRequest:[NSURLRequest requestWithURL:authURL]];
             
         } else {
             if (callback) {
@@ -148,8 +193,6 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     
     return YES;
 }
-
-#endif
 
 - (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback {
     NSDictionary *requestParameters = @{

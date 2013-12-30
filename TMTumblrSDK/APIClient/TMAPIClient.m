@@ -38,7 +38,16 @@ NSString *fullBlogName(NSString *blogName);
 
 #pragma mark - Authentication
 
-#ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
+- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(void(^)(NSError *))callback {
+    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
+                                                 webView:webView
+                                                callback:^(NSString *token, NSString *secret, NSError *error) {
+                                                    self.OAuthToken = token;
+                                                    self.OAuthTokenSecret = secret;
+                                                    
+                                                    callback(error);
+                                                }];
+}
 
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))callback {
     [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
@@ -53,8 +62,6 @@ NSString *fullBlogName(NSString *blogName);
 - (BOOL)handleOpenURL:(NSURL *)url {
     return [[TMTumblrAuthenticator sharedInstance] handleOpenURL:url];
 }
-
-#endif
 
 - (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(void(^)(NSError *))callback {
     return [[TMTumblrAuthenticator sharedInstance] xAuth:emailAddress password:password
