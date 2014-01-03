@@ -40,11 +40,8 @@
 
 + (void)viewPost:(NSString *)postID blogName:(NSString *)blogName {
     if (blogName) {
-        NSMutableDictionary *params = [@{ @"blogName" : blogName } mutableCopy];
-        
-        if (postID) {
-            params[@"postID"] = postID;
-        }
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:@{ @"blogName" : blogName }];
+        [params setValue:postID forKey:@"postID"];
         
         [self performAction:@"blog" parameters:params];
     }
@@ -56,19 +53,10 @@
 
 + (void)createTextPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
                 cancel:(NSURL *)cancelURL {
-    NSMutableDictionary *params = [@{} mutableCopy];
-    
-    if (title) {
-        [params setValue:title forKey:@"title"];
-    }
-    
-    if (body) {
-        [params setValue:body forKey:@"body"];
-    }
-    
-    if (tags) {
-        [params setValue:tags forKey:@"tags"];
-    }
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:title forKey:@"title"];
+    [params setValue:body forKey:@"body"];
+    [params setValue:tags forKey:@"tags"];
     
     [self performAction:@"text" parameters:params success:successURL cancel:cancelURL];
 }
@@ -79,19 +67,10 @@
 
 + (void)createQuotePost:(NSString *)quote source:(NSString *)source tags:(NSArray *)tags success:(NSURL *)successURL
                  cancel:(NSURL *)cancelURL {
-    NSMutableDictionary *params = [@{} mutableCopy];
-    
-    if (quote) {
-        [params setValue:quote forKey:@"quote"];
-    }
-    
-    if (source) {
-        [params setValue:source forKey:@"source"];
-    }
-    
-    if (tags) {
-        [params setValue:tags forKey:@"tags"];
-    }
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:quote forKey:@"quote"];
+    [params setValue:source forKey:@"source"];
+    [params setValue:tags forKey:@"tags"];
 
     [self performAction:@"quote" parameters:params success:successURL cancel:cancelURL];
 }
@@ -103,23 +82,11 @@
 
 + (void)createLinkPost:(NSString *)title URLString:(NSString *)URLString description:(NSString *)description
                   tags:(NSArray *)tags success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
-    NSMutableDictionary *params = [@{} mutableCopy];
-    
-    if (title) {
-        [params setValue:title forKey:@"title"];
-    }
-    
-    if (URLString) {
-        [params setValue:URLString forKey:@"url"];
-    }
-
-    if (description) {
-        [params setValue:description forKey:@"description"];
-    }
-    
-    if (tags) {
-        [params setValue:tags forKey:@"tags"];
-    }
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:title forKey:@"title"];
+    [params setValue:URLString forKey:@"url"];
+    [params setValue:description forKey:@"description"];
+    [params setValue:tags forKey:@"tags"];
     
     [self performAction:@"link" parameters:params success:successURL cancel:cancelURL];
 }
@@ -130,19 +97,10 @@
 
 + (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags  success:(NSURL *)successURL
                 cancel:(NSURL *)cancelURL {
-    NSMutableDictionary *params = [@{} mutableCopy];
-    
-    if (title) {
-        [params setValue:title forKey:@"title"];
-    }
-
-    if (body) {
-        [params setValue:body forKey:@"body"];
-    }
-    
-    if (tags) {
-        [params setValue:tags forKey:@"tags"];
-    }
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:title forKey:@"title"];
+    [params setValue:body forKey:@"body"];
+    [params setValue:tags forKey:@"tags"];
     
     [self performAction:@"chat" parameters:params success:successURL cancel:cancelURL];
 }
@@ -155,17 +113,10 @@
 
 + (void)performAction:(NSString *)action parameters:(NSDictionary *)parameters success:(NSURL *)successURL cancel:(NSURL *)cancelURL {
     if ([self isTumblrInstalled]) {
-        NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-        
-        mutableParameters[@"referrer"] = @"TMTumblrSDK";
-        
-        if (successURL) {
-            mutableParameters[@"x-success"] = [successURL absoluteString];
-        }
-        
-        if (cancelURL) {
-            mutableParameters[@"x-cancel"] = [cancelURL absoluteString];
-        }
+        NSMutableDictionary *mutableParameters = [[NSMutableDictionary alloc] initWithDictionary:parameters];
+        [mutableParameters setValue:@"TMTumblrSDK" forKey:@"referrer"];
+        [mutableParameters setValue:[successURL absoluteString] forKey:@"x-success"];
+        [mutableParameters setValue:[cancelURL absoluteString] forKey:@"x-cancel"];
         
         NSString *URLString = [NSString stringWithFormat:@"tumblr://x-callback-url/%@?%@", action,
                                TMDictionaryToQueryString(mutableParameters)];
