@@ -28,10 +28,10 @@ NSString *URLWithPath(NSString *path);
 
 @implementation TMAPIClient
 
-+ (id)sharedInstance {
++ (instancetype)sharedInstance {
     static TMAPIClient *instance;
     static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{ instance = [[TMAPIClient alloc] init]; });
+    dispatch_once(&predicate, ^{ instance = [[self alloc] init]; });
     return instance;
 }
 

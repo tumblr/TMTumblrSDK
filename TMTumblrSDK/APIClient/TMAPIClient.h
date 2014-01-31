@@ -65,7 +65,7 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /** @name Singleton instance */
 
-+ (TMAPIClient *)sharedInstance;
++ (instancetype)sharedInstance;
 
 /** @name Sending raw requests */
 
