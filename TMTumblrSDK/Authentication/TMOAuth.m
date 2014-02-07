@@ -13,6 +13,14 @@
 #import <sys/sysctl.h>
 #import "TMSDKFunctions.h"
 
+#ifndef __IPHONE_7_0
+@interface NSData (NSDeprecated)
+// This method was retroactively made public as of iOS 7.
+// https://developer.apple.com/library/ios/documentation/cocoa/reference/foundation/Classes/NSData_Class/DeprecationAppendix/AppendixADeprecatedAPI.html#//apple_ref/doc/uid/20000172-SW39
+- (NSString *)base64Encoding;
+@end
+#endif
+
 @interface TMOAuth()
 
 NSString *generateBaseString(NSString *baseURL, NSString *method, NSDictionary *headers, NSDictionary *queryParameters,
@@ -90,7 +98,13 @@ NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSe
     NSString *keyString = [NSString stringWithFormat:@"%@&%@", consumerSecret, tokenSecret ? tokenSecret : @""];
     
     NSData *hashedData = HMACSHA1(baseString, keyString);
-    NSString *base64EncodedString = [hashedData base64EncodedStringWithOptions:0];
+    NSString *base64EncodedString = nil;
+	
+    if ([hashedData respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
+        base64EncodedString = [hashedData base64EncodedStringWithOptions:0];
+    } else {
+        base64EncodedString = [hashedData base64Encoding];
+    }
     
     return base64EncodedString;
 }
