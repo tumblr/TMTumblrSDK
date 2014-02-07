@@ -264,6 +264,9 @@ interaction controller to an `NSDictionary` containing a `TumblrCaption`
 key, mapped to your caption (an `NSString`). To include tags, add a 
 `TumblrTags` key to the dictionary, mapped an an `NSArray` of `NSStrings`.
 
+If you want *only* the Tumblr app to show up in a document interaction controller,
+you can specify the file extension `tumblrphoto` and custom UTI `com.tumblr.photo`.
+
 ### UIActivityViewController
 
 The SDK includes a [UIActivity subclass](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h) 
