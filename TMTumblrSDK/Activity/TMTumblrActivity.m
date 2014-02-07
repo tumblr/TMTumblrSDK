@@ -26,4 +26,10 @@
 	return [UIImage imageNamed:@"UIActivityTumblr"];
 }
 
+#ifdef __IPHONE_7_0
+- (UIActivityCategory)activityCategory {
+    return UIActivityCategoryShare;
+}
+#endif
+
 @end
