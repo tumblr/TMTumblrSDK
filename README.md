@@ -216,8 +216,9 @@ user has it installed. Only a few basic endpoints are supported for now but more
 will be added in the near future:
 
 ``` objectivec
-if (![TMTumblrAppClient isTumblrInstalled])
+if (![TMTumblrAppClient isTumblrInstalled]) {
     [TMTumblrAppClient viewInAppStore];
+}
 
 [TMTumblrAppClient viewDashboard];
 
