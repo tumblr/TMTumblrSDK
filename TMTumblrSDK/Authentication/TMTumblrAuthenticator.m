@@ -21,13 +21,12 @@ typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSEr
 
 @interface TMTumblrAuthenticator()
 
-@property (nonatomic, copy) TMAuthenticationCallback authCallback;
-@property (nonatomic, copy) NSString *OAuthToken;
-@property (nonatomic, copy) NSString *OAuthTokenSecret;
+@property (nonatomic, copy) TMAuthenticationCallback threeLeggedOAuthCallback;
+@property (nonatomic, copy) NSString *threeLeggedOAuthTokenSecret;
 
 NSMutableURLRequest *mutableRequestWithURLString(NSString *URLString);
 
-NSError *errorWithStatusCode(int statusCode);
+NSError *errorWithStatusCode(NSInteger statusCode);
 
 NSDictionary *formEncodedDataToDictionary(NSData *data);
 
@@ -44,29 +43,31 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
 
 - (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
     // Clear token secret in case authentication was previously started but not finished
-    self.OAuthTokenSecret = nil;
+    self.threeLeggedOAuthTokenSecret = nil;
     
     NSString *tokenRequestURLString = [NSString stringWithFormat:@"http://www.tumblr.com/oauth/request_token?oauth_callback=%@",
                                        TMURLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme])];
     
     NSMutableURLRequest *request = mutableRequestWithURLString(tokenRequestURLString);
-    [self signRequest:request withParameters:nil];
+    [[self class] signRequest:request withParameters:nil consumerKey:self.OAuthConsumerKey
+               consumerSecret:self.OAuthConsumerSecret token:nil tokenSecret:nil];
     
     NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
         if (error) {
-            if (callback)
+            if (callback) {
                 callback(nil, nil, error);
+            }
             
             return;
         }
         
-        int statusCode = ((NSHTTPURLResponse *)response).statusCode;
+        NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
         
         if (statusCode == 200) {
-            self.authCallback = callback;
+            self.threeLeggedOAuthCallback = callback;
             
             NSDictionary *responseParameters = formEncodedDataToDictionary(data);
-            self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
+            self.threeLeggedOAuthTokenSecret = responseParameters[@"oauth_token_secret"];
             
             NSURL *authURL = [NSURL URLWithString:
                               [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
@@ -79,8 +80,9 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
 #endif
 
         } else {
-            if (callback)
+            if (callback) {
                 callback(nil, nil, errorWithStatusCode(statusCode));
+            }
         }
     };
     
@@ -88,51 +90,54 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-    if (![url.host isEqualToString:@"tumblr-authorize"])
+    if (![url.host isEqualToString:@"tumblr-authorize"]) {
         return NO;
+    }
     
     void(^clearState)() = ^ {
-        self.OAuthToken = nil;
-        self.OAuthTokenSecret = nil;
-        self.authCallback = nil;
+        self.threeLeggedOAuthTokenSecret = nil;
+        self.threeLeggedOAuthCallback = nil;
     };
     
     NSDictionary *URLParameters = TMQueryStringToDictionary(url.query);
     
     if ([[URLParameters allKeys] count] == 0) {
-        if (self.authCallback)
-            self.authCallback(nil, nil, [NSError errorWithDomain:@"Permission denied by user" code:0 userInfo:nil]);
+        if (self.threeLeggedOAuthCallback) {
+            self.threeLeggedOAuthCallback(nil, nil, [NSError errorWithDomain:@"Permission denied by user" code:0 userInfo:nil]);
+        }
         
         clearState();
         
         return NO;
     }
     
-    self.OAuthToken = URLParameters[@"oauth_token"];
+    NSString *OAuthToken = URLParameters[@"oauth_token"];
     
     NSDictionary *requestParameters = @{ @"oauth_verifier" : URLParameters[@"oauth_verifier"] };
     
     NSMutableURLRequest *request = mutableRequestWithURLString(@"https://www.tumblr.com/oauth/access_token");
     request.HTTPMethod = @"POST";
     request.HTTPBody = [TMDictionaryToQueryString(requestParameters) dataUsingEncoding:NSUTF8StringEncoding];
-    [self signRequest:request withParameters:requestParameters];
+    
+    [[self class] signRequest:request withParameters:requestParameters consumerKey:self.OAuthConsumerKey
+               consumerSecret:self.OAuthConsumerSecret token:OAuthToken tokenSecret:self.threeLeggedOAuthTokenSecret];
     
     NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
         if (error) {
-            if (self.authCallback)
-                self.authCallback(nil, nil, error);
-            
+            if (self.threeLeggedOAuthCallback) {
+                self.threeLeggedOAuthCallback(nil, nil, error);
+            }
         } else {
-            int statusCode = ((NSHTTPURLResponse *)response).statusCode;
+            NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
             
-            if (self.authCallback) {
+            if (self.threeLeggedOAuthCallback) {
                 if (statusCode == 200) {
                     NSDictionary *responseParameters = formEncodedDataToDictionary(data);
                     
-                    self.authCallback(responseParameters[@"oauth_token"], responseParameters[@"oauth_token_secret"], nil);
+                    self.threeLeggedOAuthCallback(responseParameters[@"oauth_token"], responseParameters[@"oauth_token_secret"], nil);
                     
                 } else {
-                    self.authCallback(nil, nil, errorWithStatusCode(statusCode));
+                    self.threeLeggedOAuthCallback(nil, nil, errorWithStatusCode(statusCode));
                 }
             }
         }
@@ -156,29 +161,32 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     NSMutableURLRequest *request = mutableRequestWithURLString(@"https://www.tumblr.com/oauth/access_token");
     request.HTTPMethod = @"POST";
     request.HTTPBody = [TMDictionaryToQueryString(requestParameters) dataUsingEncoding:NSUTF8StringEncoding];
-    [self signRequest:request withParameters:requestParameters];
+    
+    [[self class] signRequest:request withParameters:requestParameters consumerKey:self.OAuthConsumerKey
+               consumerSecret:self.OAuthConsumerSecret token:nil tokenSecret:nil];
 
     NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
         if (error) {
-            if (callback)
+            if (callback) {
                 callback(nil, nil, error);
+            }
             
             return;
         }
         
-        int statusCode = ((NSHTTPURLResponse *)response).statusCode;
+        NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
         
         if (statusCode == 200) {
             NSDictionary *responseParameters = formEncodedDataToDictionary(data);
-            self.OAuthToken = responseParameters[@"oauth_token"];
-            self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
-            
-            if (callback)
-                callback(self.OAuthToken, self.OAuthTokenSecret, nil);
+
+            if (callback) {
+                callback(responseParameters[@"oauth_token"], responseParameters[@"oauth_token_secret"], nil);
+            }
             
         } else {
-            if (callback)
+            if (callback) {
                 callback(nil, nil, errorWithStatusCode(statusCode));
+            }
         }
     };
     
@@ -190,24 +198,29 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
 
 #pragma mark - Helpers
 
-- (void)signRequest:(NSMutableURLRequest *)request withParameters:(NSDictionary *)parameters {
++ (void)signRequest:(NSMutableURLRequest *)request
+     withParameters:(NSDictionary *)parameters
+        consumerKey:(NSString *)consumerKey
+     consumerSecret:(NSString *)consumerSecret
+              token:(NSString *)OAuthToken
+        tokenSecret:(NSString *)OAuthTokenSecret {
     [request setValue:@"TMTumblrSDK" forHTTPHeaderField:@"User-Agent"];
     
     [request setValue:[TMOAuth headerForURL:request.URL
                                      method:request.HTTPMethod
                              postParameters:parameters
                                       nonce:[[NSProcessInfo processInfo] globallyUniqueString]
-                                consumerKey:self.OAuthConsumerKey
-                             consumerSecret:self.OAuthConsumerSecret
-                                      token:self.OAuthToken
-                                tokenSecret:self.OAuthTokenSecret] forHTTPHeaderField:@"Authorization"];
+                                consumerKey:consumerKey
+                             consumerSecret:consumerSecret
+                                      token:OAuthToken
+                                tokenSecret:OAuthTokenSecret] forHTTPHeaderField:@"Authorization"];
 }
 
 NSMutableURLRequest *mutableRequestWithURLString(NSString *URLString) {
     return [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URLString]];
 }
 
-NSError *errorWithStatusCode(int statusCode) {
+NSError *errorWithStatusCode(NSInteger statusCode) {
     return [NSError errorWithDomain:@"Authentication request failed" code:statusCode userInfo:nil];
 }
 

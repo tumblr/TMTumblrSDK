@@ -19,7 +19,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tumblr_auth_example</string>
+				<string>tumblrauthexample</string>
 			</array>
 		</dict>
 	</array>
