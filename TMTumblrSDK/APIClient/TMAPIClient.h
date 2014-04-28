@@ -162,14 +162,14 @@ typedef void (^TMAPICallback)(id, NSError *error);
 /** @name Blog */
 
 /// Get the avatar for a blog
-- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback;
+- (void)avatar:(NSString *)blogName size:(NSUInteger)size callback:(TMAPICallback)callback;
 
 /**
  Get the avatar for a blog.
  
  @param queue Queue to execute the callback block on.
  */
-- (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
+- (void)avatar:(NSString *)blogName size:(NSUInteger)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
 
 /// Get information about a blog
 - (JXHTTPOperation *)blogInfoRequest:(NSString *)blogName;
