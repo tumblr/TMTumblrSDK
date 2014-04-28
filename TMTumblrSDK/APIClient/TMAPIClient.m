@@ -145,12 +145,12 @@ NSString *URLWithPath(NSString *path);
 
 #pragma mark - Blog
 
-- (void)avatar:(NSString *)blogName size:(int)size callback:(TMAPICallback)callback {
+- (void)avatar:(NSString *)blogName size:(NSUInteger)size callback:(TMAPICallback)callback {
     [self avatar:blogName size:size queue:self.defaultCallbackQueue callback:callback];
 }
 
-- (void)avatar:(NSString *)blogName size:(int)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
-    JXHTTPOperation *request = [self getRequestWithPath:[blogPath(@"avatar", blogName) stringByAppendingFormat:@"/%d", size]
+- (void)avatar:(NSString *)blogName size:(NSUInteger)size queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback {
+    JXHTTPOperation *request = [self getRequestWithPath:[blogPath(@"avatar", blogName) stringByAppendingFormat:@"/%ld", (long)size]
                                              parameters:nil];
     
     if (callback) {
