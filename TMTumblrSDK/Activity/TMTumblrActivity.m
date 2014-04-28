@@ -27,7 +27,7 @@
 }
 
 #ifdef __IPHONE_7_0
-- (UIActivityCategory)activityCategory {
++ (UIActivityCategory)activityCategory {
     return UIActivityCategoryShare;
 }
 #endif
