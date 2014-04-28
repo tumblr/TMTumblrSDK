@@ -19,9 +19,9 @@
     NSDictionary *dictionary = TMQueryStringToDictionary([NSString stringWithFormat:@"title=%@&body=%@",
                                                           TMURLEncode(title), TMURLEncode(body)]);
     
-    STAssertTrue([[dictionary allKeys] count] == 2, @"Incorrect number of dictionary keys");
-    STAssertEqualObjects(dictionary[@"title"], title, @"Title parameter is incorrect");
-    STAssertEqualObjects(dictionary[@"body"], body, @"Body parameter is incorrect");
+    XCTAssertTrue([[dictionary allKeys] count] == 2, @"Incorrect number of dictionary keys");
+    XCTAssertEqualObjects(dictionary[@"title"], title, @"Title parameter is incorrect");
+    XCTAssertEqualObjects(dictionary[@"body"], body, @"Body parameter is incorrect");
 }
 
 - (void)testQueryToDictionaryWithRepeatedParameter {
@@ -36,9 +36,9 @@
 
     NSArray *tags = @[tag1, tag2, tag3];
     
-    STAssertTrue([[dictionary allKeys] count] == 2, @"Incorrect number of dictionary keys");
-    STAssertEqualObjects(dictionary[@"title"], title, @"Title parameter is incorrect");
-    STAssertEqualObjects(dictionary[@"tag"], tags, @"Tag parameter is incorrect");
+    XCTAssertTrue([[dictionary allKeys] count] == 2, @"Incorrect number of dictionary keys");
+    XCTAssertEqualObjects(dictionary[@"title"], title, @"Title parameter is incorrect");
+    XCTAssertEqualObjects(dictionary[@"tag"], tags, @"Tag parameter is incorrect");
 }
 
 - (void)testDictionaryToQueryWithTwoParameters {
@@ -47,7 +47,7 @@
     
     NSString *result = [NSString stringWithFormat:@"body=%@&title=%@", TMURLEncode(body), TMURLEncode(title)];
     
-    STAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"body" : body }), result,
+    XCTAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"body" : body }), result,
                          @"Incorrect query string");
 }
 
@@ -58,7 +58,7 @@
     NSString *result = [NSString stringWithFormat:@"tag=%@&tag=%@&tag=%@&title=%@", TMURLEncode(tags[0]),
                         TMURLEncode(tags[1]), TMURLEncode(tags[2]), TMURLEncode(title)];
     
-    STAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"tag" : tags }), result,
+    XCTAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"tag" : tags }), result,
                          @"Incorrect query string with repeated parameter");
 }
 

@@ -18,7 +18,6 @@
 		93A3902616FCE5C80045183F /* TMTumblrActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A3902116FCE5C80045183F /* TMTumblrActivity.m */; };
 		93BAE9501709328B00E7E490 /* TMSDKFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BAE94F1709328B00E7E490 /* TMSDKFunctions.m */; };
 		93E52A74168BB43700E5471A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A73168BB43700E5471A /* Foundation.framework */; };
-		93E52A83168BB43700E5471A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A82168BB43700E5471A /* SenTestingKit.framework */; };
 		93E52A85168BB43700E5471A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A84168BB43700E5471A /* UIKit.framework */; };
 		93E52A86168BB43700E5471A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A73168BB43700E5471A /* Foundation.framework */; };
 		93E52A89168BB43700E5471A /* libTMTumblrSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E52A70168BB43700E5471A /* libTMTumblrSDK.a */; };
@@ -78,8 +77,7 @@
 		93E52A70168BB43700E5471A /* libTMTumblrSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTMTumblrSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E52A73168BB43700E5471A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93E52A77168BB43700E5471A /* TMTumblrSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TMTumblrSDK-Prefix.pch"; sourceTree = "<group>"; };
-		93E52A81168BB43700E5471A /* TMTumblrSDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMTumblrSDKTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		93E52A82168BB43700E5471A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		93E52A81168BB43700E5471A /* TMTumblrSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMTumblrSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E52A84168BB43700E5471A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		93E52A8C168BB43700E5471A /* TMTumblrSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TMTumblrSDKTests-Info.plist"; sourceTree = "<group>"; };
 		93F8E38416F921BE004CA7D5 /* TMTumblrAppClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTumblrAppClient.h; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				491CDDF916FA0B6700C657BF /* libPods-test.a in Frameworks */,
-				93E52A83168BB43700E5471A /* SenTestingKit.framework in Frameworks */,
 				93E52A85168BB43700E5471A /* UIKit.framework in Frameworks */,
 				93E52A86168BB43700E5471A /* Foundation.framework in Frameworks */,
 				93E52A89168BB43700E5471A /* libTMTumblrSDK.a in Frameworks */,
@@ -189,7 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				93E52A70168BB43700E5471A /* libTMTumblrSDK.a */,
-				93E52A81168BB43700E5471A /* TMTumblrSDKTests.octest */,
+				93E52A81168BB43700E5471A /* TMTumblrSDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,7 +195,6 @@
 			isa = PBXGroup;
 			children = (
 				93E52A73168BB43700E5471A /* Foundation.framework */,
-				93E52A82168BB43700E5471A /* SenTestingKit.framework */,
 				93E52A84168BB43700E5471A /* UIKit.framework */,
 				491CDDF816FA0B6700C657BF /* libPods-test.a */,
 				4027A38887244210991EA792 /* libPods.a */,
@@ -303,8 +299,8 @@
 			);
 			name = TMTumblrSDKTests;
 			productName = TumblrSDKTests;
-			productReference = 93E52A81168BB43700E5471A /* TMTumblrSDKTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 93E52A81168BB43700E5471A /* TMTumblrSDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -312,6 +308,7 @@
 		93E52A67168BB43600E5471A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Tumblr;
 			};
@@ -500,6 +497,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTumblrSDK/TMTumblrSDK-Prefix.pch";
@@ -513,7 +511,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = TMTumblrSDKTests;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -524,6 +521,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTumblrSDK/TMTumblrSDK-Prefix.pch";
@@ -536,7 +534,6 @@
 				INFOPLIST_FILE = "TMTumblrSDKTests/TMTumblrSDKTests-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = TMTumblrSDKTests;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

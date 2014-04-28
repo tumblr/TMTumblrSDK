@@ -9,10 +9,10 @@
 #import <OCMock/OCMock.h>
 #import <OCMock/OCMockObject.h>
 #import <OCMock/OCMArg.h>
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "TMAPIClient.h"
 
-@interface TMAPIClientUnitTest : SenTestCase
+@interface TMAPIClientUnitTest : XCTestCase
 
 @property(nonatomic, retain) TMAPIClient *client;
 

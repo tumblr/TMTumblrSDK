@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface TMSDKFunctionsTest : SenTestCase
+@interface TMSDKFunctionsTest : XCTestCase
 
 @end
