@@ -45,7 +45,7 @@
     }] sendRequest:[OCMArg isNotNil] callback:[OCMArg any]];
     // And then make the call and make sure we receive the proper data
     TMAPICallback check = ^(NSDictionary *data, NSError *error) {
-        STAssertEquals(data, expectation, @"unexpected response");
+        XCTAssertEqual(data, expectation, @"unexpected response");
     };
     action(mClient, check);
     // Chill
@@ -85,19 +85,19 @@
 
 - (void) assertBody:(JXHTTPOperation*)op is:(NSDictionary*)expected {
     JXHTTPFormEncodedBody *body = (JXHTTPFormEncodedBody *) [op requestBody];
-    STAssertEqualObjects([body dictionary], expected, @"wrong url");
+    XCTAssertEqualObjects([body dictionary], expected, @"wrong url");
 }
 
 - (void) assertQuery:(JXHTTPOperation*)op is:(NSString*)expected {
-    STAssertEqualObjects([[[op request] URL] query], expected, @"wrong request query");
+    XCTAssertEqualObjects([[[op request] URL] query], expected, @"wrong request query");
 }
 
 -(void) assertPath:(JXHTTPOperation*)op is:(NSString*)expected {
-    STAssertEqualObjects([[[op request] URL] path], expected, @"wrong request path");
+    XCTAssertEqualObjects([[[op request] URL] path], expected, @"wrong request path");
 }
 
 -(void) assertMethod:(JXHTTPOperation*)op is:(NSString*)expected {
-    STAssertEqualObjects([op requestMethod], expected, @"wrong request method");
+    XCTAssertEqualObjects([op requestMethod], expected, @"wrong request method");
 }
 
 @end
