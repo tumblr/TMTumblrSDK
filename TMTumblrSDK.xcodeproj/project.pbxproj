@@ -13,6 +13,8 @@
 		499CAE7016FA314900D2975E /* TMAPIClientBlogTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE6F16FA314900D2975E /* TMAPIClientBlogTest.m */; };
 		499CAE7316FA320B00D2975E /* TMAPIClientPostTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE7216FA320B00D2975E /* TMAPIClientPostTest.m */; };
 		499CAE7616FA327700D2975E /* TMAPIClientTagTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 499CAE7516FA327700D2975E /* TMAPIClientTagTest.m */; };
+		930D050B192162C3006D75CA /* TMHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D050A192162C3006D75CA /* TMHTTPSessionManager.m */; };
+		930D050F192164CF006D75CA /* TMHTTPRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D050E192164CF006D75CA /* TMHTTPRequestSerializer.m */; };
 		9330592E16F9281500868C9C /* TMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9330592D16F9281500868C9C /* TMAPIClient.m */; };
 		938272D517093B600025FA5C /* TMSDKFunctionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 938272CE170934FE0025FA5C /* TMSDKFunctionsTest.m */; };
 		93A3902616FCE5C80045183F /* TMTumblrActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A3902116FCE5C80045183F /* TMTumblrActivity.m */; };
@@ -62,6 +64,11 @@
 		499CAE7216FA320B00D2975E /* TMAPIClientPostTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientPostTest.m; sourceTree = "<group>"; };
 		499CAE7416FA327700D2975E /* TMAPIClientTagTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClientTagTest.h; sourceTree = "<group>"; };
 		499CAE7516FA327700D2975E /* TMAPIClientTagTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientTagTest.m; sourceTree = "<group>"; };
+		930D0509192162C3006D75CA /* TMHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMHTTPSessionManager.h; sourceTree = "<group>"; };
+		930D050A192162C3006D75CA /* TMHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHTTPSessionManager.m; sourceTree = "<group>"; };
+		930D050C1921641A006D75CA /* TMAPIBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMAPIBlocks.h; sourceTree = "<group>"; };
+		930D050D192164CF006D75CA /* TMHTTPRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMHTTPRequestSerializer.h; sourceTree = "<group>"; };
+		930D050E192164CF006D75CA /* TMHTTPRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHTTPRequestSerializer.m; sourceTree = "<group>"; };
 		9330592C16F9281500868C9C /* TMAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAPIClient.h; sourceTree = "<group>"; };
 		9330592D16F9281500868C9C /* TMAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClient.m; sourceTree = "<group>"; };
 		938272CD170934FE0025FA5C /* TMSDKFunctionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMSDKFunctionsTest.h; sourceTree = "<group>"; };
@@ -118,6 +125,11 @@
 			children = (
 				9330592C16F9281500868C9C /* TMAPIClient.h */,
 				9330592D16F9281500868C9C /* TMAPIClient.m */,
+				930D050D192164CF006D75CA /* TMHTTPRequestSerializer.h */,
+				930D050E192164CF006D75CA /* TMHTTPRequestSerializer.m */,
+				930D0509192162C3006D75CA /* TMHTTPSessionManager.h */,
+				930D050A192162C3006D75CA /* TMHTTPSessionManager.m */,
+				930D050C1921641A006D75CA /* TMAPIBlocks.h */,
 			);
 			name = "API Client";
 			path = APIClient;
@@ -377,8 +389,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930D050F192164CF006D75CA /* TMHTTPRequestSerializer.m in Sources */,
 				93F8E38B16F921BE004CA7D5 /* TMTumblrAppClient.m in Sources */,
 				93F8E39016F921C6004CA7D5 /* TMOAuth.m in Sources */,
+				930D050B192162C3006D75CA /* TMHTTPSessionManager.m in Sources */,
 				93F8E39116F921C6004CA7D5 /* TMTumblrAuthenticator.m in Sources */,
 				9330592E16F9281500868C9C /* TMAPIClient.m in Sources */,
 				93A3902616FCE5C80045183F /* TMTumblrActivity.m in Sources */,

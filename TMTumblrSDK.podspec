@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'Apache 2.0', :file => 'LICENSE' }
   s.source       = { :git => 'https://github.com/tumblr/TMTumblrSDK.git', :tag => "#{s.version}" }
   s.requires_arc = true
-  s.ios.deployment_target = '5.0'
+  s.ios.deployment_target = '6.0'
   s.osx.deployment_target = '10.7'
   s.frameworks   = 'Foundation'
   s.ios.weak_frameworks   = 'UIKit'
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'APIClient' do |ss|
     ss.source_files = 'TMTumblrSDK/APIClient'
-    ss.dependency   'JXHTTP', '1.0.0'
+    ss.dependency   'AFNetworking'
 
     ss.subspec 'Authentication' do |sss|
       sss.source_files = 'TMTumblrSDK/Authentication'
