@@ -37,6 +37,17 @@ NSString *URLWithPath(NSString *path);
 
 #pragma mark - Authentication
 
+- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(void(^)(NSError *))callback {
+    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
+                                                 webView:webView
+                                                callback:^(NSString *token, NSString *secret, NSError *error) {
+                                                    self.OAuthToken = token;
+                                                    self.OAuthTokenSecret = secret;
+                                                    
+                                                    callback(error);
+                                                }];
+}
+
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))callback {
     [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
                                                 callback:^(NSString *token, NSString *secret, NSError *error) {
