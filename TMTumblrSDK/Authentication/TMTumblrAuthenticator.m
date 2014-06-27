@@ -12,9 +12,10 @@
 #import "TMSDKFunctions.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <UIKit/UIKit.h>
+    #import <UIKit/UIKit.h>
 #else
-#import <AppKit/AppKit.h>
+    #import <AppKit/AppKit.h>
+    #import <WebKit/WebKit.h>
 #endif
 
 typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSError *);
@@ -89,7 +90,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
 }
 
-- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(TMAuthenticationCallback)callback {
+- (void)authenticate:(NSString *)URLScheme webView:(TMWebView *)webView callback:(TMAuthenticationCallback)callback {
     // Clear token secret in case authentication was previously started but not finished
     self.threeLeggedOAuthTokenSecret = nil;
     
@@ -120,8 +121,12 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
                               [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
                                responseParameters[@"oauth_token"]]];
             
+        #if __IPHONE_OS_VERSION_MIN_REQUIRED
             [webView loadRequest:[NSURLRequest requestWithURL:authURL]];
-            
+        #else
+            [webView.mainFrame loadRequest:[NSURLRequest requestWithURL:authURL]];
+        #endif
+
         } else {
             if (callback)
                 callback(nil, nil, errorWithStatusCode(statusCode));

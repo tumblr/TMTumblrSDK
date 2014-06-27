@@ -6,6 +6,14 @@
 //  Copyright (c) 2012 Tumblr. All rights reserved.
 //
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+    @class UIWebView;
+    #define TMWebView UIWebView
+#else
+    @class WebView;
+    #define TMWebView WebView
+#endif
+
 typedef void (^TMAuthenticationCallback)(NSString *, NSString *, NSError *);
 
 /**
@@ -32,7 +40,7 @@ typedef void (^TMAuthenticationCallback)(NSString *, NSString *, NSError *);
 - (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback;
 
 /**
- Authenticate via three-legged OAuth with a given UIWebView.
+ Authenticate via three-legged OAuth with a given NSWebView/UIWebView.
  
  Your `TMTumblrAuthenticator` instance's `handleOpenURL:` method must also be called from your `UIApplicationDelegate`'s
  `application:openURL:sourceApplication:annotation:` method in order to receive the tokens.
@@ -41,7 +49,7 @@ typedef void (^TMAuthenticationCallback)(NSString *, NSString *, NSError *);
  
  @param webView a UIWebView to open the authentication site in.
  */
-- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(TMAuthenticationCallback)callback;
+- (void)authenticate:(NSString *)URLScheme webView:(TMWebView *)webView callback:(TMAuthenticationCallback)callback;
 
 /**
  Authenticate via three-legged OAuth. This should be called from your `UIApplicationDelegate`'s

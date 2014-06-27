@@ -8,6 +8,14 @@
 
 #import "JXHTTP.h"
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+    @class UIWebView;
+    #define TMWebView UIWebView
+#else
+    @class WebView;
+    #define TMWebView WebView
+#endif
+
 typedef void (^TMAPICallback)(id, NSError *error);
 
 /**
@@ -106,7 +114,7 @@ typedef void (^TMAPICallback)(id, NSError *error);
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))error;
 
 /**
- Authenticate via three-legged OAuth using a given UIWebView
+ Authenticate via three-legged OAuth using a given NSWebView/UIWebView
  
  Your `TMAPIClient` instance's `handleOpenURL:` method must also be called from your `UIApplicationDelegate`'s
  `application:openURL:sourceApplication:annotation:` method in order to receive the tokens.
@@ -118,7 +126,7 @@ typedef void (^TMAPICallback)(id, NSError *error);
  
  @param webView a UIWebView to open the authentication site in.
  */
-- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(void(^)(NSError *))error;
+- (void)authenticate:(NSString *)URLScheme webView:(TMWebView *)webView callback:(void(^)(NSError *))error;
 
 /**
  Authenticate via three-legged OAuth. This should be called from your `UIApplicationDelegate`'s
