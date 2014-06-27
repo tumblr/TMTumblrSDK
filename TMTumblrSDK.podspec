@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = 'TMTumblrSDK'
-  s.version      = '1.0.8'
+  s.version      = '1.0.9-oe'
   s.summary      = 'An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application.'
   s.author       = { 'Bryan Irace' => 'bryan@tumblr.com' }
   s.homepage     = 'http://tumblr.github.com/TMTumblrSDK'
   s.license      = { :type => 'Apache 2.0', :file => 'LICENSE' }
-  s.source       = { :git => 'https://github.com/tumblr/TMTumblrSDK.git', :tag => "#{s.version}" }
+  s.source       = { :git => 'https://github.com/obviousengineering/TMTumblrSDK.git', :tag => "#{s.version}" }
   s.requires_arc = true
   s.ios.deployment_target = '5.0'
   s.osx.deployment_target = '10.7'
