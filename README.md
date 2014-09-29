@@ -255,7 +255,27 @@ tumblr://x-callback-url/chat?title=Title&body=Body&tags=gif&tags=lol
 If you don't want to use this SDK and would rather hit these URLs directly, please go
 right ahead.
 
+### Share extension
+
+As of iOS 8, Tumblr for iOS ships with a share extension. It currently supports the following input types:
+
+* Text
+* Images (maximum: 10)
+* Video (maximum: 1)
+* URL (maximum: 1)
+
+If you need to uniquely identify the Tumblr share extension (e.g. to provide different inputs than you’re passing 
+to other extensions), you can do so using the bundle identifier **`com.tumblr.tumblr.Share-With-Tumblr`**
+
+In the future, we hope to document specific ways for apps to pass parameters to be used for creating the different 
+Tumblr post types, but we’d need to figure out a good way to do so that [won’t interfere with other share
+extensions that could also potentially be displayed](https://github.com/tumblr/ios-extension-issues/issues/5).
+
 ### UIDocumentInteractionController
+
+***Note:* As of iOS 8, it’s preferable to just allow your users to use our share extension instead. 
+`UIDocumentInteractionController` support is still being maintained as of 9/29/2015, but may be discontinued in the 
+future.**
 
 Photos and videos can be passed to Tumblr for iOS using Apple's
 standard [UIDocumentInteractionController](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
@@ -269,6 +289,8 @@ If you want *only* the Tumblr app to show up in a document interaction controlle
 you can specify the file extension `tumblrphoto` and custom UTI `com.tumblr.photo`.
 
 ### UIActivityViewController
+
+***Note:* As of iOS 8, it’s preferable to just allow your users to use our share extension instead.*
 
 The SDK includes a [UIActivity subclass](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h) 
 for including Tumblr in a standard `UIActivityViewController`. It currently 
