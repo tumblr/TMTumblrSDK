@@ -275,8 +275,8 @@ extensions that could also potentially be displayed](https://github.com/tumblr/i
 ### UIDocumentInteractionController
 
 ***Note:* As of iOS 8, it’s preferable to just allow your users to use our share extension instead. 
-`UIDocumentInteractionController` support is still being maintained as of 9/29/2015, but may be discontinued in the 
-future.**
+`UIDocumentInteractionController` support is still being maintained as of 9/29/2015, but will likely be discontinued 
+in the future.**
 
 Photos and videos can be passed to Tumblr for iOS using Apple's
 standard [UIDocumentInteractionController](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
@@ -291,7 +291,7 @@ you can specify the file extension `tumblrphoto` and custom UTI `com.tumblr.phot
 
 ### UIActivityViewController
 
-***Note:* As of iOS 8, it’s preferable to just allow your users to use our share extension instead.*
+***Note:* As of iOS 8, it’s preferable to just allow your users to use our share extension instead.**
 
 The SDK includes a [UIActivity subclass](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h) 
 for including Tumblr in a standard `UIActivityViewController`. It currently 
