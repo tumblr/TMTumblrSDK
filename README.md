@@ -32,6 +32,7 @@ submitting a pull request. Please use the Tumblr API [responsibly](http://www.tu
 * [Inter-app communication](#inter-app-communication)
     * [App client](#app-client)
         * [URL schemes](#url-schemes)
+    * [Share extension](#share-extension)
     * [UIDocumentInteractionController](#uidocumentinteractioncontroller)
     * [UIActivityViewController](#uiactivityviewcontroller)
     * [Example](#example)
