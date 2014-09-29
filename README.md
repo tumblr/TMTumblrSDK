@@ -216,7 +216,7 @@ The `TMTumblrAppClient` class provides a simple interface for interacting with
 user has it installed. Only a few basic endpoints are supported for now but more
 will be added in the near future:
 
-``` objectivec
+```objc
 if (![TMTumblrAppClient isTumblrInstalled]) {
     [TMTumblrAppClient viewInAppStore];
 }
