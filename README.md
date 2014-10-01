@@ -301,8 +301,6 @@ the `TMTumblrSDK/Activity` sub-pod can be installed by itself.
 The repository includes a [sample application](https://github.com/tumblr/TMTumblrSDK/tree/master/Examples/AppClientExample)
 which shows all of the inter-app hooks in action.
 
-![Screenshot of Tumblr activity icon](https://raw.github.com/tumblr/TMTumblrSDK/master/Examples/AppClientExample/screenshot.png)
-
 ## Dependencies
 
 * [JXHTTP](https://github.com/jstn/JXHTTP)
