@@ -291,7 +291,8 @@ you can specify the file extension `tumblrphoto` and custom UTI `com.tumblr.phot
 
 ### UIActivityViewController
 
-***Note:* As of iOS 8, it’s preferable to just allow your users to use our share extension instead.**
+***Note:* As of iOS 8, it’s preferable to just allow your users to use our share extension instead. To share to Tumblr directly without 
+using our extension, please use our [URL schemes](#url-schemes). **
 
 The SDK includes a [UIActivity subclass](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h) 
 for including Tumblr in a standard `UIActivityViewController`. It currently 
