@@ -265,9 +265,6 @@ As of iOS 8, Tumblr for iOS ships with a share extension. It currently supports 
 * Video (maximum: 1)
 * URL (maximum: 1)
 
-If you need to uniquely identify the Tumblr share extension (e.g. to provide different inputs than you’re passing 
-to other extensions), you can do so using the bundle identifier **`com.tumblr.tumblr.Share-With-Tumblr`**
-
 In the future, we hope to document specific ways for apps to pass parameters to be used for creating the different 
 Tumblr post types, but we’d need to figure out a good way to do so that [won’t interfere with other share
 extensions that could also potentially be displayed](https://github.com/tumblr/ios-extension-issues/issues/5).
