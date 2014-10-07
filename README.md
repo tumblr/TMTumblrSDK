@@ -269,6 +269,8 @@ In the future, we hope to document specific ways for apps to pass parameters to 
 Tumblr post types, but we’d need to figure out a good way to do so that [won’t interfere with other share
 extensions that could also potentially be displayed](https://github.com/tumblr/ios-extension-issues/issues/5).
 
+If you're looking to hardcode some Tumblr-specific behavior, our share extension’s bundle identifier is **com.tumblr.tumblr.Share-With-Tumblr**.
+
 ### UIDocumentInteractionController
 
 **Note: As of iOS 8, it’s preferable to just allow your users to use our share extension instead. `UIDocumentInteractionController` support is still being maintained as of 9/29/2015, but will likely be discontinued in the future.**
