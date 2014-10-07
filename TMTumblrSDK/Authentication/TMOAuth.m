@@ -103,7 +103,10 @@ NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSe
     if ([hashedData respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
         base64EncodedString = [hashedData base64EncodedStringWithOptions:0];
     } else {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         base64EncodedString = [hashedData base64Encoding];
+#pragma GCC diagnostic pop
     }
     
     return base64EncodedString;

@@ -11,6 +11,13 @@
 #import "TMOAuth.h"
 #import "TMTumblrAuthenticator.h"
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+    #import <UIKit/UIKit.h>
+#else
+    #import <AppKit/AppKit.h>
+    #import <WebKit/WebKit.h>
+#endif
+
 static NSTimeInterval const TMAPIClientDefaultRequestTimeoutInterval = 60;
 
 @interface TMAPIClient()
@@ -36,6 +43,17 @@ NSString *URLWithPath(NSString *path);
 }
 
 #pragma mark - Authentication
+
+- (void)authenticate:(NSString *)URLScheme webView:(TMWebView *)webView callback:(void(^)(NSError *))callback {
+    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
+                                                 webView:webView
+                                                callback:^(NSString *token, NSString *secret, NSError *error) {
+                                                    self.OAuthToken = token;
+                                                    self.OAuthTokenSecret = secret;
+                                                    
+                                                    callback(error);
+                                                }];
+}
 
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))callback {
     [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
