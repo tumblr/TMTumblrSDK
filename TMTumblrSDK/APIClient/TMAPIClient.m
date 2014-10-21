@@ -21,8 +21,6 @@ NSString *blogPath(NSString *ext, NSString *blogName);
 
 NSString *fullBlogName(NSString *blogName);
 
-NSString *URLWithPath(NSString *path);
-
 @end
 
 
@@ -379,7 +377,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path) queryParameters:mutableParameters];
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:[self URLWithPath:path] queryParameters:mutableParameters];
     request.continuesInAppBackground = YES;
     request.requestTimeoutInterval = self.timeoutInterval;
     
@@ -392,7 +390,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(path)];
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:[self URLWithPath:path]];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     request.requestBody = [JXHTTPFormEncodedBody withDictionary:mutableParameters];
@@ -410,7 +408,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
     mutableParameters[@"type"] = type;
 
-    JXHTTPOperation *request = [JXHTTPOperation withURLString:URLWithPath(blogPath(@"post", blogName))];
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:[self URLWithPath:blogPath(@"post", blogName)]];
     request.requestMethod = @"POST";
     request.continuesInAppBackground = YES;
     request.requestBody = [self multipartBodyForParameters:mutableParameters filePathArray:filePathArray
@@ -485,6 +483,10 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     [self.queue addOperation:request];
 }
 
+- (NSString *)URLWithPath:(NSString *)path {
+    return [[self.baseURL URLByAppendingPathComponent:path] absoluteString];
+}
+
 NSString *blogPath(NSString *ext, NSString *blogName) {
     return [NSString stringWithFormat:@"blog/%@/%@", fullBlogName(blogName), ext];
 }
@@ -497,10 +499,6 @@ NSString *fullBlogName(NSString *blogName) {
     return blogName;
 }
 
-NSString *URLWithPath(NSString *path) {
-    return [@"http://api.tumblr.com/v2/" stringByAppendingString:path];
-}
-
 #pragma mark - NSObject
 
 - (id)init {
@@ -508,6 +506,7 @@ NSString *URLWithPath(NSString *path) {
         self.queue = [[JXHTTPOperationQueue alloc] init];
         self.defaultCallbackQueue = [NSOperationQueue mainQueue];
         self.timeoutInterval = TMAPIClientDefaultRequestTimeoutInterval;
+        self.baseURL = [NSURL URLWithString:@"https://api.tumblr.com/v2/"];
     }
     
     return self;
