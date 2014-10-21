@@ -63,6 +63,8 @@ typedef void (^TMAPICallback)(id, NSError *error);
  */
 @property (nonatomic, strong) NSOperationQueue *defaultCallbackQueue;
 
+@property (nonatomic, strong) NSURL *baseURL;
+
 /** @name Singleton instance */
 
 + (instancetype)sharedInstance;
