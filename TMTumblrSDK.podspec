@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'TMTumblrSDK'
-  s.version      = '1.0.8'
+  s.version      = '1.1.0'
   s.summary      = 'An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application.'
   s.author       = { 'Bryan Irace' => 'bryan@tumblr.com' }
   s.homepage     = 'http://tumblr.github.com/TMTumblrSDK'
