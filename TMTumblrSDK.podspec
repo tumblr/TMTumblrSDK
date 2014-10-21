@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'TMTumblrSDK'
-  s.version      = '1.1.0'
+  s.version      = '1.1.1'
   s.summary      = 'An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application.'
   s.author       = { 'Bryan Irace' => 'bryan@tumblr.com' }
   s.homepage     = 'http://tumblr.github.com/TMTumblrSDK'
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'APIClient' do |ss|
     ss.source_files = 'TMTumblrSDK/APIClient'
-    ss.dependency   'JXHTTP', '1.0.0'
+    ss.dependency   'JXHTTP', '~> 1.0'
 
     ss.subspec 'Authentication' do |sss|
       sss.source_files = 'TMTumblrSDK/Authentication'
