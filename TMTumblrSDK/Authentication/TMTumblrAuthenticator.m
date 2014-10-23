@@ -89,6 +89,47 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
 }
 
+- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(TMAuthenticationCallback)callback {
+    // Clear token secret in case authentication was previously started but not finished
+    self.OAuthTokenSecret = nil;
+    
+    NSString *tokenRequestURLString = [NSString stringWithFormat:@"http://www.tumblr.com/oauth/request_token?oauth_callback=%@",
+                                       TMURLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme])];
+    
+    NSMutableURLRequest *request = mutableRequestWithURLString(tokenRequestURLString);
+    [self signRequest:request withParameters:nil];
+    
+    NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error) {
+            if (callback)
+                callback(nil, nil, error);
+            
+            return;
+        }
+        
+        int statusCode = ((NSHTTPURLResponse *)response).statusCode;
+        
+        if (statusCode == 200) {
+            self.authCallback = callback;
+            
+            NSDictionary *responseParameters = formEncodedDataToDictionary(data);
+            self.OAuthTokenSecret = responseParameters[@"oauth_token_secret"];
+            
+            NSURL *authURL = [NSURL URLWithString:
+                              [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
+                               responseParameters[@"oauth_token"]]];
+            
+            [webView loadRequest:[NSURLRequest requestWithURL:authURL]];
+            
+        } else {
+            if (callback)
+                callback(nil, nil, errorWithStatusCode(statusCode));
+        }
+    };
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
+}
+
 - (BOOL)handleOpenURL:(NSURL *)url {
     if (![url.host isEqualToString:@"tumblr-authorize"]) {
         return NO;
