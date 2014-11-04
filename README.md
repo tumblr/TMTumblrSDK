@@ -118,7 +118,7 @@ Unfortunately, [Apple has started rejecting apps](https://github.com/tumblr/TMTu
 that use three-legged OAuth via Safari, the preferred way to retrieve access tokens from a security perspective. For 
 the time being, please either:
 
-* [Request xAuth access](](http://www.tumblr.com/oauth/apps))
+* [Request xAuth access](http://www.tumblr.com/oauth/apps)
 * Use a web view inside of your application (here's [a TMTumblrSDK fork](https://github.com/felixmo/TMTumblrSDK/) 
 that adds this capability, we may add it to the SDK proper at a later date)
 
