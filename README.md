@@ -107,6 +107,54 @@ with your app’s Tumblr consumer key and secret:
 If you don't already have a consumer key/secret you can
 register [here](http://www.tumblr.com/oauth/apps).
 
+The authentication methods detailed below will provide the API client with a token and token secret. The
+SDK does *not* currently persist these values; you are responsible for storing them and setting them on
+the API client on subsequent app launches, before making any API requests. This may change in a future
+release.
+
+### OAuth (OS X only)
+In your app’s `Info.plist`, specify a custom URL scheme that the browser can
+use to return to your application once the user has permitted or denied
+access to Tumblr:
+
+``` xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>myapp</string>
+    </array>
+  </dict>
+</array>
+```
+
+In your app delegate, allow the `TMAPIClient` singleton to handle incoming URL
+requests. On iOS this looks like:
+
+``` objectivec
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+    NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventManager];
+    [appleEventManager setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:)
+                                          forEventClass:kInternetEventClass andEventID:kAEGetURL];
+}
+
+- (void)handleURLEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent {
+    NSString *calledURL = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+
+    [[TMAPIClient sharedInstance] handleOpenURL:[NSURL URLWithString:calledURL]];
+}
+```
+
+Initiate the three-legged OAuth flow, by specifying the URL scheme that your
+app will respond to:
+
+``` objectivec
+[[TMAPIClient sharedInstance] authenticate:@"myapp" callback:^(NSError *error) {
+    // You are now authenticated (if !error)
+}];
+```
+
 ### xAuth
 
 Please note that xAuth access
@@ -121,10 +169,6 @@ user’s email address and password:
     // You are now authenticated (if !error)
 }];
 ```
-
-This method will provide the API client with a token and token secret. The SDK does *not* currently persist these values; 
-you are responsible for storing them and setting them on the API client on subsequent app launches, before making any API 
-requests. This may change in a future release.
 
 If you're only interested in authentication, the
 `TMTumblrSDK/APIClient/Authentication` sub-pod can be installed by itself.
