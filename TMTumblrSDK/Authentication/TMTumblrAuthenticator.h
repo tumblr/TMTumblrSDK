@@ -22,24 +22,6 @@ typedef void (^TMAuthenticationCallback)(NSString *, NSString *, NSError *);
 + (TMTumblrAuthenticator *)sharedInstance;
 
 /**
- Authenticate via three-legged OAuth.
- 
- Your `TMTumblrAuthenticator` instance's `handleOpenURL:` method must also be called from your `UIApplicationDelegate`'s
- `application:openURL:sourceApplication:annotation:` method in order to receive the tokens.
- 
- @param URLScheme a URL scheme that your application can handle requests to.
- */
-- (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback;
-
-/**
- Authenticate via three-legged OAuth. This should be called from your `UIApplicationDelegate`'s
- `application:openURL:sourceApplication:annotation:` method in order to receive the tokens.
- 
- This method is the last part of the authentication flow started by calling `authenticate:callback:`
- */
-- (BOOL)handleOpenURL:(NSURL *)url;
-
-/**
  Authenticate via xAuth.
  
  Please note that xAuth access [must be specifically requested](http://www.tumblr.com/oauth/apps) for your application.
