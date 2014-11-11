@@ -41,6 +41,8 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     return instance;
 }
 
+#ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
+
 - (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
     // Clear token secret in case authentication was previously started but not finished
     self.threeLeggedOAuthTokenSecret = nil;
@@ -73,12 +75,8 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
                               [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
                                responseParameters[@"oauth_token"]]];
             
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-            [[UIApplication sharedApplication] openURL:authURL];
-#else
             [[NSWorkspace sharedWorkspace] openURL:authURL];
-#endif
-
+            
         } else {
             if (callback) {
                 callback(nil, nil, errorWithStatusCode(statusCode));
@@ -149,6 +147,8 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     
     return YES;
 }
+
+#endif
 
 - (void)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback {
     NSDictionary *requestParameters = @{

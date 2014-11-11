@@ -112,7 +112,18 @@ SDK does *not* currently persist these values; you are responsible for storing t
 the API client on subsequent app launches, before making any API requests. This may change in a future
 release.
 
-### OAuth
+### OAuth (OS X only)
+
+Unfortunately, [Apple has started rejecting apps](https://github.com/tumblr/TMTumblrSDK/issues/67#issuecomment-59384303) 
+that use three-legged OAuth via Safari, the preferred way to retrieve access tokens from a security perspective. For 
+the time being, please either:
+
+* [Request xAuth access](http://www.tumblr.com/oauth/apps)
+* Use a web view inside of your application (here's [a TMTumblrSDK fork](https://github.com/felixmo/TMTumblrSDK/) 
+that adds this capability, we may add it to the SDK proper at a later date)
+
+We hope to have more to share on this note shortly.
+
 In your app’s `Info.plist`, specify a custom URL scheme that the browser can
 use to return to your application once the user has permitted or denied
 access to Tumblr:
@@ -130,16 +141,7 @@ access to Tumblr:
 ```
 
 In your app delegate, allow the `TMAPIClient` singleton to handle incoming URL
-requests. On iOS this looks like:
-
-``` objectivec
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    return [[TMAPIClient sharedInstance] handleOpenURL:url];
-}
-```
-
-And on OS X:
+requests.
 
 ``` objectivec
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
