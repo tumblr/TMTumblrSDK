@@ -18,4 +18,6 @@ NSDictionary *TMQueryStringToDictionary(NSString *query);
 
 NSString *TMDictionaryToQueryString(NSDictionary *dictionary);
 
+NSString *TMUserAgent();
+
 @end

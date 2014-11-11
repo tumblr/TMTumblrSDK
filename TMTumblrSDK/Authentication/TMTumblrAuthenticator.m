@@ -204,7 +204,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
      consumerSecret:(NSString *)consumerSecret
               token:(NSString *)OAuthToken
         tokenSecret:(NSString *)OAuthTokenSecret {
-    [request setValue:@"TMTumblrSDK" forHTTPHeaderField:@"User-Agent"];
+    [request setValue:TMUserAgent() forHTTPHeaderField:@"User-Agent"];
     
     [request setValue:[TMOAuth headerForURL:request.URL
                                      method:request.HTTPMethod

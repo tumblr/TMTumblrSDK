@@ -75,4 +75,8 @@ NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
     return [parameters componentsJoinedByString:@"&"];
 }
 
+NSString *TMUserAgent() {
+    return @"TMTumblrSDK/1.1.2";
+}
+
 @end
