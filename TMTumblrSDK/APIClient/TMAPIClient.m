@@ -455,7 +455,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     return request;
 }
 
-- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters nsDataArray:(NSArray *)nsdataArrayOrNil
+- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters nsDataArray:(NSArray *)nsdataArray
                                    contentTypeArray:(NSArray *)contentTypeArray fileNameArray:(NSArray *)fileNameArray {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     mutableParameters[@"api_key"] = self.OAuthConsumerKey;
@@ -464,7 +464,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     
     BOOL multiple = [nsdataArrayOrNil count] > 1;
     
-    [filePathArray enumerateObjectsUsingBlock:^(NSData *data, NSUInteger index, BOOL *stop) {
+    [nsdataArray enumerateObjectsUsingBlock:^(NSData *data, NSUInteger index, BOOL *stop) {
         [multipartBody addData:data forKey:multiple ? [NSString stringWithFormat:@"data[%lu]", (unsigned long)index] : @"data"
                    contentType:contentTypeArray[index] fileName:fileNameArray[index]];
     }];
