@@ -462,7 +462,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     
     JXHTTPMultipartBody *multipartBody = [JXHTTPMultipartBody withDictionary:mutableParameters];
     
-    BOOL multiple = [nsdataArrayOrNil count] > 1;
+    BOOL multiple = [nsdataArray count] > 1;
     
     [nsdataArray enumerateObjectsUsingBlock:^(NSData *data, NSUInteger index, BOOL *stop) {
         [multipartBody addData:data forKey:multiple ? [NSString stringWithFormat:@"data[%lu]", (unsigned long)index] : @"data"
