@@ -103,7 +103,10 @@ NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSe
     if ([hashedData respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
         base64EncodedString = [hashedData base64EncodedStringWithOptions:0];
     } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         base64EncodedString = [hashedData base64Encoding];
+#pragma clang diagnostic pop
     }
     
     return base64EncodedString;
