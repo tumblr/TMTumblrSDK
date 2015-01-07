@@ -19,7 +19,9 @@
         TMPodspec *spec = [[TMPodspec alloc] initWithFileURL:
                            [[NSBundle bundleForClass:[self class]] URLForResource:@"TMTumblrSDK.podspec" withExtension:@"json"]];
         
-        userAgentHeaderString = [@"TMTumblrSDK" stringByAppendingPathComponent:spec.version];
+        NSString *versionString = spec.version ?: @"";
+        
+        userAgentHeaderString = [@"TMTumblrSDK" stringByAppendingPathComponent:versionString];
     });
     
     return userAgentHeaderString;
