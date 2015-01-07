@@ -9,6 +9,7 @@
 #import "TMAPIClient.h"
 
 #import "TMOAuth.h"
+#import "TMSDKUserAgent.h"
 #import "TMTumblrAuthenticator.h"
 
 static NSTimeInterval const TMAPIClientDefaultRequestTimeoutInterval = 60;
@@ -442,7 +443,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
 }
 
 - (void)signRequest:(JXHTTPOperation *)request withParameters:(NSDictionary *)parameters {
-    [request setValue:@"TMTumblrSDK" forRequestHeader:@"User-Agent"];
+    [request setValue:[TMSDKUserAgent userAgentHeaderString] forRequestHeader:@"User-Agent"];
     
     for (NSString *header in self.customHeaders)
         [request setValue:self.customHeaders[header] forRequestHeader:header];

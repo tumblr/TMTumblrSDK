@@ -29,7 +29,8 @@
   "subspecs": [
     {
       "name": "Core",
-      "source_files": "TMTumblrSDK/Core"
+      "source_files": "TMTumblrSDK/Core",
+      "resources": "TMTumblrSDK.podspec.json"
     },
     {
       "name": "Activity",
