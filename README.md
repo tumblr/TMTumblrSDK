@@ -86,6 +86,11 @@ everything, feel free to mix and match as you see fit:
 
 Each component is described in more detail throughout this README.
 
+If you choose to include TMTumblrSDK (and as such, its dependencies) manually (i.e. without CocoaPods)
+please make sure that your app can still read `TMTumblrSDK.podspec.json`. We use this for
+tracking which versions of TMTumblrSDK are in use, which helps us make informed decisions
+about the project’s future.
+
 ### Documentation
 
 Appledoc for the SDK can be found [here](http://cocoadocs.org/docsets/TMTumblrSDK).
