@@ -1,5 +1,21 @@
 # TMTumblrSDK changelog
 
+## 2.0.1
+
+* Suppress unnecessary warning
+
+## 2.0
+
+* Remove three-legged OAuth support as per Apple policies
+
+## 1.1.1
+
+* Less restrictive JXHTTP versioning
+
+## 1.1.0
+
+* Base URL is now configurable
+
 ## 1.0.8
 
 * Use `NSInteger` instead of `int`
