@@ -10,6 +10,7 @@
 
 #import "TMOAuth.h"
 #import "TMSDKFunctions.h"
+#import "TMSDKUserAgent.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>
@@ -204,7 +205,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
      consumerSecret:(NSString *)consumerSecret
               token:(NSString *)OAuthToken
         tokenSecret:(NSString *)OAuthTokenSecret {
-    [request setValue:@"TMTumblrSDK" forHTTPHeaderField:@"User-Agent"];
+    [request setValue:[TMSDKUserAgent userAgentHeaderString] forHTTPHeaderField:@"User-Agent"];
     
     [request setValue:[TMOAuth headerForURL:request.URL
                                      method:request.HTTPMethod

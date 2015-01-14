@@ -29,7 +29,13 @@
   "subspecs": [
     {
       "name": "Core",
-      "source_files": "TMTumblrSDK/Core"
+      "source_files": "TMTumblrSDK/Core",
+      "dependencies": {
+        "Spectacles": [
+          "~> 1.0"
+        ]
+      },
+      "resources": "TMTumblrSDK.podspec.json"
     },
     {
       "name": "Activity",
