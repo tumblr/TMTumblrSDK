@@ -9,6 +9,8 @@
 #import <Spectacles/TMPodspec.h>
 #import "TMSDKUserAgent.h"
 
+static NSString * const UnknownVersionString = @"Unknown";
+
 @implementation TMSDKUserAgent
 
 + (NSString *)userAgentHeaderString {
@@ -19,7 +21,7 @@
         TMPodspec *spec = [[TMPodspec alloc] initWithFileURL:
                            [[NSBundle bundleForClass:[self class]] URLForResource:@"TMTumblrSDK.podspec" withExtension:@"json"]];
         
-        NSString *versionString = spec.version ?: @"";
+        NSString *versionString = spec.version ?: UnknownVersionString;
         
         userAgentHeaderString = [@"TMTumblrSDK" stringByAppendingPathComponent:versionString];
     });
