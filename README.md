@@ -5,7 +5,7 @@ your iOS or OS X application. The library uses ARC and requires at least iOS 5 o
 OS X 10.7.
 
 ``` objectivec
-[[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^ (id result, NSError *error) {
+[[TMAPIClient sharedInstance] blogInfo:@"bryan" success:^(id result, NSError *error) {
     if (error) {
       NSLog(@"Bummer, dude: %@", error);
       return;
