@@ -1,5 +1,9 @@
 # TMTumblrSDK changelog
 
+## 2.0.2
+
+* Adds version reporting to the default user-agent header
+
 ## 2.0.1
 
 * Suppress unnecessary warning
