@@ -24,7 +24,7 @@ submitting a pull request. Please use the Tumblr API [responsibly](http://www.tu
     * [CocoaPods](#cocoapods)
     * [Documentation](#documentation)
 * [Authentication](#authentication)
-    * [OAuth](#oauth)
+    * [OAuth](#oauth-os-x-only)
     * [xAuth](#xauth)
 * [API client](#api-client)
 * [Inter-app communication](#inter-app-communication)
