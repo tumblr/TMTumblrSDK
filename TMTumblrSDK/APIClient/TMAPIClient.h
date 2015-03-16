@@ -255,8 +255,8 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
 - (void)video:(NSString *)blogName filePath:(NSString *)filePathOrNil contentType:(NSString *)contentTypeOrNil
      fileName:(NSString *)fileNameOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
-/// Create a Video Post from URL
-- (JXHTTPOperation *)videoLinkRequest:(NSString *)blogName parameters:(NSDictionary *)parameters ;
+/// Create a Video Post from URL or Embed HTML
+- (JXHTTPOperation *)webVideoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters;
 
 /// Create an audio post
 - (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil

@@ -348,7 +348,7 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
                               parameters:parameters] callback:(TMAPICallback)callback];
 }
 
-- (JXHTTPOperation *)videoLinkRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+- (JXHTTPOperation *)webVideoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
     return [self postRequest:blogName type:@"video" parameters:parameters];
 }
 
