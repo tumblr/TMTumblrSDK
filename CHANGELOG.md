@@ -1,5 +1,9 @@
 # TMTumblrSDK changelog
 
+## 2.1
+
+* Adds a method for creating video posts from either embed codes or web URLs
+
 ## 2.0.2
 
 * Adds version reporting to the default user-agent header
