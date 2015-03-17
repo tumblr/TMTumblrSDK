@@ -348,6 +348,10 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
                               parameters:parameters] callback:(TMAPICallback)callback];
 }
 
+- (JXHTTPOperation *)webVideoRequest:(NSString *)blogName parameters:(NSDictionary *)parameters {
+    return [self postRequest:blogName type:@"video" parameters:parameters];
+}
+
 - (JXHTTPOperation *)audioRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
                       contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
                        parameters:(NSDictionary *)parameters {
