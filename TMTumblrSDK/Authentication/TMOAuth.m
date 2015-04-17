@@ -113,7 +113,7 @@ NSString *sign(NSString *baseString, NSString *consumerSecret, NSString *tokenSe
 }
 
 NSString *UNIXTimestamp(NSDate *date) {
-    return [NSString stringWithFormat:@"%f", round([date timeIntervalSince1970])];
+    return [NSString stringWithFormat:@"%d", (int)([date timeIntervalSince1970])];
 }
 
 NSData *HMACSHA1(NSString *dataString, NSString *keyString) {
