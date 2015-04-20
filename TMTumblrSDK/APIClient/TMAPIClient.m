@@ -452,8 +452,15 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     for (NSString *header in self.customHeaders)
         [request setValue:self.customHeaders[header] forRequestHeader:header];
     
+    NSString *nonce;
+    if ([NSUUID class]) {
+        nonce = [[NSUUID UUID] UUIDString];
+    } else {
+        nonce = request.uniqueString;
+    }
+
     [request setValue:[TMOAuth headerForURL:request.requestURL method:request.requestMethod postParameters:parameters
-                                      nonce:request.uniqueString consumerKey:self.OAuthConsumerKey
+                                      nonce:nonce consumerKey:self.OAuthConsumerKey
                              consumerSecret:self.OAuthConsumerSecret token:self.OAuthToken
                                 tokenSecret:self.OAuthTokenSecret] forRequestHeader:@"Authorization"];
 }

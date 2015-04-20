@@ -206,11 +206,18 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
               token:(NSString *)OAuthToken
         tokenSecret:(NSString *)OAuthTokenSecret {
     [request setValue:[TMSDKUserAgent userAgentHeaderString] forHTTPHeaderField:@"User-Agent"];
+
+    NSString *nonce;
+    if ([NSUUID class]) {
+        nonce = [[NSUUID UUID] UUIDString];
+    } else {
+        nonce = [[NSProcessInfo processInfo] globallyUniqueString];
+    }
     
     [request setValue:[TMOAuth headerForURL:request.URL
                                      method:request.HTTPMethod
                              postParameters:parameters
-                                      nonce:[[NSProcessInfo processInfo] globallyUniqueString]
+                                      nonce:nonce
                                 consumerKey:consumerKey
                              consumerSecret:consumerSecret
                                       token:OAuthToken
