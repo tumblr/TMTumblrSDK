@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/tumblr/TMTumblrSDK.git",
-    "tag": "2.1.1"
+    "tag": "2.1.2"
   },
   "requires_arc": true,
   "platforms": {
