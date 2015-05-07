@@ -314,7 +314,7 @@ which shows all of the inter-app hooks in action.
 
 ## Contact
 
-* [Bryan Irace](bryan@tumblr.com)
+* [Bryan Irace](mailto:bryan@tumblr.com)
 * [Tumblr API discussion group](https://groups.google.com/group/tumblr-api/)
 
 ## License
