@@ -57,19 +57,27 @@ NSDictionary *TMQueryStringToDictionary(NSString *query) {
 
 NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
+    __block __weak void (^weakAddParameter)(NSString *key, id value);
+    void (^addParameter)(NSString *key, id value);
     
-    void (^addParameter)(NSString *key, NSString *value) = ^(NSString *key, NSString *value) {
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
+    weakAddParameter = addParameter = ^(NSString *key, id value) {
+        if ([value isKindOfClass:[NSDictionary class]]) {
+            for (NSString *subKey in [((NSDictionary *)value).allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
+                weakAddParameter([NSString stringWithFormat:@"%@[%@]", key, subKey], value[subKey]);
+            }
+        }
+        else if ([value isKindOfClass:[NSArray class]]) {
+            for (id arrayValue in (NSArray *)value){
+                weakAddParameter(key, arrayValue);
+            }
+        }
+        else {
+            [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
+        }
     };
     
     for (NSString *key in [[dictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
-        id value = dictionary[key];
-        
-        if ([value isKindOfClass:[NSArray class]]) {
-            for (NSString *arrayValue in (NSArray *)value)
-                addParameter(key, arrayValue);
-        } else
-            addParameter(key, value);
+        addParameter(key, dictionary[key]);
     }
     
     return [parameters componentsJoinedByString:@"&"];
