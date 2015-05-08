@@ -24,7 +24,7 @@ NSString *TMURLEncode(id value) {
         string = [value stringValue];
     
     return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
-                                                                                 CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
+                                                                                 CFSTR("!*'();:@&=+$,[]/?%#%"), kCFStringEncodingUTF8));
 }
 
 NSDictionary *TMQueryStringToDictionary(NSString *query) {
@@ -57,30 +57,30 @@ NSDictionary *TMQueryStringToDictionary(NSString *query) {
 
 NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
-    __block __weak void (^weakAddParameter)(NSString *key, id value);
-    void (^addParameter)(NSString *key, id value);
-    
-    weakAddParameter = addParameter = ^(NSString *key, id value) {
-        if ([value isKindOfClass:[NSDictionary class]]) {
-            for (NSString *subKey in [((NSDictionary *)value).allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
-                weakAddParameter([NSString stringWithFormat:@"%@[%@]", key, subKey], value[subKey]);
-            }
-        }
-        else if ([value isKindOfClass:[NSArray class]]) {
-            for (id arrayValue in (NSArray *)value){
-                weakAddParameter(key, arrayValue);
-            }
-        }
-        else {
-            [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
-        }
-    };
     
     for (NSString *key in [[dictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
-        addParameter(key, dictionary[key]);
+        AddParameter(key, dictionary[key], parameters);
     }
     
     return [parameters componentsJoinedByString:@"&"];
+}
+
+#pragma mark - private
+
+void AddParameter(NSString *key, id value, NSMutableArray *parameters) {
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        for (NSString *subKey in [((NSDictionary *)value).allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
+            AddParameter([NSString stringWithFormat:@"%@[%@]", key, subKey], value[subKey], parameters);
+        }
+    }
+    else if ([value isKindOfClass:[NSArray class]]) {
+        for (id arrayValue in (NSArray *)value){
+            AddParameter(key, arrayValue, parameters);
+        }
+    }
+    else {
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
+    }
 }
 
 @end
