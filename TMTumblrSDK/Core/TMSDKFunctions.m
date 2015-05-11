@@ -24,7 +24,7 @@ NSString *TMURLEncode(id value) {
         string = [value stringValue];
     
     return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
-                                                                                 CFSTR("!*'();:@&=+$,[]/?%#%"), kCFStringEncodingUTF8));
+                                                                                 CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
 }
 
 NSDictionary *TMQueryStringToDictionary(NSString *query) {
@@ -59,7 +59,7 @@ NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
     
     for (NSString *key in [[dictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
-        AddParameter(key, dictionary[key], parameters);
+        TMAddKeyValuePairToQueryStringMutableArray(key, dictionary[key], parameters);
     }
     
     return [parameters componentsJoinedByString:@"&"];
@@ -67,15 +67,15 @@ NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
 
 #pragma mark - private
 
-void AddParameter(NSString *key, id value, NSMutableArray *parameters) {
+void TMAddKeyValuePairToQueryStringMutableArray(NSString *key, id value, NSMutableArray *parameters) {
     if ([value isKindOfClass:[NSDictionary class]]) {
         for (NSString *subKey in [((NSDictionary *)value).allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
-            AddParameter([NSString stringWithFormat:@"%@[%@]", key, subKey], value[subKey], parameters);
+            TMAddKeyValuePairToQueryStringMutableArray([NSString stringWithFormat:@"%@[%@]", key, subKey], value[subKey], parameters);
         }
     }
     else if ([value isKindOfClass:[NSArray class]]) {
         for (id arrayValue in (NSArray *)value){
-            AddParameter(key, arrayValue, parameters);
+            TMAddKeyValuePairToQueryStringMutableArray(key, arrayValue, parameters);
         }
     }
     else {
