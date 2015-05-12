@@ -69,8 +69,9 @@ NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
 
 void TMAddKeyValuePairToQueryStringMutableArray(NSString *key, id value, NSMutableArray *parameters) {
     if ([value isKindOfClass:[NSDictionary class]]) {
-        for (NSString *subKey in [((NSDictionary *)value).allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
-            TMAddKeyValuePairToQueryStringMutableArray([NSString stringWithFormat:@"%@[%@]", key, subKey], value[subKey], parameters);
+        NSDictionary *dictionary = (NSDictionary *)value;
+        for (NSString *subKey in [dictionary.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
+            TMAddKeyValuePairToQueryStringMutableArray([NSString stringWithFormat:@"%@[%@]", key, subKey], dictionary[subKey], parameters);
         }
     }
     else if ([value isKindOfClass:[NSArray class]]) {
