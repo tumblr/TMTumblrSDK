@@ -22,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		86EFED2E98293EED7501CFB5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		9330594016F92D6B00868C9C /* AppClientExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppClientExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9330594316F92D6B00868C9C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9330594516F92D6B00868C9C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -38,8 +39,8 @@
 		9330596016F92DA000868C9C /* TMAppClientExampleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAppClientExampleController.h; sourceTree = "<group>"; };
 		9330596116F92DA000868C9C /* TMAppClientExampleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAppClientExampleController.m; sourceTree = "<group>"; };
 		9330596316F930CB00868C9C /* tumblr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tumblr.png; sourceTree = "<group>"; };
-		ABEA0C5488FC430994D12D9D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		E241EBDBBDCF4E3393680DED /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7D2F48E989E7862098B14AB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +64,7 @@
 				9330594916F92D6B00868C9C /* AppClientExample */,
 				9330594216F92D6B00868C9C /* Frameworks */,
 				9330594116F92D6B00868C9C /* Products */,
-				ABEA0C5488FC430994D12D9D /* Pods.xcconfig */,
+				D1EB5FD88786D67A2B4C4B8D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +112,15 @@
 				9330595916F92D6B00868C9C /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D1EB5FD88786D67A2B4C4B8D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				86EFED2E98293EED7501CFB5 /* Pods.debug.xcconfig */,
+				F7D2F48E989E7862098B14AB /* Pods.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,7 +199,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -276,7 +286,7 @@
 		};
 		9330595E16F92D6B00868C9C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ABEA0C5488FC430994D12D9D /* Pods.xcconfig */;
+			baseConfigurationReference = 86EFED2E98293EED7501CFB5 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppClientExample/AppClientExample-Prefix.pch";
@@ -288,7 +298,7 @@
 		};
 		9330595F16F92D6B00868C9C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ABEA0C5488FC430994D12D9D /* Pods.xcconfig */;
+			baseConfigurationReference = F7D2F48E989E7862098B14AB /* Pods.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppClientExample/AppClientExample-Prefix.pch";
