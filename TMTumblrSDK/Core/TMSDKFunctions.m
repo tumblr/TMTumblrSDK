@@ -58,21 +58,30 @@ NSDictionary *TMQueryStringToDictionary(NSString *query) {
 NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
     
-    void (^addParameter)(NSString *key, NSString *value) = ^(NSString *key, NSString *value) {
-        [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
-    };
-    
     for (NSString *key in [[dictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
-        id value = dictionary[key];
-        
-        if ([value isKindOfClass:[NSArray class]]) {
-            for (NSString *arrayValue in (NSArray *)value)
-                addParameter(key, arrayValue);
-        } else
-            addParameter(key, value);
+        TMAddKeyValuePairToQueryStringMutableArray(key, dictionary[key], parameters);
     }
     
     return [parameters componentsJoinedByString:@"&"];
+}
+
+#pragma mark - Private
+
+void TMAddKeyValuePairToQueryStringMutableArray(NSString *key, id value, NSMutableArray *parameters) {
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dictionary = (NSDictionary *)value;
+        for (NSString *subKey in [dictionary.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
+            TMAddKeyValuePairToQueryStringMutableArray([NSString stringWithFormat:@"%@[%@]", key, subKey], dictionary[subKey], parameters);
+        }
+    }
+    else if ([value isKindOfClass:[NSArray class]]) {
+        for (id arrayValue in (NSArray *)value){
+            TMAddKeyValuePairToQueryStringMutableArray(key, arrayValue, parameters);
+        }
+    }
+    else {
+        [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
+    }
 }
 
 @end

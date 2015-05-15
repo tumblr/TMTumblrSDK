@@ -32,30 +32,22 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "93E52A80168BB43700E5471A"
-               BuildableName = "TMTumblrSDKTests.xctest"
-               BlueprintName = "TMTumblrSDKTests"
+               BlueprintIdentifier = "93A015BA1B0696E20047F8C4"
+               BuildableName = "Tests.xctest"
+               BlueprintName = "Tests"
                ReferencedContainer = "container:TMTumblrSDK.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "TMAPIClientBlogTest">
-               </Test>
-               <Test
-                  Identifier = "TMAPIClientPostTest">
-               </Test>
-               <Test
-                  Identifier = "TMAPIClientTagTest">
-               </Test>
-               <Test
-                  Identifier = "TMAPIClientUnitTest">
-               </Test>
-               <Test
-                  Identifier = "TMAPIClientUserTest">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "93E52A6F168BB43600E5471A"
+            BuildableName = "libTMTumblrSDK.a"
+            BlueprintName = "TMTumblrSDK"
+            ReferencedContainer = "container:TMTumblrSDK.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -66,6 +58,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "93E52A6F168BB43600E5471A"
+            BuildableName = "libTMTumblrSDK.a"
+            BlueprintName = "TMTumblrSDK"
+            ReferencedContainer = "container:TMTumblrSDK.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -75,6 +76,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "93E52A6F168BB43600E5471A"
+            BuildableName = "libTMTumblrSDK.a"
+            BlueprintName = "TMTumblrSDK"
+            ReferencedContainer = "container:TMTumblrSDK.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

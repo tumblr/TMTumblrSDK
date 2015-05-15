@@ -6,9 +6,13 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
-#import "TMSDKFunctionsTest.h"
-
+#import <XCTest/XCTest.h>
 #import "TMSDKFunctions.h"
+
+@interface TMSDKFunctionsTest : XCTestCase
+
+@end
+
 
 @implementation TMSDKFunctionsTest
 
@@ -60,6 +64,25 @@
     
     XCTAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"tag" : tags }), result,
                          @"Incorrect query string with repeated parameter");
+}
+
+- (void)testDictionaryToQueryWithNestedDictionary {
+    NSDictionary *input = @{
+                            @"stringKey": @"value",
+                            @"arrayKey": @[@"arrayValue1", @"arrayValue2"],
+                            @"dictionaryKey": @{
+                                    @"innerDictionaryKey1": @"innerDictionaryValue1",
+                                    @"innerDictionaryKey2": @"innerDictionaryValue2"
+                                    },
+                            };
+    
+    NSString *expected = [NSString stringWithFormat:@"arrayKey=arrayValue1&arrayKey=arrayValue2&%@=innerDictionaryValue1&%@=innerDictionaryValue2&stringKey=value",
+                          TMURLEncode(@"dictionaryKey[innerDictionaryKey1]"),
+                          TMURLEncode(@"dictionaryKey[innerDictionaryKey2]")];
+    
+    NSString *actual = TMDictionaryToQueryString(input);
+    
+    XCTAssertEqualObjects(expected, actual);
 }
 
 @end
