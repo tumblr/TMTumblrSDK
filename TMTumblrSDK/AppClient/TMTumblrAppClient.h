@@ -24,13 +24,13 @@
 /// View the explore page
 + (void)viewExplore;
 
-// View the activity page for a given blog. If blogName is null, will display the primary blog.
+// View the activity page for a given blog. If blogName is nil, will display the primary blog.
 + (void)viewActivity:(NSString *)blogName;
 
 /// View a tag
 + (void)viewTag:(NSString *)tag;
 
-/// View a blog. If blogName is null, will display the primary blog
+/// View a blog. If blogName is nil, will display the primary blog
 + (void)viewBlog:(NSString *)blogName;
 
 /// View a blog's post
