@@ -37,7 +37,7 @@
         params = @{ @"blogName" : blogName };
     }
     
-    [self performAction:@"explore" parameters:params];
+    [self performAction:@"activity" parameters:params];
 }
 
 + (void)viewTag:(NSString *)tag {
