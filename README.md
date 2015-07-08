@@ -246,7 +246,11 @@ interface on top of the following URLs:
 
 ```
 tumblr://x-callback-url/dashboard
+tumblr://x-callback-url/explore
+tumblr://x-callback-url/activity
+tumblr://x-callback-url/activity?blogName=bryan
 tumblr://x-callback-url/tag?tag=gif
+tumblr://x-callback-url/blog
 tumblr://x-callback-url/blog?blogName=bryan
 tumblr://x-callback-url/blog?blogName=bryan&postID=43724939726
 
