@@ -30,6 +30,10 @@
     [self performAction:@"explore" parameters:nil];
 }
 
++ (void)viewActivityForPrimaryBlog {
+    [self viewActivity:nil];
+}
+
 + (void)viewActivity:(NSString *)blogName {
     NSDictionary *params;
     
@@ -44,6 +48,10 @@
     if (tag) {
         [self performAction:@"tag" parameters:@{ @"tag" : tag }];
     }
+}
+
++ (void)viewPrimaryBlog {
+    [self viewBlog:nil];
 }
 
 + (void)viewBlog:(NSString *)blogName {
