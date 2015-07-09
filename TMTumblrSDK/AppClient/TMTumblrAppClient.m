@@ -26,16 +26,42 @@
     [self performAction:@"dashboard" parameters:nil];
 }
 
++ (void)viewExplore {
+    [self performAction:@"explore" parameters:nil];
+}
+
++ (void)viewActivityForPrimaryBlog {
+    [self viewActivity:nil];
+}
+
++ (void)viewActivity:(NSString *)blogName {
+    NSDictionary *params;
+    
+    if (blogName) {
+        params = @{ @"blogName" : blogName };
+    }
+    
+    [self performAction:@"activity" parameters:params];
+}
+
 + (void)viewTag:(NSString *)tag {
     if (tag) {
         [self performAction:@"tag" parameters:@{ @"tag" : tag }];
     }
 }
 
++ (void)viewPrimaryBlog {
+    [self viewBlog:nil];
+}
+
 + (void)viewBlog:(NSString *)blogName {
+    NSDictionary *params;
+    
     if (blogName) {
-        [self performAction:@"blog" parameters:@{ @"blogName" : blogName }];
+        params = @{ @"blogName" : blogName };
     }
+    
+    [self performAction:@"blog" parameters:params];
 }
 
 + (void)viewPost:(NSString *)postID blogName:(NSString *)blogName {

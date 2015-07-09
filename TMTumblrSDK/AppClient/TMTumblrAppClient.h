@@ -21,10 +21,22 @@
 /// View the authenticated user's dashboard
 + (void)viewDashboard;
 
+/// View the explore page
++ (void)viewExplore;
+
+/// View the activity page for the primary blog
++ (void)viewActivityForPrimaryBlog;
+
+// View the activity page for a given blog. If blogName is nil, will display the primary blog.
++ (void)viewActivity:(NSString *)blogName;
+
 /// View a tag
 + (void)viewTag:(NSString *)tag;
 
-/// View a blog
+/// View the primary blog
++ (void)viewPrimaryBlog;
+
+/// View a blog. If blogName is nil, will display the primary blog
 + (void)viewBlog:(NSString *)blogName;
 
 /// View a blog's post
