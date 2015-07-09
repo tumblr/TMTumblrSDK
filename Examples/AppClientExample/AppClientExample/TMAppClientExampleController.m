@@ -13,6 +13,8 @@
 typedef enum {
     TMAppClientActionViewInAppStore,
     TMAppClientActionViewDashboard,
+    TMAppClientActionViewExplore,
+    TMAppClientActionViewActivity,
     TMAppClientActionViewTag,
     TMAppClientActionViewBlog,
     TMAppClientActionViewPost,
@@ -93,6 +95,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
         case TMAppClientActionViewDashboard:
             cell.textLabel.text = @"View dashboard";
             break;
+        case TMAppClientActionViewExplore:
+            cell.textLabel.text = @"View explore";
+            break;
+        case TMAppClientActionViewActivity:
+            cell.textLabel.text = @"View activity";
+            break;
         case TMAppClientActionViewTag:
             cell.textLabel.text = @"View GIF tag";
             break;
@@ -131,6 +139,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
             break;
         case TMAppClientActionViewDashboard:
             [TMTumblrAppClient viewDashboard];
+            break;
+        case TMAppClientActionViewExplore:
+            [TMTumblrAppClient viewExplore];
+            break;
+        case TMAppClientActionViewActivity:
+            [TMTumblrAppClient viewActivityForPrimaryBlog];
             break;
         case TMAppClientActionViewTag:
             [TMTumblrAppClient viewTag:@"gif"];
