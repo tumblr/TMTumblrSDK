@@ -24,6 +24,7 @@
 /// View the explore page
 + (void)viewExplore;
 
+/// View the activity page for the primary blog
 + (void)viewActivityForPrimaryBlog;
 
 // View the activity page for a given blog. If blogName is nil, will display the primary blog.
@@ -32,6 +33,7 @@
 /// View a tag
 + (void)viewTag:(NSString *)tag;
 
+/// View the primary blog
 + (void)viewPrimaryBlog;
 
 /// View a blog. If blogName is nil, will display the primary blog
