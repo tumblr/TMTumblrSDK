@@ -1,6 +1,6 @@
 {
   "name": "TMTumblrSDK",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "summary": "An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application.",
   "authors": {
     "Bryan Irace": "bryan@tumblr.com"
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/tumblr/TMTumblrSDK.git",
-    "tag": "2.1.3"
+    "tag": "2.2.0"
   },
   "requires_arc": true,
   "platforms": {

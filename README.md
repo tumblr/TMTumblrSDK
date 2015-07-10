@@ -260,6 +260,9 @@ tumblr://x-callback-url/text?title=Title&body=Body&tags=gif&tags=lol
 tumblr://x-callback-url/quote?quote=Quote&source=Source
 tumblr://x-callback-url/link?title=Bryan&url=bryan.io&description=Website
 tumblr://x-callback-url/chat?title=Title&body=Body&tags=gif&tags=lol
+
+// Will create a post using images from `[UIPasteboard generalPasteboard].images`
+tumblr://x-callback-url/photo?caption=Caption&tags=gif&tags=lol
 ```
 
 If you don't want to use this SDK and would rather hit these URLs directly, please go
