@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Tumlr. All rights reserved.
 //
 
+#import <JXHTTP/JXHTTP.h>
 #import "TMAPIClient.h"
-
 #import "TMOAuth.h"
 #import "TMSDKUserAgent.h"
 #import "TMTumblrAuthenticator.h"
