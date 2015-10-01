@@ -12,6 +12,8 @@
 #import "TMSDKUserAgent.h"
 #import "TMTumblrAuthenticator.h"
 
+#import <JXHTTP/JXHTTP.h>
+
 static NSTimeInterval const TMAPIClientDefaultRequestTimeoutInterval = 60;
 
 @interface TMAPIClient()
