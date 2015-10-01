@@ -6,7 +6,14 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
-#if __has_feature(modules)
+/*
+ *  We use the presence of a wrapper extension to determine if the pod is being built as a framework target
+ *  or a static library.
+ *
+ *  See: The WRAPPER_EXTENSION documentation here:
+ *  https://developer.apple.com/library/ios/documentation/DeveloperTools/Reference/XcodeBuildSettingRef/1-Build_Setting_Reference/build_setting_ref.html
+ */
+#if WRAPPER_EXTENSION
 @import JXHTTP;
 #else
 #import <JXHTTP/JXHTTP.h>
