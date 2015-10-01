@@ -6,7 +6,11 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
+#if __has_feature(modules)
+@import JXHTTP;
+#else
 #import <JXHTTP/JXHTTP.h>
+#endif
 
 typedef void (^TMAPICallback)(id, NSError *error);
 
