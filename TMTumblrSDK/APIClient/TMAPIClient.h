@@ -8,7 +8,7 @@
 
 /*
  *  We use the presence of a wrapper extension to determine if the pod is being built as a framework target
- *  or a static library.
+ *  or a static library, because static libraries do not have a wrapper extension.
  *
  *  See: The WRAPPER_EXTENSION documentation here:
  *  https://developer.apple.com/library/ios/documentation/DeveloperTools/Reference/XcodeBuildSettingRef/1-Build_Setting_Reference/build_setting_ref.html
