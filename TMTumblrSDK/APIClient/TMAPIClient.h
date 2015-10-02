@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
-#import <JXHTTP/JXHTTP.h>
+@class JXHTTPOperation;
+@class JXHTTPOperationQueue;
 
 typedef void (^TMAPICallback)(id, NSError *error);
 

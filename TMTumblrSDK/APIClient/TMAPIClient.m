@@ -8,6 +8,8 @@
 
 #import "TMAPIClient.h"
 
+#import <JXHTTP/JXHTTP.h>
+
 #import "TMOAuth.h"
 #import "TMSDKUserAgent.h"
 #import "TMTumblrAuthenticator.h"
