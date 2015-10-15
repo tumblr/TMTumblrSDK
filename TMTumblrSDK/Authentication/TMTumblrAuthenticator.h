@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Tumblr. All rights reserved.
 //
 
+@import Foundation;
+
 typedef void (^TMAuthenticationCallback)(NSString *, NSString *, NSError *);
 
 /**

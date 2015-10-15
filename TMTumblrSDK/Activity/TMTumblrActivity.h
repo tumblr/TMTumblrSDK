@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import Foundation;
+@import UIKit;
 
 /**
  `TMTumblrActivity` provides the bare minimum `UIActivity` subclass necessary to start sharing to Tumblr: just the name

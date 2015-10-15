@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Tumblr. All rights reserved.
 //
 
+@import Foundation;
+
 /**
  Convenience wrapper around the URLs that [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404) knows how 
  to open.
