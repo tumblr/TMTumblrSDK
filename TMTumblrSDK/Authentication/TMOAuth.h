@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Tumblr. All rights reserved.
 //
 
+@import Foundation;
 @interface TMOAuth : NSObject
 
 /// Base string used to generate the OAuth signature
