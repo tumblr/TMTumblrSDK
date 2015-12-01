@@ -11,7 +11,7 @@
 @implementation TMSDKFunctions
 
 NSString *TMURLDecode(NSString *string) {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)string,
+    return (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)[string stringByReplacingOccurrencesOfString:@"+" withString:@" "],
                                                                                     CFSTR("")));
 }
 
