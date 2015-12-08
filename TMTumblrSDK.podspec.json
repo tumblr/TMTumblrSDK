@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "summary": "An unopinionated and flexible library for easily integrating Tumblr data into your iOS or OS X application.",
   "authors": {
-    "Bryan Irace": "bryan@tumblr.com"
+    "Tumblr iOS": "ios-engineering@tumblr.com"
   },
   "homepage": "http://tumblr.github.com/TMTumblrSDK",
   "license": {
