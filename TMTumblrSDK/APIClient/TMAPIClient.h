@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Tumblr. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 @class JXHTTPOperation;
 @class JXHTTPOperationQueue;
 
