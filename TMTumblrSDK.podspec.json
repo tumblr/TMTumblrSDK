@@ -50,7 +50,6 @@
       "source_files": "TMTumblrSDK/APIClient",
       "dependencies": {
         "JXHTTP": [
-          "~> 3.0.1"
         ]
       },
       "subspecs": [
