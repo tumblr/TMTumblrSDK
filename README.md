@@ -31,6 +31,7 @@ submitting a pull request. Please use the Tumblr API [responsibly](http://www.tu
     * [App client](#app-client)
         * [URL schemes](#url-schemes)
     * [Share extension](#share-extension)
+    * [UIDocumentInteractionController](#uidocumentinteractioncontroller)
     * [UIActivityViewController](#uiactivityviewcontroller)
     * [Example](#example)
 * [Contact](#contact)
@@ -42,16 +43,16 @@ submitting a pull request. Please use the Tumblr API [responsibly](http://www.tu
 
 [CocoaPods](http://cocoapods.org) is the recommended way to add the Tumblr
 SDK to your project. *Using CocoaPods means you don't need to worry about
-cloning or adding this repository as a git submodule.* CocoaPods is a package
+cloning or adding this repository as a git submodule.* CocoaPods is a package 
 manager like `gem` (Ruby) and `npm` (Node.js), but for Objective-C projects.
 
-Module authors create "pods" which are versioned and stored in a central
+Module authors create "pods" which are versioned and stored in a central 
 repository. App developers create "podfiles" to specify their apps'
 dependencies and use the CocoaPods command line tool to:
 
 * Fetch the dependencies specified in their podfile
 * Recursively fetch all subdependencies
-* Create an Xcode workspace that includes the pods, links any necessary libraries,
+* Create an Xcode workspace that includes the pods, links any necessary libraries, 
 configures header search paths, enables ARC where appropriate, and more
 
 If you're new to CocoaPods, the website contains lots of helpful [documentation](http://docs.cocoapods.org).
@@ -70,7 +71,7 @@ After running `pod install`, you'll have an Xcode workspace that includes not
 only your application but also the Tumblr SDK and its dependencies. That's really
 all there is to it.
 
-You will get the latest version of the SDK by referring to it simply by name
+You will get the latest version of the SDK by referring to it simply by name 
 (`TMTumblrSDK`). [This guide](http://docs.cocoapods.org/guides/dependency_versioning.html)
 explains how explicit dependency versions can instead be specified.
 
@@ -116,12 +117,12 @@ release.
 
 ### OAuth (OS X only)
 
-Unfortunately, [Apple has started rejecting apps](https://github.com/tumblr/TMTumblrSDK/issues/67#issuecomment-59384303)
-that use three-legged OAuth via Safari, the preferred way to retrieve access tokens from a security perspective. For
+Unfortunately, [Apple has started rejecting apps](https://github.com/tumblr/TMTumblrSDK/issues/67#issuecomment-59384303) 
+that use three-legged OAuth via Safari, the preferred way to retrieve access tokens from a security perspective. For 
 the time being, please either:
 
 * [Request xAuth access](http://www.tumblr.com/oauth/apps)
-* Use a web view inside of your application (here's [a TMTumblrSDK fork](https://github.com/felixmo/TMTumblrSDK/)
+* Use a web view inside of your application (here's [a TMTumblrSDK fork](https://github.com/felixmo/TMTumblrSDK/) 
 that adds this capability, we may add it to the SDK proper at a later date)
 
 We hope to have more to share on this note shortly.
@@ -240,7 +241,7 @@ the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.
 #### URL schemes
 
 Tumblr for iOS exposes actions using the [x-callback-url](http://x-callback-url.com/)
-specification. The `TMTumblrAppClient` class merely provides a convenient
+specification. The `TMTumblrAppClient` class merely provides a convenient 
 interface on top of the following URLs:
 
 ```
@@ -276,19 +277,34 @@ As of iOS 8, Tumblr for iOS ships with a share extension. It currently supports 
 * Video (maximum: 1)
 * URL (maximum: 1)
 
-In the future, we hope to document specific ways for apps to pass parameters to be used for creating the different
+In the future, we hope to document specific ways for apps to pass parameters to be used for creating the different 
 Tumblr post types, but we’d need to figure out a good way to do so that [won’t interfere with other share
 extensions that could also potentially be displayed](https://github.com/tumblr/ios-extension-issues/issues/5).
 
 If you're looking to hardcode some Tumblr-specific behavior, our share extension’s bundle identifier is **com.tumblr.tumblr.Share-With-Tumblr**.
 
+### UIDocumentInteractionController
+
+**Note: As of iOS 8, it’s preferable to just allow your users to use our share extension instead. `UIDocumentInteractionController` support is still being maintained as of 9/29/2015, but will likely be discontinued in the future.**
+
+Photos and videos can be passed to Tumblr for iOS using Apple's
+standard [UIDocumentInteractionController](http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIDocumentInteractionController_class/Reference/Reference.html).
+
+To include a caption, set the `annotation` property on the document 
+interaction controller to an `NSDictionary` containing a `TumblrCaption` 
+key, mapped to your caption (an `NSString`). To include tags, add a 
+`TumblrTags` key to the dictionary, mapped an an `NSArray` of `NSStrings`.
+
+If you want *only* the Tumblr app to show up in a document interaction controller,
+you can specify the file extension `tumblrphoto` and custom UTI `com.tumblr.photo`.
+
 ### UIActivityViewController
 
 **Note: As of iOS 8, it’s preferable to just allow your users to use our share extension instead. To share to Tumblr directly without using our extension, please use our [URL schemes](#url-schemes).**
 
-The SDK includes a [UIActivity subclass](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h)
-for including Tumblr in a standard `UIActivityViewController`. It currently
-provides only the activity icon and title, but you can hook it up however you
+The SDK includes a [UIActivity subclass](https://github.com/tumblr/TMTumblrSDK/blob/master/TMTumblrSDK/Activity/TMTumblrActivity.h) 
+for including Tumblr in a standard `UIActivityViewController`. It currently 
+provides only the activity icon and title, but you can hook it up however you 
 see fit and we may provide a more integrated solution in the future.
 
 If you're only interested in this UIActivity subclass,
