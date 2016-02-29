@@ -73,4 +73,11 @@
 + (void)createChatPost:(NSString *)title body:(NSString *)body tags:(NSArray *)tags success:(NSURL *)successURL
                 cancel:(NSURL *)cancelURL;
 
+/**
+ *  Present the OAuth authorize screen to the user. This will use the native app, if installed, else it will bump the user to Safari.
+ *
+ *  @param token Token to use from Tumblr's Request-token URL (see https://www.tumblr.com/docs/en/api/v2#auth)
+ */
++ (void)showAuthorizeWithToken:(NSString *)token;
+
 @end
