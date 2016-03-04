@@ -166,9 +166,6 @@ typedef NS_ENUM(NSUInteger, TMUniversalLink) {
         case TMUniversalLinkAuthorize:
             URLString = [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?%@", TMDictionaryToQueryString(parameters)];
             break;
-            
-        default:
-            break;
     }
     
     if (URLString) {
