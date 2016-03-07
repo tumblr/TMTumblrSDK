@@ -11,5 +11,6 @@ build
 
 Podfile.lock
 Pods/
+Cartfile.resolved
 Carthage/
 

@@ -232,7 +232,15 @@ if (![TMTumblrAppClient isTumblrInstalled]) {
 [TMTumblrAppClient viewBlog:@"bryan"];
 
 [TMTumblrAppClient viewPost:@"43724939726" blogName:@"bryan"];
+
+[TMTumblrAppClient showAuthorizeWithToken:@"AnOAuthToken"];
 ```
+
+The `showAuthorizeWithToken:` example allows you to kick off the OAuth 
+authorization step after obtaining a request token 
+(see [Authentication](https://www.tumblr.com/docs/en/api/v2#auth) section in the
+docs). Make sure your redirect URLs are properly set in the API dashboard to
+handle callbacks from this flow.
 
 If you're only interested in the app client,
 the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.

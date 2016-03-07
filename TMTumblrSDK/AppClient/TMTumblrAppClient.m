@@ -11,6 +11,10 @@
 #import <UIKit/UIKit.h>
 #import "TMSDKFunctions.h"
 
+typedef NS_ENUM(NSUInteger, TMUniversalLink) {
+    TMUniversalLinkAuthorize
+};
+
 @implementation TMTumblrAppClient
 
 + (BOOL)isTumblrInstalled {
@@ -131,6 +135,10 @@
     [self performAction:@"chat" parameters:params success:successURL cancel:cancelURL];
 }
 
++ (void)showAuthorizeWithToken:(NSString *)token {
+    [self openLink:TMUniversalLinkAuthorize parameters:@{ @"oauth_token" : token }];
+}
+
 #pragma mark - Private
 
 + (void)performAction:(NSString *)action parameters:(NSDictionary *)parameters {
@@ -147,6 +155,20 @@
         NSString *URLString = [NSString stringWithFormat:@"tumblr://x-callback-url/%@?%@", action,
                                TMDictionaryToQueryString(mutableParameters)];
         
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
+    }
+}
+
++ (void)openLink:(TMUniversalLink)link parameters:(NSDictionary *)parameters {
+    NSString *URLString;
+    
+    switch (link) {
+        case TMUniversalLinkAuthorize:
+            URLString = [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?%@", TMDictionaryToQueryString(parameters)];
+            break;
+    }
+    
+    if (URLString) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
     }
 }
