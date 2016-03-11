@@ -11,6 +11,7 @@
 #import "TMOAuth.h"
 #import "TMSDKFunctions.h"
 #import "TMSDKUserAgent.h"
+#import "TMSDKConstants.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>
@@ -124,7 +125,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     
     if ([[URLParameters allKeys] count] == 0) {
         if (self.threeLeggedOAuthCallback) {
-            self.threeLeggedOAuthCallback(nil, nil, [NSError errorWithDomain:@"Permission denied by user" code:0 userInfo:nil]);
+            self.threeLeggedOAuthCallback(nil, nil, errorCanceledByUser()); // Permission denied by user
         }
         
         clearState();
@@ -242,7 +243,10 @@ NSMutableURLRequest *mutableRequestWithURLString(NSString *URLString) {
 }
 
 NSError *errorWithStatusCode(NSInteger statusCode) {
-    return [NSError errorWithDomain:@"Authentication request failed" code:statusCode userInfo:nil];
+    return [NSError errorWithDomain:TMTumblrSDKErrorDomain
+                               code:TMTumblrSDKRequestFailedErrorCode
+                           userInfo:@{NSLocalizedDescriptionKey: @"Authentication request failed.",
+                                      TMTumblrSDKHTTPStatusCodeErrorKey: @(statusCode)}];
 }
 
 NSDictionary *formEncodedDataToDictionary(NSData *data) {

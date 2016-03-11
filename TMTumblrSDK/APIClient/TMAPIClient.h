@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TMSDKConstants.h"
 @class JXHTTPOperation;
 @class JXHTTPOperationQueue;
 

@@ -183,8 +183,10 @@ NSString *fullBlogName(NSString *blogName);
             if (operation.responseStatusCode/100 == 2) {
                 response = operation.responseData;
             } else {
-                error = [NSError errorWithDomain:@"Request failed" code:operation.responseStatusCode
-                                        userInfo:nil];
+                error = [NSError errorWithDomain:TMTumblrSDKErrorDomain
+                                            code:TMTumblrSDKRequestFailedErrorCode
+                                        userInfo:@{NSLocalizedDescriptionKey: @"Request failed.",
+                                                   TMTumblrSDKHTTPStatusCodeErrorKey: @(operation.responseStatusCode)}];
             }
             
             [queue addOperationWithBlock:^{
@@ -489,9 +491,13 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
             
             NSError *error = nil;
             
-            if (statusCode/100 != 2)
-                error = [NSError errorWithDomain:@"Request failed" code:statusCode userInfo:nil];
-            
+            if (statusCode/100 != 2) {
+                error = [NSError errorWithDomain:TMTumblrSDKErrorDomain
+                                            code:TMTumblrSDKRequestFailedErrorCode
+                                        userInfo:@{NSLocalizedDescriptionKey: @"Request failed.",
+                                                   TMTumblrSDKHTTPStatusCodeErrorKey: @(statusCode)}];
+            }
+
             [queue addOperationWithBlock:^{
                 blockCallback(response[@"response"], error);
                 blockCallback = nil;
