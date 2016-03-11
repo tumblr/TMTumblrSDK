@@ -19,6 +19,7 @@
 #endif
 
 typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSError *);
+typedef void (^TMHandleAuthenticationURLCallback)(NSURL *authURL);
 
 @interface TMTumblrAuthenticator()
 
@@ -42,7 +43,10 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     return instance;
 }
 
-- (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
+- (void)authenticate:(NSString *)URLScheme
+       handleAuthURL:(TMHandleAuthenticationURLCallback)handleAuthURLBlock
+        authCallback:(TMAuthenticationCallback)callback {
+
     // Clear token secret in case authentication was previously started but not finished
     self.threeLeggedOAuthTokenSecret = nil;
     
@@ -73,13 +77,9 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
             NSURL *authURL = [NSURL URLWithString:
                               [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
                                responseParameters[@"oauth_token"]]];
-            
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-            [[UIApplication sharedApplication] openURL:authURL];
-#else
-            [[NSWorkspace sharedWorkspace] openURL:authURL];
-#endif
-            
+
+            handleAuthURLBlock(authURL);
+
         } else {
             if (callback) {
                 callback(nil, nil, errorWithStatusCode(statusCode));
@@ -90,47 +90,20 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
 }
 
+- (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
+    [self authenticate:URLScheme handleAuthURL:^(NSURL *authURL) {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+        [[UIApplication sharedApplication] openURL:authURL];
+#else
+        [[NSWorkspace sharedWorkspace] openURL:authURL];
+#endif
+    } authCallback:callback];
+}
+
 - (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(TMAuthenticationCallback)callback {
-    // Clear token secret in case authentication was previously started but not finished
-    self.threeLeggedOAuthTokenSecret = nil;
-    
-    NSString *tokenRequestURLString = [NSString stringWithFormat:@"https://www.tumblr.com/oauth/request_token?oauth_callback=%@",
-                                       TMURLEncode([NSString stringWithFormat:@"%@://tumblr-authorize", URLScheme])];
-
-    NSMutableURLRequest *request = mutableRequestWithURLString(tokenRequestURLString);
-    [[self class] signRequest:request withParameters:nil consumerKey:self.OAuthConsumerKey
-               consumerSecret:self.OAuthConsumerSecret token:nil tokenSecret:nil];
-
-    NSURLConnectionCompletionHandler handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        if (error) {
-            if (callback)
-                callback(nil, nil, error);
-            
-            return;
-        }
-        
-        int statusCode = ((NSHTTPURLResponse *)response).statusCode;
-        
-        if (statusCode == 200) {
-            self.threeLeggedOAuthCallback = callback;
-
-            NSDictionary *responseParameters = formEncodedDataToDictionary(data);
-            self.threeLeggedOAuthTokenSecret = responseParameters[@"oauth_token_secret"];
-            
-            NSURL *authURL = [NSURL URLWithString:
-                              [NSString stringWithFormat:@"https://www.tumblr.com/oauth/authorize?oauth_token=%@",
-                               responseParameters[@"oauth_token"]]];
-
-            [webView loadRequest:[NSURLRequest requestWithURL:authURL]];
-            
-        } else {
-            if (callback) {
-                callback(nil, nil, errorWithStatusCode(statusCode));
-            }
-        }
-    };
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
+    [self authenticate:URLScheme handleAuthURL:^(NSURL *authURL) {
+        [webView loadRequest:[NSURLRequest requestWithURL:authURL]];
+    } authCallback:callback];
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
