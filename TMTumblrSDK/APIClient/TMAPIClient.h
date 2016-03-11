@@ -96,6 +96,8 @@ typedef void (^TMAPICallback)(id, NSError *error);
 
 /** @name Authentication */
 
+#ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
+
 /**
  Authenticate via three-legged OAuth.
  
@@ -108,6 +110,10 @@ typedef void (^TMAPICallback)(id, NSError *error);
  @param URLScheme a URL scheme that your application can handle requests to.
  */
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))error;
+
+#endif
+
+#ifdef __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
 
 /**
  Authenticate via three-legged OAuth using a given UIWebView
@@ -123,6 +129,8 @@ typedef void (^TMAPICallback)(id, NSError *error);
  @param webView a UIWebView to open the authentication site in.
  */
 - (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(void(^)(NSError *))error;
+
+#endif
 
 /**
  Authenticate via three-legged OAuth. This should be called from your `UIApplicationDelegate`'s

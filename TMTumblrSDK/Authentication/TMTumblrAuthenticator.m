@@ -90,21 +90,25 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
 }
 
+#ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
+
 - (void)authenticate:(NSString *)URLScheme callback:(TMAuthenticationCallback)callback {
     [self authenticate:URLScheme handleAuthURL:^(NSURL *authURL) {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-        [[UIApplication sharedApplication] openURL:authURL];
-#else
         [[NSWorkspace sharedWorkspace] openURL:authURL];
-#endif
     } authCallback:callback];
 }
+
+#endif
+
+#ifdef __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
 
 - (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(TMAuthenticationCallback)callback {
     [self authenticate:URLScheme handleAuthURL:^(NSURL *authURL) {
         [webView loadRequest:[NSURLRequest requestWithURL:authURL]];
     } authCallback:callback];
 }
+
+#endif
 
 - (BOOL)handleOpenURL:(NSURL *)url {
     if (![url.host isEqualToString:@"tumblr-authorize"]) {

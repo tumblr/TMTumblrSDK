@@ -38,16 +38,7 @@ NSString *fullBlogName(NSString *blogName);
 
 #pragma mark - Authentication
 
-- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(void(^)(NSError *))callback {
-    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
-                                                 webView:webView
-                                                callback:^(NSString *token, NSString *secret, NSError *error) {
-                                                    self.OAuthToken = token;
-                                                    self.OAuthTokenSecret = secret;
-                                                    
-                                                    callback(error);
-                                                }];
-}
+#ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
 
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))callback {
     [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
@@ -58,6 +49,23 @@ NSString *fullBlogName(NSString *blogName);
                                                     callback(error);
                                                 }];
 }
+
+#endif
+
+#ifdef __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
+
+- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(void(^)(NSError *))callback {
+    [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
+                                                 webView:webView
+                                                callback:^(NSString *token, NSString *secret, NSError *error) {
+                                                    self.OAuthToken = token;
+                                                    self.OAuthTokenSecret = secret;
+
+                                                    callback(error);
+                                                }];
+}
+
+#endif
 
 - (BOOL)handleOpenURL:(NSURL *)url {
     return [[TMTumblrAuthenticator sharedInstance] handleOpenURL:url];
