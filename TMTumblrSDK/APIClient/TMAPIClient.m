@@ -54,9 +54,9 @@ NSString *fullBlogName(NSString *blogName);
 
 #ifdef __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
 
-- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(void(^)(NSError *))callback {
+- (void)authenticate:(NSString *)URLScheme fromViewController:(UIViewController *)fromViewController callback:(void(^)(NSError *))callback {
     [[TMTumblrAuthenticator sharedInstance] authenticate:URLScheme
-                                                 webView:webView
+                                      fromViewController:fromViewController
                                                 callback:^(NSString *token, NSString *secret, NSError *error) {
                                                     self.OAuthToken = token;
                                                     self.OAuthTokenSecret = secret;

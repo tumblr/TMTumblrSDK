@@ -8,7 +8,7 @@
 
 @import Foundation;
 
-typedef void (^TMAuthenticationCallback)(NSString *, NSString *, NSError *);
+typedef void (^TMAuthenticationCallback)(NSString *token, NSString *secret, NSError *error);
 
 /**
  Provides three-legged OAuth and xAuth implementations for authenticating with the Tumblr API.
@@ -47,9 +47,9 @@ typedef void (^TMAuthenticationCallback)(NSString *, NSString *, NSError *);
  
  @param URLScheme a URL scheme that your application can handle requests to.
  
- @param webView a UIWebView to open the authentication site in.
+ @param fromViewController a UIViewController to present the authentication view controller from.
  */
-- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(TMAuthenticationCallback)callback;
+- (void)authenticate:(NSString *)URLScheme fromViewController:(UIViewController *)fromViewController callback:(TMAuthenticationCallback)callback;
 
 #endif
 

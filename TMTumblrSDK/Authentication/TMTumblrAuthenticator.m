@@ -11,6 +11,7 @@
 #import "TMOAuth.h"
 #import "TMSDKFunctions.h"
 #import "TMSDKUserAgent.h"
+#import "TMWebViewController.h"
 #import "TMSDKConstants.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
@@ -22,7 +23,7 @@
 typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSError *);
 typedef void (^TMHandleAuthenticationURLCallback)(NSURL *authURL);
 
-@interface TMTumblrAuthenticator()
+@interface TMTumblrAuthenticator() <TMWebViewControllerDelegate>
 
 @property (nonatomic, copy) TMAuthenticationCallback threeLeggedOAuthCallback;
 @property (nonatomic, copy) NSString *threeLeggedOAuthTokenSecret;
@@ -103,10 +104,32 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
 
 #ifdef __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
 
-- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(TMAuthenticationCallback)callback {
+- (void)authenticate:(NSString *)URLScheme fromViewController:(UIViewController *)fromViewController callback:(TMAuthenticationCallback)callback {
     [self authenticate:URLScheme handleAuthURL:^(NSURL *authURL) {
-        [webView loadRequest:[NSURLRequest requestWithURL:authURL]];
-    } authCallback:callback];
+        Class SFSafariViewControllerClass = NSClassFromString(@"SFSafariViewController");
+        UIViewController *authController;
+        if (SFSafariViewControllerClass) {
+            authController = [[SFSafariViewControllerClass alloc] initWithURL:authURL];
+            authController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            [authController performSelector:@selector(setDelegate:) withObject:self];
+        } else {
+            TMWebViewController *controller = [[TMWebViewController alloc] initWithURL:authURL];
+            controller.delegate = self;
+            authController = [[UINavigationController alloc] initWithRootViewController:controller];
+        }
+        [fromViewController presentViewController:authController animated:YES completion:NULL];
+    } authCallback:^(NSString *token, NSString *secret, NSError *error) {
+        dispatch_block_t performCallback = ^{
+            if (callback) {
+                callback(token, secret, error);
+            }
+        };
+        if (fromViewController.presentedViewController && !fromViewController.presentedViewController.isBeingDismissed) {
+            [fromViewController dismissViewControllerAnimated:YES completion:performCallback];
+        } else {
+            performCallback();
+        }
+    }];
 }
 
 #endif
@@ -215,8 +238,33 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
 }
 
-#pragma mark - NSObject
+#pragma mark - SFSafariViewControllerDelegate
 
+- (void)safariViewControllerDidFinish:(UIViewController *)controller {
+    void(^clearState)() = ^ {
+        self.threeLeggedOAuthTokenSecret = nil;
+        self.threeLeggedOAuthCallback = nil;
+    };
+    if (self.threeLeggedOAuthCallback) {
+        self.threeLeggedOAuthCallback(nil, nil, errorCanceledByUser()); // Canceled by user
+    }
+    clearState();
+}
+
+#pragma mark - TMWebViewControllerDelegate
+
+- (void)webViewControllerDidFinish:(TMWebViewController *)controller {
+    void(^clearState)() = ^ {
+        self.threeLeggedOAuthTokenSecret = nil;
+        self.threeLeggedOAuthCallback = nil;
+    };
+    [controller dismissViewControllerAnimated:YES completion:^{
+        if (self.threeLeggedOAuthCallback) {
+            self.threeLeggedOAuthCallback(nil, nil, errorCanceledByUser()); // Canceled by user
+        }
+        clearState();
+    }];
+}
 
 #pragma mark - Helpers
 
@@ -247,6 +295,12 @@ NSError *errorWithStatusCode(NSInteger statusCode) {
                                code:TMTumblrSDKRequestFailedErrorCode
                            userInfo:@{NSLocalizedDescriptionKey: @"Authentication request failed.",
                                       TMTumblrSDKHTTPStatusCodeErrorKey: @(statusCode)}];
+}
+
+NSError *errorCanceledByUser() {
+    return [NSError errorWithDomain:TMTumblrSDKErrorDomain
+                               code:TMTumblrSDKCanceledErrorCode
+                           userInfo:@{NSLocalizedDescriptionKey: @"Canceled by a user."}];
 }
 
 NSDictionary *formEncodedDataToDictionary(NSData *data) {

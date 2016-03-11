@@ -127,9 +127,9 @@ typedef void (^TMAPICallback)(id, NSError *error);
  
  @param URLScheme a URL scheme that your application can handle requests to.
  
- @param webView a UIWebView to open the authentication site in.
+ @param fromViewController a UIViewController to present the authentication view controller from.
  */
-- (void)authenticate:(NSString *)URLScheme webView:(UIWebView *)webView callback:(void(^)(NSError *))error;
+- (void)authenticate:(NSString *)URLScheme fromViewController:(UIViewController *)fromViewController callback:(void(^)(NSError *))error;
 
 #endif
 
