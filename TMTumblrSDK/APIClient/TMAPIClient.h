@@ -13,6 +13,24 @@
 typedef void (^TMAPICallback)(id, NSError *error);
 
 /**
+ *  Key for a URL string representing a deep link into your iOS app. If a value is set for this key in the parameters of a post request,
+ *  the Tumblr iOS app will display an app attribution bar at the bottom of the post that is created. If your app is installed, tapping
+ *  this bar or the "Open" button will redirect the user to the URL specified. If your app is not installed, they will be redirected to
+ *  your app's page on the app store.
+ *  @warning You must provide a valid App Store URL for your application on the configuration page, or the attribution
+ *  bar UI will not be displayed on posts.
+ */
+extern NSString * const TMPostKeyDeepLinkiOS;
+
+/**
+ *  Key for a URL string representing a deep link into your Android app. If a value is set for this key in the parameters of a post request,
+ *  the Tumblr Android app will display an app attribution bar at the bottom of the post that is created. If your app is installed, tapping
+ *  this bar or the "Open" button will redirect the user to the URL specified. If your app is not installed, they will be redirected to your
+ *  app's Google Play Store URL, or your Application Website if a Google Play Store URL has not been provided.
+ */
+extern NSString * const TMPostKeyDeepLinkAndroid;
+
+/**
  Full wrapper around the [Tumblr API](http://www.tumblr.com/docs/en/api/). Please see API documentation for a listing 
  of each route's parameters.
  */

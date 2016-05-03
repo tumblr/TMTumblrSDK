@@ -16,6 +16,9 @@
 
 static NSTimeInterval const TMAPIClientDefaultRequestTimeoutInterval = 60;
 
+NSString * const TMPostKeyDeepLinkiOS = @"deep_link_ios";
+NSString * const TMPostKeyDeepLinkAndroid = @"deep_link_android";
+
 @interface TMAPIClient()
 
 @property (nonatomic, strong) JXHTTPOperationQueue *queue;
