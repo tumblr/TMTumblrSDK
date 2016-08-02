@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TMSDKConstants.h"
 @class JXHTTPOperation;
 @class JXHTTPOperationQueue;
 
@@ -94,9 +95,9 @@ typedef void (^TMAPICallback)(id, NSError *error);
  */
 - (void)sendRequest:(JXHTTPOperation *)request queue:(NSOperationQueue *)queue callback:(TMAPICallback)callback;
 
-#ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
-
 /** @name Authentication */
+
+#ifdef __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
 
 /**
  Authenticate via three-legged OAuth.
@@ -111,6 +112,27 @@ typedef void (^TMAPICallback)(id, NSError *error);
  */
 - (void)authenticate:(NSString *)URLScheme callback:(void(^)(NSError *))error;
 
+#endif
+
+#ifdef __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
+
+/**
+ Authenticate via three-legged OAuth using a given UIWebView
+ 
+ Your `TMAPIClient` instance's `handleOpenURL:` method must also be called from your `UIApplicationDelegate`'s
+ `application:openURL:sourceApplication:annotation:` method in order to receive the tokens.
+ 
+ This method proxies to an underlying `TMTumblrAuthenticator` which will authenticate using the given the web view.
+ That class can be used on its own but you do not need to invoke it directly if you are including the whole API client in your project.
+ 
+ @param URLScheme a URL scheme that your application can handle requests to.
+ 
+ @param fromViewController a UIViewController to present the authentication view controller from.
+ */
+- (void)authenticate:(NSString *)URLScheme fromViewController:(UIViewController *)fromViewController callback:(void(^)(NSError *))error;
+
+#endif
+
 /**
  Authenticate via three-legged OAuth. This should be called from your `UIApplicationDelegate`'s
  `application:openURL:sourceApplication:annotation:` method in order to receive the tokens.
@@ -121,8 +143,6 @@ typedef void (^TMAPICallback)(id, NSError *error);
  This method is the last part of the authentication flow started by calling `authenticate:callback:`
  */
 - (BOOL)handleOpenURL:(NSURL *)url;
-
-#endif
 
 /**
  Authenticate via xAuth. Please note that xAuth access [must be specifically requested](http://www.tumblr.com/oauth/apps) 

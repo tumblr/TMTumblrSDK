@@ -25,6 +25,10 @@
 		315FEF311BCF4BF00064B3AA /* TMSDKUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B345C01A4218CF00E39E3B /* TMSDKUserAgent.m */; settings = {ASSET_TAGS = (); }; };
 		315FEF331BCF51270064B3AA /* JXHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 315FEF321BCF51270064B3AA /* JXHTTP.framework */; };
 		93A015C91B0696EF0047F8C4 /* TMSDKFunctionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A015C81B0696EF0047F8C4 /* TMSDKFunctionsTest.m */; };
+		E3F5FA431C92EBA100343A59 /* TMWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F5FA411C92EBA100343A59 /* TMWebViewController.m */; };
+		E3F5FA441C92EBA100343A59 /* TMWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = E3F5FA421C92EBA100343A59 /* TMWebViewController.h */; };
+		E3FBEF7C1C93054F006D535E /* TMSDKConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = E3FBEF7A1C93054F006D535E /* TMSDKConstants.h */; };
+		E3FBEF7D1C93054F006D535E /* TMSDKConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FBEF7B1C93054F006D535E /* TMSDKConstants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +66,10 @@
 		93F8E38E16F921C6004CA7D5 /* TMTumblrAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTumblrAuthenticator.h; sourceTree = "<group>"; };
 		93F8E38F16F921C6004CA7D5 /* TMTumblrAuthenticator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTumblrAuthenticator.m; sourceTree = "<group>"; };
 		BDD19E73B3BF8B7C6E532A05 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E3F5FA411C92EBA100343A59 /* TMWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMWebViewController.m; sourceTree = "<group>"; };
+		E3F5FA421C92EBA100343A59 /* TMWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMWebViewController.h; sourceTree = "<group>"; };
+		E3FBEF7A1C93054F006D535E /* TMSDKConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMSDKConstants.h; sourceTree = "<group>"; };
+		E3FBEF7B1C93054F006D535E /* TMSDKConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMSDKConstants.m; sourceTree = "<group>"; };
 		F20180682E41431BF494938D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,6 +140,8 @@
 				93BAE94F1709328B00E7E490 /* TMSDKFunctions.m */,
 				93B345BF1A4218CF00E39E3B /* TMSDKUserAgent.h */,
 				93B345C01A4218CF00E39E3B /* TMSDKUserAgent.m */,
+				E3FBEF7A1C93054F006D535E /* TMSDKConstants.h */,
+				E3FBEF7B1C93054F006D535E /* TMSDKConstants.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -199,6 +209,8 @@
 				93F8E38D16F921C6004CA7D5 /* TMOAuth.m */,
 				93F8E38E16F921C6004CA7D5 /* TMTumblrAuthenticator.h */,
 				93F8E38F16F921C6004CA7D5 /* TMTumblrAuthenticator.m */,
+				E3F5FA421C92EBA100343A59 /* TMWebViewController.h */,
+				E3F5FA411C92EBA100343A59 /* TMWebViewController.m */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -233,11 +245,13 @@
 			files = (
 				2D64109E1BD0064600599831 /* TMTumblrSDK.h in Headers */,
 				315FEF281BCF4BE20064B3AA /* TMTumblrAppClient.h in Headers */,
+				E3FBEF7C1C93054F006D535E /* TMSDKConstants.h in Headers */,
 				315FEF241BCF4BD50064B3AA /* TMTumblrActivity.h in Headers */,
 				315FEF2A1BCF4BE90064B3AA /* TMOAuth.h in Headers */,
 				315FEF261BCF4BDC0064B3AA /* TMAPIClient.h in Headers */,
 				315FEF2E1BCF4BF00064B3AA /* TMSDKFunctions.h in Headers */,
 				315FEF2C1BCF4BE90064B3AA /* TMTumblrAuthenticator.h in Headers */,
+				E3F5FA441C92EBA100343A59 /* TMWebViewController.h in Headers */,
 				315FEF301BCF4BF00064B3AA /* TMSDKUserAgent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,8 +356,10 @@
 				315FEF251BCF4BD50064B3AA /* TMTumblrActivity.m in Sources */,
 				315FEF2B1BCF4BE90064B3AA /* TMOAuth.m in Sources */,
 				315FEF291BCF4BE20064B3AA /* TMTumblrAppClient.m in Sources */,
+				E3FBEF7D1C93054F006D535E /* TMSDKConstants.m in Sources */,
 				315FEF2D1BCF4BE90064B3AA /* TMTumblrAuthenticator.m in Sources */,
 				315FEF311BCF4BF00064B3AA /* TMSDKUserAgent.m in Sources */,
+				E3F5FA431C92EBA100343A59 /* TMWebViewController.m in Sources */,
 				315FEF2F1BCF4BF00064B3AA /* TMSDKFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
