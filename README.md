@@ -255,6 +255,12 @@ handle callbacks from this flow.
 If you're only interested in the app client,
 the `TMTumblrSDK/AppClient` sub-pod can be installed by itself.
 
+#### Attribution and Deep Links
+
+If your app posts to Tumblr, you can provide the API Client with deep link URLs under the keys `TMPostKeyDeepLinkiOS` and `TMPostKeyDeepLinkAndroid`. This will cause attribution UI for your app to be displayed beneath the post on the respective platform. When this UI is tapped, the OS will open the deep link you specified. Be aware that all icons and required fields must be provided in your app's [configuration](https://www.tumblr.com/oauth/apps) before this UI will be visible.
+
+**NOTE:** This is currently only available to whitelisted app partners. Contact Tumblr business development ([bd@tumblr.com](mailto:bd@tumblr.com)) if your app requires this functionality.
+
 #### URL schemes
 
 Tumblr for iOS exposes actions using the [x-callback-url](http://x-callback-url.com/)
