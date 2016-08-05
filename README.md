@@ -325,7 +325,7 @@ which shows all of the inter-app hooks in action.
 
 ## Dependencies
 
-* [JXHTTP](https://github.com/jstn/JXHTTP)
+* [JXHTTP](https://github.com/tumblr/JXHTTP)
 
 ## Contact
 
