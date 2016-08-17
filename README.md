@@ -81,11 +81,9 @@ to Xcode for you.
 
 There are two ways for your application to connect with Tumblr, each with different benefits.  You are free to choose the method that you prefer based on the needs of your application.  
 
-API Client - The first method is the [API Client](#api-client), a class that facilitates direct communication with Tumblr via the [Tumblr API](http://www.tumblr.com/docs/en/api/v2).  The benefits of using the API Client include the ability to better control the user experience and keep users in your app.  A typical use case for the API client is an application that allows a user to share a photo to multiple social networks at the same time.  In this case, after allowing a user to select a photo, you might present them with a list of toggles representing the different networks that would receive the photo.  Once they confirm, and assuming they selected Tumblr, you would use the API client to post the image to the user's Tumblr.  Use of the API Client requires [authentication](#authentication) from the user which you may facilitate through the TMTumblrAuthenticator class.  
-
-App Client - The second method is the [App Client](#app-client), a class that allows you to facilate communication to Tumblr via the Tumblr App installed on the phone.  The App Client provides a series of methods, each of which will launch the Tumblr App, passing the necessary parameters to perform a specific function.  When the function is completed, the Tumblr App will return the user to your app.  The benefit of the App Client is that it requires very little programming on your part and does not require any user authentication (they are already authenticated in the Tumblr App).  In addition, it always uses the latest functionality in the Tumblr app to perform the desired function so you don't have to keep your app up to date.  You might use the App Client when you want to enable a user to post an image to Tumblr using the Post Form in the Tumblr App, thus allowing them to edit the image using Tumblr's tools.  
-
 ### API client
+
+The first method is the API Client, a class that facilitates direct communication with Tumblr via the [Tumblr API](http://www.tumblr.com/docs/en/api/v2).  The benefits of using the API Client include the ability to better control the user experience and keep users in your app.  A typical use case for the API client is an application that allows a user to share a photo to multiple social networks at the same time.  In this case, after allowing a user to select a photo, you might present them with a list of toggles representing the different networks that would receive the photo.  Once they confirm, and assuming they selected Tumblr, you would use the API client to post the image to the user's Tumblr.  Use of the API Client requires [authentication](#authentication) from the user which you may facilitate through the TMTumblrAuthenticator class.  
 
 Please view the [API documentation](http://www.tumblr.com/docs/en/api/v2) for
 full usage instructions.
@@ -203,6 +201,9 @@ If you're only interested in authentication, the
 
 
 ### App client
+
+The second method is the App Client, a class that allows you to facilate communication to Tumblr via the Tumblr App installed on the phone.  The App Client provides a series of methods, each of which will launch the Tumblr App, passing the necessary parameters to perform a specific function.  When the function is completed, the Tumblr App will return the user to your app.  The benefit of the App Client is that it requires very little programming on your part and does not require any user authentication (they are already authenticated in the Tumblr App).  In addition, it always uses the latest functionality in the Tumblr app to perform the desired function so you don't have to keep your app up to date.  You might use the App Client when you want to enable a user to post an image to Tumblr using the Post Form in the Tumblr App, thus allowing them to edit the image using Tumblr's tools.  
+
 
 The `TMTumblrAppClient` class provides a simple interface for interacting with
 [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the
