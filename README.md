@@ -15,6 +15,7 @@ submitting a pull request. Please use the Tumblr API [responsibly](http://www.tu
 * [Connecting to Tumblr](#connecting-to-tumblr)
     * [API client](#api-client) - [Authentication Required](#authentication) 
     * [App client](#app-client) - No Authentication Required
+    * [Other connection methods](#other-connection-methods)
 * [Example App](#example)
 * [Contact](#contact)
 * [License](#license)
@@ -247,15 +248,13 @@ If your app posts to Tumblr, you can provide the API Client with deep link URLs 
 
 **NOTE:** This is currently only available to whitelisted app partners. Contact Tumblr business development ([bd@tumblr.com](mailto:bd@tumblr.com)) if your app requires this functionality.
 
+### Other Connection Methods
 #### URL schemes [Depricated]
-
 Apps that already make direct calls to Tumblr URL schemes will still work.  Going forward, for App to App communications, use the App client.  
+#### Share extension [Depricated]
+#### UIActivityViewController [Depricated]
 
-### Share extension [Depricated]
-
-### UIActivityViewController [Depricated]
-
-### Example
+## Example
 
 The repository includes a [sample application](https://github.com/tumblr/TMTumblrSDK/tree/master/Examples/AppClientExample)
 which shows all of the inter-app hooks in action.
