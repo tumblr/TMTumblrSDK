@@ -13,7 +13,8 @@ submitting a pull request. Please use the Tumblr API [responsibly](http://www.tu
     * [CocoaPods](#cocoapods)
     * [Documentation](#documentation)
 * [Connecting to Tumblr](#connecting-to-tumblr)
-    * [API client](#api-client) - [Authentication Required](#authentication) 
+    * [API client](#api-client)
+      * [Authentication](#authentication) 
     * [App client](#app-client) - No Authentication Required
     * [Other connection methods](#other-connection-methods)
 * [Example App](#example)
