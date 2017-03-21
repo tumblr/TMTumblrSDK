@@ -14,7 +14,7 @@ submitting a pull request. Please use the Tumblr API [responsibly](http://www.tu
     * [Documentation](#documentation)
 * [Connecting to Tumblr](#connecting-to-tumblr)
     * [API client](#api-client)
-      * [Authentication](#authentication) 
+      * [Authentication](#authentication)
     * [App client](#app-client)
     * [Other connection methods](#other-connection-methods)
 * [Example App](#example)
@@ -27,16 +27,16 @@ submitting a pull request. Please use the Tumblr API [responsibly](http://www.tu
 
 [CocoaPods](http://cocoapods.org) is the recommended way to add the Tumblr
 SDK to your project. *Using CocoaPods means you don't need to worry about
-cloning or adding this repository as a git submodule.* CocoaPods is a package 
+cloning or adding this repository as a git submodule.* CocoaPods is a package
 manager like `gem` (Ruby) and `npm` (Node.js), but for Objective-C projects.
 
-Module authors create "pods" which are versioned and stored in a central 
+Module authors create "pods" which are versioned and stored in a central
 repository. App developers create "podfiles" to specify their apps'
 dependencies and use the CocoaPods command line tool to:
 
 * Fetch the dependencies specified in their podfile
 * Recursively fetch all subdependencies
-* Create an Xcode workspace that includes the pods, links any necessary libraries, 
+* Create an Xcode workspace that includes the pods, links any necessary libraries,
 configures header search paths, enables ARC where appropriate, and more
 
 If you're new to CocoaPods, the website contains lots of helpful [documentation](http://docs.cocoapods.org).
@@ -55,7 +55,7 @@ After running `pod install`, you'll have an Xcode workspace that includes not
 only your application but also the Tumblr SDK and its dependencies. That's really
 all there is to it.
 
-You will get the latest version of the SDK by referring to it simply by name 
+You will get the latest version of the SDK by referring to it simply by name
 (`TMTumblrSDK`). [This guide](http://docs.cocoapods.org/guides/dependency_versioning.html)
 explains how explicit dependency versions can instead be specified.
 
@@ -81,11 +81,11 @@ to Xcode for you.
 
 ## Connecting to Tumblr
 
-There are two ways for your application to connect with Tumblr, each with different benefits.  You are free to choose the method that you prefer based on the needs of your application.  
+There are two ways for your application to connect with Tumblr, each with different benefits. You are free to choose the method that you prefer based on the needs of your application.
 
 ### API client
 
-The first method is the API Client, a class that facilitates direct communication with Tumblr via the [Tumblr API](http://www.tumblr.com/docs/en/api/v2).  The benefits of using the API Client include the ability to better control the user experience and keep users in your app.  A typical use case for the API client is an application that allows a user to share a photo to multiple social networks at the same time.  In this case, after allowing a user to select a photo, you might present them with a list of toggles representing the different networks that would receive the photo.  Once they confirm, and assuming they selected Tumblr, you would use the API client to post the image to the user's Tumblr.  Use of the API Client requires [authentication](#authentication) from the user for certain routes which you may facilitate through the `TMTumblrAuthenticator` class.  
+The first method is the API Client, a class that facilitates direct communication with Tumblr via the [Tumblr API](http://www.tumblr.com/docs/en/api/v2). The benefits of using the API Client include the ability to better control the user experience and keep users in your app. A typical use case for the API client is an application that allows a user to share a photo to multiple social networks at the same time. In this case, after allowing a user to select a photo, you might present them with a list of toggles representing the different networks that would receive the photo. Once they confirm, and assuming they selected Tumblr, you would use the API client to post the image to the user's Tumblr. Use of the API Client requires [authentication](#authentication) from the user for certain routes which you may facilitate through the `TMTumblrAuthenticator` class.
 
 Please view the [API documentation](http://www.tumblr.com/docs/en/api/v2) for
 full usage instructions.
@@ -204,12 +204,12 @@ If you're only interested in authentication, the
 
 ### App client
 
-The second method is the App Client, a class that allows you to facilate communication to Tumblr via the Tumblr App installed on the phone.  The App Client provides a series of methods, each of which will launch the Tumblr App, passing the necessary parameters to perform a specific function.  When launching the Tumblr app to make a post, the Tumblr App will return the user to your app if you include the correct success and cancel parameters.  The benefit of the App Client is that it requires very little programming on your part and does not require any user authentication (they are already authenticated in the Tumblr App).  In addition, it always uses the latest functionality in the Tumblr app to perform the desired function so you don't have to keep your app up to date.  You might use the App Client when you want to enable a user to post an image to Tumblr using the Post Form in the Tumblr App, thus allowing them to edit the image using Tumblr's tools.  
+The second method is the App Client, a class that allows you to facilate communication to Tumblr via the Tumblr App installed on the phone. The App Client provides a series of methods, each of which will launch the Tumblr App, passing the necessary parameters to perform a specific function. When launching the Tumblr app to make a post, the Tumblr App will return the user to your app if you include the correct success and cancel parameters. The benefit of the App Client is that it requires very little programming on your part and does not require any user authentication (they are already authenticated in the Tumblr App). In addition, it always uses the latest functionality in the Tumblr app to perform the desired function so you don't have to keep your app up to date. You might use the App Client when you want to enable a user to post an image to Tumblr using the Post Form in the Tumblr App, thus allowing them to edit the image using Tumblr's tools.
 
 
 The `TMTumblrAppClient` class provides a simple interface for interacting with
 [Tumblr for iOS](https://itunes.apple.com/us/app/tumblr/id305343404?mt=8) if the
-user has it installed. The following methods are currently available.  See the [AppleDoc](http://cocoadocs.org/docsets/TMTumblrSDK/4.0.4/Classes/TMTumblrAppClient.html#class_methods) for details of each.  
+user has it installed. The following methods are currently available. See the [AppleDoc](http://cocoadocs.org/docsets/TMTumblrSDK/4.0.4/Classes/TMTumblrAppClient.html#class_methods) for details of each.
 
 ```objc
 + isTumblrInstalled
@@ -234,8 +234,8 @@ user has it installed. The following methods are currently available.  See the [
 
 ```
 
-The `showAuthorizeWithToken:` example allows you to kick off the OAuth 
-authorization step after obtaining a request token 
+The `showAuthorizeWithToken:` example allows you to kick off the OAuth
+authorization step after obtaining a request token
 (see [Authentication](https://www.tumblr.com/docs/en/api/v2#auth) section in the
 docs). Make sure your redirect URLs are properly set in the API dashboard to
 handle callbacks from this flow.
