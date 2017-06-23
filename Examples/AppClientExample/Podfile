@@ -3,11 +3,3 @@ platform :ios, '5.0'
 target 'AppClientExample' do
   pod 'TMTumblrSDK/AppClient', :path => '../..'
 end
-
-plugin 'cocoapods-keys', {
-  :project => 'AppClientExample',
-  :keys => [
-    "OAuthConsumerKey",
-    "OAuthConsumerSecret"
-  ]
-}
