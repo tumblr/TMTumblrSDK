@@ -19,6 +19,10 @@
     [button setTitle:@"Post photo" forState:UIControlStateNormal];
     [button sizeToFit];
     [button addTarget:self action:@selector(postPhoto) forControlEvents:UIControlEventTouchUpInside];
+
+    CGRect screenRect  = [[UIScreen mainScreen] bounds];
+    button.center = CGPointMake(screenRect.size.width / 2, screenRect.size.height / 2);
+
     [self.view addSubview:button];
     
     // TODO: Fill in your keys and secrets
