@@ -18,12 +18,13 @@
 		9379E32117496C4300998F0C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9379E32017496C4300998F0C /* Default-568h@2x.png */; };
 		9379E32917496C6400998F0C /* TMPhotoPostController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9379E32817496C6400998F0C /* TMPhotoPostController.m */; };
 		9379E32B17496CF700998F0C /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 9379E32A17496CF700998F0C /* blue.png */; };
-		BDC17B63FEDE443FA3BCACC7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AC8A9EE01E437BB669FB46 /* libPods.a */; };
+		AA81B9E9B3478BFAAF8ED830 /* libPods-PhotoPostExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F975E8F71A331D3138DC9E59 /* libPods-PhotoPostExample.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2E49474A41D2A02B1E127BFD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		618DF6CDE4B7B60312CF0D9D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		62BBAF696902435E7A49CF46 /* Pods-PhotoPostExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoPostExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoPostExample/Pods-PhotoPostExample.release.xcconfig"; sourceTree = "<group>"; };
 		89AC8A9EE01E437BB669FB46 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9379E30717496C4300998F0C /* PhotoPostExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoPostExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9379E30A17496C4300998F0C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -41,6 +42,8 @@
 		9379E32717496C6400998F0C /* TMPhotoPostController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPhotoPostController.h; sourceTree = "<group>"; };
 		9379E32817496C6400998F0C /* TMPhotoPostController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPhotoPostController.m; sourceTree = "<group>"; };
 		9379E32A17496CF700998F0C /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
+		A37AC9E7D93CA3E198D194BE /* Pods-PhotoPostExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoPostExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoPostExample/Pods-PhotoPostExample.debug.xcconfig"; sourceTree = "<group>"; };
+		F975E8F71A331D3138DC9E59 /* libPods-PhotoPostExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoPostExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +54,7 @@
 				9379E30B17496C4300998F0C /* UIKit.framework in Frameworks */,
 				9379E30D17496C4300998F0C /* Foundation.framework in Frameworks */,
 				9379E30F17496C4300998F0C /* CoreGraphics.framework in Frameworks */,
-				BDC17B63FEDE443FA3BCACC7 /* libPods.a in Frameworks */,
+				AA81B9E9B3478BFAAF8ED830 /* libPods-PhotoPostExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +86,7 @@
 				9379E30C17496C4300998F0C /* Foundation.framework */,
 				9379E30E17496C4300998F0C /* CoreGraphics.framework */,
 				89AC8A9EE01E437BB669FB46 /* libPods.a */,
+				F975E8F71A331D3138DC9E59 /* libPods-PhotoPostExample.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -119,6 +123,8 @@
 			children = (
 				618DF6CDE4B7B60312CF0D9D /* Pods.debug.xcconfig */,
 				2E49474A41D2A02B1E127BFD /* Pods.release.xcconfig */,
+				A37AC9E7D93CA3E198D194BE /* Pods-PhotoPostExample.debug.xcconfig */,
+				62BBAF696902435E7A49CF46 /* Pods-PhotoPostExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -130,11 +136,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9379E32417496C4300998F0C /* Build configuration list for PBXNativeTarget "PhotoPostExample" */;
 			buildPhases = (
-				AD905AC7A4C643AEB9B8A657 /* Check Pods Manifest.lock */,
+				AD905AC7A4C643AEB9B8A657 /* [CP] Check Pods Manifest.lock */,
 				9379E30317496C4200998F0C /* Sources */,
 				9379E30417496C4200998F0C /* Frameworks */,
 				9379E30517496C4200998F0C /* Resources */,
-				F1BC47DF41B74E268B400A1C /* Copy Pods Resources */,
+				F1BC47DF41B74E268B400A1C /* [CP] Copy Pods Resources */,
+				490248F73D65A2FDA43F60DB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,33 +195,48 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AD905AC7A4C643AEB9B8A657 /* Check Pods Manifest.lock */ = {
+		490248F73D65A2FDA43F60DB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sanbox is not in sync with the Podfile.lock. Run 'pod install'.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoPostExample/Pods-PhotoPostExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-		F1BC47DF41B74E268B400A1C /* Copy Pods Resources */ = {
+		AD905AC7A4C643AEB9B8A657 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+		};
+		F1BC47DF41B74E268B400A1C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoPostExample/Pods-PhotoPostExample-resources.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -301,7 +323,7 @@
 		};
 		9379E32517496C4300998F0C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 618DF6CDE4B7B60312CF0D9D /* Pods.debug.xcconfig */;
+			baseConfigurationReference = A37AC9E7D93CA3E198D194BE /* Pods-PhotoPostExample.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoPostExample/PhotoPostExample-Prefix.pch";
@@ -313,7 +335,7 @@
 		};
 		9379E32617496C4300998F0C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E49474A41D2A02B1E127BFD /* Pods.release.xcconfig */;
+			baseConfigurationReference = 62BBAF696902435E7A49CF46 /* Pods-PhotoPostExample.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoPostExample/PhotoPostExample-Prefix.pch";

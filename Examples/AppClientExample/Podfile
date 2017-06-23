@@ -1,3 +1,5 @@
 platform :ios, '5.0'
 
-pod 'TMTumblrSDK/AppClient', :local => '../..'
+target 'AppClientExample' do
+  pod 'TMTumblrSDK/AppClient', :path => '../..'
+end
