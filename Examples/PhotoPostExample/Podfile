@@ -1,3 +1,5 @@
 platform :ios, '5.0'
 
-pod 'TMTumblrSDK/APIClient', :path => '../..'
+target 'PhotoPostExample' do
+  pod 'TMTumblrSDK/APIClient', :path => '../..'
+end
