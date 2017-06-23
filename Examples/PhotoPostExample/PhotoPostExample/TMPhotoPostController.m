@@ -9,6 +9,7 @@
 #import "TMPhotoPostController.h"
 
 #import "TMAPIClient.h"
+#import <Keys/PhotoPostExampleKeys.h>
 
 @implementation TMPhotoPostController
 
@@ -21,12 +22,10 @@
     [button addTarget:self action:@selector(postPhoto) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
-    // TODO: Fill in your keys and secrets
     
-    [TMAPIClient sharedInstance].OAuthConsumerKey = @"";
-    [TMAPIClient sharedInstance].OAuthConsumerSecret = @"";
-    [TMAPIClient sharedInstance].OAuthToken = @"";
-    [TMAPIClient sharedInstance].OAuthTokenSecret = @"";
+    PhotoPostExampleKeys *keys = [[PhotoPostExampleKeys alloc] init];
+    [TMAPIClient sharedInstance].OAuthConsumerKey = keys.oAuthConsumerKey;
+    [TMAPIClient sharedInstance].OAuthConsumerSecret = keys.oAuthConsumerSecret;
 }
 
 - (void)postPhoto {
