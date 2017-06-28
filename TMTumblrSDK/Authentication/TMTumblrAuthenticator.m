@@ -23,7 +23,11 @@
 typedef void (^NSURLConnectionCompletionHandler)(NSURLResponse *, NSData *, NSError *);
 typedef void (^TMHandleAuthenticationURLCallback)(NSURL *authURL);
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
 @interface TMTumblrAuthenticator() <TMWebViewControllerDelegate>
+#else
+@interface TMTumblrAuthenticator()
+#endif
 
 @property (nonatomic, copy) TMAuthenticationCallback threeLeggedOAuthCallback;
 @property (nonatomic, copy) NSString *threeLeggedOAuthTokenSecret;
@@ -238,6 +242,8 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
 }
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
 #pragma mark - SFSafariViewControllerDelegate
 
 - (void)safariViewControllerDidFinish:(UIViewController *)controller {
@@ -265,6 +271,8 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
         clearState();
     }];
 }
+
+#endif
 
 #pragma mark - Helpers
 

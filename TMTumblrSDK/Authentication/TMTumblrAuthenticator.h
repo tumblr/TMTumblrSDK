@@ -8,6 +8,10 @@
 
 @import Foundation;
 
+#ifdef __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
+#import <UIKit/UIKit.h>
+#endif
+
 typedef void (^TMAuthenticationCallback)(NSString *token, NSString *secret, NSError *error);
 
 /**
