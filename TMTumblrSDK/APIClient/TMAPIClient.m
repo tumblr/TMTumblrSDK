@@ -355,6 +355,22 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
                            fileNameArray:fileNameArrayOrNil parameters:parameters] callback:(TMAPICallback)callback];
 }
 
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName imageNSDataArray:(NSArray *)nsdataArrayOrNil
+                 contentTypeArray:(NSArray *)contentTypeArrayOrNil fileNameArray:(NSArray *)fileNameArrayOrNil
+                       parameters:(NSDictionary *)parameters
+{
+    return [self multipartPostRequest:blogName type:@"photo" parameters:parameters nsDataArray:nsdataArrayOrNil
+                     contentTypeArray:contentTypeArrayOrNil fileNameArray:fileNameArrayOrNil];
+}
+
+- (void)photo:(NSString *)blogName imageNSDataArray:(NSArray *)nsdataArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
+fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback
+{
+    [self sendRequest:[self photoRequest:blogName imageNSDataArray:nsdataArrayOrNil contentTypeArray:contentTypeArrayOrNil
+                           fileNameArray:fileNameArrayOrNil parameters:parameters] callback:(TMAPICallback)callback];
+
+}
+
 - (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
                       contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
                        parameters:(NSDictionary *)parameters {
@@ -449,6 +465,42 @@ fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameter
     [self signRequest:request withParameters:mutableParameters];
     
     return request;
+}
+
+- (JXHTTPOperation *)multipartPostRequest:(NSString *)blogName type:(NSString *)type parameters:(NSDictionary *)parameters
+                            nsDataArray:(NSArray *)nsdataArrayOrNil contentTypeArray:(NSArray *)contentTypeArray
+                            fileNameArray:(NSArray *)fileNameArray {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    mutableParameters[@"type"] = type;
+    
+    JXHTTPOperation *request = [JXHTTPOperation withURLString:[self URLWithPath:blogPath(@"post", blogName)]];
+    request.requestMethod = @"POST";
+    request.continuesInAppBackground = YES;
+    request.requestBody = [self multipartBodyForParameters:mutableParameters nsDataArray:nsdataArrayOrNil
+                                          contentTypeArray:contentTypeArray fileNameArray:fileNameArray];
+    request.requestTimeoutInterval = self.timeoutInterval;
+    
+    [self signRequest:request withParameters:mutableParameters];
+    
+    return request;
+}
+
+- (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters nsDataArray:(NSArray *)nsdataArray
+                                   contentTypeArray:(NSArray *)contentTypeArray fileNameArray:(NSArray *)fileNameArray {
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    mutableParameters[@"api_key"] = self.OAuthConsumerKey;
+    
+    JXHTTPMultipartBody *multipartBody = [JXHTTPMultipartBody withDictionary:mutableParameters];
+    
+    BOOL multiple = [nsdataArray count] > 1;
+    
+    [nsdataArray enumerateObjectsUsingBlock:^(NSData *data, NSUInteger index, BOOL *stop) {
+        [multipartBody addData:data forKey:multiple ? [NSString stringWithFormat:@"data[%lu]", (unsigned long)index] : @"data"
+                   contentType:contentTypeArray[index] fileName:fileNameArray[index]];
+    }];
+    
+    return multipartBody;
 }
 
 - (JXHTTPMultipartBody *)multipartBodyForParameters:(NSDictionary *)parameters filePathArray:(NSArray *)filePathArray

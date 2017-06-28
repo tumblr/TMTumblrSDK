@@ -288,6 +288,15 @@ extern NSString * const TMPostKeyDeepLinkAndroid;
 - (void)photo:(NSString *)blogName filePathArray:(NSArray *)filePathArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
 fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
 
+
+- (JXHTTPOperation *)photoRequest:(NSString *)blogName imageNSDataArray:(NSArray *)nsdataArrayOrNil
+                 contentTypeArray:(NSArray *)contentTypeArrayOrNil fileNameArray:(NSArray *)fileNameArrayOrNil
+                       parameters:(NSDictionary *)parameters;
+
+- (void)photo:(NSString *)blogName imageNSDataArray:(NSArray *)nsdataArrayOrNil contentTypeArray:(NSArray *)contentTypeArrayOrNil
+fileNameArray:(NSArray *)fileNameArrayOrNil parameters:(NSDictionary *)parameters callback:(TMAPICallback)callback;
+
+
 /// Create a video post
 - (JXHTTPOperation *)videoRequest:(NSString *)blogName filePath:(NSString *)filePathOrNil
                       contentType:(NSString *)contentTypeOrNil fileName:(NSString *)fileNameOrNil
