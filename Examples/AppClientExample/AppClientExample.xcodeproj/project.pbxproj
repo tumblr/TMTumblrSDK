@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00B5D1ABE4A6431E804EB5DA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E241EBDBBDCF4E3393680DED /* libPods.a */; };
+		62DB9DC6FE73D58C41DB57D5 /* libPods-AppClientExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 081ECCB5093BF5EA249E3DF9 /* libPods-AppClientExample.a */; };
 		9330594416F92D6B00868C9C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9330594316F92D6B00868C9C /* UIKit.framework */; };
 		9330594616F92D6B00868C9C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9330594516F92D6B00868C9C /* Foundation.framework */; };
 		9330594816F92D6B00868C9C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9330594716F92D6B00868C9C /* CoreGraphics.framework */; };
@@ -22,7 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		081ECCB5093BF5EA249E3DF9 /* libPods-AppClientExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AppClientExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86EFED2E98293EED7501CFB5 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		8D22401278BF22DBBEFA9323 /* Pods-AppClientExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppClientExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppClientExample/Pods-AppClientExample.release.xcconfig"; sourceTree = "<group>"; };
 		9330594016F92D6B00868C9C /* AppClientExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppClientExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9330594316F92D6B00868C9C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9330594516F92D6B00868C9C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -39,6 +41,7 @@
 		9330596016F92DA000868C9C /* TMAppClientExampleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAppClientExampleController.h; sourceTree = "<group>"; };
 		9330596116F92DA000868C9C /* TMAppClientExampleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAppClientExampleController.m; sourceTree = "<group>"; };
 		9330596316F930CB00868C9C /* tumblr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tumblr.png; sourceTree = "<group>"; };
+		9553335344D46A5856131B86 /* Pods-AppClientExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppClientExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppClientExample/Pods-AppClientExample.debug.xcconfig"; sourceTree = "<group>"; };
 		E241EBDBBDCF4E3393680DED /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D2F48E989E7862098B14AB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,7 +54,7 @@
 				9330594416F92D6B00868C9C /* UIKit.framework in Frameworks */,
 				9330594616F92D6B00868C9C /* Foundation.framework in Frameworks */,
 				9330594816F92D6B00868C9C /* CoreGraphics.framework in Frameworks */,
-				00B5D1ABE4A6431E804EB5DA /* libPods.a in Frameworks */,
+				62DB9DC6FE73D58C41DB57D5 /* libPods-AppClientExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +86,7 @@
 				9330594516F92D6B00868C9C /* Foundation.framework */,
 				9330594716F92D6B00868C9C /* CoreGraphics.framework */,
 				E241EBDBBDCF4E3393680DED /* libPods.a */,
+				081ECCB5093BF5EA249E3DF9 /* libPods-AppClientExample.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -119,6 +123,8 @@
 			children = (
 				86EFED2E98293EED7501CFB5 /* Pods.debug.xcconfig */,
 				F7D2F48E989E7862098B14AB /* Pods.release.xcconfig */,
+				9553335344D46A5856131B86 /* Pods-AppClientExample.debug.xcconfig */,
+				8D22401278BF22DBBEFA9323 /* Pods-AppClientExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -130,10 +136,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9330595D16F92D6B00868C9C /* Build configuration list for PBXNativeTarget "AppClientExample" */;
 			buildPhases = (
+				56CEBD4B6B45E4B652B7EB98 /* [CP] Check Pods Manifest.lock */,
 				9330593C16F92D6B00868C9C /* Sources */,
 				9330593D16F92D6B00868C9C /* Frameworks */,
 				9330593E16F92D6B00868C9C /* Resources */,
-				C05FF4C5F704428AA6529B95 /* Copy Pods Resources */,
+				C05FF4C5F704428AA6529B95 /* [CP] Copy Pods Resources */,
+				A75750A438D3014DFB3EC95A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -187,19 +195,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C05FF4C5F704428AA6529B95 /* Copy Pods Resources */ = {
+		56CEBD4B6B45E4B652B7EB98 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A75750A438D3014DFB3EC95A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppClientExample/Pods-AppClientExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C05FF4C5F704428AA6529B95 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppClientExample/Pods-AppClientExample-resources.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -286,7 +324,7 @@
 		};
 		9330595E16F92D6B00868C9C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 86EFED2E98293EED7501CFB5 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 9553335344D46A5856131B86 /* Pods-AppClientExample.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppClientExample/AppClientExample-Prefix.pch";
@@ -298,7 +336,7 @@
 		};
 		9330595F16F92D6B00868C9C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7D2F48E989E7862098B14AB /* Pods.release.xcconfig */;
+			baseConfigurationReference = 8D22401278BF22DBBEFA9323 /* Pods-AppClientExample.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppClientExample/AppClientExample-Prefix.pch";

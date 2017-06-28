@@ -9,6 +9,7 @@
 #import "TMAppDelegate.h"
 
 #import "TMPhotoPostController.h"
+#import "TMAPIClient.h"
 
 @implementation TMAppDelegate
 
@@ -19,6 +20,12 @@
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+#pragma mark - URL Scheme
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [[TMAPIClient sharedInstance] handleOpenURL:url];
 }
 
 @end
