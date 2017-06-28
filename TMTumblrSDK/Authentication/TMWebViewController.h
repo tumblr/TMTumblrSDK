@@ -6,6 +6,8 @@
 //  Copyright (c) 2016 Tumblr. All rights reserved.
 //
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+
 #import <UIKit/UIKit.h>
 
 @protocol TMWebViewControllerDelegate;
@@ -28,3 +30,5 @@
 - (void)webViewControllerDidFinish:(TMWebViewController *)controller;
 
 @end
+
+#endif
