@@ -17,12 +17,12 @@ NSString *TMURLDecode(NSString *string) {
 
 NSString *TMURLEncode(id value) {
     NSString *string;
-    
+
     if ([value isKindOfClass:[NSString class]])
         string = (NSString *)value;
     else
         string = [value stringValue];
-    
+
     return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
                                                                                  CFSTR("!*'();:@&=+$,/?%#[]%"), kCFStringEncodingUTF8));
 }
@@ -30,38 +30,56 @@ NSString *TMURLEncode(id value) {
 NSDictionary *TMQueryStringToDictionary(NSString *query) {
     NSMutableDictionary *mutableParameterDictionary = [[NSMutableDictionary alloc] init];
     
-    NSArray *parameters = [query componentsSeparatedByString:@"&"];
+    NSString *regexStr = @".*\\[[0-9]+\\]$";
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:regexStr options:NSRegularExpressionAnchorsMatchLines error:nil];
     
+    NSString *regexKeyStr = @"\\[[0-9]+\\]$";
+    NSRegularExpression *replaceKeyRegex = [[NSRegularExpression alloc] initWithPattern:regexKeyStr options:NSRegularExpressionAnchorsMatchLines error:nil];
+
+    NSArray *parameters = [query componentsSeparatedByString:@"&"];
     for (NSString *parameter in parameters) {
         NSArray *keyValuePair = [parameter componentsSeparatedByString:@"="];
-        
+
         if (keyValuePair.count == 2) {
             NSString *key = TMURLDecode(keyValuePair[0]);
             NSString *value = TMURLDecode(keyValuePair[1]);
             
+            NSUInteger matches = [regex numberOfMatchesInString:key options:NSMatchingReportProgress range:NSMakeRange(0, key.length)];
+            BOOL isArray = matches == 1;
+            if (isArray) {
+                key = [replaceKeyRegex stringByReplacingMatchesInString:key options:NSMatchingReportProgress range:NSMakeRange(0, key.length) withTemplate:@""];
+            }
+
             id existingValueForKey = mutableParameterDictionary[key];
-            
+
             if (existingValueForKey) {
-                if ([existingValueForKey isKindOfClass:[NSMutableArray class]])
+                if ([existingValueForKey isKindOfClass:[NSMutableArray class]]) {
                     [(NSMutableArray *)existingValueForKey addObject:value];
-                else
+                }
+                else {
                     [mutableParameterDictionary setObject:[NSMutableArray arrayWithObjects:existingValueForKey, value, nil]
                                                    forKey:key];
-            } else
+                }
+            }
+            else if (isArray) {
+                [mutableParameterDictionary setObject:[NSMutableArray arrayWithObject:value] forKey:key];
+            }
+            else {
                 [mutableParameterDictionary setObject:value forKey:key];
+            }
         }
     }
-    
+
     return [NSDictionary dictionaryWithDictionary:mutableParameterDictionary];
 }
 
 NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
-    
+
     for (NSString *key in [[dictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
         TMAddKeyValuePairToQueryStringMutableArray(key, dictionary[key], parameters);
     }
-    
+
     return [parameters componentsJoinedByString:@"&"];
 }
 
@@ -75,9 +93,9 @@ void TMAddKeyValuePairToQueryStringMutableArray(NSString *key, id value, NSMutab
         }
     }
     else if ([value isKindOfClass:[NSArray class]]) {
-        for (id arrayValue in (NSArray *)value){
-            TMAddKeyValuePairToQueryStringMutableArray(key, arrayValue, parameters);
-        }
+        [value enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TMAddKeyValuePairToQueryStringMutableArray([NSString stringWithFormat:@"%@[%ld]", key, idx], obj, parameters);
+        }];
     }
     else {
         [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];

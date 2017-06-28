@@ -59,7 +59,7 @@
     NSString *title = @"Some $$$@#?@#9i==%&&&&title";
     NSArray *tags = @[@"adioj ASD $**$*$ a8aA//&&adsijd====", @"lol", @"    foo bar baz    "];
     
-    NSString *result = [NSString stringWithFormat:@"tag=%@&tag=%@&tag=%@&title=%@", TMURLEncode(tags[0]),
+    NSString *result = [NSString stringWithFormat:@"tag%%5B0%%5D=%@&tag%%5B1%%5D=%@&tag%%5B2%%5D=%@&title=%@", TMURLEncode(tags[0]),
                         TMURLEncode(tags[1]), TMURLEncode(tags[2]), TMURLEncode(title)];
     
     XCTAssertEqualObjects(TMDictionaryToQueryString(@{ @"title" : title, @"tag" : tags }), result,
@@ -76,13 +76,44 @@
                                     },
                             };
     
-    NSString *expected = [NSString stringWithFormat:@"arrayKey=arrayValue1&arrayKey=arrayValue2&%@=innerDictionaryValue1&%@=innerDictionaryValue2&stringKey=value",
+    NSString *expected = [NSString stringWithFormat:@"arrayKey%%5B0%%5D=arrayValue1&arrayKey%%5B1%%5D=arrayValue2&%@=innerDictionaryValue1&%@=innerDictionaryValue2&stringKey=value",
                           TMURLEncode(@"dictionaryKey[innerDictionaryKey1]"),
                           TMURLEncode(@"dictionaryKey[innerDictionaryKey2]")];
     
     NSString *actual = TMDictionaryToQueryString(input);
     
     XCTAssertEqualObjects(expected, actual);
+}
+
+- (void)testAcceptsSquareBrackets {
+    NSString *validKey = @"[]keyIsValid";
+    NSString *validValue = @"";
+    NSString *validKeyTwo = @"key[0]a";
+    NSDictionary *input = @{ validKey: validValue, validKeyTwo: validValue };
+    
+    NSString *expectedStr = [NSString stringWithFormat:@"%@=%@&%@=%@", TMURLEncode(validKey), TMURLEncode(validValue), TMURLEncode(validKeyTwo), TMURLEncode(validValue)];
+    NSString *actualStr = TMDictionaryToQueryString(input);
+    
+    NSDictionary *expectedDict = TMQueryStringToDictionary(expectedStr);
+    
+    XCTAssertTrue([expectedStr isEqualToString:actualStr]);
+    XCTAssertEqualObjects(input, expectedDict);
+}
+
+- (void)testKeysAreTheSame {
+    NSString *key = @"key";
+    
+    NSString *arrayIn1 = @"1";
+    NSString *arrayIn2 = @"2";
+    NSString *arrayIn3 = @"3";
+    
+    NSDictionary *input = @{ key: @[ arrayIn1, arrayIn2, arrayIn3 ] };
+    
+    NSString *queryString = TMDictionaryToQueryString(input);
+    NSDictionary *output = TMQueryStringToDictionary(queryString);
+    
+    XCTAssertTrue([key isEqualToString:output.allKeys.firstObject]);
+    XCTAssertEqualObjects(input, output);
 }
 
 @end
