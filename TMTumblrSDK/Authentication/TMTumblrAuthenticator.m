@@ -106,7 +106,7 @@ NSDictionary *formEncodedDataToDictionary(NSData *data);
 
 #endif
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#if __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
 
 - (void)authenticate:(NSString *)URLScheme fromViewController:(UIViewController *)fromViewController callback:(TMAuthenticationCallback)callback {
     [self authenticate:URLScheme handleAuthURL:^(NSURL *authURL) {
