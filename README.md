@@ -109,7 +109,7 @@ access to Tumblr:
                         <string>com.tumblr.example</string>
                         <key>CFBundleURLSchemes</key>
                         <array>
-                                <string>ello</string>
+                                <string>my-sample-app</string>
                         </array>
                 </dict>
         </array>
