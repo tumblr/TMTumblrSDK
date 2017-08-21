@@ -18,7 +18,6 @@
     "Foundation"
   ],
   "source_files": "Classes/**/*.{h,m}",
-  "resources": "Resources/*",
   "dependencies": {
   }
 
