@@ -78,86 +78,108 @@ Use the `TMAPIClient` class for communication with Tumblr via the [Tumblr API](h
 
 Please view the [API documentation](http://www.tumblr.com/docs/en/api/v2) for full usage instructions.
 
-### Authentication
+### OAuth Authentication
 
-Import `TMAPIClient.h`. Configure the `[TMAPIClient sharedInstance]` singleton
-with your app’s Tumblr consumer key and secret:
+In your `AppDelegate`,  import `<TMTumblrSDK/TMOAuthAuthenticator.h>`, `<TMTumblrSDK/TMURLSession.h>`, and `TMOAuthAuthenticatorDelegate.h`. 
+
+Declare constants for your app’s Tumblr consumer key and secret:
 
 ``` objectivec
-[TMAPIClient sharedInstance].OAuthConsumerKey = @"ADISJdadsoj2dj38dj29dj38jd9238jdk92djasdjASDaoijsd";
-[TMAPIClient sharedInstance].OAuthConsumerSecret = @"MGI39kdasdoka3240989ASFjoiajsfomdasd39129ASDAPDOJa";
+NSString * const OAuthTokenConsumerKey = @"";
+NSString * const ConsumerSecret = @"";
 ```
 
 If you don't already have a consumer key/secret you can
 register [here](http://www.tumblr.com/oauth/apps).
 
-The authentication methods detailed below will provide the API client with a token and token secret. The
-SDK does *not* currently persist these values; you are responsible for storing them and setting them on
-the API client on subsequent app launches, before making any API requests. This may change in a future
-release.
 
-#### OAuth
+#### Setup
 
 In your app’s `Info.plist`, specify a custom URL scheme that the browser can
 use to return to your application once the user has permitted or denied
 access to Tumblr:
 
 ``` xml
-<key>CFBundleURLTypes</key>
-<array>
-  <dict>
-    <key>CFBundleURLSchemes</key>
-    <array>
-      <string>myapp</string>
-    </array>
-  </dict>
-</array>
+        <key>CFBundleURLTypes</key>
+        <array>
+                <dict>
+                        <key>CFBundleTypeRole</key>
+                        <string>Editor</string>
+                        <key>CFBundleURLName</key>
+                        <string>com.tumblr.example</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                                <string>ello</string>
+                        </array>
+                </dict>
+        </array>
 ```
 
-In your app delegate, allow the `TMAPIClient` singleton to handle incoming URL requests.
+In your app delegate setup your `TMURLSession` and `TMOAuthAuthenticator` instances, for example:
+
+``` objectivec
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    self.applicationCredentials = [[TMAPIApplicationCredentials alloc] initWithConsumerKey:OAuthTokenConsumerKey consumerSecret:ConsumerSecret];
+
+    self.session = [[TMURLSession alloc] initWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                        applicationCredentials:self.applicationCredentials
+                                               userCredentials:[TMAPIUserCredentials new]
+                                        networkActivityManager:nil
+                                     sessionTaskUpdateDelegate:nil
+                                        sessionMetricsDelegate:nil
+                                            requestTransformer:nil
+                                             additionalHeaders:nil];
+
+    self.authenticator = [[TMOAuthAuthenticator alloc] initWithSession:self.session
+                                                applicationCredentials:self.applicationCredentials
+                                                              delegate:self];
+
+    ViewController *vc = [[ViewController alloc] initWithSession:self.session authenticator:self.authenticator];
+
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.rootViewController = vc;
+    [self.window makeKeyAndVisible];
+
+    return YES;
+}
+```
+
+Also add the ability to handle incoming URL requests and also conform to `TMOAuthAuthenticatorDelegate` 
 
 On iOS this looks like:
 
 ``` objectivec
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [[TMAPIClient sharedInstance] handleOpenURL:url];
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    [self.authenticator handleOpenURL:url];
+    return YES;
+}
+
+#pragma mark - TMOAuthAuthenticatorDelegate
+
+- (void)openURLInBrowser:(NSURL *)url {
+    [[UIApplication sharedApplication] openURL:url];
 }
 ```
 
-OS X:
+
+Then, use these instances in an `authenticate` method in another class such as a view controller, for example
 
 ``` objectivec
-- (void)applicationWillFinishLaunching:(NSNotification *)notification {
-    NSAppleEventManager *appleEventManager = [NSAppleEventManager sharedAppleEventManager];
-    [appleEventManager setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:)
-                                          forEventClass:kInternetEventClass andEventID:kAEGetURL];
+- (void)authenticate {
+    [self.authenticator authenticate:@"ello" callback:^(TMAPIUserCredentials *creds, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                self.authResultsTextView.text = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
+            }
+            else {
+                self.session = [[TMURLSession alloc] initWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] applicationCredentials:[[TMAPIApplicationCredentials alloc] initWithConsumerKey:@"" consumerSecret:@""] userCredentials:[[TMAPIUserCredentials alloc] initWithToken:creds.token tokenSecret:creds.tokenSecret]];
+                self.authResultsTextView.text = [NSString stringWithFormat:@"Success!\nToken: %@\nSecret: %@", creds.token, creds.tokenSecret];
+                [self request];
+            }
+        });
+    }];
 }
-
-- (void)handleURLEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent {
-    NSString *calledURL = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
-
-    [[TMAPIClient sharedInstance] handleOpenURL:[NSURL URLWithString:calledURL]];
-}
-```
-
-Initiate the three-legged OAuth flow, by specifying the URL scheme that your app will respond to.
-
-iOS:
-
-``` objectivec
-[[TMAPIClient sharedInstance] authenticate:@"myapp" fromViewController:controller
-                                  callback:^(NSError *error) {
-    // You are now authenticated (if !error)
-}];
-```
-
-OS X:
-
-``` objectivec
-[[TMAPIClient sharedInstance] authenticate:@"myapp" callback:^(NSError *error) {
-    // You are now authenticated (if !error)
-}];
 ```
 
 
