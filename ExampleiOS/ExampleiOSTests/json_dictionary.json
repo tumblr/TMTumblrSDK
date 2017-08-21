@@ -1,0 +1,12 @@
+{
+  "obj": {
+    "bool": true
+  },
+  "parameter": "Wow",
+  "array": [
+    1,
+    2,
+    3,
+    4
+  ]
+}

@@ -1,0 +1,10 @@
+use_frameworks!
+
+target 'ExampleiOS' do
+	pod 'TMTumblrSDK', :path => '../'
+end
+
+target 'ExampleiOSTests' do
+	pod 'TMTumblrSDK', :path => '../'
+end
+
