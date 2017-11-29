@@ -17,6 +17,7 @@
 		4F42407C1E7870440025D05A /* TMRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F42407B1E7870440025D05A /* TMRequestBodyTests.swift */; };
 		5504733998EABA0CAC4A36D1 /* Pods_ExampleiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FF02AD3DC60E53A04343321 /* Pods_ExampleiOSTests.framework */; };
 		58B1FF699B7A5ADD949BC11C /* Pods_ExampleiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF14371B0CC595789B748CB /* Pods_ExampleiOS.framework */; };
+		7236C8821FCE0DBE00D0BE36 /* TMOAuthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7236C8811FCE0DBE00D0BE36 /* TMOAuthTests.m */; };
 		B901B72F1C3DC99B007691FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B72E1C3DC99B007691FA /* main.m */; };
 		B901B7321C3DC99B007691FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B7311C3DC99B007691FA /* AppDelegate.m */; };
 		B901B7351C3DC99B007691FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B7341C3DC99B007691FA /* ViewController.m */; };
@@ -87,6 +88,7 @@
 		4F1262731ECB51BC0039DD2F /* json_dictionary.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = json_dictionary.json; sourceTree = "<group>"; };
 		4F1262751ECB52FD0039DD2F /* json_data */ = {isa = PBXFileReference; lastKnownFileType = file; path = json_data; sourceTree = "<group>"; };
 		4F42407B1E7870440025D05A /* TMRequestBodyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMRequestBodyTests.swift; sourceTree = "<group>"; };
+		7236C8811FCE0DBE00D0BE36 /* TMOAuthTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMOAuthTests.m; sourceTree = "<group>"; };
 		881E033CC768127BD368A833 /* Pods-ExampleiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleiOS/Pods-ExampleiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B901B72A1C3DC99B007691FA /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B901B72E1C3DC99B007691FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				B99900D81D0F840D00558ADA /* TMMultipartBodyTest.m */,
 				B9C29ADA1D14A5510063FBEB /* TMAPIClientCallbackConverterTests.m */,
 				2DBBAF3E1E9EC5E40029437A /* TMOAuthAuthenticatorTests.m */,
+				7236C8811FCE0DBE00D0BE36 /* TMOAuthTests.m */,
 				B9BA14301D10D04500D90A89 /* TMXAuthAuthenticatorTests.m */,
 				B9BA14381D10DB5E00D90A89 /* TMURLEncodingTests.m */,
 				B9D27E5D1D0F938A00A2E95E /* TMHTTPRequestTests.m */,
@@ -436,9 +439,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ExampleiOS/Pods-ExampleiOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/TMTumblrSDK/TMTumblrSDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TMTumblrSDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -451,13 +457,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ExampleiOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6BC2CF2A845D9AA7FF19F1BB /* [CP] Copy Pods Resources */ = {
@@ -481,13 +490,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ExampleiOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FA77AE57BB0E92B244B8AD86 /* [CP] Embed Pods Frameworks */ = {
@@ -496,9 +508,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ExampleiOSTests/Pods-ExampleiOSTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/TMTumblrSDK/TMTumblrSDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TMTumblrSDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -550,6 +565,7 @@
 				B9415D701D13763000F80E01 /* TMAllSystemTests.m in Sources */,
 				2DEC2FF51EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m in Sources */,
 				B9C29ADB1D14A5510063FBEB /* TMAPIClientCallbackConverterTests.m in Sources */,
+				7236C8821FCE0DBE00D0BE36 /* TMOAuthTests.m in Sources */,
 				B9ACAA941C617E20009B9BDF /* TMMultithreadingTests.m in Sources */,
 				B99900DF1D0F893700558ADA /* TMURLSessionTaskObserverTests.m in Sources */,
 				B98885831D0CB090008B9B07 /* TMSDKFunctionsTests.m in Sources */,

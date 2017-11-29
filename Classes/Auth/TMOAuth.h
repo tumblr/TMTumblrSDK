@@ -29,13 +29,46 @@ __attribute__((objc_subclassing_restricted))
  @param token OAuth user token
  @param tokenSecret OAuth user secret
  */
-- (id)initWithURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
-            nonce:(NSString *)nonce consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
-            token:(NSString *)token tokenSecret:(NSString *)tokenSecret;
+- (id)initWithURL:(NSURL *)URL
+           method:(NSString *)method
+   postParameters:(NSDictionary *)postParameters
+            nonce:(NSString *)nonce
+      consumerKey:(NSString *)consumerKey
+   consumerSecret:(NSString *)consumerSecret
+            token:(NSString *)token
+      tokenSecret:(NSString *)tokenSecret;
 
 /// Convenience method for generating an OAuth header string
-+ (NSString *)headerForURL:(NSURL *)URL method:(NSString *)method postParameters:(NSDictionary *)postParameters
-                     nonce:(NSString *)nonce consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret
-                     token:(NSString *)token tokenSecret:(NSString *)tokenSecret;
++ (NSString *)headerForURL:(NSURL *)URL
+                    method:(NSString *)method
+            postParameters:(NSDictionary *)postParameters
+                     nonce:(NSString *)nonce
+               consumerKey:(NSString *)consumerKey
+            consumerSecret:(NSString *)consumerSecret
+                     token:(NSString *)token
+               tokenSecret:(NSString *)tokenSecret;
+
+/**
+ Sign a URL with OAuth parameters in the query component for a Tumblr API request.
+
+ @param URL API request URL
+ @param method HTTP method (GET or POST)
+ @param postParameters POST body parameters
+ @param nonce Unique request identifier
+ @param consumerKey OAuth consumer key
+ @param consumerSecret OAuth consumer secret
+ @param token OAuth user token
+ @param tokenSecret OAuth user secret
+ @param timestamp Unix / epoch time
+ */
++ (NSURL *)signUrlWithQueryComponent:(NSURL *)URL
+                              method:(NSString *)method
+                      postParameters:(NSDictionary *)postParameters
+                               nonce:(NSString *)nonce
+                         consumerKey:(NSString *)consumerKey
+                      consumerSecret:(NSString *)consumerSecret
+                               token:(NSString *)token
+                         tokenSecret:(NSString *)tokenSecret
+                           timestamp:(NSString *)timestamp;
 
 @end
