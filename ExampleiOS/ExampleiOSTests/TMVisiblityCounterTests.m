@@ -107,6 +107,25 @@
     }];
 }
 
+- (void)testCounterRunningDoesNotGoNegativeAfterSafeToStopObserving {
+    TMNetworkActivityVisiblityCounter *counter = [[TMNetworkActivityVisiblityCounter alloc] initWithNetworkActivityIndicatorManager:self];
+
+    [self addState:TMURLSessionTaskStateRunning toCounter:counter];
+    [self addState:TMURLSessionTaskStateUnknown toCounter:counter];
+    [self addState:TMURLSessionTaskStateUnknown toCounter:counter];
+    [self addState:TMURLSessionTaskStateStopped toCounter:counter];
+    [self addState:TMURLSessionTaskStateStoppedAndSafeToStopObserving toCounter:counter];
+
+    self.expectedCountTurningOn = 1;
+    self.expectedCountTurningOff = 1;
+
+    self.testExpectation = [self expectationWithDescription:@"Expectation for expected delegate calls"];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError * _Nullable error) {
+        XCTAssertNil(error);
+        XCTAssertTrue(!self.shouldShowNetworkActivityIndicatorVisible);
+        XCTAssert(counter.activeCount == 0);
+    }];
+}
 
 #pragma mark Helpers
 
