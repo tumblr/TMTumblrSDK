@@ -15,6 +15,14 @@
 
 @implementation TMSDKFunctionsTests
 
+- (void)testBlogName {
+    NSString *path = blogPath(@"test", @"pearapps.tumblr.com");
+
+    NSString *otherPath = blogPath(@"test", @"pearapps");
+
+    XCTAssertEqualObjects(path, otherPath);
+}
+
 - (void)testDecodeDoesntChangeStringThatDoesntNeedToBe {
 
     NSString *URL = @"https://api.tumblr.com/v2/user/info";
