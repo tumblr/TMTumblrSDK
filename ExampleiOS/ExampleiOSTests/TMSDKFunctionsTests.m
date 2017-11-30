@@ -15,7 +15,7 @@
 
 @implementation TMSDKFunctionsTests
 
-- (void)testBlogName {
+- (void)testBlogNameWithoutTumblrIsSameAsWith {
     NSString *path = blogPath(@"test", @"pearapps.tumblr.com");
 
     NSString *otherPath = blogPath(@"test", @"pearapps");
