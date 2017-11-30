@@ -51,6 +51,7 @@
                          @"GET",
                          @"POST",
                          @"GET",
+                         @"GET",
                          @"GET"
                          ];
 
@@ -76,7 +77,8 @@
                         @"user/like",
                         @"blog/ios.tumblr.com/posts/queue",
                         @"blog/ios.tumblr.com/post/reblog",
-                        @"blog/t:HxFRdt0Yhn2qG8zsmKuHMA/info"
+                        @"blog/t:HxFRdt0Yhn2qG8zsmKuHMA/info",
+                        @"user/dashboard"
                         ];
 
     NSArray *tasks = @[
@@ -102,7 +104,8 @@
                        [client taskWithRequest:[requestFactory queueRequestForBlogWithName:@"ios" queryParameters:@{}] callback:callback],
                        [client taskWithRequest:[requestFactory reblogPostRequestWithBlogName:@"ios" parameters:@{}] callback:callback],
                        [client taskWithRequest:[requestFactory blogInfoRequestForBlogUUID:@"t:HxFRdt0Yhn2qG8zsmKuHMA"] callback:callback],
-                       [client taskWithRequest:[requestFactory dashboardRequest:nil] callback:callback]
+                       [client taskWithRequest:[requestFactory dashboardRequest:nil] callback:callback],
+                       [client dashboardRequest:nil callback:callback]
                        ];
 
     NSArray *requests = @[
@@ -128,8 +131,12 @@
                           [requestFactory queueRequestForBlogWithName:@"ios" queryParameters:@{}],
                           [requestFactory reblogPostRequestWithBlogName:@"ios" parameters:@{}],
                           [requestFactory blogInfoRequestForBlogUUID:@"t:HxFRdt0Yhn2qG8zsmKuHMA"],
+                          [requestFactory dashboardRequest:nil],
                           [requestFactory dashboardRequest:nil]
                         ];
+
+    XCTAssert(requests.count == tasks.count);
+    XCTAssert(requests.count == methods.count);
 
     for (NSInteger i = 0; i < routes.count; i++) {
         XCTAssert([self sessionTask:tasks[i] request:requests[i] isUsingPath:routes[i]]);
