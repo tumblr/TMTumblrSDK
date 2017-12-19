@@ -5,7 +5,7 @@
   "homepage": "https://github.tumblr.net/TumblrMobile/orangina",
   "source": {
     "git": "https://github.com/tumblr/TMTumblrSDK.git",
-    "tag": "5.0"
+    "tag": "5.0.1"
   },
   "license": {
     "type": "Apache 2.0",
