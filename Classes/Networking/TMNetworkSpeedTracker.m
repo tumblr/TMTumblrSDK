@@ -10,7 +10,7 @@
 #import "os/lock.h"
 
 os_unfair_lock lock = OS_UNFAIR_LOCK_INIT;
-short samples = 0;
+const short targetSampleSize = 10;
 
 @implementation TMNetworkSpeedTracker
 
@@ -29,23 +29,11 @@ short samples = 0;
 
         if (timeDifference > 0) {
             const double bytesPerSecond = bytes / timeDifference;
-            const NSNumber *kbps = @(bytesPerSecond * 0.008);
-
+            NSNumber * const kbps = @(bytesPerSecond * 0.008);
             const id class = [self class];
 
             os_unfair_lock_lock(&lock);
-
-            NSMutableArray *numbers = [class sharedArray];
-
-            if (numbers.count > 10) {
-                numbers[0] = kbps;
-            }
-            else {
-                [numbers addObject:kbps];
-            }
-
-            samples++;
-            
+            [class addTrackedSpeed:kbps toSpeeds:[class sharedArray]];
             os_unfair_lock_unlock(&lock);
         }
     }
@@ -53,29 +41,32 @@ short samples = 0;
 
 + (TMNetworkSpeedQuality)quality {
     const double kbps = [self kbps];
+    const short bad = 150;
+    const short moderate = 550;
 
-    const float low = 150;
-    const float medium = 550;
-    const float high = 2000;
-
-    if (kbps <= low) {
+    if (kbps <= 0) {
+        return TMNetworkSpeedQualityUnkown;
+    }
+    else if (kbps <= bad) {
         return TMNetworkSpeedQualityBad;
     }
-    else if (kbps <= medium) {
+    else if (kbps <= moderate) {
         return TMNetworkSpeedQualityModerate;
     }
-    else if (kbps <= high) {
+    else {
         return TMNetworkSpeedQualityGood;
     }
-
-    return TMNetworkSpeedQualityUnkown;
 }
 
 + (double)kbps {
     os_unfair_lock_lock(&lock);
-
     // Make a copy of this so we can iterate through it outside the lock
     NSArray *copy = [[[self class] sharedArray] copy];
+
+    if (copy.count < targetSampleSize) {
+        os_unfair_lock_unlock(&lock);
+        return -1;
+    }
     os_unfair_lock_unlock(&lock);
 
     double total = 0;
@@ -86,4 +77,13 @@ short samples = 0;
     return total / copy.count;
 }
 
++ (void)addTrackedSpeed:(NSNumber *)kbps toSpeeds:(NSMutableArray *)speeds {
+    [speeds addObject:kbps];
+    // Keeps the sample size capped to monitor the most recent samples taken
+    if (speeds.count > targetSampleSize) {
+        [speeds removeObjectAtIndex:0];
+    }
+}
+
 @end
+

@@ -12,6 +12,7 @@
 		2DEC2FF21EBA336B00A1BDEA /* TMMockSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEC2FF11EBA336B00A1BDEA /* TMMockSession.m */; };
 		2DEC2FF51EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEC2FF41EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m */; };
 		2DEC2FFF1EBBA1AD00A1BDEA /* TMAuthTokenRequestGeneratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEC2FFE1EBBA1AC00A1BDEA /* TMAuthTokenRequestGeneratorTests.m */; };
+		4EF02C761FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF02C751FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m */; };
 		4F1262741ECB51BC0039DD2F /* json_dictionary.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F1262731ECB51BC0039DD2F /* json_dictionary.json */; };
 		4F1262761ECB542E0039DD2F /* json_data in Resources */ = {isa = PBXBuildFile; fileRef = 4F1262751ECB52FD0039DD2F /* json_data */; };
 		4F42407C1E7870440025D05A /* TMRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F42407B1E7870440025D05A /* TMRequestBodyTests.swift */; };
@@ -85,6 +86,7 @@
 		2DEC2FF41EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMSynchronousMockURLSessionTask.m; sourceTree = "<group>"; };
 		2DEC2FFE1EBBA1AC00A1BDEA /* TMAuthTokenRequestGeneratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAuthTokenRequestGeneratorTests.m; sourceTree = "<group>"; };
 		2E30B1AA52F4A5DF6989226C /* Pods-ExampleiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleiOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleiOSTests/Pods-ExampleiOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		4EF02C751FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMNetworkSpeedTrackerTests.m; sourceTree = "<group>"; };
 		4F1262731ECB51BC0039DD2F /* json_dictionary.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = json_dictionary.json; sourceTree = "<group>"; };
 		4F1262751ECB52FD0039DD2F /* json_data */ = {isa = PBXFileReference; lastKnownFileType = file; path = json_data; sourceTree = "<group>"; };
 		4F42407B1E7870440025D05A /* TMRequestBodyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMRequestBodyTests.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				4F42407B1E7870440025D05A /* TMRequestBodyTests.swift */,
 				2DEC2FFE1EBBA1AC00A1BDEA /* TMAuthTokenRequestGeneratorTests.m */,
 				2D8396631EE0767C0003A80F /* TMBasicBaseURLDeterminerTests.m */,
+				4EF02C751FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m */,
 			);
 			path = ExampleiOSTests;
 			sourceTree = "<group>";
@@ -560,6 +563,7 @@
 				2DEC2FF21EBA336B00A1BDEA /* TMMockSession.m in Sources */,
 				2DEC2FFF1EBBA1AD00A1BDEA /* TMAuthTokenRequestGeneratorTests.m in Sources */,
 				2DBBAF3F1E9EC5E40029437A /* TMOAuthAuthenticatorTests.m in Sources */,
+				4EF02C761FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m in Sources */,
 				B9BA14391D10DB5E00D90A89 /* TMURLEncodingTests.m in Sources */,
 				B9E6BCD31D0B402F0049C88E /* TMSDKUserAgentTests.m in Sources */,
 				B9415D701D13763000F80E01 /* TMAllSystemTests.m in Sources */,
