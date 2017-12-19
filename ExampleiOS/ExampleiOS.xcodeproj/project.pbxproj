@@ -704,6 +704,7 @@
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				INFOPLIST_FILE = ExampleiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tumblr..ExampleiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -726,6 +727,7 @@
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				INFOPLIST_FILE = ExampleiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tumblr..ExampleiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
