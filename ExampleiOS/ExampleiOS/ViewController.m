@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 #import <TMTumblrSDK/TMHTTPRequest.h>
 #import <TMTumblrSDK/TMURLSession.h>
+#import <TMTumblrSDK/TMOAuth.h>
 
 @interface ViewController () <TMNetworkActivityIndicatorManager, TMSessionTaskUpdateDelegate>
 
