@@ -84,7 +84,7 @@
         return NO;
     }
 
-    void(^clearState)(void) = ^(){
+    void(^clearState)(void) = ^(void){
         self.threeLeggedOAuthTokenSecret = nil;
         self.threeLeggedOAuthCallback = nil;
     };
