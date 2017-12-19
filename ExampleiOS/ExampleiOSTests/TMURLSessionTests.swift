@@ -15,7 +15,7 @@ final class TMURLSessionTests: XCTestCase {
     let URLSessionManager = TMURLSession(configuration: URLSessionConfiguration.default, applicationCredentials: TMAPIApplicationCredentials(consumerKey: "kenny", consumerSecret: "paul"), userCredentials: TMAPIUserCredentials(token: "token'", tokenSecret: "ht"))
 
     static func baseURLString() -> String {
-        return "https://api.tumblr.com/v2"
+        return "https://api.tumblr.com/v2/"
     }
 
     let baseURL = URL(string: TMURLSessionTests.baseURLString())
