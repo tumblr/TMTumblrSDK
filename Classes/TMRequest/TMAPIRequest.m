@@ -118,7 +118,9 @@
 }
 
 - (nonnull NSURL *)URL {
-    NSURL *URL = [self.baseURL URLByAppendingPathComponent:self.path];
+    NSString *baseURLString = self.baseURL.absoluteString;
+    NSString *baseURLStringPlusPath = [baseURLString stringByAppendingString:self.path];
+    NSURL *URL = [NSURL URLWithString:baseURLStringPlusPath];
 
     if (!URL) {
         @throw [[NSException alloc] initWithName:@"Illegal URL or Path exception" reason:@"The URL generated was nil." userInfo:nil];
