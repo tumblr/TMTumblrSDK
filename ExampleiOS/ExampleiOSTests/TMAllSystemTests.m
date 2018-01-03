@@ -63,7 +63,7 @@
                         @"blog/ios.tumblr.com/post/edit",
                         @"blog/ios.tumblr.com/posts/submission",
                         @"blog/ios.tumblr.com/posts/draft",
-                        @"blog/t:HxFRdt0Yhn2qG8zsmKuHMA/likes",
+                        @"blog/t%3AHxFRdt0Yhn2qG8zsmKuHMA/likes",
                         @"blog/ios.tumblr.com/info",
                         @"blog/ios.tumblr.com/followers",
                         @"blog/ios.tumblr.com/posts",
@@ -76,7 +76,7 @@
                         @"user/like",
                         @"blog/ios.tumblr.com/posts/queue",
                         @"blog/ios.tumblr.com/post/reblog",
-                        @"blog/t:HxFRdt0Yhn2qG8zsmKuHMA/info"
+                        @"blog/t%3AHxFRdt0Yhn2qG8zsmKuHMA/info"
                         ];
 
     NSArray *tasks = @[

@@ -15,7 +15,7 @@ final class TMURLSessionTests: XCTestCase {
     let URLSessionManager = TMURLSession(configuration: URLSessionConfiguration.default, applicationCredentials: TMAPIApplicationCredentials(consumerKey: "kenny", consumerSecret: "paul"), userCredentials: TMAPIUserCredentials(token: "token'", tokenSecret: "ht"))
 
     static func baseURLString() -> String {
-        return "https://api.tumblr.com/v2"
+        return "https://api.tumblr.com/v2/"
     }
 
     let baseURL = URL(string: TMURLSessionTests.baseURLString())
@@ -56,8 +56,7 @@ final class TMURLSessionTests: XCTestCase {
         let parameters = ["key": "some value", "foo": "bar"]
         let request = signedRequest(.GET, path: path, parameters: parameters as [String : AnyObject]?)
         
-        let urlString = TMURLSessionTests.baseURLString() + "/config?api_key=kenny&foo=bar&key=some%20value"
-
+        let urlString = TMURLSessionTests.baseURLString() + "config?api_key=kenny&foo=bar&key=some%20value"
         XCTAssert(request.url == URL(string: urlString), "Parameters passed to a GET request should correctly pass then to the URL via NSURLComponents.")
     }
     
@@ -90,7 +89,7 @@ final class TMURLSessionTests: XCTestCase {
         let parameters = ["key": "some value", "foo": "bar"]
         let request = signedRequest(.DELETE, path: path, parameters: parameters as [String : AnyObject]?)
 
-        let urlString = TMURLSessionTests.baseURLString() + "/config?api_key=kenny&foo=bar&key=some%20value"
+        let urlString = TMURLSessionTests.baseURLString() + "config?api_key=kenny&foo=bar&key=some%20value"
         XCTAssert(request.url == URL(string: urlString), "Parameters passed to a DELETE request should correctly be encoded in the URL.")
     }
 

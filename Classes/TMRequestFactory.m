@@ -64,7 +64,7 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
         parameters[@"before_timestamp"] = @(round([beforeDate timeIntervalSince1970]));
     }
 
-    return [self requestWithPath:[[NSString alloc] initWithFormat:@"blog/%@/notes", blogUUID] method:TMHTTPRequestMethodGET queryParameters:[parameters copy]];
+    return [self requestWithPath:[[NSString alloc] initWithFormat:@"blog/%@/notes", TMURLEncode(blogUUID)] method:TMHTTPRequestMethodGET queryParameters:[parameters copy]];
 }
 
 - (nonnull id <TMRequest>)dashboardRequest:(nullable NSDictionary *)parameters {
@@ -161,7 +161,7 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
     NSParameterAssert(blogUUID);
     NSParameterAssert(parameters);
     
-    return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/likes", blogUUID] method:TMHTTPRequestMethodGET queryParameters:parameters];
+    return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/likes", TMURLEncode(blogUUID)] method:TMHTTPRequestMethodGET queryParameters:parameters];
 }
 
 - (nonnull id <TMRequest>)blogInfoRequestForBlogName:(nonnull NSString *)blogName {
@@ -172,7 +172,7 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
 
 - (nonnull id <TMRequest>)blogInfoRequestForBlogUUID:(nonnull NSString *)blogUUID {
     NSParameterAssert(blogUUID);
-    return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/info/", blogUUID] method:TMHTTPRequestMethodGET queryParameters:nil];
+    return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/info/", TMURLEncode(blogUUID)] method:TMHTTPRequestMethodGET queryParameters:nil];
 }
 
 - (nonnull id <TMRequest>)queueRequestForBlogWithName:(nonnull NSString *)blogName queryParameters:(nonnull NSDictionary *)queryParameters {
@@ -216,7 +216,7 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
     NSParameterAssert(blogUUID);
     NSParameterAssert(postID);
 
-    return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/posts/%@/permalink", blogUUID, postID] method:TMHTTPRequestMethodGET queryParameters:nil];
+    return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/posts/%@/permalink", TMURLEncode(blogUUID), postID] method:TMHTTPRequestMethodGET queryParameters:nil];
 }
 
 - (nonnull id <TMRequest>)postRequestWithBlogName:(nonnull NSString *)blogName type:(nullable NSString *)type parameters:(nonnull NSDictionary *)parameters {
