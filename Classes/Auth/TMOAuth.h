@@ -61,14 +61,14 @@ __attribute__((objc_subclassing_restricted))
  @param tokenSecret OAuth user secret
  @param timestamp Unix / epoch time
  */
-+ (NSString *)signUrlWithQueryComponent:(NSURL *)URL
-                                 method:(NSString *)method
-                         postParameters:(NSDictionary *)postParameters
-                                  nonce:(NSString *)nonce
-                            consumerKey:(NSString *)consumerKey
-                         consumerSecret:(NSString *)consumerSecret
-                                  token:(NSString *)token
-                            tokenSecret:(NSString *)tokenSecret
-                              timestamp:(NSString *)timestamp;
++ (NSURL *)signUrlWithQueryComponent:(NSURL *)URL
+                              method:(NSString *)method
+                      postParameters:(NSDictionary *)postParameters
+                               nonce:(NSString *)nonce
+                         consumerKey:(NSString *)consumerKey
+                      consumerSecret:(NSString *)consumerSecret
+                               token:(NSString *)token
+                         tokenSecret:(NSString *)tokenSecret
+                           timestamp:(NSString *)timestamp;
 
 @end

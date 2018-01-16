@@ -52,15 +52,15 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
     return auth.headerString;
 }
 
-+ (NSString *)signUrlWithQueryComponent:(NSURL *)URL
-                                 method:(NSString *)method
-                         postParameters:(NSDictionary *)postParameters
-                                  nonce:(NSString *)nonce
-                            consumerKey:(NSString *)consumerKey
-                         consumerSecret:(NSString *)consumerSecret
-                                  token:(NSString *)token
-                            tokenSecret:(NSString *)tokenSecret
-                              timestamp:(NSString *)timestamp {
++ (NSURL *)signUrlWithQueryComponent:(NSURL *)URL
+                              method:(NSString *)method
+                      postParameters:(NSDictionary *)postParameters
+                               nonce:(NSString *)nonce
+                         consumerKey:(NSString *)consumerKey
+                      consumerSecret:(NSString *)consumerSecret
+                               token:(NSString *)token
+                         tokenSecret:(NSString *)tokenSecret
+                           timestamp:(NSString *)timestamp {
 
     NSMutableDictionary *oAuthParameters = [TMOAuth OAuthParametersFromURL:nil
                                                                        url: URL
@@ -72,7 +72,7 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
                                                                      token: token
                                                                tokenSecret: tokenSecret
                                                                  timestamp: timestamp];
-    return [URL.absoluteString stringByAppendingFormat:@"?%@", [TMURLEncoding encodedDictionary:oAuthParameters]];
+    return [NSURL URLWithString:[URL.absoluteString stringByAppendingFormat:@"?%@", [TMURLEncoding encodedDictionary:oAuthParameters]]];
 }
 
 - (id)initWithURL:(NSURL *)URL
