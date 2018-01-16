@@ -12,6 +12,7 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import <sys/sysctl.h>
 #import "TMSDKFunctions.h"
+#import "TMURLEncoding.h"
 
 @interface TMOAuth()
 
@@ -51,15 +52,15 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
     return auth.headerString;
 }
 
-+ (NSURL *)signUrlWithQueryComponent:(NSURL *)URL
-                              method:(NSString *)method
-                      postParameters:(NSDictionary *)postParameters
-                               nonce:(NSString *)nonce
-                         consumerKey:(NSString *)consumerKey
-                      consumerSecret:(NSString *)consumerSecret
-                               token:(NSString *)token
-                         tokenSecret:(NSString *)tokenSecret
-                           timestamp:(NSString *)timestamp {
++ (NSString *)signUrlWithQueryComponent:(NSURL *)URL
+                                 method:(NSString *)method
+                         postParameters:(NSDictionary *)postParameters
+                                  nonce:(NSString *)nonce
+                            consumerKey:(NSString *)consumerKey
+                         consumerSecret:(NSString *)consumerSecret
+                                  token:(NSString *)token
+                            tokenSecret:(NSString *)tokenSecret
+                              timestamp:(NSString *)timestamp {
 
     NSMutableDictionary *oAuthParameters = [TMOAuth OAuthParametersFromURL:nil
                                                                        url: URL
@@ -71,16 +72,7 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
                                                                      token: token
                                                                tokenSecret: tokenSecret
                                                                  timestamp: timestamp];
-    
-    NSMutableArray *queryItems = [NSMutableArray array];
-    for (NSString *key in oAuthParameters) {
-        [queryItems addObject:[NSURLQueryItem queryItemWithName:key value:TMURLEncode(oAuthParameters[key])]];
-    }
-
-    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:URL resolvingAgainstBaseURL:true];
-    urlComponents.queryItems = queryItems;
-
-    return [urlComponents URL];
+    return [URL.absoluteString stringByAppendingFormat:@"?%@", [TMURLEncoding encodedDictionary:oAuthParameters]];
 }
 
 - (id)initWithURL:(NSURL *)URL
