@@ -25,13 +25,7 @@
                                                     token:@"token"
                                               tokenSecret:@"tokenSecret"
                                                 timestamp:@"1511967770"];
-    
-    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:signedURL resolvingAgainstBaseURL:false];
-    NSArray *queryItems = urlComponents.queryItems;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name=%@", @"oauth_signature"];
-    NSURLQueryItem *queryItem = [queryItems filteredArrayUsingPredicate:predicate].firstObject;
-    
-    XCTAssert([queryItem.value isEqualToString:@"w%2FLP1MdJwiCfakR3GbW9IoeOz1E%3D"], @"The generated OAuth signature should match the expected value.");
+    XCTAssert([signedURL.absoluteString isEqualToString:@"https://tumblr.com/?oauth_consumer_key=consumerKey&oauth_nonce=1234&oauth_signature=w/LP1MdJwiCfakR3GbW9IoeOz1E%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1511967770&oauth_token=token&oauth_version=1.0"], @"The generated OAuth signature should match the expected value.");
 }
 
 - (void)testInitSetsInstanceVariables {

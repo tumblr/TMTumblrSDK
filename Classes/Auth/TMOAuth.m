@@ -12,6 +12,7 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import <sys/sysctl.h>
 #import "TMSDKFunctions.h"
+#import "TMURLEncoding.h"
 
 @interface TMOAuth()
 
@@ -71,16 +72,7 @@ NSData *HMACSHA1(NSString *dataString, NSString *keyString);
                                                                      token: token
                                                                tokenSecret: tokenSecret
                                                                  timestamp: timestamp];
-    
-    NSMutableArray *queryItems = [NSMutableArray array];
-    for (NSString *key in oAuthParameters) {
-        [queryItems addObject:[NSURLQueryItem queryItemWithName:key value:TMURLEncode(oAuthParameters[key])]];
-    }
-
-    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:URL resolvingAgainstBaseURL:true];
-    urlComponents.queryItems = queryItems;
-
-    return [urlComponents URL];
+    return [NSURL URLWithString:[URL.absoluteString stringByAppendingFormat:@"?%@", [TMURLEncoding encodedDictionary:oAuthParameters]]];
 }
 
 - (id)initWithURL:(NSURL *)URL
