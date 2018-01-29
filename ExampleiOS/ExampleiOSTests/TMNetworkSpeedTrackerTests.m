@@ -55,8 +55,8 @@
 
 // Number of bytes transferred in a mock response
 const short tinyPayload = 10;
-const short oneKBPayload = 1024;
-const short badStatePayload = 18750;
+const short tenKbPayload = 10240;
+const int badStatePayload = 18750;
 const int moderateStatePayload = 68750;
 const int goodStatePayload = 250000;
 const int excellentStatePayload = 250001;
@@ -80,18 +80,18 @@ const float timeInterval = 1.0;
     XCTAssertEqual([TestableEmptyTMNetworkSpeedTracker quality], TMNetworkSpeedQualityUnkown,
                    "Quality was tracked when a series of requests smaller than the trackable payload size were received.");
 
-    [testEmptyTracker track:start endDate:endDate bytes:oneKBPayload];
+    [testEmptyTracker track:start endDate:endDate bytes:tenKbPayload];
     XCTAssertEqual([TestableEmptyTMNetworkSpeedTracker quality], TMNetworkSpeedQualityUnkown,
                    "Received a network quality other than 'unknown' with only one tracked network speed rate.");
 
     // The tracker should only send back a state other than "Unknown" when it receives 10 requests.
     for (int i = 0; i < 8; i++) {
-        [testEmptyTracker track:start endDate:endDate bytes:oneKBPayload];
+        [testEmptyTracker track:start endDate:endDate bytes:tenKbPayload];
     }
     XCTAssertEqual([TestableEmptyTMNetworkSpeedTracker quality], TMNetworkSpeedQualityUnkown,
                    "After receiving at 9 requests that are 1 KB in size, the tracker sending back a quality other than 'Unknown'.");
 
-    [testEmptyTracker track:start endDate:endDate bytes:oneKBPayload];
+    [testEmptyTracker track:start endDate:endDate bytes:tenKbPayload];
     XCTAssertNotEqual([TestableEmptyTMNetworkSpeedTracker quality], TMNetworkSpeedQualityUnkown,
                       "After receiving at 10 requests that are 1 KB in size, the tracker sending back an 'Unknown' network quality.");
 }
