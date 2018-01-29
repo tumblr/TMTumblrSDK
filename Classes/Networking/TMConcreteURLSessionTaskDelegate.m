@@ -47,7 +47,7 @@
     for (NSURLSessionTaskTransactionMetrics *metric in metrics.transactionMetrics) {
         if (metric.resourceFetchType == NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad) {
 
-            [self.networkSpeedTracker track:metric.responseStartDate endDate:metric.responseEndDate bytes:task.countOfBytesReceived];
+            [self.networkSpeedTracker track:metric.requestStartDate endDate:metric.responseEndDate bytes:task.countOfBytesReceived];
 
         }
     }

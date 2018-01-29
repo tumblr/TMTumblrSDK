@@ -27,7 +27,7 @@ const short targetSampleSize = 10;
     if (bytes >= 1024) {
         const NSTimeInterval timeDifference = end.timeIntervalSinceReferenceDate - start.timeIntervalSinceReferenceDate;
 
-        if (timeDifference > 0) {
+        if (timeDifference > 0.05) {
             const double bytesPerSecond = bytes / timeDifference;
             NSNumber * const kbps = @(bytesPerSecond * 0.008);
             const id class = [self class];
