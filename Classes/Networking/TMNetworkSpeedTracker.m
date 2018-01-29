@@ -24,7 +24,7 @@ const short targetSampleSize = 10;
 }
 
 - (void)track:(NSDate *)start endDate:(NSDate *)end bytes:(long long)bytes {
-    if (bytes >= 1024) {
+    if (bytes >= 10240) {
         const NSTimeInterval timeDifference = end.timeIntervalSinceReferenceDate - start.timeIntervalSinceReferenceDate;
 
         if (timeDifference > 0.05) {
