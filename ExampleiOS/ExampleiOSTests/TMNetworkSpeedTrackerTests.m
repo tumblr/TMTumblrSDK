@@ -58,7 +58,8 @@ const short tinyPayload = 10;
 const short oneKBPayload = 1024;
 const short badStatePayload = 18750;
 const int moderateStatePayload = 68750;
-const int goodStatePayload = 68751;
+const int goodStatePayload = 250000;
+const int excellentStatePayload = 250001;
 
 // Time interval for transfers
 const float timeInterval = 1.0;
@@ -131,7 +132,20 @@ const float timeInterval = 1.0;
     }
 
     XCTAssertEqual([TestableTMNetworkSpeedTracker quality], TMNetworkSpeedQualityGood,
-                   "> 550 kbps was not rated as 'Good'.");
+                   "2000 kbps was not rated as 'Good'.");
+}
+
+- (void)testExcellentQualityState {
+    TMNetworkSpeedTracker *testTracker = [[TestableTMNetworkSpeedTracker alloc] init];
+    NSDate* start = [NSDate date];
+    NSDate* endDate = [NSDate dateWithTimeInterval:timeInterval sinceDate:start];
+
+    for (int i = 0; i < 10; i++) {
+        [testTracker track:start endDate:endDate bytes:excellentStatePayload];
+    }
+
+    XCTAssertEqual([TestableTMNetworkSpeedTracker quality], TMNetworkSpeedQualityExcellent,
+                   "> 2000 kbps was not rated as 'Excellent'.");
 }
 
 @end

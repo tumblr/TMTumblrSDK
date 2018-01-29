@@ -13,5 +13,6 @@ typedef NS_ENUM(NSInteger, TMNetworkSpeedQuality) {
     TMNetworkSpeedQualityUnkown = 0,
     TMNetworkSpeedQualityBad = 1,
     TMNetworkSpeedQualityModerate = 2,
-    TMNetworkSpeedQualityGood = 3
+    TMNetworkSpeedQualityGood = 3,
+    TMNetworkSpeedQualityExcellent = 4
 };

@@ -27,7 +27,7 @@ const short targetSampleSize = 10;
     if (bytes >= 1024) {
         const NSTimeInterval timeDifference = end.timeIntervalSinceReferenceDate - start.timeIntervalSinceReferenceDate;
 
-        if (timeDifference > 0.05) {
+        if (timeDifference > 0.02) {
             const double bytesPerSecond = bytes / timeDifference;
             NSNumber * const kbps = @(bytesPerSecond * 0.008);
             const id class = [self class];
@@ -43,6 +43,7 @@ const short targetSampleSize = 10;
     const double kbps = [self kbps];
     const short bad = 150;
     const short moderate = 550;
+    const short good = 2000;
 
     if (kbps <= 0) {
         return TMNetworkSpeedQualityUnkown;
@@ -53,8 +54,11 @@ const short targetSampleSize = 10;
     else if (kbps <= moderate) {
         return TMNetworkSpeedQualityModerate;
     }
-    else {
+    else if (kbps <= good) {
         return TMNetworkSpeedQualityGood;
+    }
+    else {
+        return TMNetworkSpeedQualityExcellent;
     }
 }
 
