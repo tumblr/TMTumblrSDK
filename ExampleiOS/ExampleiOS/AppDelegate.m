@@ -63,7 +63,7 @@ NSString * const ConsumerSecret = @"";
 #pragma mark - TMOAuthAuthenticatorDelegate
 
 - (void)openURLInBrowser:(NSURL *)url {
-    [[UIApplication sharedApplication] openURL:url];
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 
 @end
