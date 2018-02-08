@@ -36,7 +36,7 @@ final class TMRequestMethodHelpersTests: XCTestCase {
         XCTAssert(result == "HEAD", "The .POST enum case should always produce the POST string")
     }
 
-    func testPUTEnumIsHead() {
+    func testPUTEnumIsPut() {
         let result = TMRequestMethodHelpers.method(from: "PUT")
         XCTAssert(result == .PUT)
     }

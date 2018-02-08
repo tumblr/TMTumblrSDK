@@ -36,7 +36,7 @@
 - (void)testBadPath {
     XCTAssertThrows([[TMAPIRequest alloc] initWithBaseURL:[NSURL URLWithString:@""]
                                                    method:TMHTTPRequestMethodGET
-                                                     path:@"/?/&/C://hello"
+                                                     path:@"/?/&/C://hello%"
                                           queryParameters:nil
                                               requestBody:nil
                                         additionalHeaders:nil
