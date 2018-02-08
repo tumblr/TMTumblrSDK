@@ -43,4 +43,22 @@
                                                  isUpload:YES]);
 }
 
+- (void)testAdditionalHeaders {
+
+    id <TMRequest> request = [[TMAPIRequest alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.tumblr.com/v2/"]
+                                                            method:TMHTTPRequestMethodGET
+                                                              path:@"user/info"
+                                                   queryParameters:nil
+                                                       requestBody:nil
+                                                 additionalHeaders:nil
+                                                          isUpload:YES];
+
+    XCTAssertNil(request.additionalHeaders);
+
+    request = [request requestByAddingAdditionalHeaders:@{@"paul" : @"chains"}];
+
+    XCTAssert([request.additionalHeaders[@"paul"] isEqual:@"chains"]);
+
+}
+
 @end

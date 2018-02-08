@@ -78,8 +78,6 @@
         }
         return APIErrors;
     }
-
-    return @[];
 }
 
 @end

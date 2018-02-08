@@ -23,6 +23,22 @@
     XCTAssert(request.method == TMHTTPRequestMethodPOST);
 }
 
+- (void)testPermalinkFactoryMethod {
+    TMRequestFactory *requestFactory = [[TMRequestFactory alloc] init];
+
+    id <TMRequest> request = [requestFactory permalinkRequestWithBlogName:@"pearapps" postID:@"ken"];
+
+    XCTAssertEqualObjects(@"https://api.tumblr.com/v2/blog/pearapps.tumblr.com/posts/ken/permalink", request.URL.absoluteString);
+}
+
+- (void)testPermalinkFactoryMethodUUID {
+    TMRequestFactory *requestFactory = [[TMRequestFactory alloc] init];
+
+    id <TMRequest> request = [requestFactory permalinkRequestWithBlogUUID:@"sdihoadspfhdsoiao" postID:@"ken"];
+
+    XCTAssertEqualObjects(@"https://api.tumblr.com/v2/blog/sdihoadspfhdsoiao/posts/ken/permalink", request.URL.absoluteString);
+
+}
 - (void)testURLEncodingSimplePath {
     TMRequestFactory *requestFactory = [[TMRequestFactory alloc] initWithBaseURLDeterminer:[[TMBasicBaseURLDeterminer alloc] init]];
 
