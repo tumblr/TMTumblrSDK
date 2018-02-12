@@ -1,22 +1,22 @@
 //
-//  TMGzipEncodedRequestBody.m
+//  TMGZIPEncodedRequestBody.m
 //  TMTumblrSDK
 //
 //  Created by Michael Benedict on 2/9/18.
 //
 
 #import "TMRequestBody.h"
-#import "TMGzipEncodedRequestBody.h"
+#import "TMGZIPEncodedRequestBody.h"
 #include <zlib.h>
 #define CHUNKSIZE (1024*4)
 
-@interface TMGzipEncodedRequestBody ()
+@interface TMGZIPEncodedRequestBody ()
 @property (nonatomic, nonnull, readonly) id<TMRequestBody> originalBody;
 @property (nonatomic, nonnull, readonly) NSData *compressedBodyData;
 -(NSData*)compressedBody:(NSData *)data;
 @end
 
-@implementation TMGzipEncodedRequestBody
+@implementation TMGZIPEncodedRequestBody
 
 - (nonnull instancetype)initWithRequestBody:(nonnull id<TMRequestBody>)body {
     NSParameterAssert(body);
@@ -37,18 +37,22 @@
 }
 
 - (nullable NSString *)contentEncoding {
-    if (_compressedBodyData == nil)
+    if (! _compressedBodyData ) {
         return nil;
-    else
+    }
+    else {
         return @"gzip";
+    }
 }
 
 
 - (nullable NSData *)bodyData {
-    if (_compressedBodyData == nil)
+    if (_compressedBodyData == nil) {
         return [_originalBody bodyData];
-    else
+    }
+    else {
         return _compressedBodyData;
+    }
 }
 
 - (nonnull NSDictionary *)parameters {
@@ -59,7 +63,7 @@
     return [_originalBody encodeParameters];
 }
 
-- (NSData*)compressedBody:(NSData *)data {
+- (NSData *)compressedBody:(NSData *)data {
     z_stream strm;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
@@ -86,19 +90,22 @@
         NSMutableData *compressed = [[NSMutableData alloc] initWithLength:CHUNKSIZE];
         
         do {
-            if (strm.total_out >= [compressed length])
+            if (strm.total_out >= [compressed length]) {
                 [compressed increaseLengthBy:CHUNKSIZE];
+	    }
             
             strm.next_out = [compressed mutableBytes] + strm.total_out;
             strm.avail_out = (unsigned int)([compressed length] - strm.total_out);
             
-            if (Z_STREAM_ERROR == deflate(&strm, Z_FINISH))
+            if (Z_STREAM_ERROR == deflate(&strm, Z_FINISH)) {
                 return nil;
+	    }
             
         } while (strm.avail_out == 0);
         
-        if (deflateEnd(&strm) != Z_OK)
+        if (deflateEnd(&strm) != Z_OK) {
             return nil;
+	}
         
         [compressed setLength: strm.total_out];
         
@@ -110,4 +117,3 @@
 }
 
 @end
-

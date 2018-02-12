@@ -34,7 +34,7 @@
 }
 
 - (nullable NSString *)contentEncoding {
-    return NULL;
+    return nil;
 }
 
 
