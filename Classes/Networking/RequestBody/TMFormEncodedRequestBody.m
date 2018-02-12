@@ -38,6 +38,10 @@
     return @"application/x-www-form-urlencoded; charset=utf-8";
 }
 
+- (nullable NSString *)contentEncoding {
+    return NULL;
+}
+
 - (nonnull NSDictionary *)parameters {
     return self.body;
 }

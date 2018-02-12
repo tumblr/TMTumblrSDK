@@ -38,6 +38,10 @@
     return nil;
 }
 
+- (nullable NSString *)contentEncoding {
+    return nil;
+}
+
 - (nonnull NSDictionary *)parameters {
     return self.queryDictionary;
 }

@@ -79,6 +79,13 @@
         if (contentType) {
             [URLRequest addValue:contentType forHTTPHeaderField:@"Content-Type"];
         }
+        
+        NSString *contentEncoding = [requestBody contentEncoding];
+        
+        if (contentEncoding) {
+            [URLRequest addValue:contentEncoding forHTTPHeaderField:@"Content-Encoding"];
+        }
+
 
         URLRequest.HTTPMethod = [TMRequestMethodHelpers stringFromMethod:request.method];
         

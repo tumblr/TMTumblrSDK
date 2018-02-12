@@ -33,6 +33,11 @@
     return @"application/json";
 }
 
+- (nullable NSString *)contentEncoding {
+    return NULL;
+}
+
+
 - (nullable NSData *)bodyData {
     return [NSJSONSerialization dataWithJSONObject:self.JSONDictionary options:0 error:nil];
 }

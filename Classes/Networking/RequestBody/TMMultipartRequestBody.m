@@ -60,6 +60,10 @@
     return [[NSString alloc] initWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", TMMultipartBoundary];
 }
 
+- (nullable NSString *)contentEncoding {
+    return nil;
+}
+
 - (nullable NSData *)bodyData {
 
     NSMutableArray *parts = [[NSMutableArray alloc] init];
