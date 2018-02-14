@@ -11,9 +11,10 @@
 #define CHUNKSIZE (1024*4)
 
 @interface TMGZIPEncodedRequestBody ()
+
 @property (nonatomic, nonnull, readonly) id<TMRequestBody> originalBody;
 @property (nonatomic, nonnull, readonly) NSData *compressedBodyData;
--(NSData*)compressedBody:(NSData *)data;
+
 @end
 
 @implementation TMGZIPEncodedRequestBody
@@ -37,7 +38,7 @@
 }
 
 - (nullable NSString *)contentEncoding {
-    if (! _compressedBodyData ) {
+    if (!_compressedBodyData ) {
         return nil;
     }
     else {
@@ -47,7 +48,7 @@
 
 
 - (nullable NSData *)bodyData {
-    if (_compressedBodyData == nil) {
+    if (!_compressedBodyData) {
         return [_originalBody bodyData];
     }
     else {
