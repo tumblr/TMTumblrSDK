@@ -93,20 +93,20 @@
         do {
             if (strm.total_out >= [compressed length]) {
                 [compressed increaseLengthBy:CHUNKSIZE];
-	    }
+            }
             
             strm.next_out = [compressed mutableBytes] + strm.total_out;
             strm.avail_out = (unsigned int)([compressed length] - strm.total_out);
             
             if (Z_STREAM_ERROR == deflate(&strm, Z_FINISH)) {
                 return nil;
-	    }
+            }
             
         } while (strm.avail_out == 0);
         
         if (deflateEnd(&strm) != Z_OK) {
             return nil;
-	}
+        }
         
         [compressed setLength: strm.total_out];
         
