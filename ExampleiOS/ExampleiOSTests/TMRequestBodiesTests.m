@@ -80,6 +80,13 @@
     XCTAssert([[self unZipTinyData:body.bodyData] isEqualToString:@"{\"4\":3}"],  @"Strings are not equal %@ %@", @"{\"4\":3}", [self unZipTinyData:body.bodyData]);
 }
 
+- (void)testFormEncodedGzippedRequestBodysParamtersAreCorrect {
+    TMFormEncodedRequestBody *formBody = [[TMFormEncodedRequestBody alloc] initWithBody:@{@"4" : @3}];
+    TMGZIPEncodedRequestBody *body = [[TMGZIPEncodedRequestBody alloc] initWithRequestBody:formBody];
+
+    XCTAssert([[body parameters] isEqual:@{@"4" : @3}]);
+}
+
 #pragma mark - Helpers
 // tiny unzip functionality that can return up to 1k of unzipped data which is good enough for unit tests
 - (NSString *)unZipTinyData:(NSData *)data {

@@ -55,6 +55,13 @@ final class TMRequestBodyTests: XCTestCase {
         XCTAssertEqual(requestBody.contentEncoding() as String?, "gzip", "GZipped JSON request should have Content-Encoding: gzip.")
     }
 
+    func testGZIPFormEncodedBody() {
+        let dictionary = testDictionary()
+        let requestBody = TMGZIPEncodedRequestBody(requestBody: TMFormEncodedRequestBody(body: dictionary))
+        XCTAssertEqual(requestBody.parameters() as NSDictionary, dictionary as NSDictionary, "Form encoded request parameters should equal the body dictionary passed in.")
+        XCTAssertTrue(requestBody.encodeParameters(), "Form encoded request body should encode parameters.")
+    }
+
     // MARK: Private
 
     private func testDictionary() -> [AnyHashable: Any] {
