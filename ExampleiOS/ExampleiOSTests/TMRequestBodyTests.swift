@@ -31,6 +31,30 @@ final class TMRequestBodyTests: XCTestCase {
         XCTAssertTrue(requestBody.encodeParameters(), "Query encoded request body should encode parameters.")
     }
 
+    func testJSONRequestContentType() {
+        let dictionary = testDictionary()
+        let requestBody = TMJSONEncodedRequestBody(jsonDictionary: dictionary)
+        XCTAssertEqual(requestBody.contentType() as String?, "application/json", "JSON request should have Content-Type: application/json.")
+    }
+
+    func testJSONRequestContentEncoding() {
+        let dictionary = testDictionary()
+        let requestBody = TMJSONEncodedRequestBody(jsonDictionary: dictionary)
+        XCTAssertEqual(requestBody.contentEncoding() as String?, nil, "JSON request should NOT have a Content-Encoding.")
+    }
+
+    func testGZIPJSONRequestContentType() {
+        let dictionary = testDictionary()
+        let requestBody = TMGZIPEncodedRequestBody(requestBody: TMJSONEncodedRequestBody(jsonDictionary: dictionary))
+        XCTAssertEqual(requestBody.contentType() as String?, "application/json", "GZipped JSON request should have Content-Type: application/json.")
+    }
+
+    func testGZIPJSONRequestContentEncoding() {
+        let dictionary = testDictionary()
+        let requestBody = TMGZIPEncodedRequestBody(requestBody: TMJSONEncodedRequestBody(jsonDictionary: dictionary))
+        XCTAssertEqual(requestBody.contentEncoding() as String?, "gzip", "GZipped JSON request should have Content-Encoding: gzip.")
+    }
+
     // MARK: Private
 
     private func testDictionary() -> [AnyHashable: Any] {
