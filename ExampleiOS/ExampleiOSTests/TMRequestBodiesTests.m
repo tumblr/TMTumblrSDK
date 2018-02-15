@@ -93,6 +93,8 @@
     strm.avail_out = 1024;
     strm.next_out = [uncompressed mutableBytes];
 
+    // https://stackoverflow.com/a/22311297/8838812 shows MAX_WBITS | 16 is
+    // needed for decoding the gzip format
     if (inflateInit2(&strm, MAX_WBITS | 16) != Z_OK) {
         return nil;
     }
