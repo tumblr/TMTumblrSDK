@@ -26,6 +26,13 @@
 - (nullable NSString *)contentType;
 
 /**
+ *  Gets the content encoding for the header of Content-Encoding on a request.
+ *
+ *  @return The content encoding of the request body.
+ */
+- (nullable NSString *)contentEncoding;
+
+/**
  *  The parameters represented by the body data.
  *
  *  @return Parameters that are represented by the body data.
