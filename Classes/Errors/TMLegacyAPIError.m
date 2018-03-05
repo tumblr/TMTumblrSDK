@@ -11,6 +11,7 @@
 @implementation TMLegacyAPIError
 @synthesize detail = _detail;
 @synthesize title = _title;
+@synthesize code = _code;
 
 - (nonnull instancetype)initWithTitle:(nonnull NSString *)title detail:(nonnull NSString *)detail {
     NSParameterAssert(title);
@@ -20,6 +21,7 @@
     if (self) {
         _title = title;
         _detail = detail;
+        _code = 0;
     }
 
     return self;
@@ -28,5 +30,6 @@
 - (BOOL)logout {
     return NO;
 }
+
 
 @end
