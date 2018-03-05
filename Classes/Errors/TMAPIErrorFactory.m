@@ -50,7 +50,7 @@
                 && ([logout isKindOfClass:[NSNumber class]] || !logout)
                 && ([code isKindOfClass:[NSNumber class]] || !code)) {
                 const BOOL finalLogoutValue = [logout boolValue] ?: NO;
-                const NSInteger finalCodeValue = [code integerValue] ?: 0;
+                const NSInteger finalCodeValue = [code integerValue];
                 [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue]];
             }
         }

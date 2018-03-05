@@ -21,7 +21,6 @@
     if (self) {
         _title = title;
         _detail = detail;
-        _code = 0;
     }
 
     return self;
