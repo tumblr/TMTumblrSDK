@@ -40,15 +40,18 @@
             id title = error[@"title"];
             id detail = error[@"detail"];
             id logout = error[@"logout"];
+            id code = error[@"code"];
 
             /**
              *  Only accept these things if they are the right type :/
              */
             if ([title isKindOfClass:[NSString class]]
                 && [detail isKindOfClass:[NSString class]]
-                && ([logout isKindOfClass:[NSNumber class]] || !logout)) {
+                && ([logout isKindOfClass:[NSNumber class]] || !logout)
+                && ([code isKindOfClass:[NSNumber class]] || !code)) {
                 const BOOL finalLogoutValue = [logout boolValue] ?: NO;
-                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail]];
+                const NSInteger finalCodeValue = [code integerValue];
+                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue]];
             }
         }
         return APIErrors;

@@ -12,8 +12,9 @@
 @synthesize logout = _logout;
 @synthesize detail = _detail;
 @synthesize title = _title;
+@synthesize code = _code;
 
-- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail {
+- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code {
     NSParameterAssert(title);
     NSParameterAssert(detail);
     self = [super init];
@@ -22,6 +23,7 @@
         _logout = logout;
         _title = title;
         _detail = detail;
+        _code = code;
     }
     
     return self;

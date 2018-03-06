@@ -15,10 +15,10 @@
 
 @implementation TMAPIErrorFactoryTests
 
-- (BOOL)singlePasses:(NSString *)title detail:(NSString *)detail logout:(BOOL)logout {
+- (BOOL)singlePasses:(NSString *)title detail:(NSString *)detail logout:(BOOL)logout code:(NSInteger)code {
     TMAPIErrorFactory *factory = [[TMAPIErrorFactory alloc] initWithErrors:@[
                                                                              @{
-                                                                                 @"code" : @1001,
+                                                                                 @"code" : @(code),
                                                                                  @"title" : title,
                                                                                  @"logout": @(logout),
                                                                                  @"detail" : detail
@@ -30,7 +30,7 @@
     
     id <TMAPIError> error = [errors firstObject];
 
-    return [error logout] == logout && [[error detail] isEqualToString:detail] && [[error title] isEqualToString:title];
+    return [error logout] == logout && [[error detail] isEqualToString:detail] && [[error title] isEqualToString:title] && [error code] == code;
 }
 
 - (BOOL)singlePassesLegacy:(NSString *)title detail:(NSString *)detail {
@@ -51,12 +51,12 @@
 
 - (void)testOneObjectCorrectlyTranslatesToModelObjectWithLogout {
 
-    XCTAssert([self singlePasses:@"UNAUTHORIZED!" detail:@"You got chainsed." logout:YES]);
+    XCTAssert([self singlePasses:@"UNAUTHORIZED!" detail:@"You got chainsed." logout:YES code:1001]);
 }
 
 - (void)testOneObjectCorrectlyTranslatesToModelObjectWithNoLogout {
 
-    XCTAssert([self singlePasses:@"noadsfhio!" detail:@"You got chainsed." logout:NO]);
+    XCTAssert([self singlePasses:@"noadsfhio!" detail:@"You got chainsed." logout:NO code:1001]);
 }
 
 - (void)testSingleLegacy {
@@ -128,6 +128,7 @@
     XCTAssert([error logout]);
     XCTAssert([[error detail] isEqualToString:@"Account is chainsed!"]);
     XCTAssert([[error title] isEqualToString:@"Unauthorized"]);
+    XCTAssertTrue(error.code == 1001);
 }
 
 - (void)testWronglyFormattedLegacyErrorsDoNotCrashTheApp {

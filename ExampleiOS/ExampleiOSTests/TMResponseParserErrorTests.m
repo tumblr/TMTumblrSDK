@@ -51,6 +51,7 @@
         XCTAssert([[otherError title] isEqualToString:[error title]]);
         XCTAssert([[otherError detail] isEqualToString:[error detail]]);
         XCTAssert([otherError logout] == [error logout]);
+        XCTAssert([otherError code] == [error code]);
     }
 
 }

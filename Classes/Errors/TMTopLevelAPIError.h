@@ -21,9 +21,10 @@ __attribute__((objc_subclassing_restricted))
  *  @param logout Whether or not this error denotes whether we should log a user out.
  *  @param title  The title of the API error. Eg "Unauthorized".
  *  @param detail A more descriptive string detailing why the error is occurring.
+ *  @param code   A code associated with the specific error.
  *
  *  @return An initialized instance of @c TMTopLevelAPIError.
  */
-- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail;
+- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code;
 
 @end

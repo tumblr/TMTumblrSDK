@@ -26,5 +26,10 @@
  */
 @property (nonatomic, readonly, nonnull) NSString *detail;
 
+/**
+ *  A specific code associated with an error.
+ */
+@property (nonatomic, readonly) NSInteger code;
+
 @end
 
