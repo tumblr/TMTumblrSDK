@@ -13,7 +13,7 @@
 @interface TMGZIPEncodedRequestBody ()
 
 @property (nonatomic, nonnull, readonly) id<TMRequestBody> originalBody;
-@property (nonatomic, nonnull, readonly) NSData *compressedBodyData;
+@property (nonatomic, nullable, readonly) NSData *compressedBodyData;
 
 @end
 
