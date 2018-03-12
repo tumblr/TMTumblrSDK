@@ -25,6 +25,6 @@ __attribute__((objc_subclassing_restricted))
  *
  *  @return An initialized instance of @c TMTopLevelAPIError.
  */
-- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code;
+- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge;
 
 @end

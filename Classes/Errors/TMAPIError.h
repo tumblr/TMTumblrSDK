@@ -31,5 +31,20 @@
  */
 @property (nonatomic, readonly) NSInteger code;
 
+/**
+ A specific property associated with some errors for the GUCE Consent flow.
+ */
+@property (nonatomic, readonly) BOOL needsConsent;
+
+/**
+ A specific property associated with some errors for the GUCE Consent flow.
+ */
+@property (nonatomic, readonly) BOOL isConsentBlocking;
+
+/**
+ A specific property associated with some errors for the GUCE Consent flow.
+ */
+@property (nonatomic, readonly) BOOL needsAge;
+
 @end
 
