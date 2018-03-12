@@ -63,7 +63,7 @@
      */
     const BOOL successful = response.statusCode / 100 == 2;
 
-    NSDictionary *JSON = [self JSON];
+    NSDictionary *JSON = [self fullJSON];
     NSDictionary *responseJSON = [self calculateResponseFromJSON:JSON];
     NSArray <id <TMAPIError>> *APIErrors = [self errors:JSON responseJSON:responseJSON];
 
@@ -112,7 +112,7 @@
     return @{};
 }
 
-- (nonnull NSDictionary *)JSON {
+- (nonnull NSDictionary *)fullJSON {
     NSData *data = self.data;
 
     /**

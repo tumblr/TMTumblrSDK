@@ -79,9 +79,9 @@
                                                                                         error:nil
                                                                                 serializeJSON:YES];
 
-                    TMParsedHTTPResponse *response = [responseParser parse];
+                    NSDictionary *fullResponseJSON = [responseParser fullJSON];
 
-                    self.callback(nil, errorWithStatusCode(statusCode, response.JSONDictionary));
+                    self.callback(nil, errorWithStatusCode(statusCode, fullResponseJSON));
                 }
             }
         }
