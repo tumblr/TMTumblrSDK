@@ -21,7 +21,7 @@
     TMXAuthAuthenticator *authenticator = [[TMXAuthAuthenticator alloc] initWithSession:[[TMURLSession alloc] initWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] applicationCredentials:[[TMAPIApplicationCredentials alloc] initWithConsumerKey:@"hello" consumerSecret:@"tokensecret"] userCredentials:nil]];
 
 
-    NSURLSessionTask *task = [authenticator xAuth:@"testemail@email.com" password:@"testpass" callback:^(TMAPIUserCredentials * _Nullable creds, NSError * _Nullable error) {
+    NSURLSessionTask *task = [authenticator xAuth:@"testemail@email.com" password:@"testpass" callback:^(TMAPIUserCredentials * _Nullable creds, id <TMAPIError> apiError, NSError * networkingError) {
 
     }];
 
@@ -33,7 +33,7 @@
     TMXAuthAuthenticator *authenticator = [[TMXAuthAuthenticator alloc] initWithSession:[[TMURLSession alloc] initWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] applicationCredentials:[[TMAPIApplicationCredentials alloc] initWithConsumerKey:@"hello" consumerSecret:@"tokensecret"] userCredentials:nil]];
 
 
-    NSURLSessionTask *task = [authenticator xAuth:@"testemail@email.com" password:@"testpass" authToken:@"token" callback:^(TMAPIUserCredentials * _Nullable creds, NSError * _Nullable error) {
+    NSURLSessionTask *task = [authenticator xAuth:@"testemail@email.com" password:@"testpass" authToken:@"token" callback:^(TMAPIUserCredentials * _Nullable creds, id <TMAPIError> apiError, NSError * networkingError) {
 
     }];
 

@@ -10,4 +10,4 @@
 @protocol TMAPIError;
 
 // Alias for callbacks on network requests that return user credentials
-typedef void (^TMAuthenticationCallback)(TMAPIUserCredentials * _Nullable, id <TMAPIError> _Nullable, NSError * _Nullable networkingError);
+typedef void (^TMAuthenticationCallback)(TMAPIUserCredentials * _Nullable, id <TMAPIError> _Nullable apiError, NSError * _Nullable networkingError);

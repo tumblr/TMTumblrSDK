@@ -56,9 +56,9 @@
 }
 
 - (void)authenticate {
-    [self.authenticator authenticate:@"ello" callback:^(TMAPIUserCredentials *creds, id<TMAPIError> error, NSError *networkingError) {
+    [self.authenticator authenticate:@"ello" callback:^(TMAPIUserCredentials *creds, id<TMAPIError> apiError, NSError *networkingError) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (error) {
+            if (apiError || networkingError) {
                 self.authResultsTextView.text = [NSString stringWithFormat:@"Error: %@", networkingError.localizedDescription];
             }
             else {

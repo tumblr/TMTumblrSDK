@@ -20,7 +20,7 @@
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"callback is called"];
 
-    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, NSError * _Nullable error) {
+    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, id <TMAPIError> apiError, NSError * networkingError) {
 
         XCTAssert([creds.token isEqualToString:@"hello"]);
         XCTAssert([creds.tokenSecret isEqualToString:@"hi"]);
@@ -37,10 +37,10 @@
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"callback is called"];
 
-    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, NSError * _Nullable error) {
+    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, id <TMAPIError> apiError, NSError * networkingError) {
 
-        XCTAssert(error);
-        XCTAssert(error.code == 3400);
+        XCTAssert(networkingError);
+        XCTAssert(networkingError.code == 3400);
 
         [expectation fulfill];
     }];
@@ -54,10 +54,10 @@
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"callback is called"];
 
-    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, NSError * _Nullable error) {
+    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, id <TMAPIError> apiError, NSError * networkingError) {
 
-        XCTAssert(error.code == 400);
-        XCTAssert(error);
+        XCTAssert(networkingError.code == 400);
+        XCTAssert(networkingError);
 
         [expectation fulfill];
     }];
@@ -71,9 +71,9 @@
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"callback is called"];
     NSError *baseError = [[NSError alloc] initWithDomain:@"" code:22321 userInfo:nil];
-    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, NSError * _Nullable error) {
+    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, id <TMAPIError> apiError, NSError * networkingError) {
 
-        XCTAssert([error isEqual:baseError]);
+        XCTAssert([networkingError isEqual:baseError]);
 
         [expectation fulfill];
     }];

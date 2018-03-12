@@ -82,8 +82,8 @@
 
                     TMParsedHTTPResponse *response = [responseParser parse];
                     id <TMAPIError> error = response.APIErrors.firstObject;
-
-                    self.callback(nil, error, errorWithStatusCode(statusCode));
+                    NSError *networkingError = errorWithStatusCode(statusCode);
+                    self.callback(nil, error, networkingError);
                 }
             }
         }

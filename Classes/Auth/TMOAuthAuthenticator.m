@@ -52,11 +52,11 @@
     // Clear token secret in case authentication was previously started but not finished
     self.threeLeggedOAuthTokenSecret = nil;
 
-    TMAuthenticationResponseProcessor *responseProcessor = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials *userCredentials, id <TMAPIError> error,  NSError *networkingError) {
+    TMAuthenticationResponseProcessor *responseProcessor = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials *userCredentials, id <TMAPIError> apiError,  NSError *networkingError) {
 
-        if (error || networkingError) {
+        if (apiError || networkingError) {
             if (callback) {
-                callback(nil, error, networkingError);
+                callback(nil, apiError, networkingError);
             }
 
             return;
@@ -112,10 +112,10 @@
 
     TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:urlString method:TMHTTPRequestMethodPOST additionalHeaders:nil requestBody:requestBody isSigned:NO isUpload:NO];
 
-    TMAuthenticationResponseProcessor *responseProcessor = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials *userCredentials, id <TMAPIError> error, NSError * networkingError) {
-        if (error) {
+    TMAuthenticationResponseProcessor *responseProcessor = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials *userCredentials, id <TMAPIError> apiError, NSError * networkingError) {
+        if (apiError || networkingError) {
             if (self.threeLeggedOAuthCallback) {
-                self.threeLeggedOAuthCallback(nil, error, nil);
+                self.threeLeggedOAuthCallback(nil, apiError, networkingError);
             }
         }
         else {
