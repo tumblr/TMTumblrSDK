@@ -16,6 +16,7 @@
 #import "TMAuthenticationConstants.h"
 #import "TMAuthTokenRequestGenerator.h"
 #import "TMSDKFunctions.h"
+#import "TMAPIError.h"
 
 @interface TMOAuthAuthenticator()
 
@@ -51,11 +52,11 @@
     // Clear token secret in case authentication was previously started but not finished
     self.threeLeggedOAuthTokenSecret = nil;
 
-    TMAuthenticationResponseProcessor *responseProcessor = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials *userCredentials, NSError *error) {
+    TMAuthenticationResponseProcessor *responseProcessor = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials *userCredentials, id <TMAPIError> error,  NSError *networkingError) {
 
-        if (error) {
+        if (error || networkingError) {
             if (callback) {
-                callback(nil, error);
+                callback(nil, error, networkingError);
             }
 
             return;
@@ -93,7 +94,7 @@
 
     if ([[URLParameters allKeys] count] == 0) {
         if (self.threeLeggedOAuthCallback) {
-            self.threeLeggedOAuthCallback(nil, [NSError errorWithDomain:@"Permission denied by user" code:0 userInfo:nil]);
+            self.threeLeggedOAuthCallback(nil, nil, [NSError errorWithDomain:@"Permission denied by user" code:0 userInfo:nil]);
         }
 
         clearState();
@@ -111,14 +112,14 @@
 
     TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:urlString method:TMHTTPRequestMethodPOST additionalHeaders:nil requestBody:requestBody isSigned:NO isUpload:NO];
 
-    TMAuthenticationResponseProcessor *responseProcessor = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials *userCredentials, NSError *error) {
+    TMAuthenticationResponseProcessor *responseProcessor = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials *userCredentials, id <TMAPIError> error, NSError * networkingError) {
         if (error) {
             if (self.threeLeggedOAuthCallback) {
-                self.threeLeggedOAuthCallback(nil, error);
+                self.threeLeggedOAuthCallback(nil, error, nil);
             }
         }
         else {
-            self.threeLeggedOAuthCallback(userCredentials, nil);
+            self.threeLeggedOAuthCallback(userCredentials, nil, nil);
         }
 
         clearState();

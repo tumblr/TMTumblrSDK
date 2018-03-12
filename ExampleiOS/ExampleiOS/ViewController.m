@@ -56,10 +56,10 @@
 }
 
 - (void)authenticate {
-    [self.authenticator authenticate:@"ello" callback:^(TMAPIUserCredentials *creds, NSError *error) {
+    [self.authenticator authenticate:@"ello" callback:^(TMAPIUserCredentials *creds, id<TMAPIError> error, NSError *networkingError) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
-                self.authResultsTextView.text = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
+                self.authResultsTextView.text = [NSString stringWithFormat:@"Error: %@", networkingError.localizedDescription];
             }
             else {
                 self.session = [[TMURLSession alloc] initWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] applicationCredentials:[[TMAPIApplicationCredentials alloc] initWithConsumerKey:@"" consumerSecret:@""] userCredentials:[[TMAPIUserCredentials alloc] initWithToken:creds.token tokenSecret:creds.tokenSecret]];

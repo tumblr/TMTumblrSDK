@@ -7,6 +7,7 @@
 //
 
 @class TMAPIUserCredentials;
+@protocol TMAPIError;
 
 // Alias for callbacks on network requests that return user credentials
-typedef void (^TMAuthenticationCallback)(TMAPIUserCredentials * _Nullable, NSError * _Nullable);
+typedef void (^TMAuthenticationCallback)(TMAPIUserCredentials * _Nullable, id <TMAPIError> _Nullable, NSError * _Nullable networkingError);

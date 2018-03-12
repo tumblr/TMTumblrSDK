@@ -29,7 +29,12 @@
 /**
  *  A specific code associated with an error.
  */
-@property (nonatomic, readonly) NSInteger code;
+@property (nonatomic) NSInteger code;
+
+/**
+ The http Status code associated with the API error.
+ */
+@property (nonatomic) NSInteger httpStatusCode;
 
 /**
  A specific property associated with some errors for the GUCE Consent flow.

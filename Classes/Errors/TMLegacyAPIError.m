@@ -15,6 +15,7 @@
 @synthesize needsConsent = _needsConsent;
 @synthesize needsAge = _needsAge;
 @synthesize isConsentBlocking = _isConsentBlocking;
+@synthesize httpStatusCode = _httpStatusCode;
 
 - (nonnull instancetype)initWithTitle:(nonnull NSString *)title detail:(nonnull NSString *)detail {
     NSParameterAssert(title);
