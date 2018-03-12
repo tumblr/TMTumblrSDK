@@ -11,6 +11,8 @@
 #import "TMURLSessionCallbacks.h"
 #import "TMSDKFunctions.h"
 #import "TMAPIUserCredentials.h"
+#import "TMResponseParser.h"
+#import "TMParsedHTTPResponse.h"
 
 @interface TMAuthenticationResponseProcessor ()
 
@@ -72,8 +74,14 @@
                         statusCode = passwordStatusCode;
                     }
 
-                    
-                    self.callback(nil, errorWithStatusCode(statusCode));
+                    TMResponseParser *responseParser = [[TMResponseParser alloc] initWithData:data
+                                                                                  URLResponse:response
+                                                                                        error:nil
+                                                                                serializeJSON:YES];
+
+                    TMParsedHTTPResponse *response = [responseParser parse];
+
+                    self.callback(nil, errorWithStatusCode(statusCode, response.JSONDictionary));
                 }
             }
         }
@@ -82,8 +90,8 @@
 
 #pragma mark - Helpers
 
-NSError *errorWithStatusCode(NSInteger statusCode) {
-    return [NSError errorWithDomain:@"Authentication request failed" code:statusCode userInfo:nil];
+NSError *errorWithStatusCode(NSInteger statusCode, NSDictionary *userInfo) {
+    return [NSError errorWithDomain:@"Authentication request failed" code:statusCode userInfo:userInfo];
 }
 
 NSDictionary *formEncodedDataToDictionary(NSData *data) {
