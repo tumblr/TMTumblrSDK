@@ -33,6 +33,27 @@
     return [error logout] == logout && [[error detail] isEqualToString:detail] && [[error title] isEqualToString:title] && [error code] == code;
 }
 
+- (BOOL)singlePasses:(NSString *)title detail:(NSString *)detail logout:(BOOL)logout code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge {
+    TMAPIErrorFactory *factory = [[TMAPIErrorFactory alloc] initWithErrors:@[
+                                                                             @{
+                                                                                 @"code" : @(code),
+                                                                                 @"title" : title,
+                                                                                 @"logout": @(logout),
+                                                                                 @"detail" : detail,
+                                                                                 @"gdpr_needs_consent": @(needsConsent),
+                                                                                 @"gdpr_is_consent_blocking": @(isConsentBlocking),
+                                                                                 @"gdpr_needs_age": @(needsAge)
+                                                                                 }
+
+                                                                             ] legacy:NO];
+
+    NSArray <id <TMAPIError>> *errors = [factory APIErrors];
+
+    id <TMAPIError> error = [errors firstObject];
+
+    return [error logout] == logout && [[error detail] isEqualToString:detail] && [[error title] isEqualToString:title] && [error code] == code && [error needsConsent] == needsConsent && [error isConsentBlocking] == isConsentBlocking && [error needsAge] == needsAge;
+}
+
 - (BOOL)singlePassesLegacy:(NSString *)title detail:(NSString *)detail {
     TMAPIErrorFactory *factory = [[TMAPIErrorFactory alloc] initWithErrors:@[
                                                                              @{
@@ -52,6 +73,21 @@
 - (void)testOneObjectCorrectlyTranslatesToModelObjectWithLogout {
 
     XCTAssert([self singlePasses:@"UNAUTHORIZED!" detail:@"You got chainsed." logout:YES code:1001]);
+}
+
+- (void)testOneObjectCorrectlyTranslatesToModelObjectWithAddedFieldsAllTrue {
+
+    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:YES isConsentBlocking:YES needsAge:YES]);
+}
+
+- (void)testOneObjectCorrectlyTranslatesToModelObjectWithAddedFieldsAllFalse {
+
+    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:NO isConsentBlocking:NO needsAge:NO]);
+}
+
+- (void)testOneObjectCorrectlyTranslatesToModelObjectWithAddedFieldsMixedValues {
+
+    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:NO isConsentBlocking:YES needsAge:NO]);
 }
 
 - (void)testOneObjectCorrectlyTranslatesToModelObjectWithNoLogout {
