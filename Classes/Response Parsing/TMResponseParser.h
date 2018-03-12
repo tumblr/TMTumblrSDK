@@ -42,11 +42,4 @@ __attribute__((objc_subclassing_restricted))
  */
 - (nonnull TMParsedHTTPResponse *)parse;
 
-/**
- This returns the full json payload.
-
- @return all json in the request parsed from the data.
- */
-- (nonnull NSDictionary *)fullJSON;
-
 @end
