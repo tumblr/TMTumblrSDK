@@ -82,13 +82,18 @@
 
                     TMParsedHTTPResponse *response = [responseParser parse];
                     id <TMAPIError> error = response.APIErrors.firstObject;
-                    error.httpStatusCode = statusCode;
 
-                    self.callback(nil, error, nil);
+                    self.callback(nil, error, errorWithStatusCode(statusCode));
                 }
             }
         }
     };
+}
+
+#pragma mark - Helpers
+
+NSError *errorWithStatusCode(NSInteger statusCode) {
+    return [NSError errorWithDomain:@"Authentication request failed" code:statusCode userInfo:nil];
 }
 
 NSDictionary *formEncodedDataToDictionary(NSData *data) {
