@@ -83,4 +83,25 @@
     [self waitForExpectationsWithTimeout:DISPATCH_TIME_FOREVER handler:nil];
 }
 
+- (void)testFailedRequestCallsCallbackFunctionWithFullJSONPayload {
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"callback is called"];
+    NSDictionary *responseFields = @{@"errors": @[@{@"key_1": @(YES), @"key_2": @(NO)}]};
+
+    NSData *dataFromDict = [NSJSONSerialization dataWithJSONObject:responseFields
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:nil];
+
+    TMAuthenticationResponseProcessor *response = [[TMAuthenticationResponseProcessor alloc] initWithCallback:^(TMAPIUserCredentials * _Nullable creds, NSError * _Nullable error) {
+
+        XCTAssert([error.userInfo isEqual:responseFields]);
+
+        [expectation fulfill];
+    }];
+
+    [response sessionCompletionBlock](dataFromDict, [[NSHTTPURLResponse alloc] initWithURL:[[NSURL alloc] init] statusCode:400 HTTPVersion:@"1.1" headerFields:nil], nil);
+
+    [self waitForExpectationsWithTimeout:DISPATCH_TIME_FOREVER handler:nil];
+}
+
 @end
