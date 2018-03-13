@@ -48,4 +48,24 @@ __attribute__((objc_subclassing_restricted))
                           authToken:(nullable NSString *)authToken
                            callback:(nonnull TMAuthenticationCallback)callback;
 
+/**
+ *  Authenticates via xAuth.
+ *
+ *  Please note that xAuth access [must be specifically requested](http://www.tumblr.com/oauth/apps) for your application.
+ *
+ *  @param emailAddress The email address of the user.
+ *  @param password     The password of the user.
+ *  @param authToken    An optional authentication token for the user.
+ *  @param callback     The callback block for the xAuth request.
+ */
+- (nonnull NSURLSessionTask *)xAuth:(nonnull NSString *)emailAddress
+                           password:(nonnull NSString *)password
+                          authToken:(nullable NSString *)authToken
+                          euResident:(nullable NSString *)euResident
+                          gdprIsAcceptableAge:(nullable NSString *)gdprIsAcceptableAge
+                          gdprConsentCore:(nullable NSString *)gdprConsentCore
+                          gdprConsentAds:(nullable NSString *)gdprConsentAds
+                          gdprToken:(nullable NSString *)gdprToken
+                           callback:(nonnull TMAuthenticationCallback)callback;
+
 @end
