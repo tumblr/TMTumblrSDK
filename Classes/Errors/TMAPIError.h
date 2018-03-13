@@ -29,7 +29,7 @@
 /**
  *  A specific code associated with an error.
  */
-@property (nonatomic) NSInteger code;
+@property (nonatomic, readonly) NSInteger code;
 
 /**
  A specific property associated with some errors for the GUCE Consent flow.
