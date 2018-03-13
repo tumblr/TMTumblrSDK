@@ -39,8 +39,8 @@ NSString * const accessTokenURLString = @"https://www.tumblr.com/oauth/access_to
 
     TMOAuthAuthenticator *authenticator = [[TMOAuthAuthenticator alloc] initWithSession:session applicationCredentials:[self creds] delegate:self];
 
-    [authenticator authenticate:urlScheme callback:^(TMAPIUserCredentials *creds, NSError *error) {
-        XCTAssertNotNil(error, @"An error should be passed in the case of failure");
+    [authenticator authenticate:urlScheme callback:^(TMAPIUserCredentials *creds, id <TMAPIError> apiError, NSError * networkingError) {
+        XCTAssertNotNil(networkingError, @"An error should be passed in the case of failure");
         self.completionCalled = YES;
     }];
 
@@ -78,8 +78,8 @@ NSString * const accessTokenURLString = @"https://www.tumblr.com/oauth/access_to
 
     TMOAuthAuthenticator *authenticator = [[TMOAuthAuthenticator alloc] initWithSession:session applicationCredentials:[self creds] delegate:self];
 
-    [authenticator authenticate:urlScheme callback:^(TMAPIUserCredentials *creds, NSError *error) {
-        XCTAssertNil(error, @"No error should be passed in the case of success");
+    [authenticator authenticate:urlScheme callback:^(TMAPIUserCredentials *creds, id <TMAPIError> apiError, NSError * networkingError) {
+        XCTAssertNil(networkingError, @"No error should be passed in the case of success");
         XCTAssertEqualObjects(creds.tokenSecret, @"hey", @"A valid token secret should be returned");
         XCTAssertEqualObjects(creds.token, @"whatsup", @"A valid token should be returned");
         self.completionCalled = YES;
@@ -99,8 +99,8 @@ NSString * const accessTokenURLString = @"https://www.tumblr.com/oauth/access_to
 
     TMOAuthAuthenticator *authenticator = [[TMOAuthAuthenticator alloc] initWithSession:session applicationCredentials:[self creds] delegate:self];
 
-    [authenticator authenticate:@"ello" callback:^(TMAPIUserCredentials *creds, NSError *error) {
-        XCTAssertNotNil(error, @"An error should be passed in the case of failure");
+    [authenticator authenticate:@"ello" callback:^(TMAPIUserCredentials *creds, id <TMAPIError> apiError, NSError * networkingError) {
+        XCTAssertNotNil(networkingError, @"An error should be passed in the case of failure");
         XCTAssertNil(creds, @"No creds should be passed in the case of failure");
         self.completionCalled = YES;
     }];

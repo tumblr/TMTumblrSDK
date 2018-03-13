@@ -12,6 +12,10 @@
 @synthesize detail = _detail;
 @synthesize title = _title;
 @synthesize code = _code;
+@synthesize needsConsent = _needsConsent;
+@synthesize needsAge = _needsAge;
+@synthesize isConsentBlocking = _isConsentBlocking;
+@synthesize authToken = _authToken;
 
 - (nonnull instancetype)initWithTitle:(nonnull NSString *)title detail:(nonnull NSString *)detail {
     NSParameterAssert(title);

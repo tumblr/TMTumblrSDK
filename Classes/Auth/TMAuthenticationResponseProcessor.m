@@ -11,6 +11,9 @@
 #import "TMURLSessionCallbacks.h"
 #import "TMSDKFunctions.h"
 #import "TMAPIUserCredentials.h"
+#import "TMResponseParser.h"
+#import "TMParsedHTTPResponse.h"
+#import "TMAPIError.h"
 
 @interface TMAuthenticationResponseProcessor ()
 
@@ -39,7 +42,7 @@
 
         if (error) {
             if (self.callback) {
-                self.callback(nil, error);
+                self.callback(nil, nil, error);
             }
 
             return;
@@ -56,12 +59,12 @@
                     id token = responseParameters[@"oauth_token"];
 
                     if ([secret isKindOfClass:[NSString class]] && [token isKindOfClass:[NSString class]]) {
-                        self.callback([[TMAPIUserCredentials alloc] initWithToken:token tokenSecret:secret], nil);
+                        self.callback([[TMAPIUserCredentials alloc] initWithToken:token tokenSecret:secret], nil, nil);
                         return;
                     }
 
                     // API gave us bad types, we can not send anything useful back
-                    self.callback(nil, [[NSError alloc] initWithDomain:@"com.tumblr.sdk" code:3400 userInfo:nil]);
+                    self.callback(nil, nil, [[NSError alloc] initWithDomain:@"com.tumblr.sdk" code:3400 userInfo:nil]);
                 }
             }
             else {
@@ -72,8 +75,15 @@
                         statusCode = passwordStatusCode;
                     }
 
-                    
-                    self.callback(nil, errorWithStatusCode(statusCode));
+                    TMResponseParser *responseParser = [[TMResponseParser alloc] initWithData:data
+                                                                                  URLResponse:response
+                                                                                        error:nil
+                                                                                serializeJSON:YES];
+
+                    TMParsedHTTPResponse *response = [responseParser parse];
+                    id <TMAPIError> error = response.APIErrors.firstObject;
+                    NSError *networkingError = errorWithStatusCode(statusCode);
+                    self.callback(nil, error, networkingError);
                 }
             }
         }
@@ -92,6 +102,5 @@ NSDictionary *formEncodedDataToDictionary(NSData *data) {
 
     return dictionary;
 }
-
 
 @end

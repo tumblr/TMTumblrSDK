@@ -41,6 +41,10 @@
             id detail = error[@"detail"];
             id logout = error[@"logout"];
             id code = error[@"code"];
+            id needsConsent = error[@"gdpr_needs_consent"];
+            id isConsentBlocking = error[@"gdpr_is_consent_blocking"];
+            id needsAge = error[@"gdpr_needs_age"];
+            id authToken = error[@"auth_token"];
 
             /**
              *  Only accept these things if they are the right type :/
@@ -48,10 +52,15 @@
             if ([title isKindOfClass:[NSString class]]
                 && [detail isKindOfClass:[NSString class]]
                 && ([logout isKindOfClass:[NSNumber class]] || !logout)
-                && ([code isKindOfClass:[NSNumber class]] || !code)) {
+                && ([code isKindOfClass:[NSNumber class]] || !code)
+                && ([authToken isKindOfClass:[NSString class]] || !authToken)) {
                 const BOOL finalLogoutValue = [logout boolValue] ?: NO;
+                const BOOL finalNeedsConsentValue = [needsConsent boolValue] ?: NO;
+                const BOOL finalIsConsentBockingValue = [isConsentBlocking boolValue] ?: NO;
+                const BOOL finalNeedsAgeValue = [needsAge boolValue] ?: NO;
+
                 const NSInteger finalCodeValue = [code integerValue];
-                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue]];
+                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue needsConsent:finalNeedsConsentValue isConsentBlocking:finalIsConsentBockingValue needsAge:finalNeedsAgeValue authToken:authToken]];
             }
         }
         return APIErrors;
