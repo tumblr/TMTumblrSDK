@@ -82,7 +82,7 @@ typedef void (^TMCompletionHandler)(NSData *, NSURLResponse *, NSError *);
             parameters[@"gdpr_consent_first_party_ads"] = authToken;
         }
         if (gdprToken) {
-            parameters[@"auth_token"] = gdprToken;
+            parameters[@"gdpr_auth_token"] = gdprToken;
         }
 
         return [parameters copy];
