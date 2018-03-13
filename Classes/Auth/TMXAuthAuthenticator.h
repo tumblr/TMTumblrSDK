@@ -56,6 +56,11 @@ __attribute__((objc_subclassing_restricted))
  *  @param emailAddress The email address of the user.
  *  @param password     The password of the user.
  *  @param authToken    An optional authentication token for the user.
+ *  @param euResident   Whether the user has reported being an EU resident.
+ *  @param gdprIsAcceptableAge   Whether the user has reported being an acceptable age.
+ *  @param gdprConsentCore   Whether the user has agreed to our core consent.
+ *  @param gdprConsentAds   Whether the user has agreed to our ads terms.
+ *  @param gdprToken    An optional token for authentication.
  *  @param callback     The callback block for the xAuth request.
  */
 - (nonnull NSURLSessionTask *)xAuth:(nonnull NSString *)emailAddress
