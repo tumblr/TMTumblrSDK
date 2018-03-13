@@ -46,5 +46,10 @@
  */
 @property (nonatomic, readonly) BOOL needsAge;
 
+/**
+ Token sometimes sent to facilitate authentication with the GUCE flow. 
+ */
+@property (nonatomic, readonly, nullable) NSString *authToken;
+
 @end
 

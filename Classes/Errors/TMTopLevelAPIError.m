@@ -16,8 +16,9 @@
 @synthesize needsConsent = _needsConsent;
 @synthesize needsAge = _needsAge;
 @synthesize isConsentBlocking = _isConsentBlocking;
+@synthesize authToken = _authToken;
 
-- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge {
+- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge authToken:(NSString * _Nullable)authToken {
     NSParameterAssert(title);
     NSParameterAssert(detail);
     self = [super init];
@@ -30,6 +31,7 @@
         _needsAge = needsAge;
         _needsConsent = needsConsent;
         _isConsentBlocking = isConsentBlocking;
+        _authToken = authToken;
     }
     
     return self;
