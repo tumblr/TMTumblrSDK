@@ -43,7 +43,7 @@
                                                                                  @"gdpr_needs_consent": @(needsConsent),
                                                                                  @"gdpr_is_consent_blocking": @(isConsentBlocking),
                                                                                  @"gdpr_needs_age": @(needsAge),
-                                                                                 @"auth_token": authToken
+                                                                                 @"gdpr_auth_token": authToken
                                                                                  }
 
                                                                              ] legacy:NO];

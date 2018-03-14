@@ -44,7 +44,7 @@
             id needsConsent = error[@"gdpr_needs_consent"];
             id isConsentBlocking = error[@"gdpr_is_consent_blocking"];
             id needsAge = error[@"gdpr_needs_age"];
-            id authToken = error[@"auth_token"];
+            id authToken = error[@"gdpr_auth_token"];
 
             /**
              *  Only accept these things if they are the right type :/
