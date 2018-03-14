@@ -47,16 +47,13 @@ typedef void (^TMCompletionHandler)(NSData *, NSURLResponse *, NSError *);
                    password:(NSString *)password
                   authToken:(NSString *)authToken
                    callback:(TMAuthenticationCallback)callback {
-    return [self xAuth:emailAddress password:password authToken:authToken euResident:nil gdprIsAcceptableAge:nil gdprConsentCore:nil gdprConsentAds:nil gdprToken:nil callback:callback];
+    return [self xAuth:emailAddress password:password authToken:authToken gdprConsentResponseFields:nil gdprToken:nil callback:callback];
 }
 
 - (nonnull NSURLSessionTask *)xAuth:(nonnull NSString *)emailAddress
                            password:(nonnull NSString *)password
                           authToken:(nullable NSString *)authToken
-                         euResident:(nullable NSString *)euResident
-                gdprIsAcceptableAge:(nullable NSString *)gdprIsAcceptableAge
-                    gdprConsentCore:(nullable NSString *)gdprConsentCore
-                     gdprConsentAds:(nullable NSString *)gdprConsentAds
+          gdprConsentResponseFields:(nullable NSDictionary *)gdprConsentResponseFields
                           gdprToken:(nullable NSString *)gdprToken
                            callback:(nonnull TMAuthenticationCallback)callback {
     NSDictionary *requestParameters = ^NSDictionary *{
@@ -69,18 +66,11 @@ typedef void (^TMCompletionHandler)(NSData *, NSURLResponse *, NSError *);
         if (authToken) {
             parameters[@"x_auth_token"] = authToken;
         }
-        if (euResident) {
-            parameters[@"eu_resident"] = authToken;
+
+        if (gdprConsentResponseFields) {
+            [parameters addEntriesFromDictionary:gdprConsentResponseFields];
         }
-        if (gdprIsAcceptableAge) {
-            parameters[@"gdpr_is_acceptable_age"] = authToken;
-        }
-        if (gdprConsentCore) {
-            parameters[@"gdpr_consent_core"] = authToken;
-        }
-        if (gdprConsentAds) {
-            parameters[@"gdpr_consent_first_party_ads"] = authToken;
-        }
+
         if (gdprToken) {
             parameters[@"gdpr_auth_token"] = gdprToken;
         }
