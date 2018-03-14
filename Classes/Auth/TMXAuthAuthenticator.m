@@ -40,14 +40,7 @@ typedef void (^TMCompletionHandler)(NSData *, NSURLResponse *, NSError *);
 }
 
 - (NSURLSessionTask *)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback {
-    return [self xAuth:emailAddress password:password authToken:nil callback:callback];
-}
-
-- (NSURLSessionTask *)xAuth:(NSString *)emailAddress
-                   password:(NSString *)password
-                  authToken:(NSString *)authToken
-                   callback:(TMAuthenticationCallback)callback {
-    return [self xAuth:emailAddress password:password authToken:authToken gdprConsentResponseFields:nil gdprToken:nil callback:callback];
+    return [self xAuth:emailAddress password:password authToken:nil gdprConsentResponseFields:nil gdprToken:nil callback:callback];
 }
 
 - (nonnull NSURLSessionTask *)xAuth:(nonnull NSString *)emailAddress
