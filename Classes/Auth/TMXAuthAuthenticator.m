@@ -40,13 +40,15 @@ typedef void (^TMCompletionHandler)(NSData *, NSURLResponse *, NSError *);
 }
 
 - (NSURLSessionTask *)xAuth:(NSString *)emailAddress password:(NSString *)password callback:(TMAuthenticationCallback)callback {
-    return [self xAuth:emailAddress password:password authToken:nil callback:callback];
+    return [self xAuth:emailAddress password:password authToken:nil gdprConsentResponseFields:nil gdprToken:nil callback:callback];
 }
 
-- (NSURLSessionTask *)xAuth:(NSString *)emailAddress
-                   password:(NSString *)password
-                  authToken:(NSString *)authToken
-                   callback:(TMAuthenticationCallback)callback {
+- (nonnull NSURLSessionTask *)xAuth:(nonnull NSString *)emailAddress
+                           password:(nonnull NSString *)password
+                          authToken:(nullable NSString *)authToken
+          gdprConsentResponseFields:(nullable NSDictionary *)gdprConsentResponseFields
+                          gdprToken:(nullable NSString *)gdprToken
+                           callback:(nonnull TMAuthenticationCallback)callback {
     NSDictionary *requestParameters = ^NSDictionary *{
         NSMutableDictionary *parameters = @{
                                             @"x_auth_username" : emailAddress,
@@ -56,6 +58,14 @@ typedef void (^TMCompletionHandler)(NSData *, NSURLResponse *, NSError *);
 
         if (authToken) {
             parameters[@"x_auth_token"] = authToken;
+        }
+
+        if (gdprConsentResponseFields) {
+            [parameters addEntriesFromDictionary:gdprConsentResponseFields];
+        }
+
+        if (gdprToken) {
+            parameters[@"gdpr_auth_token"] = gdprToken;
         }
 
         return [parameters copy];

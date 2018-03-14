@@ -41,11 +41,15 @@ __attribute__((objc_subclassing_restricted))
  *  @param emailAddress The email address of the user.
  *  @param password     The password of the user.
  *  @param authToken    An optional authentication token for the user.
+ *  @param gdprConsentResponseFields optional answers to GDPR-GUCE consent questions.
+ *  @param gdprToken    An optional token for authentication.
  *  @param callback     The callback block for the xAuth request.
  */
 - (nonnull NSURLSessionTask *)xAuth:(nonnull NSString *)emailAddress
                            password:(nonnull NSString *)password
                           authToken:(nullable NSString *)authToken
+          gdprConsentResponseFields:(nullable NSDictionary *)gdprConsentResponseFields
+                          gdprToken:(nullable NSString *)gdprToken
                            callback:(nonnull TMAuthenticationCallback)callback;
 
 @end
