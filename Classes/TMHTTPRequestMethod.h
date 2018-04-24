@@ -30,4 +30,8 @@ typedef NS_ENUM(int, TMHTTPRequestMethod) {
      *  HEAD
      */
     TMHTTPRequestMethodHEAD,
+    /**
+    * Patch
+    */
+    TMHTTPRequestMethodPATCH,
 };
