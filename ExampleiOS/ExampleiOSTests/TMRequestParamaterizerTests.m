@@ -32,6 +32,10 @@
     XCTAssert([[self basicRequestWithMethod:TMHTTPRequestMethodDELETE].HTTPMethod isEqualToString:@"DELETE"]);
 }
 
+- (void)testPatchMethod {
+    XCTAssert([[self basicRequestWithMethod:TMHTTPRequestMethodPATCH].HTTPMethod isEqualToString:@"PATCH"]);
+}
+
 - (void)testHTTPBodyExistsJSONBody {
     NSURLRequest *paramedRequest = [self basicHTTPBodyRequestWithBody:[[TMJSONEncodedRequestBody alloc] initWithJSONDictionary:@{@"key" : @"value"}]];
 

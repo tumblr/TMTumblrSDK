@@ -36,6 +36,13 @@
     
 }
 
+- (void)testRequestMethodFromStringPATCH {
+
+    TMHTTPRequestMethod method = [TMRequestMethodHelpers methodFromString:@"PATCH"];
+    XCTAssertEqual(method, TMHTTPRequestMethodPATCH);
+
+}
+
 - (void)testRequestMethodFromStringUnkownIsGET {
 
     TMHTTPRequestMethod method = [TMRequestMethodHelpers methodFromString:@"adfishapd"];
