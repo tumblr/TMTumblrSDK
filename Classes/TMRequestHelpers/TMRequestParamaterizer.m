@@ -43,7 +43,7 @@
         _request = request;
         _additionalHeaders = additionalHeaders;
     }
-    
+
     return self;
 }
 
@@ -79,16 +79,16 @@
         if (contentType) {
             [URLRequest addValue:contentType forHTTPHeaderField:@"Content-Type"];
         }
-        
+
         NSString *contentEncoding = [requestBody contentEncoding];
-        
+
         if (contentEncoding) {
             [URLRequest addValue:contentEncoding forHTTPHeaderField:@"Content-Encoding"];
         }
 
 
         URLRequest.HTTPMethod = [TMRequestMethodHelpers stringFromMethod:request.method];
-        
+
         return [URLRequest copy];
     }();
 
@@ -128,7 +128,7 @@
 }
 
 /*
- The reason we can not use the @c TMRequest here (and must pass an @c NSURLRequest into this method) is because we 
+ The reason we can not use the @c TMRequest here (and must pass an @c NSURLRequest into this method) is because we
  need to copy an a different copy than what the TMRequest provides.
  */
 - (nonnull NSURLRequest *)signedURLRequestWithRequest:(nonnull NSURLRequest *)URLRequest {
@@ -145,7 +145,7 @@
         tokenSecret = self.userCredentials.tokenSecret;
     }
 
-    NSDictionary *postParameters = (self.request.method == TMHTTPRequestMethodPOST && [self.request.requestBody encodeParameters]) ? [self.request.requestBody parameters] : nil;
+    NSDictionary *postParameters = (self.request.method == (TMHTTPRequestMethodPOST | TMHTTPRequestMethodPATCH) && [self.request.requestBody encodeParameters]) ? [self.request.requestBody parameters] : nil;
     [mutableRequest addValue:[TMOAuth headerForURL:mutableRequest.URL
                                             method:[TMRequestMethodHelpers stringFromMethod:self.request.method]
                                     postParameters:postParameters
