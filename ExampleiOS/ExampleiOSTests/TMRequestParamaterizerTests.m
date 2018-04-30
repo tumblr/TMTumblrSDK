@@ -78,6 +78,21 @@
     XCTAssert([[paramaterizer URLRequestWithRequest:request].allHTTPHeaderFields[@"kenny-header"] isEqualToString:@"hello"]);
 }
 
+-(void)testPatchinRequestWithRequest {
+    TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
+                                                               method:TMHTTPRequestMethodPATCH
+                                                    additionalHeaders:nil
+                                                          requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:@{@"key" : @"value"}]
+                                                             isSigned:YES
+                                                             isUpload:YES];
+    TMRequestParamaterizer *paramaterizer = [[TMRequestParamaterizer alloc] initWithApplicationCredentials:nil userCredentials:nil request:request additionalHeaders:@{}];
+    NSURLRequest *requestWithRequest = [paramaterizer URLRequestWithRequest:request];
+
+    XCTAssertEqual(requestWithRequest.HTTPMethod, @"POST");
+
+
+}
+
 - (void)testHTTPBodyDataIsNotSet {
     TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
                                                                method:TMHTTPRequestMethodPOST
@@ -90,6 +105,7 @@
 
     XCTAssertNil([paramaterizer URLRequestWithRequest:request].HTTPBody);
 }
+
 
 #pragma mark - Helpers
 
@@ -113,5 +129,6 @@
 
     return [paramaterizer URLRequestWithRequest:request];
 }
+
 
 @end
