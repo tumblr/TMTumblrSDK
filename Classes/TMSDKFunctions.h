@@ -7,6 +7,7 @@
 //
 
 @import Foundation;
+#import "TMRequest.h"
 
 @interface TMSDKFunctions : NSObject
 
@@ -21,5 +22,7 @@ NSString * _Nonnull TMDictionaryToQueryString(NSDictionary * _Nonnull dictionary
 NSString * _Nonnull blogPath(NSString * _Nonnull ext, NSString * _Nonnull blogName);
 
 NSString * _Nonnull fullBlogName(NSString * _Nonnull blogName);
+
+NSDictionary * _Nullable postParametersForSignedRequests(_Nonnull id <TMRequest> request);
 
 @end

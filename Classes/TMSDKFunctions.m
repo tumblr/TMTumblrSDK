@@ -7,6 +7,9 @@
 //
 
 #import "TMSDKFunctions.h"
+#import "TMQueryEncodedRequestBody.h"
+#import "TMJSONEncodedRequestBody.h"
+#import "TMRequest.h"
 
 @implementation TMSDKFunctions
 
@@ -80,6 +83,11 @@ NSString *fullBlogName(NSString *blogName) {
     return blogName;
 }
 
+NSDictionary *postParametersForSignedRequests(_Nonnull id <TMRequest> request){
+    NSDictionary *postParameters = (request.method == TMHTTPRequestMethodPOST || request.method == TMHTTPRequestMethodPATCH) && [request.requestBody encodeParameters] ? [request.requestBody parameters] : nil;
+    return postParameters;
+}
+
 #pragma mark - Private
 
 void TMAddKeyValuePairToQueryStringMutableArray(NSString *key, id value, NSMutableArray *parameters) {
@@ -98,5 +106,7 @@ void TMAddKeyValuePairToQueryStringMutableArray(NSString *key, id value, NSMutab
         [parameters addObject:[NSString stringWithFormat:@"%@=%@", TMURLEncode(key), TMURLEncode(value)]];
     }
 }
+
+
 
 @end

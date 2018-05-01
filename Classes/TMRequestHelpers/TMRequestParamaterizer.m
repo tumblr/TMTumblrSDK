@@ -145,8 +145,9 @@
         tokenSecret = self.userCredentials.tokenSecret;
     }
 
-    //NSDictionary *postParameters = (self.request.method == TMHTTPRequestMethodPOST || self.request.method == TMHTTPRequestMethodPATCH) && [self.request.requestBody encodeParameters] ? [self.request.requestBody parameters] : nil;
-    NSDictionary *postParameters = self.request.method == (TMHTTPRequestMethodPOST | TMHTTPRequestMethodPATCH) && [self.request.requestBody encodeParameters] ? [self.request.requestBody parameters] : nil;
+    //CHANGE TO BOOL
+    
+    NSDictionary *postParameters = postParametizerForSignedRequests(self.request);
     [mutableRequest addValue:[TMOAuth headerForURL:mutableRequest.URL
                                             method:[TMRequestMethodHelpers stringFromMethod:self.request.method]
                                     postParameters:postParameters
