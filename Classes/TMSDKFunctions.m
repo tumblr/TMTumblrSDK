@@ -8,7 +8,6 @@
 
 #import "TMSDKFunctions.h"
 #import "TMQueryEncodedRequestBody.h"
-#import "TMJSONEncodedRequestBody.h"
 #import "TMRequest.h"
 
 @implementation TMSDKFunctions
