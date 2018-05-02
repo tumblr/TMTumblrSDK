@@ -12,8 +12,6 @@
 #import <TMTumblrSDK/TMHTTPRequestMethod.h>
 #import <TMTumblrSDK/TMJSONEncodedRequestBody.h>
 #import <TMTumblrSDK/TMFormEncodedRequestBody.h>
-#import <TMTumblrSDK/TMAPIUserCredentials.h>
-#import <TMTumblrSDK/TMAPIApplicationCredentials.h>
 #import <TMTumblrSDK/TMSDKFunctions.h>
 
 
@@ -165,7 +163,6 @@
     XCTAssertNil([paramaterizer URLRequestWithRequest:request].HTTPBody);
 }
 
-
 #pragma mark - Helpers
 
 - (NSURLRequest *)basicHTTPBodyRequestWithBody:(id <TMRequestBody>)body {
@@ -188,6 +185,5 @@
 
     return [paramaterizer URLRequestWithRequest:request];
 }
-
 
 @end
