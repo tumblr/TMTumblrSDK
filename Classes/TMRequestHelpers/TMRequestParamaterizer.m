@@ -145,9 +145,8 @@
         tokenSecret = self.userCredentials.tokenSecret;
     }
 
-    //CHANGE TO BOOL
-    
-    NSDictionary *postParameters = postParametizerForSignedRequests(self.request);
+    BOOL shouldGiveRequestParametersForRequest = postParametersForSignedRequests(self.request);
+    NSDictionary *postParameters = shouldGiveRequestParametersForRequest ? [self.request.requestBody parameters] : nil;
     [mutableRequest addValue:[TMOAuth headerForURL:mutableRequest.URL
                                             method:[TMRequestMethodHelpers stringFromMethod:self.request.method]
                                     postParameters:postParameters

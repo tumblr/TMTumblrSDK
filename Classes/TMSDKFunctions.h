@@ -23,6 +23,6 @@ NSString * _Nonnull blogPath(NSString * _Nonnull ext, NSString * _Nonnull blogNa
 
 NSString * _Nonnull fullBlogName(NSString * _Nonnull blogName);
 
-NSDictionary * _Nullable postParametersForSignedRequests(_Nonnull id <TMRequest> request);
+BOOL postParametersForSignedRequests(_Nonnull id <TMRequest> request);
 
 @end

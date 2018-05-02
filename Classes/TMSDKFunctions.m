@@ -83,9 +83,9 @@ NSString *fullBlogName(NSString *blogName) {
     return blogName;
 }
 
-NSDictionary *postParametersForSignedRequests(_Nonnull id <TMRequest> request){
-    NSDictionary *postParameters = (request.method == TMHTTPRequestMethodPOST || request.method == TMHTTPRequestMethodPATCH) && [request.requestBody encodeParameters] ? [request.requestBody parameters] : nil;
-    return postParameters;
+BOOL postParametersForSignedRequests(_Nonnull id <TMRequest> request) {
+    BOOL shouldGiveRequestParametersForRequest = (request.method == TMHTTPRequestMethodPOST || request.method == TMHTTPRequestMethodPATCH) && [request.requestBody encodeParameters];
+    return shouldGiveRequestParametersForRequest;
 }
 
 #pragma mark - Private
