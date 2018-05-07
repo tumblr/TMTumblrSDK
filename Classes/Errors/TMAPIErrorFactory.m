@@ -45,7 +45,7 @@
             id isConsentBlocking = error[@"gdpr_is_consent_blocking"];
             id needsAge = error[@"gdpr_needs_age"];
             id authToken = error[@"gdpr_auth_token"];
-            id gdprMinimumAge = error[@"gdpr_minimum_required_age"];
+            id minimumRequiredAge = error[@"gdpr_minimum_required_age"];
 
             /**
              *  Only accept these things if they are the right type :/
@@ -55,16 +55,16 @@
                 && ([logout isKindOfClass:[NSNumber class]] || !logout)
                 && ([code isKindOfClass:[NSNumber class]] || !code)
                 && ([authToken isKindOfClass:[NSString class]] || !authToken)
-                && ([gdprMinimumAge isKindOfClass:[NSNumber class]] || !gdprMinimumAge)) {
+                && ([minimumRequiredAge isKindOfClass:[NSNumber class]] || !minimumRequiredAge)) {
                 const BOOL finalLogoutValue = [logout boolValue] ?: NO;
                 const BOOL finalNeedsConsentValue = [needsConsent boolValue] ?: NO;
                 const BOOL finalIsConsentBockingValue = [isConsentBlocking boolValue] ?: NO;
                 const BOOL finalNeedsAgeValue = [needsAge boolValue] ?: NO;
 
                 const NSInteger finalCodeValue = [code integerValue];
-                const NSInteger finalGdprMinimumAgeValue = [gdprMinimumAge integerValue];
+                const NSInteger finalMinimumRequiredAgeValue = [minimumRequiredAge integerValue];
 
-                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue needsConsent:finalNeedsConsentValue  isConsentBlocking:finalIsConsentBockingValue needsAge:finalNeedsAgeValue gdprMinimumAge:finalGdprMinimumAgeValue authToken:authToken]];
+                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue needsConsent:finalNeedsConsentValue  isConsentBlocking:finalIsConsentBockingValue needsAge:finalNeedsAgeValue minimumRequiredAge:finalMinimumRequiredAgeValue authToken:authToken]];
             }
         }
         return APIErrors;

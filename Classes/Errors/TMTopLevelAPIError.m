@@ -15,11 +15,11 @@
 @synthesize code = _code;
 @synthesize needsConsent = _needsConsent;
 @synthesize needsAge = _needsAge;
-@synthesize gdprMinimumAge = _gdprMinimumAge;
+@synthesize minimumRequiredAge = _minimumRequiredAge;
 @synthesize isConsentBlocking = _isConsentBlocking;
 @synthesize authToken = _authToken;
 
-- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge gdprMinimumAge:(NSInteger)gdprMinimumAge authToken:(NSString * _Nullable)authToken {
+- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge minimumRequiredAge:(NSInteger)minimumRequiredAge authToken:(NSString * _Nullable)authToken {
     NSParameterAssert(title);
     NSParameterAssert(detail);
     self = [super init];
@@ -30,7 +30,7 @@
         _detail = detail;
         _code = code;
         _needsAge = needsAge;
-        _gdprMinimumAge = gdprMinimumAge;
+        _minimumRequiredAge = minimumRequiredAge;
         _needsConsent = needsConsent;
         _isConsentBlocking = isConsentBlocking;
         _authToken = authToken;

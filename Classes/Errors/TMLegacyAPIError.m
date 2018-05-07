@@ -14,7 +14,7 @@
 @synthesize code = _code;
 @synthesize needsConsent = _needsConsent;
 @synthesize needsAge = _needsAge;
-@synthesize gdprMinimumAge = _gdprMinimumAge;
+@synthesize minimumRequiredAge = _minimumRequiredAge;
 @synthesize isConsentBlocking = _isConsentBlocking;
 @synthesize authToken = _authToken;
 
