@@ -95,6 +95,7 @@
                                                       @"detail" : @"detail",
                                                       @"gdpr_needs_consent": @(YES),
                                                       @"gdpr_is_consent_blocking": @(YES),
+                                                      @"gdpr_minimum_age": @(16),
                                                       @"gdpr_needs_age": @(YES)
                                                       }]};
 

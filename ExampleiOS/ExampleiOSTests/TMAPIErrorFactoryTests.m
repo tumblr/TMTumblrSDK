@@ -33,7 +33,7 @@
     return [error logout] == logout && [[error detail] isEqualToString:detail] && [[error title] isEqualToString:title] && [error code] == code;
 }
 
-- (BOOL)singlePasses:(NSString *)title detail:(NSString *)detail logout:(BOOL)logout code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge authToken:(NSString *)authToken {
+- (BOOL)singlePasses:(NSString *)title detail:(NSString *)detail logout:(BOOL)logout code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge minimumRequiredAge:(NSInteger)minimumRequiredAge authToken:(NSString *)authToken {
     TMAPIErrorFactory *factory = [[TMAPIErrorFactory alloc] initWithErrors:@[
                                                                              @{
                                                                                  @"code" : @(code),
@@ -43,6 +43,7 @@
                                                                                  @"gdpr_needs_consent": @(needsConsent),
                                                                                  @"gdpr_is_consent_blocking": @(isConsentBlocking),
                                                                                  @"gdpr_needs_age": @(needsAge),
+                                                                                 @"gdpr_minimum_required_age": @(minimumRequiredAge),
                                                                                  @"gdpr_auth_token": authToken
                                                                                  }
 
@@ -52,7 +53,7 @@
 
     id <TMAPIError> error = [errors firstObject];
 
-    return [error logout] == logout && [[error detail] isEqualToString:detail] && [[error title] isEqualToString:title] && [error code] == code && [error needsConsent] == needsConsent && [error isConsentBlocking] == isConsentBlocking && [error needsAge] == needsAge && [error authToken] == authToken;
+    return [error logout] == logout && [[error detail] isEqualToString:detail] && [[error title] isEqualToString:title] && [error code] == code && [error needsConsent] == needsConsent && [error isConsentBlocking] == isConsentBlocking && [error needsAge] == needsAge && [error minimumRequiredAge] == minimumRequiredAge && [error authToken] == authToken;
 }
 
 - (BOOL)singlePassesLegacy:(NSString *)title detail:(NSString *)detail {
@@ -78,17 +79,17 @@
 
 - (void)testOneObjectCorrectlyTranslatesToModelObjectWithAddedFieldsAllTrue {
 
-    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:YES isConsentBlocking:YES needsAge:YES authToken:@"abcde12345"]);
+    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:YES isConsentBlocking:YES needsAge:YES minimumRequiredAge:14 authToken:@"abcde12345"]);
 }
 
 - (void)testOneObjectCorrectlyTranslatesToModelObjectWithAddedFieldsAllFalse {
 
-    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:NO isConsentBlocking:NO needsAge:NO authToken:@"abcde12345"]);
+    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:NO isConsentBlocking:NO needsAge:NO minimumRequiredAge:16 authToken:@"abcde12345"]);
 }
 
 - (void)testOneObjectCorrectlyTranslatesToModelObjectWithAddedFieldsMixedValues {
 
-    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:NO isConsentBlocking:YES needsAge:NO authToken:@"abcde12345"]);
+    XCTAssert([self singlePasses:@"some error" detail:@"more about it" logout:NO code:1001 needsConsent:NO isConsentBlocking:YES needsAge:NO minimumRequiredAge:18 authToken:@"abcde12345"]);
 }
 
 - (void)testOneObjectCorrectlyTranslatesToModelObjectWithNoLogout {
