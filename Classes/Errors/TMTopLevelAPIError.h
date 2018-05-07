@@ -25,11 +25,11 @@ __attribute__((objc_subclassing_restricted))
  *  @param needsConsent Whether or not the error indicates that the user must go through the flow for GDPR terms.
  *  @param isConsentBlocking Whether or not the consent is required to continue using the app.
  *  @param needsAge Whether or not we need to get the user's age as part of the GDPR consent flow.
- *  @param minimumAge The specific minimum age needed for the user's country.
+ *  @param gdprMinimumAge The specific minimum age needed for the user's country.
  *  @param authToken A token passed along for authenticating the user in some cases.
  *
  *  @return An initialized instance of @c TMTopLevelAPIError.
  */
-- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge  minimumAge:(NSInteger)minimumAge authToken:(NSString * _Nullable)authToken;
+- (nonnull instancetype)initWithLogout:(BOOL)logout title:(nonnull NSString *)title detail:(nonnull NSString *)detail code:(NSInteger)code needsConsent:(BOOL)needsConsent isConsentBlocking:(BOOL)isConsentBlocking needsAge:(BOOL)needsAge gdprMinimumAge:(NSInteger)gdprMinimumAge authToken:(NSString * _Nullable)authToken;
 
 @end
