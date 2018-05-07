@@ -47,6 +47,11 @@
 @property (nonatomic, readonly) BOOL needsAge;
 
 /**
+ A specific property associated with some errors for the GUCE Consent flow. This specifies the age the user must be based on their gdpr region.
+ */
+@property (nonatomic, readonly) NSInteger minimumAge;
+
+/**
  Token sometimes sent to facilitate authentication with the GUCE flow. 
  */
 @property (nonatomic, readonly, nullable) NSString *authToken;

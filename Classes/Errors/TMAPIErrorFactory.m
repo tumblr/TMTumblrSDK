@@ -45,6 +45,7 @@
             id isConsentBlocking = error[@"gdpr_is_consent_blocking"];
             id needsAge = error[@"gdpr_needs_age"];
             id authToken = error[@"gdpr_auth_token"];
+            id minimumAge = error[@"gdpr_minimum_required_age"];
 
             /**
              *  Only accept these things if they are the right type :/
@@ -53,14 +54,17 @@
                 && [detail isKindOfClass:[NSString class]]
                 && ([logout isKindOfClass:[NSNumber class]] || !logout)
                 && ([code isKindOfClass:[NSNumber class]] || !code)
-                && ([authToken isKindOfClass:[NSString class]] || !authToken)) {
+                && ([authToken isKindOfClass:[NSString class]] || !authToken)
+                && ([minimumAge isKindOfClass:[NSNumber class]] || !minimumAge)) {
                 const BOOL finalLogoutValue = [logout boolValue] ?: NO;
                 const BOOL finalNeedsConsentValue = [needsConsent boolValue] ?: NO;
                 const BOOL finalIsConsentBockingValue = [isConsentBlocking boolValue] ?: NO;
                 const BOOL finalNeedsAgeValue = [needsAge boolValue] ?: NO;
 
                 const NSInteger finalCodeValue = [code integerValue];
-                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue needsConsent:finalNeedsConsentValue isConsentBlocking:finalIsConsentBockingValue needsAge:finalNeedsAgeValue authToken:authToken]];
+                const NSInteger finalMinimumAgeValue = [minimumAge integerValue];
+
+                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue needsConsent:finalNeedsConsentValue  isConsentBlocking:finalIsConsentBockingValue needsAge:finalNeedsAgeValue minimumAge:finalMinimumAgeValue authToken:authToken]];
             }
         }
         return APIErrors;
