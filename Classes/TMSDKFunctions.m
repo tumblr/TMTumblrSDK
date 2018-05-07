@@ -7,6 +7,8 @@
 //
 
 #import "TMSDKFunctions.h"
+#import "TMQueryEncodedRequestBody.h"
+#import "TMRequest.h"
 
 @implementation TMSDKFunctions
 
@@ -78,6 +80,11 @@ NSString *fullBlogName(NSString *blogName) {
     }
 
     return blogName;
+}
+
+BOOL postParametersForSignedRequests(_Nonnull id <TMRequest> request) {
+    BOOL shouldGiveRequestParametersForRequest = (request.method == TMHTTPRequestMethodPOST || request.method == TMHTTPRequestMethodPATCH) && [request.requestBody encodeParameters];
+    return shouldGiveRequestParametersForRequest;
 }
 
 #pragma mark - Private

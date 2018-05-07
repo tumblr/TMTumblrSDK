@@ -12,6 +12,7 @@
 #import <TMTumblrSDK/TMHTTPRequestMethod.h>
 #import <TMTumblrSDK/TMJSONEncodedRequestBody.h>
 #import <TMTumblrSDK/TMFormEncodedRequestBody.h>
+#import <TMTumblrSDK/TMSDKFunctions.h>
 
 @interface TMRequestParamaterizerTests : XCTestCase
 
@@ -30,6 +31,10 @@
 
 - (void)testDeleteMethod {
     XCTAssert([[self basicRequestWithMethod:TMHTTPRequestMethodDELETE].HTTPMethod isEqualToString:@"DELETE"]);
+}
+
+- (void)testPatchMethod {
+    XCTAssert([[self basicRequestWithMethod:TMHTTPRequestMethodPATCH].HTTPMethod isEqualToString:@"PATCH"]);
 }
 
 - (void)testHTTPBodyExistsJSONBody {
@@ -72,6 +77,76 @@
 
 
     XCTAssert([[paramaterizer URLRequestWithRequest:request].allHTTPHeaderFields[@"kenny-header"] isEqualToString:@"hello"]);
+}
+
+-(void)testParametizerFalseForGET {
+    TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
+                                                               method:TMHTTPRequestMethodGET
+                                                    additionalHeaders:nil
+                                                          requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:@{@"key" : @"value"}]
+                                                             isSigned:NO
+                                                             isUpload:NO];
+    XCTAssertFalse(postParametersForSignedRequests(request));
+}
+
+-(void)testParametizerFalseForHEAD {
+    TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
+                                                               method:TMHTTPRequestMethodHEAD
+                                                    additionalHeaders:nil
+                                                          requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:@{@"key" : @"value"}]
+                                                             isSigned:NO
+                                                             isUpload:NO];
+    XCTAssertFalse(postParametersForSignedRequests(request));
+}
+
+-(void)testParametizerFalseForPUT {
+    TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
+                                                               method:TMHTTPRequestMethodPUT
+                                                    additionalHeaders:nil
+                                                          requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:@{@"key" : @"value"}]
+                                                             isSigned:NO
+                                                             isUpload:NO];
+    XCTAssertFalse(postParametersForSignedRequests(request));
+}
+
+-(void)testParametizerFalseForDELETE {
+    TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
+                                                               method:TMHTTPRequestMethodDELETE
+                                                    additionalHeaders:nil
+                                                          requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:@{@"key" : @"value"}]
+                                                             isSigned:NO
+                                                             isUpload:NO];
+    XCTAssertFalse(postParametersForSignedRequests(request));
+}
+
+-(void)testParametizerFalseForPATCHNoBody {
+    TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
+                                                               method:TMHTTPRequestMethodPATCH
+                                                    additionalHeaders:nil
+                                                          requestBody:nil
+                                                             isSigned:NO
+                                                             isUpload:NO];
+    XCTAssertFalse(postParametersForSignedRequests(request));
+}
+
+-(void)testParametizerTrueForPATCH {
+    TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
+                                                               method:TMHTTPRequestMethodPATCH
+                                                    additionalHeaders:nil
+                                                          requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:@{@"key" : @"value"}]
+                                                             isSigned:NO
+                                                             isUpload:NO];
+    XCTAssertTrue(postParametersForSignedRequests(request));
+}
+
+-(void)testParametizerTrueForPOST {
+    TMHTTPRequest *request = [[TMHTTPRequest alloc] initWithURLString:@"http://tumblr.com"
+                                                               method:TMHTTPRequestMethodPOST
+                                                    additionalHeaders:nil
+                                                          requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:@{@"key" : @"value"}]
+                                                             isSigned:NO
+                                                             isUpload:NO];
+    XCTAssertTrue(postParametersForSignedRequests(request));
 }
 
 - (void)testHTTPBodyDataIsNotSet {

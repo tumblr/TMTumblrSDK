@@ -26,6 +26,9 @@
     else if ([methodString isEqualToString:@"HEAD"]) {
         return TMHTTPRequestMethodHEAD;
     }
+    else if ([methodString isEqualToString:@"PATCH"]) {
+        return TMHTTPRequestMethodPATCH;
+    }
 
     return TMHTTPRequestMethodGET;
 }
@@ -42,6 +45,8 @@
             return @"PUT";
         case TMHTTPRequestMethodHEAD:
             return @"HEAD";
+        case TMHTTPRequestMethodPATCH:
+            return @"PATCH";
     }
 }
 
