@@ -27,6 +27,10 @@
     return self;
 }
 
+- (nonnull NSString *)description {
+    return [NSString stringWithFormat:@"<%@: %p, %@, %@>", NSStringFromClass([self class]), self, self.contentType, self.JSONDictionary];
+}
+
 #pragma mark - TMRequestBody
 
 - (nullable NSString *)contentType {

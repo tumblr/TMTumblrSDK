@@ -133,4 +133,8 @@
     return YES;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: %p, %@, %@, %@>", NSStringFromClass([self class]), self, self.URL.absoluteString, self.queryParameters, self.requestBody];
+}
+
 @end

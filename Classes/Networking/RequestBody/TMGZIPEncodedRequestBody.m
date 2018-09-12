@@ -5,7 +5,6 @@
 //  Created by Michael Benedict on 2/9/18.
 //
 
-#import "TMRequestBody.h"
 #import "TMGZIPEncodedRequestBody.h"
 #include <zlib.h>
 #define CHUNKSIZE (1024*4)
@@ -29,6 +28,10 @@
     }
     
     return self;
+}
+
+- (nonnull NSString *)description {
+    return [NSString stringWithFormat:@"<%@: %p, originalBody=%@>", NSStringFromClass([self class]), self, self.originalBody];
 }
 
 #pragma mark - TMRequestBody
