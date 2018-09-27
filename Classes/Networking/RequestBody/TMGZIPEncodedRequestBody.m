@@ -6,7 +6,7 @@
 //
 
 #import "TMRequestBody.h"
-#import "TMGZIPEncodedRequestBody.h"
+#import "TMGzipEncodedRequestBody.h"
 #include <zlib.h>
 #define CHUNKSIZE (1024*4)
 
