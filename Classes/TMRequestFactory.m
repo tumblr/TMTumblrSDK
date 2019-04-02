@@ -17,6 +17,7 @@
 #import "TMSDKFunctions.h"
 #import "TMBaseURLDetermining.h"
 #import "TMBasicBaseURLDeterminer.h"
+#import "TMQueryEncodedRequestBody.h"
 
 NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"TMRequestFactoryInvalidateBaseURLNotificationKey";
 
@@ -44,6 +45,59 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
 
 - (instancetype)init {
     return [self initWithBaseURLDeterminer:[[TMBasicBaseURLDeterminer alloc] init]];
+}
+
+
+#pragma mark - Generic Factories
+
+- (nonnull id <TMRequest>)GETRequestWithPath:(NSString * __nonnull)requestPath parameters:(NSDictionary * __nullable)parameters {
+    return [self requestWithPath:requestPath method:TMHTTPRequestMethodGET queryParameters:parameters];
+}
+
+- (nonnull id <TMRequest>)POSTRequestWithPath:(NSString * __nonnull)requestPath parameters:(NSDictionary * __nullable)parameters {
+    
+    if (!parameters) {
+        return [self requestWithPath:requestPath method:TMHTTPRequestMethodPOST queryParameters:nil];
+    }
+    
+    return [self requestWithPath:requestPath method:TMHTTPRequestMethodPOST queryParameters:nil
+                     requestBody:[[TMQueryEncodedRequestBody alloc] initWithQueryDictionary:parameters]];
+}
+
+- (nonnull id <TMRequest>)POSTRequestWithPath:(nonnull NSString *)path JSONParameters:(nullable NSDictionary *)JSONParameters {
+    NSParameterAssert(path);
+    return [[TMAPIRequest alloc] initWithBaseURL:self.baseURL
+                                          method:TMHTTPRequestMethodPOST
+                                            path:path
+                                 queryParameters:nil
+                                     requestBody:[[TMJSONEncodedRequestBody alloc] initWithJSONDictionary:JSONParameters]
+                               additionalHeaders:nil];
+}
+
+- (nonnull id <TMRequest>)requestWithPath:(nonnull NSString *)path
+                                   method:(TMHTTPRequestMethod)method
+                          queryParameters:(nullable NSDictionary *)queryParameters {
+    NSParameterAssert(path);
+    
+    return [[TMAPIRequest alloc] initWithBaseURL:self.baseURL
+                                          method:method
+                                            path:path
+                                 queryParameters:queryParameters];
+}
+
+- (nonnull id <TMRequest>)requestWithPath:(nonnull NSString *)path
+                                   method:(TMHTTPRequestMethod)method
+                          queryParameters:(nullable NSDictionary *)queryParameters
+                              requestBody:(nonnull id <TMRequestBody>)requestBody {
+    NSParameterAssert(path);
+    NSParameterAssert(requestBody);
+    
+    return [[TMAPIRequest alloc] initWithBaseURL:self.baseURL
+                                          method:method
+                                            path:path
+                                 queryParameters:nil
+                                     requestBody:requestBody
+                               additionalHeaders:nil];
 }
 
 #pragma mark - TMBaseURLDetermining
@@ -359,63 +413,6 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
                           method:TMHTTPRequestMethodPOST
                  queryParameters:nil
                      requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:parameters]];
-}
-
-#pragma mark - Private
-
-
-- (nonnull id <TMRequest>)POSTRequestWithPath:(nonnull NSString *)path JSONParameters:(nullable NSDictionary *)JSONParameters {
-    NSParameterAssert(path);
-    return [[TMAPIRequest alloc] initWithBaseURL:self.baseURL
-                                          method:TMHTTPRequestMethodPOST
-                                            path:path
-                                 queryParameters:nil
-                                     requestBody:[[TMJSONEncodedRequestBody alloc] initWithJSONDictionary:JSONParameters]
-                               additionalHeaders:nil];
-}
-
-/**
- *  Produce a @c TMAPIRequest for request.
- *
- *  @param path       (Required) URL path. (ex: config)
- *  @param method     (Required) The request method.
- *  @param queryParameters (Optional) Post queryParameters.
- *
- *  @return The new @c TMAPIRequest.
- */
-- (nonnull id <TMRequest>)requestWithPath:(nonnull NSString *)path
-                                   method:(TMHTTPRequestMethod)method
-                          queryParameters:(nullable NSDictionary *)queryParameters {
-    NSParameterAssert(path);
-
-    return [[TMAPIRequest alloc] initWithBaseURL:self.baseURL
-                                          method:method
-                                            path:path
-                                 queryParameters:queryParameters];
-}
-
-/**
- *  Produce a @c TMAPIRequest for request.
- *
- *  @param path       (Required) URL path. (ex: config)
- *  @param method     (Required) The request method.
- *  @param queryParameters (Optional) Post queryParameters.
- *
- *  @return The new @c TMAPIRequest.
- */
-- (nonnull id <TMRequest>)requestWithPath:(nonnull NSString *)path
-                                   method:(TMHTTPRequestMethod)method
-                          queryParameters:(nullable NSDictionary *)queryParameters
-                              requestBody:(nonnull id <TMRequestBody>)requestBody {
-    NSParameterAssert(path);
-    NSParameterAssert(requestBody);
-
-    return [[TMAPIRequest alloc] initWithBaseURL:self.baseURL
-                                          method:method
-                                            path:path
-                                 queryParameters:nil
-                                     requestBody:requestBody
-                               additionalHeaders:nil];
 }
 
 @end
