@@ -28,6 +28,10 @@
     return self;
 }
 
+- (nonnull NSString *)description {
+    return [NSString stringWithFormat:@"<%@: %p, %@, %@>", NSStringFromClass([self class]), self, self.contentType, self.parameters];
+}
+
 #pragma mark - TMRequestBody
 
 - (nullable NSData *)bodyData {
