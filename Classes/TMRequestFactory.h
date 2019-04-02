@@ -38,15 +38,8 @@ __attribute__((objc_subclassing_restricted))
  */
 - (nonnull instancetype)init;
 
-#pragma mark - API routes
 
-/**
- Creates a dashboard request represented by a @c TMRequest.
-
- @param parameters Additional query parameters to pass to the API.
- @return A new @c TMRequest given the query parameters.
- */
-- (nonnull id <TMRequest>)dashboardRequest:(nullable NSDictionary *)parameters;
+#pragma mark - Generic Factories
 
 /**
  *  Creates a @c TMRequest given a path, method and parameters.
@@ -98,6 +91,37 @@ __attribute__((objc_subclassing_restricted))
  *  @return A @c TMRequest given a path and parameters.
  */
 - (nonnull id <TMRequest>)POSTRequestWithPath:(nonnull NSString *)path JSONParameters:(nullable NSDictionary *)JSONParameters;
+
+/**
+ *  Creates a GET URL request for given path and parameters
+ *
+ *  @param requestPath URL request endpoint
+ *  @param params      Parameters to pass along with the request
+ *
+ *  @return A new GET request for specified path and parameters.
+ */
+- (nonnull id <TMRequest>)GETRequestWithPath:(nonnull NSString *)requestPath parameters:(nullable NSDictionary *)params;
+
+/**
+ *  Creates a POST URL request for given path and parameters
+ *
+ *  @param requestPath URL request endpoint
+ *  @param params      Parameters to pass along with the request
+ *
+ *  @return A new POST request for specified path and parameters.
+ */
+- (nonnull id <TMRequest>)POSTRequestWithPath:(nonnull NSString *)requestPath parameters:(nullable NSDictionary *)params;
+
+
+#pragma mark - API routes
+
+/**
+ Creates a dashboard request represented by a @c TMRequest.
+ 
+ @param parameters Additional query parameters to pass to the API.
+ @return A new @c TMRequest given the query parameters.
+ */
+- (nonnull id <TMRequest>)dashboardRequest:(nullable NSDictionary *)parameters;
 
 /**
  *  Creates a request that can follow a blog.
