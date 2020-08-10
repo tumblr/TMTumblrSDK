@@ -46,6 +46,7 @@
             id needsAge = error[@"gdpr_needs_age"];
             id authToken = error[@"gdpr_auth_token"];
             id minimumRequiredAge = error[@"gdpr_minimum_required_age"];
+            id consentProvider = error[@"consent_provider"];
 
             /**
              *  Only accept these things if they are the right type :/
@@ -64,7 +65,7 @@
                 const NSInteger finalCodeValue = [code integerValue];
                 const NSInteger finalMinimumRequiredAgeValue = [minimumRequiredAge integerValue];
 
-                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue needsConsent:finalNeedsConsentValue  isConsentBlocking:finalIsConsentBockingValue needsAge:finalNeedsAgeValue minimumRequiredAge:finalMinimumRequiredAgeValue authToken:authToken]];
+                [APIErrors addObject:[[TMTopLevelAPIError alloc] initWithLogout:finalLogoutValue title:title detail:detail code:finalCodeValue needsConsent:finalNeedsConsentValue  isConsentBlocking:finalIsConsentBockingValue needsAge:finalNeedsAgeValue minimumRequiredAge:finalMinimumRequiredAgeValue consentProvider:consentProvider authToken:authToken]];
             }
         }
         return APIErrors;

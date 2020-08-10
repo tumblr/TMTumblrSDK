@@ -17,6 +17,7 @@
 @synthesize minimumRequiredAge = _minimumRequiredAge;
 @synthesize isConsentBlocking = _isConsentBlocking;
 @synthesize authToken = _authToken;
+@synthesize consentProvider = _consentProvider;
 
 - (nonnull instancetype)initWithTitle:(nonnull NSString *)title detail:(nonnull NSString *)detail {
     NSParameterAssert(title);

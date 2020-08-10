@@ -37,6 +37,11 @@
 @property (nonatomic, readonly) BOOL needsConsent;
 
 /**
+ A string that describes the expected consent flow.
+ */
+@property (nonatomic, readonly, nullable) NSString *consentProvider;
+
+/**
  A specific property associated with some errors for the GUCE Consent flow.
  */
 @property (nonatomic, readonly) BOOL isConsentBlocking;
