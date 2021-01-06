@@ -80,10 +80,9 @@
         }
     }
     else if ([object isKindOfClass:[NSArray class]]) {
-        for (NSString *arrayObject in (NSArray *)object) {
-            NSString *arrayKey = [[NSString alloc] initWithFormat:@"%@[]", objectKey];
-            [self encodeObject:arrayObject withKey:arrayKey andSubKey:nil intoArray:array];
-        }
+        [(NSArray *)object enumerateObjectsUsingBlock:^(NSString *arrayObject, NSUInteger idx, BOOL * stop) {
+            [self encodeObject:arrayObject withKey:objectKey andSubKey:[[NSString alloc] initWithFormat:@"%lu", (unsigned long)idx] intoArray:array];
+        }];
     }
     else if ([object isKindOfClass:[NSNumber class]]) {
         [array addObject:[[NSString alloc] initWithFormat:@"%@=%@", objectKey, [object stringValue]]];
