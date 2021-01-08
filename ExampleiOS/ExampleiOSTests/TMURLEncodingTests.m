@@ -44,7 +44,7 @@
 - (void)testFormDictionaryWithArray {
     NSString *string = [TMURLEncoding formEncodedDictionary:@{@"hello" : @[@3, @"da"]}];
 
-    XCTAssertEqualObjects(@"hello%5B%5D=3&hello%5B%5D=da", string);
+    XCTAssertEqualObjects(@"hello[0]=3&hello[1]=da", string);
 }
 
 - (void)testEncodingEmptyDictionary {
