@@ -63,7 +63,9 @@ NSDictionary *TMQueryStringToDictionary(NSString *query) {
 NSString *TMDictionaryToQueryString(NSDictionary *dictionary) {
     NSMutableArray *parameters = [NSMutableArray array];
     
-    for (NSString *key in [[dictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]) {
+    for (NSString *key in [[dictionary allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [TMURLEncode(obj1) compare:TMURLEncode(obj2) options:NSCaseInsensitiveSearch] == NSOrderedDescending;
+    }]) {
         TMAddKeyValuePairToQueryStringMutableArray(key, dictionary[key], parameters);
     }
     
