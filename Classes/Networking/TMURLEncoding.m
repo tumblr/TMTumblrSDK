@@ -81,7 +81,7 @@
     }
     else if ([object isKindOfClass:[NSArray class]]) {
         [(NSArray *)object enumerateObjectsUsingBlock:^(NSString *arrayObject, NSUInteger idx, BOOL * stop) {
-            NSString *arrayKey = [NSString stringWithFormat:@"%@[%lu]", objectKey,  (unsigned long)idx];
+            NSString *arrayKey = [NSString stringWithFormat:@"%@[%lu]", objectKey, (unsigned long)idx];
             [self encodeObject:arrayObject withKey:arrayKey andSubKey:nil intoArray:array];
         }];
     }
