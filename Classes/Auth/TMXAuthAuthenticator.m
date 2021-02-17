@@ -7,7 +7,6 @@
 //
 
 #import "TMXAuthAuthenticator.h"
-
 #import "TMOAuth.h"
 #import "TMHTTPRequest.h"
 #import "TMSDKUserAgent.h"

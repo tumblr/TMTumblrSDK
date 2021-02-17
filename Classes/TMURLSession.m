@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Tumblr. All rights reserved.
 //
 
-#import <TMTumblrSDK/TMOAuth.h>
-#import <TMTumblrSDK/TMSDKFunctions.h>
+#import "TMOAuth.h"
+#import "TMSDKFunctions.h"
 
 #import "TMURLSession.h"
 #import "TMAPIRequest.h"

@@ -5,6 +5,7 @@
 //  Created by Kenny Ackerson on 12/14/15.
 //
 //
+@import Foundation;
 
 NSString * const TMTumblrSDKErrorDomain = @"com.tumblr.APIClient";
 
