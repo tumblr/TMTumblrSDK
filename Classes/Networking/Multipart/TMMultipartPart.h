@@ -7,10 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TMMultipartPartProtocol.h"
 
 // Represents a single part of a multipart form body.
 __attribute__((objc_subclassing_restricted))
-@interface TMMultipartPart : NSObject
+@interface TMMultipartPart : NSObject <TMMultipartPartProtocol>
+
+@property (nonatomic, readonly) UInt64 contentLength;
+@property (nonatomic, nonnull, copy, readonly) NSString *name;
+@property (nonatomic, nullable, copy, readonly) NSString *fileName;
+@property (nonatomic, nonnull, copy, readonly) NSString *contentType;
+@property (nonatomic, nonnull, readonly) NSData *data;
+@property (nonatomic) BOOL hasTopBoundary;
+@property (nonatomic) BOOL hasBottomBoundary;
 
 /**
  *  Initializes an instance of @c TMBodyPart.

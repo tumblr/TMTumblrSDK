@@ -70,6 +70,69 @@
     return nil;
 }
 
+- (nullable NSURL *)bodyFile {
+    
+    NSString *extension = [NSUUID UUID].UUIDString;
+
+    NSURL *temporaryFileURL = [[NSURL alloc] initFileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:extension]];
+    NSError *error;
+    NSFileHandle *toFile = [NSFileHandle fileHandleForWritingToURL:temporaryFileURL error:&error];
+    if (error) {
+        NSLog(@"Error ocurred while preparing upload file: %@", error.localizedDescription);
+    }
+    if(toFile == nil) {
+        [[NSFileManager defaultManager] createFileAtPath:temporaryFileURL.path contents:nil attributes:nil];
+        toFile = [NSFileHandle fileHandleForWritingAtPath:temporaryFileURL.path];
+    }
+
+    const BOOL multiple = [self hasMultipleDistinctFiles];
+
+    [self.filePaths enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger index, BOOL *stop) {
+
+        if ([filePath isKindOfClass:[NSNull class]]) {
+            return;
+        }
+
+        NSString *key = self.keys[index];
+        NSAssert(key, @"We must have a key here or else the multipart request body is invalid.");
+
+    }];
+    //self writeToFileHandle:toFile fromFileURL:<#(NSString *)#>
+
+    [toFile closeFile];
+
+    return temporaryFileURL;
+}
+
+- (void)writeToFileHandle:(NSFileHandle *)toFile fromFileURL:(NSString *)fromFilePath {
+    NSUInteger chunkSize = 100 * 1024;
+    uint8_t *buffer = malloc(chunkSize * sizeof(uint8_t));
+    
+    NSFileHandle *fromFile = [NSFileHandle fileHandleForReadingAtPath:fromFilePath];
+
+    
+    NSUInteger offset = 0;
+    
+    NSData *data;
+    do {
+        NSError *error;
+        data = [fromFile readDataUpToLength:chunkSize error:&error];
+        if (error) {
+            NSLog(@"Error ocurred while preparing upload file: %@", error.localizedDescription);
+        }
+        if (data.length > 0) {
+            [toFile writeData:data];
+            offset += [data length];
+        }
+    } while(data.length > 0);
+
+    [fromFile closeFile];
+    free(buffer);
+    buffer = NULL;
+
+    
+}
+
 - (nullable NSData *)bodyData {
 
     NSMutableArray *parts = [[NSMutableArray alloc] init];

@@ -11,10 +11,10 @@
 
 @interface TMMultipartPart ()
 
-@property (nonatomic, nonnull, readonly) NSData *data;
-@property (nonatomic, nonnull, copy, readonly) NSString *name;
-@property (nonatomic, nonnull, copy, readonly) NSString *fileName;
-@property (nonatomic, nonnull, copy, readonly) NSString *contentType;
+@property (nonatomic, nonnull) NSData *data;
+@property (nonatomic, nonnull, copy) NSString *name;
+@property (nonatomic, nonnull, copy) NSString *fileName;
+@property (nonatomic, nonnull, copy) NSString *contentType;
 
 @end
 
@@ -34,6 +34,7 @@
         _name = [name copy];
         _fileName = [fileName copy];
         _contentType = [contentType copy];
+        _contentLength = data.length;
     }
     
     return self;

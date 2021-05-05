@@ -378,13 +378,18 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
 - (nonnull id <TMRequest>)multipartPostRequestForParameters:(nullable NSDictionary *)parameters
                                                    blogName:(nonnull NSString *)blogName
                                                 requestBody:(nonnull id <TMRequestBody>)multipartRequestBody {
+    return [self multipartRequestForParameters:parameters blogName:blogName method:TMHTTPRequestMethodPOST requestBody:multipartRequestBody];
+}
+
+- (nonnull id <TMRequest>)multipartRequestForParameters:(nullable NSDictionary *)parameters
+                                               blogName:(nonnull NSString *)blogName
+                                                 method:(TMHTTPRequestMethod)method
+                                            requestBody:(nonnull id <TMRequestBody>)multipartRequestBody {
     NSParameterAssert(blogName);
     NSParameterAssert(multipartRequestBody);
-
+    
     NSString * const TMRouteBlogPathPost = @"post";
-    return [self multipartPostRequestForParameters:parameters path:blogPath(TMRouteBlogPathPost, blogName) requestBody:multipartRequestBody];
-
-
+    return [self multipartRequestForParameters:parameters path:blogPath(TMRouteBlogPathPost, blogName) method:method requestBody:multipartRequestBody];
 }
 
 - (nonnull id <TMRequest>)multipartPostRequestForParameters:(nullable NSDictionary *)parameters
@@ -392,16 +397,24 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
                                                 requestBody:(nonnull id <TMRequestBody>)multipartRequestBody {
     NSParameterAssert(path);
     NSParameterAssert(multipartRequestBody);
+    
+    return [self multipartRequestForParameters:parameters path:path method:TMHTTPRequestMethodPOST requestBody:multipartRequestBody];
+}
 
+- (nonnull id <TMRequest>)multipartRequestForParameters:(nullable NSDictionary *)parameters
+                                                   path:(nonnull NSString *)path
+                                                 method:(TMHTTPRequestMethod)method
+                                            requestBody:(nonnull id <TMRequestBody>)multipartRequestBody {
+    NSParameterAssert(path);
+    NSParameterAssert(multipartRequestBody);
+    
     return [[TMAPIRequest alloc] initWithBaseURL:self.baseURL
-                                          method:TMHTTPRequestMethodPOST
+                                          method:method
                                             path:path
                                  queryParameters:nil
                                      requestBody:multipartRequestBody
                                additionalHeaders:nil
                                         isUpload:YES];
-
-
 }
 
 - (nonnull id <TMRequest>)reblogPostRequestWithBlogName:(nonnull NSString *)blogName parameters:(nonnull NSDictionary *)parameters {

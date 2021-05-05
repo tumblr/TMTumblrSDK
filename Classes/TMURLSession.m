@@ -222,7 +222,7 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
     NSURLSessionTask *task = [[[TMUploadSessionTaskCreator alloc] initWithFilePath:temporaryFileURL
                                                                            session:self.session
                                                                            request:[self paramaterizedRequestFromRequest:request]
-                                                                          bodyData:bodyData
+                                                                          bodyData:nil
                                                                 incrementalHandler:incrementalHandler
                                                                  completionHandler:completionHandler] uploadTask];
     [self.observer addSessionTask:task];
