@@ -21,7 +21,7 @@
 
 @implementation TMUploadSessionTaskCreator
 
-- (nonnull instancetype)initWithFilePath:(nonnull NSURL *)filePath
+- (nonnull instancetype)initWithEncodedForm:(nonnull NSURL *)filePath
                                  session:(nonnull NSURLSession *)session
                                  request:(nonnull NSURLRequest *)request
                                 bodyData:(nullable NSData *)bodyData
@@ -45,7 +45,7 @@
     return self;
 }
 
-- (nonnull NSURLSessionTask *)uploadTask {
+- (nonnull NSURLSessionTask *)uploadTaskOld {
 
     NSURLSessionTask *task;
 
@@ -59,7 +59,6 @@
             task = [self.session uploadTaskWithRequest:self.request
                                               fromFile:self.filePath];
         }
-
     }
     else if (self.bodyData) {
         NSLog(@"WARNING: Could not write data to disk, using fromData to initialize upload task.");
@@ -67,7 +66,6 @@
     }
 
     return task;
-
 }
 
 @end

@@ -235,4 +235,71 @@
     XCTAssert([knownMultipartJSONData isEqual:data]);
 }
 
+- (void)testMultipartDataEncodeToFile {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    NSString *pathToJSONDictionary = [bundle pathForResource:@"json_dictionary" ofType:@"json"];
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:pathToJSONDictionary] options:0 error:NULL];
+
+    NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
+
+    TMMultipartRequestBody *requestBody = [[TMMultipartRequestBody alloc] initWithFilePaths:@[path] contentTypes:@[@"image/png"] fileNames:@[@"code.png"] parameters:dictionary keys:@[@"data"] encodeJSONBody:YES];
+
+    NSError *error;
+    NSURL *encodedFile = [requestBody encodeIntoFileWithError:&error];
+    XCTAssertNil(error);
+    XCTAssertNotNil(encodedFile);
+    
+    NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
+    NSData *knownMultipartJSONData = [NSData dataWithContentsOfFile:pathToKnownMultipartJSONData];
+
+    NSData *dataContent = [NSData dataWithContentsOfURL:encodedFile];
+    XCTAssert([knownMultipartJSONData isEqual:dataContent]);
+}
+
+- (void)testMultipartDataEncodeWithLowFileEndodingThreshold {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    TMMultipartRequestBody *requestBody = [self createRequestBodyWithThreshold:1024]; //So anything above 1KB encoded into file
+    
+    NSError *error;
+    TMMultipartEncodedForm *encodedForm = [requestBody encodeWithError:&error];
+    XCTAssertNil(error);
+    XCTAssertNotNil(encodedForm.fileURL);
+    
+    NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
+    NSData *knownMultipartJSONData = [NSData dataWithContentsOfFile:pathToKnownMultipartJSONData];
+    NSData *dataContent = [NSData dataWithContentsOfURL:encodedForm.fileURL];
+
+    XCTAssert([knownMultipartJSONData isEqual:dataContent]);
+}
+
+- (void)testMultipartDataEncodeWithHighFileEndodingThreshold {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    TMMultipartRequestBody *requestBody = [self createRequestBodyWithThreshold:TMMultipartFormFileEncodingThreshold]; //10MB threshold
+    
+    NSError *error;
+    TMMultipartEncodedForm *encodedForm = [requestBody encodeWithError:&error];
+    XCTAssertNil(error);
+    XCTAssertNotNil(encodedForm.data);
+    
+    NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
+    NSData *knownMultipartJSONData = [NSData dataWithContentsOfFile:pathToKnownMultipartJSONData];
+
+    XCTAssert([knownMultipartJSONData isEqual:encodedForm.data]);
+}
+
+- (TMMultipartRequestBody *)createRequestBodyWithThreshold:(UInt64)fileEncodingThreshold {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    NSString *pathToJSONDictionary = [bundle pathForResource:@"json_dictionary" ofType:@"json"];
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:pathToJSONDictionary] options:0 error:NULL];
+
+    NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
+
+    TMMultipartRequestBody *requestBody = [[TMMultipartRequestBody alloc] initWithFilePaths:@[path] contentTypes:@[@"image/png"] fileNames:@[@"code.png"] parameters:dictionary keys:@[@"data"] encodeJSONBody:YES fileEncodingThreshold:fileEncodingThreshold];
+    return requestBody;
+}
+
 @end

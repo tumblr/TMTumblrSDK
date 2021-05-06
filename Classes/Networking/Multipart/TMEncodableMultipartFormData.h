@@ -23,10 +23,14 @@ typedef enum{
     TMMultipartFormErrorTypeOutputStreamCreationFailed,
     TMMultipartFormErrorTypeOutputStreamWriteFailed,
     TMMultipartFormErrorTypeInputStreamReadFailed,
-    TMMultipartFormErrorTypeEncodingFailed
+    TMMultipartFormErrorTypeEncodingFailed,
+    TMMultipartFormErrorTypeInvalidFilePath,
+    TMMultipartFormErrorTypeUnexpectedInputLength
 }TMMultipartFormErrorType;
 
 @interface TMEncodableMultipartFormData : NSObject
+
+@property (nonatomic, readonly) UInt64 totalContentLength;
 
 - (nonnull instancetype)initWithFileManager:(nonnull NSFileManager *)fileManager boundary:(nonnull NSString *)boundary;
 
@@ -46,7 +50,14 @@ typedef enum{
           contentType:(nonnull NSString *)contentType
                 error:(NSError **)error;
 
-- (void)writePartsToFileURL:(NSURL *)fileURL error:(NSError **)error;
+- (void)appendFilePath:(NSString *)filePath
+                  name:(nonnull NSString *)name
+           contentType:(nonnull NSString *)contentType
+                 error:(NSError **)error;
+
+- (void)writePartsToFileWithURL:(NSURL *)fileURL error:(NSError **)error;
+
+- (NSData *)writePartsToDataWithError:(NSError **)error;
 
 @end
 
