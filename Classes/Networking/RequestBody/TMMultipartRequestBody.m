@@ -96,12 +96,12 @@ UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
         if (*error) {
             return nil;
         }
+        return [[TMMultipartEncodedForm alloc] initWithData:data fileURL:url];
     }
     else {
         data = [self.encodableFormData writePartsToDataWithError:error];
+        return [[TMMultipartEncodedForm alloc] initWithData:data];
     }
-    
-    return [[TMMultipartEncodedForm alloc] initWithData:data fileURL:url];
 }
 
 - (NSURL *)encodeIntoFileWithError:(NSError **)error {

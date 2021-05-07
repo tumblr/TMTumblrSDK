@@ -21,7 +21,7 @@
 
 @implementation TMUploadSessionTaskCreator
 
-- (nonnull instancetype)initWithEncodedForm:(nonnull NSURL *)filePath
+- (nonnull instancetype)initWithFilePath:(nonnull NSURL *)filePath
                                  session:(nonnull NSURLSession *)session
                                  request:(nonnull NSURLRequest *)request
                                 bodyData:(nullable NSData *)bodyData
@@ -45,7 +45,7 @@
     return self;
 }
 
-- (nonnull NSURLSessionTask *)uploadTaskOld {
+- (nonnull NSURLSessionTask *)uploadTask {
 
     NSURLSessionTask *task;
 

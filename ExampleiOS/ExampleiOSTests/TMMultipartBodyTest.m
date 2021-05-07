@@ -265,6 +265,7 @@
     NSError *error;
     TMMultipartEncodedForm *encodedForm = [requestBody encodeWithError:&error];
     XCTAssertNil(error);
+    XCTAssertNil(encodedForm.data);
     XCTAssertNotNil(encodedForm.fileURL);
     
     NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
@@ -283,7 +284,8 @@
     TMMultipartEncodedForm *encodedForm = [requestBody encodeWithError:&error];
     XCTAssertNil(error);
     XCTAssertNotNil(encodedForm.data);
-    
+    XCTAssertNotNil(encodedForm.fileURL);
+
     NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
     NSData *knownMultipartJSONData = [NSData dataWithContentsOfFile:pathToKnownMultipartJSONData];
 

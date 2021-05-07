@@ -220,12 +220,15 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
     if ([request.requestBody conformsToProtocol:@protocol(TMMultiPartRequestBodyProtocol)]) {
         id<TMMultiPartRequestBodyProtocol> multiPartBody = (id<TMMultiPartRequestBodyProtocol>)request.requestBody;
         form = [multiPartBody encodeWithError:&encodingError];
-        NSLog(@"WARN: Unable to encode multipart body request. %@", encodingError.description);
+        NSAssert(encodingError == nil, @"Failed to encode multipart body request.");
+        if (encodingError) {
+            form = nil;
+        }
     }
     
-    if (!form || encodingError) {
+    if (!form) {
         NSData *bodyData = [request.requestBody bodyData];
-        form = [[TMMultipartEncodedForm alloc] initWithData:bodyData fileURL:nil];
+        form = [[TMMultipartEncodedForm alloc] initWithData:bodyData];
     }
 
     NSURLSessionTask *task = [[[TMUploadSessionTaskCreator alloc] initWithFilePath:form.fileURL

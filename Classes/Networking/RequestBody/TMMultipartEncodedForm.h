@@ -12,10 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TMMultipartEncodedForm : NSObject
 
 @property (nonatomic, readonly, nullable) NSData *data;
-@property (nonatomic, readonly, nullable) NSURL *fileURL;
+@property (nonatomic, readonly, nonnull) NSURL *fileURL;
 
 - (nonnull instancetype)initWithData:(nullable NSData *)data
-                             fileURL:(nullable NSURL *)fileURL;
+                             fileURL:(nonnull NSURL *)fileURL;
+
+- (nonnull instancetype)initWithData:(nullable NSData *)data;
 
 @end
 

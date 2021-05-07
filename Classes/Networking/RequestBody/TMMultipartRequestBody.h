@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TMRequestBody.h"
 #import "TMEncodableMultipartFormData.h"
 #import "TMMultipartEncodedForm.h"
 #import "TMMultiPartRequestBodyProtocol.h"
