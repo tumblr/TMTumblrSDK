@@ -19,7 +19,8 @@
 #import "TMRequestParamaterizer.h"
 #import "TMRequestTransformer.h"
 #import "TMRequestBody.h"
-
+#import "TMMultiPartRequestBodyProtocol.h"
+#import "TMMultipartEncodedForm.h"
 #import "TMUploadSessionTaskCreator.h"
 
 NSString * _Nonnull const TMURLSessionInvalidateApplicationCredentialsNotificationKey = @"TMURLSessionInvalidateApplicationCredentials";
@@ -214,15 +215,23 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
 
     NSParameterAssert(completionHandler);
 
-    NSData *bodyData = [request.requestBody bodyData];
+    TMMultipartEncodedForm *form;
+    NSError *encodingError;
+    if ([request.requestBody conformsToProtocol:@protocol(TMMultiPartRequestBodyProtocol)]) {
+        id<TMMultiPartRequestBodyProtocol> multiPartBody = (id<TMMultiPartRequestBodyProtocol>)request.requestBody;
+        form = [multiPartBody encodeWithError:&encodingError];
+        NSLog(@"WARN: Unable to encode multipart body request. %@", encodingError.description);
+    }
+    
+    if (!form || encodingError) {
+        NSData *bodyData = [request.requestBody bodyData];
+        form = [[TMMultipartEncodedForm alloc] initWithData:bodyData fileURL:nil];
+    }
 
-    NSString *extension = [NSUUID UUID].UUIDString;
-
-    NSURL *temporaryFileURL = [[NSURL alloc] initFileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:extension]];
-    NSURLSessionTask *task = [[[TMUploadSessionTaskCreator alloc] initWithFilePath:temporaryFileURL
+    NSURLSessionTask *task = [[[TMUploadSessionTaskCreator alloc] initWithFilePath:form.fileURL
                                                                            session:self.session
                                                                            request:[self paramaterizedRequestFromRequest:request]
-                                                                          bodyData:nil
+                                                                          bodyData:form.data
                                                                 incrementalHandler:incrementalHandler
                                                                  completionHandler:completionHandler] uploadTask];
     [self.observer addSessionTask:task];

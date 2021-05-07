@@ -20,6 +20,7 @@
 		58B1FF699B7A5ADD949BC11C /* Pods_ExampleiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF14371B0CC595789B748CB /* Pods_ExampleiOS.framework */; };
 		7236C8821FCE0DBE00D0BE36 /* TMOAuthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7236C8811FCE0DBE00D0BE36 /* TMOAuthTests.m */; };
 		914A992426442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 914A992326442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m */; };
+		914A99342645B199009CBFA3 /* multipartTextData in Resources */ = {isa = PBXBuildFile; fileRef = 914A99332645B199009CBFA3 /* multipartTextData */; };
 		B901B72F1C3DC99B007691FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B72E1C3DC99B007691FA /* main.m */; };
 		B901B7321C3DC99B007691FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B7311C3DC99B007691FA /* AppDelegate.m */; };
 		B901B7351C3DC99B007691FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B7341C3DC99B007691FA /* ViewController.m */; };
@@ -94,6 +95,7 @@
 		7236C8811FCE0DBE00D0BE36 /* TMOAuthTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMOAuthTests.m; sourceTree = "<group>"; };
 		881E033CC768127BD368A833 /* Pods-ExampleiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleiOS/Pods-ExampleiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		914A992326442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMEncodableMultipartFormDataTests.m; sourceTree = "<group>"; };
+		914A99332645B199009CBFA3 /* multipartTextData */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = multipartTextData; sourceTree = "<group>"; };
 		B901B72A1C3DC99B007691FA /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B901B72E1C3DC99B007691FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B901B7301C3DC99B007691FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				B9D27E5D1D0F938A00A2E95E /* TMHTTPRequestTests.m */,
 				B9BA142C1D10CCD000D90A89 /* diff.png */,
 				B99900DA1D0F848D00558ADA /* code.png */,
+				914A99332645B199009CBFA3 /* multipartTextData */,
 				B9DB2DE81DAFFFD6006AD175 /* multiple_files_different_key */,
 				B9DB2DE41DAFFD2F006AD175 /* multiple_files */,
 				B9DB2DE61DAFFDEC006AD175 /* data */,
@@ -408,6 +411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				914A99342645B199009CBFA3 /* multipartTextData in Resources */,
 				B9DB2DE91DAFFFD6006AD175 /* multiple_files_different_key in Resources */,
 				B9DB2DE51DAFFD7B006AD175 /* multiple_files in Resources */,
 				B9DB2DE71DAFFDEC006AD175 /* data in Resources */,
