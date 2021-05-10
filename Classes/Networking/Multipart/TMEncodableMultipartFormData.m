@@ -46,16 +46,16 @@ NSUInteger const TMMaxBufferSize = 1024;
           contentType:(NSString *)contentType
                 error:(NSError **)error {
 
-    // Does the fileURL have `file` scheme?
-    if (!fileURL.isFileURL) {
-        *error = [[NSError alloc] initWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeURLNotUsingFileScheme userInfo:nil];
-        return;
-    }
-
     // Is the file name is valid?
     NSString *fileName = fileURL.lastPathComponent;
     if (!(fileName.length > 0)) {
         *error = [[NSError alloc] initWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeFileNameNotValid userInfo:nil];
+        return;
+    }
+    
+    // Does the fileURL have `file` scheme?
+    if (!fileURL.isFileURL) {
+        *error = [[NSError alloc] initWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeURLNotUsingFileScheme userInfo:nil];
         return;
     }
 

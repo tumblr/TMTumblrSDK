@@ -38,4 +38,98 @@
     XCTAssert([expectedData isEqual:generatedData]);
 }
 
+- (void)testInvalidLastPathComponent {
+    
+    TMEncodableMultipartFormData *form = [[TMEncodableMultipartFormData alloc] initWithFileManager:[NSFileManager defaultManager] boundary:TMMultipartBoundary];
+
+    NSURL *fileURL = [NSURL fileURLWithPath:@""];
+    
+    NSError *error;
+    [form appendFileURL:fileURL name:@"name" contentType:@"contenType" error:&error];
+    XCTAssertEqual(error.code, TMMultipartFormErrorTypeFileNameNotValid);
+}
+
+- (void)testAppendNonFileURL {
+    
+    TMEncodableMultipartFormData *form = [[TMEncodableMultipartFormData alloc] initWithFileManager:[NSFileManager defaultManager] boundary:TMMultipartBoundary];
+
+    NSURL *fileURL = [NSURL URLWithString:@"https://test.com/image.jpg"];
+    
+    NSError *error;
+    [form appendFileURL:fileURL name:@"name" contentType:@"contenType" error:&error];
+    XCTAssertEqual(error.code, TMMultipartFormErrorTypeURLNotUsingFileScheme);
+}
+
+- (void)testAppendNonReachableFileURL {
+    
+    TMEncodableMultipartFormData *form = [[TMEncodableMultipartFormData alloc] initWithFileManager:[NSFileManager defaultManager] boundary:TMMultipartBoundary];
+
+    NSURL *fileURL = [NSURL fileURLWithPath:@"not-existing.png"];
+    
+    NSError *error;
+    [form appendFileURL:fileURL name:@"name" contentType:@"contenType" error:&error];
+    XCTAssertEqual(error.code, TMMultipartFormErrorTypeFileNotReachable);
+}
+
+- (void)testAppendDirectory {
+    
+    TMEncodableMultipartFormData *form = [[TMEncodableMultipartFormData alloc] initWithFileManager:[NSFileManager defaultManager] boundary:TMMultipartBoundary];
+
+    NSURL *fileURL = [self tempTestDirectory];
+
+    NSError *error;
+    [form appendFileURL:fileURL name:@"name" contentType:@"contenType" error:&error];
+    XCTAssertEqual(error.code, TMMultipartFormErrorTypeFileIsDirectory);
+}
+
+- (void)testWritingToAnExistingFileFails {
+    TMEncodableMultipartFormData *form = [[TMEncodableMultipartFormData alloc] initWithFileManager:[NSFileManager defaultManager] boundary:TMMultipartBoundary];
+
+    NSURL *fileURL = [self tempFileURL];
+    
+    NSError *writeError;
+    [@"test" writeToURL:fileURL atomically:YES encoding:NSUTF8StringEncoding error:&writeError];
+    XCTAssertNil(writeError);
+    
+    NSData *testData = [@"Lorem ipsum" dataUsingEncoding:NSUTF8StringEncoding];
+
+    [form appendData:testData name:@"name" fileName:nil contentType:@"contenType"];
+    
+    NSError *error;
+    [form encodeIntoFileWithURL:fileURL error:&error];
+    
+    XCTAssertEqual(error.code, TMMultipartFormErrorTypeOutputFileAlreadyExists);
+}
+
+- (void)testWritingToBadURLFails {
+    TMEncodableMultipartFormData *form = [[TMEncodableMultipartFormData alloc] initWithFileManager:[NSFileManager defaultManager] boundary:TMMultipartBoundary];
+
+    NSURL *fileURL = [NSURL URLWithString:@"/bad/url"];
+        
+    NSData *testData = [@"Lorem ipsum" dataUsingEncoding:NSUTF8StringEncoding];
+
+    [form appendData:testData name:@"name" fileName:nil contentType:@"contenType"];
+    
+    NSError *error;
+    [form encodeIntoFileWithURL:fileURL error:&error];
+    
+    XCTAssertEqual(error.code, TMMultipartFormErrorTypeOutputFileURLInvalid);
+}
+
+- (void)testUnexpecedStreamLenght {
+    TMEncodableMultipartFormData *form = [[TMEncodableMultipartFormData alloc] initWithFileManager:[NSFileManager defaultManager] boundary:TMMultipartBoundary];
+
+    NSData *testData = [@"Lorem ipsum" dataUsingEncoding:NSUTF8StringEncoding];
+    [form appendData:testData name:@"name" fileName:nil contentType:@"contenType"];
+
+    NSError *error1;
+    [form encodeIntoDataWithError:&error1];
+    
+    NSError *error2;
+    [form encodeIntoDataWithError:&error2];
+
+    XCTAssertNil(error1);
+    XCTAssertEqual(error2.code, TMMultipartFormErrorTypeUnexpectedInputLength);
+}
+
 @end
