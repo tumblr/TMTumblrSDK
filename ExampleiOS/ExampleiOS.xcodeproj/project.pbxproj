@@ -21,6 +21,7 @@
 		7236C8821FCE0DBE00D0BE36 /* TMOAuthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7236C8811FCE0DBE00D0BE36 /* TMOAuthTests.m */; };
 		914A992426442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 914A992326442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m */; };
 		914A99342645B199009CBFA3 /* multipartTextData in Resources */ = {isa = PBXBuildFile; fileRef = 914A99332645B199009CBFA3 /* multipartTextData */; };
+		914A9BBE2649AB74009CBFA3 /* TMBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 914A9BBD2649AB74009CBFA3 /* TMBaseTestCase.m */; };
 		B901B72F1C3DC99B007691FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B72E1C3DC99B007691FA /* main.m */; };
 		B901B7321C3DC99B007691FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B7311C3DC99B007691FA /* AppDelegate.m */; };
 		B901B7351C3DC99B007691FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B7341C3DC99B007691FA /* ViewController.m */; };
@@ -96,6 +97,8 @@
 		881E033CC768127BD368A833 /* Pods-ExampleiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleiOS/Pods-ExampleiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		914A992326442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMEncodableMultipartFormDataTests.m; sourceTree = "<group>"; };
 		914A99332645B199009CBFA3 /* multipartTextData */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = multipartTextData; sourceTree = "<group>"; };
+		914A9BBD2649AB74009CBFA3 /* TMBaseTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMBaseTestCase.m; sourceTree = "<group>"; };
+		914A9BC12649AC10009CBFA3 /* TMBaseTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMBaseTestCase.h; sourceTree = "<group>"; };
 		B901B72A1C3DC99B007691FA /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B901B72E1C3DC99B007691FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B901B7301C3DC99B007691FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -262,6 +265,8 @@
 				B99900D21D0F789D00558ADA /* TMHTTPRequestMethodTests.m */,
 				B99900D41D0F7EE400558ADA /* ExampleiOSTests-Bridging-Header.h */,
 				B99900D81D0F840D00558ADA /* TMMultipartBodyTest.m */,
+				914A9BC12649AC10009CBFA3 /* TMBaseTestCase.h */,
+				914A9BBD2649AB74009CBFA3 /* TMBaseTestCase.m */,
 				914A992326442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m */,
 				B9C29ADA1D14A5510063FBEB /* TMAPIClientCallbackConverterTests.m */,
 				2DBBAF3E1E9EC5E40029437A /* TMOAuthAuthenticatorTests.m */,
@@ -532,6 +537,7 @@
 				B98885851D0CB47B008B9B07 /* TMFunctionsTests.m in Sources */,
 				2D8396641EE0767C0003A80F /* TMBasicBaseURLDeterminerTests.m in Sources */,
 				B9E6BCCF1D0B3A720049C88E /* TMAPIApplicationCredentialsTests.m in Sources */,
+				914A9BBE2649AB74009CBFA3 /* TMBaseTestCase.m in Sources */,
 				B930CF831C57EDDB000E69E8 /* TMURLSessionTaskStateProducerTests.m in Sources */,
 				B9C49C4A1DB69EFD00972A8A /* TMRequestMethodHelpersTests.swift in Sources */,
 				B9D27E5E1D0F938A00A2E95E /* TMHTTPRequestTests.m in Sources */,

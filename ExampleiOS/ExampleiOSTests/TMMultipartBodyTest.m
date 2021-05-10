@@ -7,12 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "TMBaseTestCase.h"
 #import <TMTumblrSDK/TMMultipartRequestBodyFactory.h>
 #import <TMTumblrSDK/TMMultipartRequestBody.h>
 #import <TMTumblrSDK/TMRequestBody.h>
 @import TMTumblrSDK;
 
-@interface TMMultipartBodyTest : XCTestCase
+@interface TMMultipartBodyTest : TMBaseTestCase
 
 @end
 
