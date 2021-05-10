@@ -17,3 +17,8 @@ extern NSString * _Nonnull TMMultipartBoundary;
  *  The default CRLF in mutlipart data.
  */
 extern NSString * _Nonnull TMMultipartCRLF;
+
+/**
+ *  Directory to put multi part form files.
+ */
+extern NSString * _Nonnull TMMultipartFormDirectory;

@@ -9,7 +9,6 @@
 #import "TMMultipartPartProtocol.h"
 #import "TMInputStreamMultipartPart.h"
 #import "TMMultipartConstants.h"
-#import "TMMultipartPart.h"
 
 NSString * const TMMultipartFormErrorDomain = @"com.tumblr.sdk.multipartform";
 
@@ -26,7 +25,7 @@ NSUInteger const TMMaxBufferSize = 1024;
 
 @implementation TMEncodableMultipartFormData
 
-- (nonnull instancetype)initWithFileManager:(nonnull NSFileManager *)fileManager boundary:(nonnull NSString *)boundary {
+- (instancetype)initWithFileManager:(NSFileManager *)fileManager boundary:(NSString *)boundary {
     NSParameterAssert(fileManager);
     NSParameterAssert(boundary);
     self = [super init];
@@ -40,39 +39,11 @@ NSUInteger const TMMaxBufferSize = 1024;
     return self;
 }
 
-- (void)appendFilePath:(NSString *)filePath
-                  name:(nonnull NSString *)name
-           contentType:(nonnull NSString *)contentType
-                 error:(NSError **)error {
-    
-    /// Create a URL with `file` scheme if it is not already
-    NSURL *fileURL = [NSURL URLWithString:filePath];
-    if (!fileURL.isFileURL) {
-        fileURL = [NSURL fileURLWithPath:filePath];
-    }
-    
-    NSError *fileError;
-    [self appendFileURL:fileURL
-                   name:name
-            contentType:contentType
-                  error:&fileError];
-    if (fileError) {
-        // If that fails somehow then fallback to the old mechanism and try appending the data instead.
-        NSData *data = [NSData dataWithContentsOfFile:filePath];
-        if (!data) {
-            *error = [NSError errorWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeInvalidFilePath userInfo:@{@"path":filePath}];
-            return;
-        }
-        [self appendData:data
-                       name:name
-                   fileName:filePath
-                contentType:contentType];
-    }
-}
+// MARK: - Public methods
 
-- (void)appendFileURL:(nonnull NSURL *)fileURL
-                 name:(nonnull NSString *)name
-          contentType:(nonnull NSString *)contentType
+- (void)appendFileURL:(NSURL *)fileURL
+                 name:(NSString *)name
+          contentType:(NSString *)contentType
                 error:(NSError **)error {
 
     // Does the fileURL have `file` scheme?
@@ -120,21 +91,50 @@ NSUInteger const TMMaxBufferSize = 1024;
     [self appendInputStream:inputStream contentLength:contentLength name:name fileName:fileName contentType:contentType];
 }
 
-- (void)appendData:(nonnull NSData *)data
-              name:(nonnull NSString *)name
-          fileName:(nullable NSString *)fileName
-       contentType:(nonnull NSString *)contentType {
+- (void)appendFilePath:(NSString *)filePath
+                  name:(NSString *)name
+           contentType:(NSString *)contentType
+                 error:(NSError **)error {
+    
+    /// Create a URL with `file` scheme if it is not already
+    NSURL *fileURL = [NSURL URLWithString:filePath];
+    if (!fileURL.isFileURL) {
+        fileURL = [NSURL fileURLWithPath:filePath];
+    }
+    
+    NSError *fileError;
+    [self appendFileURL:fileURL
+                   name:name
+            contentType:contentType
+                  error:&fileError];
+    if (fileError) {
+        // If that fails somehow then fallback to the old mechanism and try appending the data instead.
+        NSData *data = [NSData dataWithContentsOfFile:filePath];
+        if (!data) {
+            *error = [NSError errorWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeInvalidFilePath userInfo:@{@"path":filePath}];
+            return;
+        }
+        [self appendData:data
+                       name:name
+                   fileName:filePath
+                contentType:contentType];
+    }
+}
+
+- (void)appendData:(NSData *)data
+              name:(NSString *)name
+          fileName:(NSString *)fileName
+       contentType:(NSString *)contentType {
     
     NSInputStream *inputStream = [[NSInputStream alloc] initWithData:data];
     [self appendInputStream:inputStream contentLength:data.length name:name fileName:fileName contentType:contentType];
-    
 }
 
-- (void)appendInputStream:(nonnull NSInputStream *)inputStream
+- (void)appendInputStream:(NSInputStream *)inputStream
             contentLength:(UInt64)contentLength
-                     name:(nonnull NSString *)name
-                 fileName:(nullable NSString *)fileName
-              contentType:(nonnull NSString *)contentType {
+                     name:(NSString *)name
+                 fileName:(NSString *)fileName
+              contentType:(NSString *)contentType {
     
     TMInputStreamMultipartPart *part = [[TMInputStreamMultipartPart alloc] initWithInputStream:inputStream name:name fileName:fileName contentType:contentType contentLength:contentLength];
     [self.parts addObject:part];
@@ -148,7 +148,7 @@ NSUInteger const TMMaxBufferSize = 1024;
     return result;
 }
 
-- (void)writePartsToFileWithURL:(NSURL *)targetFileURL error:(NSError **)error {
+- (void)encodeIntoFileWithURL:(NSURL *)targetFileURL error:(NSError **)error {
     if ([self.fileManager fileExistsAtPath:targetFileURL.path]) {
         *error = [[NSError alloc] initWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeOutputFileAlreadyExists userInfo:nil];
         return;
@@ -165,10 +165,7 @@ NSUInteger const TMMaxBufferSize = 1024;
     }
     
     [outputStream open];
-    
-    [self.parts.firstObject setHasTopBoundary:YES];
-    [self.parts.lastObject setHasBottomBoundary:YES];
-    
+        
     for (id<TMMultipartPartProtocol> part in self.parts) {
         [self writeBodyPart:part toOutputStream:outputStream error:error];
     }
@@ -178,12 +175,9 @@ NSUInteger const TMMaxBufferSize = 1024;
     [outputStream close];
 }
 
-- (NSData *)writePartsToDataWithError:(NSError **)error {
+- (NSData *)encodeIntoDataWithError:(NSError **)error {
     NSMutableData *data = [NSMutableData new];
-    
-    [self.parts.firstObject setHasTopBoundary:YES];
-    [self.parts.lastObject setHasBottomBoundary:YES];
-    
+        
     for (id<TMMultipartPartProtocol> part in self.parts) {
         [data appendData:[self buildDataForBodyPart:part error:error]];
     }
@@ -212,13 +206,6 @@ NSUInteger const TMMaxBufferSize = 1024;
         }
         [data appendData:partData];
     }
-    
-    // Write non streamable
-
-    if ([part isKindOfClass:[TMMultipartPart class]]) {
-        TMMultipartPart *nonStreamablePart = (TMMultipartPart *)part;
-        [data appendData: nonStreamablePart.data];
-    }
 
     // Write bottom boundary
     
@@ -226,6 +213,8 @@ NSUInteger const TMMaxBufferSize = 1024;
 
     return [NSData dataWithData:data];
 }
+
+// MARK: - Private methods
 
 - (void)writeBodyPart:(id<TMMultipartPartProtocol>)part toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
     
@@ -253,79 +242,8 @@ NSUInteger const TMMaxBufferSize = 1024;
         }
     }
     
-    // Write non streamable
-    
-    if ([part isKindOfClass:[TMMultipartPart class]]) {
-        TMMultipartPart *nonStreamablePart = (TMMultipartPart *)part;
-        [self writeData:nonStreamablePart.data toOutputStream:outputStream error:error];
-        if (*error) {
-            return;
-        }
-    }
-    
     // Write bottom boundary
     [self writeBottomBoundaryForBodyPart:part toOutputStream:outputStream error:error];
-}
-
-- (void)writeFinalBoundaryToOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
-    [self writeData:[self.finalBoundary dataUsingEncoding:NSUTF8StringEncoding] toOutputStream:outputStream error:error];
-}
-
-- (NSString *)finalBoundary {
-    NSMutableString *string = [NSMutableString stringWithFormat:@"--%@--", self.boundary];
-    [string appendString: TMMultipartCRLF];
-    return [NSString stringWithString:string];
-}
-
-- (void)writeTopBoundaryForBodyPart:(id<TMMultipartPartProtocol>)part toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
-    NSData *data = [self.topBoundary dataUsingEncoding:NSUTF8StringEncoding];
-    [self writeData:data toOutputStream:outputStream error:error];
-}
-
-- (NSString *)topBoundary {
-    NSString *prefixedBoundary = [@"--" stringByAppendingString:self.boundary];
-    
-    NSMutableString *topBoundary = [[NSMutableString alloc] init];
-    [topBoundary appendString:prefixedBoundary];
-    [topBoundary appendString:TMMultipartCRLF];
-    return  topBoundary;
-}
-
-- (void)writeHeadersForBodyPart:(id<TMMultipartPartProtocol>)part toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
-    NSData *data = [[self headerTextForBodyPart:part] dataUsingEncoding:NSUTF8StringEncoding];
-    [self writeData:data toOutputStream:outputStream error:error];
-}
-
-- (NSString *)headerTextForBodyPart:(id<TMMultipartPartProtocol>)part {
-    NSMutableString *string = [[NSMutableString alloc] init];
-
-    [string appendFormat:@"Content-Disposition: form-data; name=\"%@\"", part.name];
-    if (part.fileName) {
-        [string appendFormat:@"; filename=\"%@\"", part.fileName];
-    }
-    [string appendString:TMMultipartCRLF];
-    [string appendFormat:@"Content-Type: %@", part.contentType];
-    [string appendString:TMMultipartCRLF];
-    [string appendString:TMMultipartCRLF];
-    
-    return [NSString stringWithString:string];
-}
-
-- (void)writeBottomBoundaryForBodyPart:(id<TMMultipartPartProtocol>)part toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
-    NSData *data = [self.bottomBoundary dataUsingEncoding:NSUTF8StringEncoding];
-    [self writeData:data toOutputStream:outputStream error:error];
-}
-
-- (NSString *)bottomBoundary {
-    return TMMultipartCRLF;
-}
-
-- (void)writeData:(NSData *)data toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
-    Byte *readBytes = (uint8_t *)[data bytes];
-    NSUInteger length = data.length;
-    Byte buffer[length];
-    (void)memcpy(buffer, readBytes, length);
-    [self writeBuffer:buffer oflength:length toOutputStream:outputStream error:error];
 }
 
 - (void)writeBodyStreamForPart:(TMInputStreamMultipartPart *)part toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
@@ -385,6 +303,14 @@ NSUInteger const TMMaxBufferSize = 1024;
     return [NSData dataWithData:data];
 }
 
+- (void)writeData:(NSData *)data toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
+    Byte *readBytes = (uint8_t *)[data bytes];
+    NSUInteger length = data.length;
+    Byte buffer[length];
+    (void)memcpy(buffer, readBytes, length);
+    [self writeBuffer:buffer oflength:length toOutputStream:outputStream error:error];
+}
+
 - (void)writeBuffer:(Byte *)buffer oflength:(NSUInteger)length toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
         
     NSInteger bytesToWrite = length;
@@ -402,4 +328,60 @@ NSUInteger const TMMaxBufferSize = 1024;
         }
     }
 }
+
+// MARK: -Boundary related
+
+- (void)writeFinalBoundaryToOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
+    [self writeData:[self.finalBoundary dataUsingEncoding:NSUTF8StringEncoding] toOutputStream:outputStream error:error];
+}
+
+- (void)writeTopBoundaryForBodyPart:(id<TMMultipartPartProtocol>)part toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
+    NSData *data = [self.topBoundary dataUsingEncoding:NSUTF8StringEncoding];
+    [self writeData:data toOutputStream:outputStream error:error];
+}
+
+- (void)writeHeadersForBodyPart:(id<TMMultipartPartProtocol>)part toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
+    NSData *data = [[self headerTextForBodyPart:part] dataUsingEncoding:NSUTF8StringEncoding];
+    [self writeData:data toOutputStream:outputStream error:error];
+}
+
+- (NSString *)headerTextForBodyPart:(id<TMMultipartPartProtocol>)part {
+    NSMutableString *string = [[NSMutableString alloc] init];
+
+    [string appendFormat:@"Content-Disposition: form-data; name=\"%@\"", part.name];
+    if (part.fileName) {
+        [string appendFormat:@"; filename=\"%@\"", part.fileName];
+    }
+    [string appendString:TMMultipartCRLF];
+    [string appendFormat:@"Content-Type: %@", part.contentType];
+    [string appendString:TMMultipartCRLF];
+    [string appendString:TMMultipartCRLF];
+    
+    return [NSString stringWithString:string];
+}
+
+- (void)writeBottomBoundaryForBodyPart:(id<TMMultipartPartProtocol>)part toOutputStream:(NSOutputStream *)outputStream error:(NSError **)error {
+    NSData *data = [self.bottomBoundary dataUsingEncoding:NSUTF8StringEncoding];
+    [self writeData:data toOutputStream:outputStream error:error];
+}
+
+- (NSString *)bottomBoundary {
+    return TMMultipartCRLF;
+}
+
+- (NSString *)topBoundary {
+    NSString *prefixedBoundary = [@"--" stringByAppendingString:self.boundary];
+    
+    NSMutableString *topBoundary = [[NSMutableString alloc] init];
+    [topBoundary appendString:prefixedBoundary];
+    [topBoundary appendString:TMMultipartCRLF];
+    return  topBoundary;
+}
+
+- (NSString *)finalBoundary {
+    NSMutableString *string = [NSMutableString stringWithFormat:@"--%@--", self.boundary];
+    [string appendString: TMMultipartCRLF];
+    return [NSString stringWithString:string];
+}
+
 @end

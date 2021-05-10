@@ -1,11 +1,12 @@
 //
 //  TMMultipartEncodedForm.m
-//  Pods-ExampleiOS
+//  Pods
 //
 //  Created by Pinar Olguc on 7.05.2021.
 //
 
 #import "TMMultipartEncodedForm.h"
+#import "TMMultipartConstants.h"
 
 @interface TMMultipartEncodedForm ()
 
@@ -16,10 +17,10 @@
 
 @implementation TMMultipartEncodedForm
 
-- (nonnull instancetype)initWithData:(NSData *)data
-                             fileURL:(NSURL *)fileURL {
+- (instancetype)initWithFileURL:(NSURL *)fileURL
+                           data:(NSData *)data {
     NSParameterAssert(fileURL);
-
+    
     self = [super init];
     
     if (self) {
@@ -30,13 +31,13 @@
     return self;
 }
 
-- (nonnull instancetype)initWithData:(NSData *)data {
+- (instancetype)initWithData:(NSData *)data {
     self = [super init];
     
     if (self) {
         _data = data;
         NSString *extension = [NSUUID UUID].UUIDString;
-        _fileURL = [[NSURL alloc] initFileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:extension]];
+        _fileURL = [[NSURL alloc] initFileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@", TMMultipartFormDirectory, extension]]];
     }
     
     return self;

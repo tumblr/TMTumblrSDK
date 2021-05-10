@@ -9,9 +9,6 @@
 
 @interface TMInputStreamMultipartPart ()
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *fileName;
-@property (nonatomic, copy) NSString *contentType;
 @property (nonatomic) NSInputStream *inputStream;
 
 @end
@@ -24,16 +21,10 @@
                                 contentType:(nonnull NSString *)contentType
                               contentLength:(UInt64)contentLength {
     NSParameterAssert(inputStream);
-    NSParameterAssert(name);
-    NSParameterAssert(contentType);
-    self = [super init];
+    self = [super initWithName:name fileName:fileName contentType:contentType contentLength:contentLength];
     
     if (self) {
         _inputStream = inputStream;
-        _name = [name copy];
-        _fileName = [fileName copy];
-        _contentType = [contentType copy];
-        _contentLength = contentLength;
     }
     return self;
 }

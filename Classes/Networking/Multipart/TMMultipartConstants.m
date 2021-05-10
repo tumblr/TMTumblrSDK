@@ -10,3 +10,4 @@
 
 NSString * _Nonnull TMMultipartBoundary = @"TumblrBoundary";
 NSString * _Nonnull TMMultipartCRLF = @"\r\n";
+NSString * _Nonnull TMMultipartFormDirectory = @"com.tumblr.sdk/multipart.form";

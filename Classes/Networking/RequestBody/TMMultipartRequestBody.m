@@ -7,9 +7,7 @@
 //
 
 #import "TMMultipartRequestBody.h"
-#import "TMMultipartFormData.h"
 #import "TMMultipartConstants.h"
-#import "TMMultipartPart.h"
 
 UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
 
@@ -60,12 +58,12 @@ UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
     return self;
 }
 
-- (nonnull instancetype)initWithFilePaths:(nonnull NSArray<NSString *> *)filePaths
-                             contentTypes:(nonnull NSArray<NSString *> *)contentTypes
-                                fileNames:(nonnull NSArray<NSString *> *)fileNames
-                               parameters:(nonnull NSDictionary *)parameters
-                                     keys:(nonnull NSArray <NSString *> *)keys
-                           encodeJSONBody:(BOOL)encodeJSONBody {
+- (instancetype)initWithFilePaths:(NSArray<NSString *> *)filePaths
+                     contentTypes:(NSArray<NSString *> *)contentTypes
+                        fileNames:(NSArray<NSString *> *)fileNames
+                       parameters:(NSDictionary *)parameters
+                             keys:(NSArray <NSString *> *)keys
+                   encodeJSONBody:(BOOL)encodeJSONBody {
     return [self initWithFilePaths:filePaths contentTypes:contentTypes fileNames:fileNames parameters:parameters keys:keys encodeJSONBody:encodeJSONBody fileEncodingThreshold:TMMultipartFormFileEncodingThreshold];
 }
 
@@ -96,10 +94,10 @@ UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
         if (*error) {
             return nil;
         }
-        return [[TMMultipartEncodedForm alloc] initWithData:data fileURL:url];
+        return [[TMMultipartEncodedForm alloc] initWithFileURL:url data:data];
     }
     else {
-        data = [self.encodableFormData writePartsToDataWithError:error];
+        data = [self.encodableFormData encodeIntoDataWithError:error];
         return [[TMMultipartEncodedForm alloc] initWithData:data];
     }
 }
@@ -113,14 +111,14 @@ UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
 }
 
 - (NSURL *)doEncodeIntoFileWithError:(NSError **)error {
-    NSURL *tempDirectory = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.tumblr.sdk/multipart.form"];
+    NSURL *tempDirectory = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:TMMultipartFormDirectory];
     NSString *fileName = [NSUUID UUID].UUIDString;
     NSURL *fileURL = [tempDirectory URLByAppendingPathComponent:fileName];
     [[NSFileManager defaultManager] createDirectoryAtURL:tempDirectory withIntermediateDirectories:YES attributes:nil error:error];
     if (*error) {
         return nil;
     }
-    [self.encodableFormData writePartsToFileWithURL:fileURL error:error];
+    [self.encodableFormData encodeIntoFileWithURL:fileURL error:error];
     return fileURL;
 }
 
@@ -180,13 +178,11 @@ UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
     
     [self build:&error];
     if (error) {
-        NSLog(@"ERROR: Multipart form body building failed. %@", error.description);
         return nil;
     }
     
-    NSData *result = [self.encodableFormData writePartsToDataWithError:&error];
+    NSData *result = [self.encodableFormData encodeIntoDataWithError:&error];
     if (error) {
-        NSLog(@"ERROR: Multipart form body encoding failed. %@", error.description);
         return nil;
     }
     

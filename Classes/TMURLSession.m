@@ -216,16 +216,17 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
     NSParameterAssert(completionHandler);
 
     TMMultipartEncodedForm *form;
-    NSError *encodingError;
+    // If the requestBody is of type TMMultiPartRequestBodyProtocol we should use `encodeWithError:` to be able to encode into a file in a memory efficient way.
     if ([request.requestBody conformsToProtocol:@protocol(TMMultiPartRequestBodyProtocol)]) {
         id<TMMultiPartRequestBodyProtocol> multiPartBody = (id<TMMultiPartRequestBodyProtocol>)request.requestBody;
+        NSError *encodingError;
         form = [multiPartBody encodeWithError:&encodingError];
         NSAssert(encodingError == nil, @"Failed to encode multipart body request.");
         if (encodingError) {
             form = nil;
         }
     }
-    
+    // If encountered an error, fallback to the old way and pass the whole data in memeory.
     if (!form) {
         NSData *bodyData = [request.requestBody bodyData];
         form = [[TMMultipartEncodedForm alloc] initWithData:bodyData];
