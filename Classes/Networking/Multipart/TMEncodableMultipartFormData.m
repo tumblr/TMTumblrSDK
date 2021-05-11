@@ -46,7 +46,7 @@ NSUInteger const TMMaxBufferSize = 1024;
           contentType:(NSString *)contentType
                 error:(NSError **)error {
 
-    // Is the file name is valid?
+    // Is the file name valid?
     NSString *fileName = fileURL.lastPathComponent;
     if (!(fileName.length > 0)) {
         *error = [[NSError alloc] initWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeFileNameNotValid userInfo:nil];

@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, TMMultipartFormErrorType) {
 /// Creates `multipart/form-data` for uploads. Provides 2 separate ways to encode the parts.
 /// 1. `encodeIntoFileWithURL:` encodes into a file. This is the memory efficient way.
 /// 2. `encodeIntoDataWithError:` encodes into an NSData instance. This is faster, but leads to fatal memory issues if the data is large enough.
-/// The caller party should decide between the 2 according to circumstances. But it is highly recommended that if there are large files involved like videos(>10mb) go with option 2. (Remember, the memory budget of the Share extension is a lot less than the main app.)
+/// The caller party should decide between the 2 according to circumstances. But it is highly recommended that if there are large files involved like videos(>10mb) go with option 1. (Remember, the memory budget of the Share extension is a lot less than the main app.)
 @interface TMEncodableMultipartFormData : TMMultipartPart
 
 /// Total length of the parts in bytes.
@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, TMMultipartFormErrorType) {
            contentType:(nonnull NSString *)contentType
                  error:(NSError **)error;
 
-/// Encodes all appended body parts into a file in the temp directory. This
+/// Encodes all appended body parts into a the file given. 
 /// @param fileURL URL to write form data into.
 /// @param error Any error encountered. Check out `TMMultipartFormErrorType`.
 - (void)encodeIntoFileWithURL:(NSURL *)fileURL error:(NSError **)error;
