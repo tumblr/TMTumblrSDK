@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *fileName;
 @property (nonatomic, copy) NSString *contentType;
-@property (nonatomic) UInt64 contentLength;
+@property (nonatomic) NSUInteger contentLength;
 
 @end
 
@@ -22,7 +22,7 @@
 - (instancetype)initWithName:(NSString *)name
                     fileName:(NSString *)fileName
                  contentType:(NSString *)contentType
-               contentLength:(UInt64)contentLength {
+               contentLength:(NSUInteger)contentLength {
     NSParameterAssert(name);
     NSParameterAssert(contentType);
     self = [super init];

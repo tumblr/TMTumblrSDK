@@ -79,7 +79,7 @@ NSUInteger const TMMaxBufferSize = 1024;
         *error = [[NSError alloc] initWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeFileSizeNotAvailable userInfo:nil];
         return;
     }
-    UInt64 contentLength = fileSizeNumber.longLongValue;
+    NSUInteger contentLength = fileSizeNumber.longLongValue;
     
     // Can we create the input stream?
     NSInputStream *inputStream = [[NSInputStream alloc] initWithURL:fileURL];
@@ -131,7 +131,7 @@ NSUInteger const TMMaxBufferSize = 1024;
 }
 
 - (void)appendInputStream:(NSInputStream *)inputStream
-            contentLength:(UInt64)contentLength
+            contentLength:(NSUInteger)contentLength
                      name:(NSString *)name
                  fileName:(NSString *)fileName
               contentType:(NSString *)contentType {
@@ -140,8 +140,8 @@ NSUInteger const TMMaxBufferSize = 1024;
     [self.parts addObject:part];
 }
 
-- (UInt64)totalContentLength {
-    UInt64 result = 0;
+- (NSUInteger)totalContentLength {
+    NSUInteger result = 0;
     for (id<TMMultipartPartProtocol> part in self.parts) {
         result += part.contentLength;
     }

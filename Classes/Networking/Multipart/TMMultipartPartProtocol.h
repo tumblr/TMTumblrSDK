@@ -9,7 +9,7 @@
 @protocol TMMultipartPartProtocol <NSObject>
 
 /// Total length of the parts in bytes.
-@property (nonatomic, readonly) UInt64 contentLength;
+@property (nonatomic, readonly) NSUInteger contentLength;
 
 /// `name` attribute value from `Content-Disposition` header.
 @property (nonatomic, nonnull, copy, readonly) NSString *name;

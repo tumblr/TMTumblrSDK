@@ -11,7 +11,7 @@
 #import "TMMultipartEncodedForm.h"
 #import "TMMultiPartRequestBodyProtocol.h"
 
-extern UInt64 const TMMultipartFormFileEncodingThreshold;
+extern NSUInteger const TMMultipartFormFileEncodingThreshold;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -56,7 +56,7 @@ __attribute__((objc_subclassing_restricted))
                                parameters:(nonnull NSDictionary *)parameters
                                      keys:(nonnull NSArray <NSString *> *)keys
                            encodeJSONBody:(BOOL)encodeJSONBody
-                    fileEncodingThreshold:(UInt64)fileEncodingThreshold;
+                    fileEncodingThreshold:(NSUInteger)fileEncodingThreshold;
 
 /// Encodes the request body. If the contents are below the `fileEncodingThreshold`,
 /// encoded data will be returned as NSData, otherwise as a temp file pointed by `fileURL`. Check out `TMMultipartEncodedForm`.

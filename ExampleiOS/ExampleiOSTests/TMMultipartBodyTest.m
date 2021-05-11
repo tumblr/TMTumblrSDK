@@ -293,7 +293,7 @@
     XCTAssert([knownMultipartJSONData isEqual:encodedForm.data]);
 }
 
-- (TMMultipartRequestBody *)createRequestBodyWithThreshold:(UInt64)fileEncodingThreshold {
+- (TMMultipartRequestBody *)createRequestBodyWithThreshold:(NSUInteger)fileEncodingThreshold {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 
     NSString *pathToJSONDictionary = [bundle pathForResource:@"json_dictionary" ofType:@"json"];

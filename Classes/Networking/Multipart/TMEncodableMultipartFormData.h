@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, TMMultipartFormErrorType) {
 @interface TMEncodableMultipartFormData : TMMultipartPart
 
 /// Total length of the parts in bytes.
-@property (nonatomic, readonly) UInt64 totalContentLength;
+@property (nonatomic, readonly) NSUInteger totalContentLength;
 
 /// Initializes this `TMEncodableMultipartFormData`
 /// @param fileManager NSFileManager instance to use when encoding the parts into a file.
@@ -73,7 +73,7 @@ typedef NS_ENUM(NSInteger, TMMultipartFormErrorType) {
 /// @param fileName (optional) `filename` attribute value from `Content-Disposition` header.
 /// @param contentType `Content-Type` header value.
 - (void)appendInputStream:(nonnull NSInputStream *)inputStream
-            contentLength:(UInt64)contentLength
+            contentLength:(NSUInteger)contentLength
                      name:(nonnull NSString *)name
                  fileName:(nullable NSString *)fileName
               contentType:(nonnull NSString *)contentType;

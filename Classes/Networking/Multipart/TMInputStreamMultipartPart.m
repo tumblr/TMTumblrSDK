@@ -19,7 +19,7 @@
                                        name:(nonnull NSString *)name
                                    fileName:(nullable NSString *)fileName
                                 contentType:(nonnull NSString *)contentType
-                              contentLength:(UInt64)contentLength {
+                              contentLength:(NSUInteger)contentLength {
     NSParameterAssert(inputStream);
     self = [super initWithName:name fileName:fileName contentType:contentType contentLength:contentLength];
     

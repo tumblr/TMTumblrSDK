@@ -9,7 +9,7 @@
 #import "TMMultipartRequestBody.h"
 #import "TMMultipartConstants.h"
 
-UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
+NSUInteger const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
 
 @interface TMMultipartRequestBody ()
 
@@ -19,7 +19,7 @@ UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
 @property (nonatomic, readonly, nonnull) NSDictionary *parameters;
 @property (nonatomic, readonly, nonnull) NSArray <NSString *> *keys;
 @property (nonatomic) BOOL encodeJSONBody;
-@property (nonatomic) UInt64 fileEncodingThreshold;
+@property (nonatomic) NSUInteger fileEncodingThreshold;
 @property (nonatomic) TMEncodableMultipartFormData *encodableFormData;
 
 @end
@@ -32,7 +32,7 @@ UInt64 const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
                                parameters:(nonnull NSDictionary *)parameters
                                      keys:(nonnull NSArray <NSString *> *)keys
                            encodeJSONBody:(BOOL)encodeJSONBody
-                    fileEncodingThreshold:(UInt64)fileEncodingThreshold {
+                    fileEncodingThreshold:(NSUInteger)fileEncodingThreshold {
     NSParameterAssert(filePaths);
     NSParameterAssert(contentTypes);
     NSParameterAssert(fileNames);

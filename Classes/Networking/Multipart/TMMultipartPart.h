@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nonnull, copy, readonly) NSString *name;
 @property (nonatomic, nullable, copy, readonly) NSString *fileName;
 @property (nonatomic, nonnull, copy, readonly) NSString *contentType;
-@property (nonatomic, readonly) UInt64 contentLength;
+@property (nonatomic, readonly) NSUInteger contentLength;
 
 /**
  *  Initializes an instance of @c TMMultipartPart.
@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nonnull instancetype)initWithName:(nonnull NSString *)name
                             fileName:(nullable NSString *)fileName
                          contentType:(nonnull NSString *)contentType
-                       contentLength:(UInt64)contentLength;
+                       contentLength:(NSUInteger)contentLength;
 
 @end
 

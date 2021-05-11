@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
                                        name:(nonnull NSString *)name
                                    fileName:(nullable NSString *)fileName
                                 contentType:(nonnull NSString *)contentType
-                              contentLength:(UInt64)contentLength;
+                              contentLength:(NSUInteger)contentLength;
 @end
 
 NS_ASSUME_NONNULL_END
