@@ -79,7 +79,7 @@ NSUInteger const TMMaxBufferSize = 1024;
         *error = [[NSError alloc] initWithDomain:TMMultipartFormErrorDomain code:TMMultipartFormErrorTypeFileSizeNotAvailable userInfo:nil];
         return;
     }
-    NSUInteger contentLength = fileSizeNumber.longLongValue;
+    NSUInteger contentLength = fileSizeNumber.unsignedIntegerValue;
     
     // Can we create the input stream?
     NSInputStream *inputStream = [[NSInputStream alloc] initWithURL:fileURL];
