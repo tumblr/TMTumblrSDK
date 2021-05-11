@@ -7,33 +7,32 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TMMultipartPartProtocol.h"
 
-// Represents a single part of a multipart form body.
-__attribute__((objc_subclassing_restricted))
-@interface TMMultipartPart : NSObject
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TMMultipartPart : NSObject <TMMultipartPartProtocol>
+
+@property (nonatomic, nonnull, copy, readonly) NSString *name;
+@property (nonatomic, nullable, copy, readonly) NSString *fileName;
+@property (nonatomic, nonnull, copy, readonly) NSString *contentType;
+@property (nonatomic, readonly) NSUInteger contentLength;
 
 /**
- *  Initializes an instance of @c TMBodyPart.
+ *  Initializes an instance of @c TMMultipartPart.
  *
- *  @param data        The main data of this body part.
  *  @param name        The name of this body part.
  *  @param fileName    The file name from where the data came from.
  *  @param contentType The content type of the data.
+ *  @param contentLength The size of the content in bytes.
  *
- *  @return A new instance of @c TMBodyPart.
+ *  @return A new instance of @c TMMultipartPart.
  */
-- (nonnull instancetype)initWithData:(nonnull NSData *)data
-                                name:(nonnull NSString *)name
+- (nonnull instancetype)initWithName:(nonnull NSString *)name
                             fileName:(nullable NSString *)fileName
-                         contentType:(nonnull NSString *)contentType;
-
-/**
- *  Calculates the data representation of this body part.
- *
- *  @param boundary    The boundary used when constructing the prefix string in the data representation.
- *
- *  @return The data representation of this body part.
- */
-- (nonnull NSData *)dataRepresentationWithBoundary:(nonnull NSString *)boundary;
+                         contentType:(nonnull NSString *)contentType
+                       contentLength:(NSUInteger)contentLength;
 
 @end
+
+NS_ASSUME_NONNULL_END

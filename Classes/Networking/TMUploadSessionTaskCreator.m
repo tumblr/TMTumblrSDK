@@ -49,7 +49,7 @@
 
     NSURLSessionTask *task;
 
-    if (self.bodyData && [self.bodyData writeToURL:self.filePath atomically:YES]) {
+    if ((self.bodyData && [self.bodyData writeToURL:self.filePath atomically:YES]) || !self.bodyData) {
         if (!self.incrementalHandler) {
             task = [self.session uploadTaskWithRequest:self.request
                                               fromFile:self.filePath
@@ -59,15 +59,13 @@
             task = [self.session uploadTaskWithRequest:self.request
                                               fromFile:self.filePath];
         }
-
     }
-    else {
+    else if (self.bodyData) {
         NSLog(@"WARNING: Could not write data to disk, using fromData to initialize upload task.");
         task = [self.session uploadTaskWithRequest:self.request fromData:self.bodyData completionHandler:self.completionHandler];
     }
 
     return task;
-
 }
 
 @end

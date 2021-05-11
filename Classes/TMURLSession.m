@@ -19,7 +19,8 @@
 #import "TMRequestParamaterizer.h"
 #import "TMRequestTransformer.h"
 #import "TMRequestBody.h"
-
+#import "TMMultiPartRequestBodyProtocol.h"
+#import "TMMultipartEncodedForm.h"
 #import "TMUploadSessionTaskCreator.h"
 
 NSString * _Nonnull const TMURLSessionInvalidateApplicationCredentialsNotificationKey = @"TMURLSessionInvalidateApplicationCredentials";
@@ -214,15 +215,27 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
 
     NSParameterAssert(completionHandler);
 
-    NSData *bodyData = [request.requestBody bodyData];
+    TMMultipartEncodedForm *form;
+    // If the requestBody is of type TMMultiPartRequestBodyProtocol we should use `encodeWithError:` to be able to encode into a file in a memory efficient way.
+    if ([request.requestBody conformsToProtocol:@protocol(TMMultiPartRequestBodyProtocol)]) {
+        id<TMMultiPartRequestBodyProtocol> multiPartBody = (id<TMMultiPartRequestBodyProtocol>)request.requestBody;
+        NSError *encodingError;
+        form = [multiPartBody encodeWithError:&encodingError];
+        NSAssert(encodingError == nil, @"Failed to encode multipart body request.");
+        if (encodingError) {
+            form = nil;
+        }
+    }
+    // If encountered an error, fallback to the old way and pass the whole data in memeory.
+    if (!form) {
+        NSData *bodyData = [request.requestBody bodyData];
+        form = [[TMMultipartEncodedForm alloc] initWithData:bodyData];
+    }
 
-    NSString *extension = [NSUUID UUID].UUIDString;
-
-    NSURL *temporaryFileURL = [[NSURL alloc] initFileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:extension]];
-    NSURLSessionTask *task = [[[TMUploadSessionTaskCreator alloc] initWithFilePath:temporaryFileURL
+    NSURLSessionTask *task = [[[TMUploadSessionTaskCreator alloc] initWithFilePath:form.fileURL
                                                                            session:self.session
                                                                            request:[self paramaterizedRequestFromRequest:request]
-                                                                          bodyData:bodyData
+                                                                          bodyData:form.data
                                                                 incrementalHandler:incrementalHandler
                                                                  completionHandler:completionHandler] uploadTask];
     [self.observer addSessionTask:task];

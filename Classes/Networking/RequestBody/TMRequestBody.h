@@ -9,7 +9,7 @@
 /**
  *  Model object that represents an HTTP body.
  */
-@protocol TMRequestBody
+@protocol TMRequestBody <NSObject>
 
 /**
  *  Calculates the data in the HTTP body.

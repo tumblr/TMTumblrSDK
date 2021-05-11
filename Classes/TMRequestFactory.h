@@ -322,6 +322,20 @@ __attribute__((objc_subclassing_restricted))
                                                 requestBody:(nonnull id <TMRequestBody>)multipartRequestBody;
 
 /**
+ *  Creates a new multipart body request to make a new post.
+ *
+ *  @param parameters    Additional parameters for the request.
+ *  @param path                 The path of the URL route on the Tumblr v2 API..
+ *  @param method             The HTTP method of the API request.
+ *  @param multipartRequestBody The request body to attach to this request.
+ *
+ *  @return A new multipart body request that posts a post to a blog.
+ */
+- (nonnull id <TMRequest>)multipartRequestForParameters:(nullable NSDictionary *)parameters
+                                                   path:(nonnull NSString *)path
+                                                 method:(TMHTTPRequestMethod)method
+                                            requestBody:(nonnull id <TMRequestBody>)multipartRequestBody;
+/**
  *  Creates a new request that reblogs a post to a blog.
  *
  *  @param blogName   The blog name to reblog a post to.
