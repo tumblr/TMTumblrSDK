@@ -378,18 +378,13 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
 - (nonnull id <TMRequest>)multipartPostRequestForParameters:(nullable NSDictionary *)parameters
                                                    blogName:(nonnull NSString *)blogName
                                                 requestBody:(nonnull id <TMRequestBody>)multipartRequestBody {
-    return [self multipartRequestForParameters:parameters blogName:blogName method:TMHTTPRequestMethodPOST requestBody:multipartRequestBody];
-}
-
-- (nonnull id <TMRequest>)multipartRequestForParameters:(nullable NSDictionary *)parameters
-                                               blogName:(nonnull NSString *)blogName
-                                                 method:(TMHTTPRequestMethod)method
-                                            requestBody:(nonnull id <TMRequestBody>)multipartRequestBody {
     NSParameterAssert(blogName);
     NSParameterAssert(multipartRequestBody);
-    
+
     NSString * const TMRouteBlogPathPost = @"post";
-    return [self multipartRequestForParameters:parameters path:blogPath(TMRouteBlogPathPost, blogName) method:method requestBody:multipartRequestBody];
+    return [self multipartPostRequestForParameters:parameters path:blogPath(TMRouteBlogPathPost, blogName) requestBody:multipartRequestBody];
+
+
 }
 
 - (nonnull id <TMRequest>)multipartPostRequestForParameters:(nullable NSDictionary *)parameters
