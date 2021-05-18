@@ -59,4 +59,13 @@
     return nil;
 }
 
+- (NSURLSessionUploadTask * _Nullable)backgroundUploadTaskWithRequest:(nonnull id<TMRequest>)request {
+    return nil;
+}
+
+
+- (void)finishTasksAndInvalidate {
+}
+
+
 @end

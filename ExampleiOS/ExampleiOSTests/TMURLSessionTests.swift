@@ -170,7 +170,7 @@ final class TMURLSessionTests: XCTestCase {
     }
 
     func testAdditionalHeadersWork() {
-        let URLSessionManager = TMURLSession(configuration: URLSessionConfiguration.default, applicationCredentials: TMAPIApplicationCredentials(consumerKey: "kenny", consumerSecret: "paul"), userCredentials: TMAPIUserCredentials(token: "token", tokenSecret: "ht"), networkActivityManager: nil, sessionTaskUpdateDelegate: nil, sessionMetricsDelegate: nil, requestTransformer:nil, additionalHeaders: ["kenny": "ios"])
+        let URLSessionManager = TMURLSession(configuration: URLSessionConfiguration.default, applicationCredentials: TMAPIApplicationCredentials(consumerKey: "kenny", consumerSecret: "paul"), userCredentials: TMAPIUserCredentials(token: "token", tokenSecret: "ht"), networkActivityManager: nil, sessionTaskUpdateDelegate: nil, sessionMetricsDelegate: nil, requestTransformer:nil, customURLSessionDataDelegate: nil, additionalHeaders: ["kenny": "ios"])
 
         let task = URLSessionManager.task(with: TMHTTPRequest(urlString: "https://tumblr.com", method: .GET), completionHandler: { (data, response, error) in
 
@@ -203,6 +203,7 @@ final class TMURLSessionTests: XCTestCase {
                                              sessionTaskUpdateDelegate: nil,
                                              sessionMetricsDelegate: nil,
                                              requestTransformer: transformer,
+                                             customURLSessionDataDelegate: nil,
                                              additionalHeaders: nil)
 
         let task = URLSessionManager.task(with: TMHTTPRequest(urlString: "https://tumblr.com", method: .GET), completionHandler: { (data, response, error) in })

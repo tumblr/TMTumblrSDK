@@ -8,6 +8,7 @@
 
 #import "TMMultipartRequestBody.h"
 #import "TMMultipartConstants.h"
+#import "TMMultipartUtil.h"
 
 NSUInteger const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
 
@@ -111,10 +112,7 @@ NSUInteger const TMMultipartFormFileEncodingThreshold = 10 * 1024 * 1024; //10MB
 }
 
 - (NSURL *)doEncodeIntoFileWithError:(NSError **)error {
-    NSURL *tempDirectory = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:TMMultipartFormDirectory];
-    NSString *fileName = [NSUUID UUID].UUIDString;
-    NSURL *fileURL = [tempDirectory URLByAppendingPathComponent:fileName];
-    [[NSFileManager defaultManager] createDirectoryAtURL:tempDirectory withIntermediateDirectories:YES attributes:nil error:error];
+    NSURL *fileURL = [TMMultipartUtil createTempFileWithError:error];
     if (*error) {
         return nil;
     }

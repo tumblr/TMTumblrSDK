@@ -25,6 +25,14 @@
                               progressHandler:(nonnull TMURLSessionRequestProgressHandler)progressHandler
                             completionHandler:(nonnull TMURLSessionRequestCompletionHandler)completionHandler;
 
+
+/**
+ *  Creates an OAuth-signed HTTP session task for the specified URL request object, that is suitable for background uploads.
+ *
+ *  @param request  (Required) An @c TMRequest object that provides the URL, cache policy, request type, body data or body stream, and so on.
+ */
+- (NSURLSessionUploadTask *_Nullable)backgroundUploadTaskWithRequest:(nonnull id <TMRequest>)request;
+
 /**
  *  Creates an OAuth-signed HTTP session task for the specified URL request object, and calls a handler upon completion.
  *
@@ -66,5 +74,9 @@
  */
 - (nonnull instancetype)copyWithNewConfiguration:(nonnull NSURLSessionConfiguration *)configuration;
 
+/**
+ * Once a session is invalidated, new tasks cannot be created in the session, but existing tasks continue until completion. This method returns immediately without waiting for tasks to finish.
+ */
+- (void)finishTasksAndInvalidate;
 
 @end

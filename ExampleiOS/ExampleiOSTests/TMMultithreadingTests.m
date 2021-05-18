@@ -31,6 +31,7 @@
                                                      sessionTaskUpdateDelegate:self
                                                         sessionMetricsDelegate:nil
                                                             requestTransformer:nil
+                                                  customURLSessionDataDelegate:nil
                                                              additionalHeaders:nil];
 
     dispatch_group_t group =  dispatch_group_create();
@@ -80,6 +81,7 @@
                                                      sessionTaskUpdateDelegate:self
                                                         sessionMetricsDelegate:nil
                                                             requestTransformer:nil
+                                                  customURLSessionDataDelegate:nil
                                                              additionalHeaders:nil];
 
     dispatch_group_t group =  dispatch_group_create();

@@ -21,13 +21,12 @@
 
 @implementation TMUploadSessionTaskCreator
 
-- (nonnull instancetype)initWithFilePath:(nonnull NSURL *)filePath
+- (nonnull instancetype)initWithFilePath:(nullable NSURL *)filePath
                                  session:(nonnull NSURLSession *)session
                                  request:(nonnull NSURLRequest *)request
                                 bodyData:(nullable NSData *)bodyData
                       incrementalHandler:(nullable TMURLSessionRequestIncrementedHandler)incrementalHandler
                        completionHandler:(nonnull TMURLSessionRequestCompletionHandler)completionHandler {
-    NSParameterAssert(filePath);
     NSParameterAssert(session);
     NSParameterAssert(request);
     NSParameterAssert(completionHandler);
@@ -49,7 +48,7 @@
 
     NSURLSessionTask *task;
 
-    if ((self.bodyData && [self.bodyData writeToURL:self.filePath atomically:YES]) || !self.bodyData) {
+    if (self.filePath) {
         if (!self.incrementalHandler) {
             task = [self.session uploadTaskWithRequest:self.request
                                               fromFile:self.filePath
@@ -60,7 +59,7 @@
                                               fromFile:self.filePath];
         }
     }
-    else if (self.bodyData) {
+    else {
         NSLog(@"WARNING: Could not write data to disk, using fromData to initialize upload task.");
         task = [self.session uploadTaskWithRequest:self.request fromData:self.bodyData completionHandler:self.completionHandler];
     }

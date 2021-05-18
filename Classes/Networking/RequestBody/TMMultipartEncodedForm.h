@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSData *data;
 
 /// The file that stores the encoded request body.
-@property (nonatomic, readonly, nonnull) NSURL *fileURL;
+@property (nonatomic, readonly, nullable) NSURL *fileURL;
 
 /// Initializes this `TMMultipartEncodedForm`.
 /// @param fileURL The file that stores the encoded request body.
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Initializes this `TMMultipartEncodedForm`. Creates a fileURL in the temp directory.
 /// @param data The encoded data.
-- (instancetype)initWithData:(nullable NSData *)data;
+- (nonnull instancetype)initWithData:(nullable NSData *)data;
 
 @end
 
