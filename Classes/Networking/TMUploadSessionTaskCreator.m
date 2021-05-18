@@ -10,23 +10,23 @@
 
 @interface TMUploadSessionTaskCreator ()
 
-@property (nonatomic, readonly, nonnull) NSURL *filePath;
-@property (nonatomic, readonly, nonnull) NSURLSession *session;
-@property (nonatomic, readonly, nonnull) NSURLRequest *request;
-@property (nonatomic, readonly, nullable) NSData *bodyData;
-@property (nonatomic, copy, readonly, nullable) TMURLSessionRequestIncrementedHandler incrementalHandler;
-@property (nonatomic, copy, readonly, nonnull) TMURLSessionRequestCompletionHandler completionHandler;
+@property (nonatomic, readonly) NSURL *filePath;
+@property (nonatomic, readonly) NSURLSession *session;
+@property (nonatomic, readonly) NSURLRequest *request;
+@property (nonatomic, readonly) NSData *bodyData;
+@property (nonatomic, copy, readonly) TMURLSessionRequestIncrementedHandler incrementalHandler;
+@property (nonatomic, copy, readonly) TMURLSessionRequestCompletionHandler completionHandler;
 
 @end
 
 @implementation TMUploadSessionTaskCreator
 
-- (nonnull instancetype)initWithFilePath:(nullable NSURL *)filePath
-                                 session:(nonnull NSURLSession *)session
-                                 request:(nonnull NSURLRequest *)request
-                                bodyData:(nullable NSData *)bodyData
-                      incrementalHandler:(nullable TMURLSessionRequestIncrementedHandler)incrementalHandler
-                       completionHandler:(nonnull TMURLSessionRequestCompletionHandler)completionHandler {
+- (nonnull instancetype)initWithFilePath:(NSURL *)filePath
+                                 session:(NSURLSession *)session
+                                 request:(NSURLRequest *)request
+                                bodyData:(NSData *)bodyData
+                      incrementalHandler:(TMURLSessionRequestIncrementedHandler)incrementalHandler
+                       completionHandler:(TMURLSessionRequestCompletionHandler)completionHandler {
     NSParameterAssert(session);
     NSParameterAssert(request);
     NSParameterAssert(completionHandler);
