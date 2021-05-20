@@ -79,4 +79,10 @@
  */
 - (void)finishTasksAndInvalidate;
 
+/**
+ * Cancels all outstanding tasks and then invalidates the session. Once invalidated, references to the delegate and callback objects are broken. After invalidation, session objects cannot be reused.
+ * To allow outstanding tasks to run until completion, call `finishTasksAndInvalidate` instead.
+ */
+- (void)invalidateAndCancel;
+
 @end

@@ -328,4 +328,9 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
 - (void)finishTasksAndInvalidate {
     [self.session finishTasksAndInvalidate];
 }
+
+- (void)invalidateAndCancel {
+    [self.session invalidateAndCancel];
+}
+
 @end

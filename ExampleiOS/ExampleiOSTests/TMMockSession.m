@@ -67,5 +67,9 @@
 - (void)finishTasksAndInvalidate {
 }
 
+- (void)invalidateAndCancel {
+}
+
+
 
 @end
