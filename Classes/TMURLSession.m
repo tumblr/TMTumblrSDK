@@ -37,6 +37,8 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
 @property (nullable, nonatomic, readonly) id <TMSessionTaskUpdateDelegate> sessionTaskUpdateDelegate;
 
 @property (nonatomic, nonnull, readonly) TMConcreteURLSessionTaskDelegate *concreteURLSessionTaskDelegate;
+@property (nonatomic, nullable, weak, readonly) id <NSURLSessionDataDelegate> customURLSessionDataDelegate;
+
 @property (nonatomic, nullable, weak, readonly) id <TMNetworkActivityIndicatorManager> networkActivityManager;
 @property (nonatomic, nullable, weak, readonly) id <TMURLSessionMetricsDelegate> sessionMetricsDelegate;
 @property (nonatomic, nullable, weak, readonly) id <TMRequestTransformer> requestTransformer;
@@ -61,6 +63,7 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
              sessionTaskUpdateDelegate:nil
                 sessionMetricsDelegate:nil
                     requestTransformer:nil
+          customURLSessionDataDelegate:nil
                      additionalHeaders:nil];
 }
 
@@ -71,6 +74,7 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
                     sessionTaskUpdateDelegate:(nullable id <TMSessionTaskUpdateDelegate>)sessionTaskUpdateDelegate
                        sessionMetricsDelegate:(nullable id <TMURLSessionMetricsDelegate>)sessionMetricsDelegate
                            requestTransformer:(nullable id <TMRequestTransformer>)requestTransformer
+                 customURLSessionDataDelegate:(nullable id <NSURLSessionDataDelegate>)customURLSessionDataDelegate
                             additionalHeaders:(nullable NSDictionary *)additionalHeaders {
     NSParameterAssert(configuration);
 
@@ -83,6 +87,7 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
         _requestTransformer = requestTransformer;
         _applicationCredentials = applicationCredentials;
         _userCredentials = userCredentials;
+        _customURLSessionDataDelegate = customURLSessionDataDelegate;
         _concreteURLSessionTaskDelegate = [[TMConcreteURLSessionTaskDelegate alloc] initWithSessionMetricsDelegate:sessionMetricsDelegate];
         _networkActivityManager = networkActivityManager;
         
@@ -144,7 +149,7 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
 #pragma mark - TMURLSession
 
 - (nonnull NSURLSessionTask *)dataTaskWithRequest:(nonnull id <TMRequest>)request
-                                    completionHandler:(nonnull TMURLSessionRequestCompletionHandler)completionHandler {
+                                completionHandler:(nonnull TMURLSessionRequestCompletionHandler)completionHandler {
     NSParameterAssert(request);
     NSParameterAssert(completionHandler);
 
@@ -207,6 +212,30 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
     }
 }
 
+- (NSURLSessionUploadTask *)backgroundUploadTaskWithRequest:(id <TMRequest>)request {
+    NSParameterAssert(request);
+    
+    TMMultipartEncodedForm *form;
+    // If the requestBody is of type TMMultiPartRequestBodyProtocol we should use `encodeWithError:` to be able to encode into a file in a memory efficient way.
+    if ([request.requestBody conformsToProtocol:@protocol(TMMultiPartRequestBodyProtocol)]) {
+        id<TMMultiPartRequestBodyProtocol> multiPartBody = (id<TMMultiPartRequestBodyProtocol>)request.requestBody;
+        NSError *encodingError;
+        form = [multiPartBody encodeWithError:&encodingError];
+        if (encodingError || !form) {
+            NSAssert(NO, @"Failed to encode multipart body request.");
+            return nil;
+        }
+    } else {
+        NSAssert(NO, @"Background tasks must be encoded into a file.");
+        return nil;
+    }
+    
+    // For the background tasks we need to have the request encoded into a file.
+    NSURLSessionUploadTask *task = [self.session uploadTaskWithRequest:[self paramaterizedRequestFromRequest:request]
+                                                              fromFile:form.fileURL];
+    return task;
+}
+
 - (nonnull NSURLSessionTask *)uploadRequest:(nonnull id <TMRequest>)request
                          incrementalHandler:(nullable TMURLSessionRequestIncrementedHandler)incrementalHandler
                             progressHandler:(nullable TMURLSessionRequestProgressHandler)progressHandler
@@ -226,7 +255,7 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
             form = nil;
         }
     }
-    // If encountered an error, fallback to the old way and pass the whole data in memeory.
+    // If encountered an error, try putting the whole data in the upload file at once.
     if (!form) {
         NSData *bodyData = [request.requestBody bodyData];
         form = [[TMMultipartEncodedForm alloc] initWithData:bodyData];
@@ -279,7 +308,7 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
 
 - (nonnull NSURLSession *)sessionWithConfiguration:(NSURLSessionConfiguration *)configuration {
     return [NSURLSession sessionWithConfiguration:configuration
-                                         delegate:self.concreteURLSessionTaskDelegate
+                                         delegate:self.customURLSessionDataDelegate ?: self.concreteURLSessionTaskDelegate
                                     delegateQueue:nil];
 }
 
@@ -292,7 +321,16 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
                              sessionTaskUpdateDelegate:self.sessionTaskUpdateDelegate
                                 sessionMetricsDelegate:self.sessionMetricsDelegate
                                     requestTransformer:self.requestTransformer
+                          customURLSessionDataDelegate:self.customURLSessionDataDelegate
                                      additionalHeaders:self.additionalHeaders];
+}
+
+- (void)finishTasksAndInvalidate {
+    [self.session finishTasksAndInvalidate];
+}
+
+- (void)invalidateAndCancel {
+    [self.session invalidateAndCancel];
 }
 
 @end

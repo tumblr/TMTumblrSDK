@@ -57,6 +57,7 @@ __attribute__((objc_subclassing_restricted))
                     sessionTaskUpdateDelegate:(nullable id <TMSessionTaskUpdateDelegate>)sessionTaskUpdateDelegate
                        sessionMetricsDelegate:(nullable id <TMURLSessionMetricsDelegate>)sessionMetricsDelegate
                            requestTransformer:(nullable id <TMRequestTransformer>)requestTransformer
+                 customURLSessionDataDelegate:(nullable id <NSURLSessionDataDelegate>)customURLSessionDataDelegate
                             additionalHeaders:(nullable NSDictionary *)additionalHeaders  NS_DESIGNATED_INITIALIZER;
 
 /**

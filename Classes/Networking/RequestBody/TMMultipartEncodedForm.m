@@ -6,7 +6,7 @@
 //
 
 #import "TMMultipartEncodedForm.h"
-#import "TMMultipartConstants.h"
+#import "TMMultipartUtil.h"
 
 @interface TMMultipartEncodedForm ()
 
@@ -36,8 +36,12 @@
     
     if (self) {
         _data = data;
-        NSString *extension = [NSUUID UUID].UUIDString;
-        _fileURL = [[NSURL alloc] initFileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@", TMMultipartFormDirectory, extension]]];
+        if (_data) {
+            _fileURL = [TMMultipartUtil createTempFileWithError:nil];
+            if (_fileURL && ![_data writeToURL:_fileURL atomically:YES]) {
+                _fileURL = nil;
+            }
+        }
     }
     
     return self;

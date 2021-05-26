@@ -10,24 +10,23 @@
 
 @interface TMUploadSessionTaskCreator ()
 
-@property (nonatomic, readonly, nonnull) NSURL *filePath;
-@property (nonatomic, readonly, nonnull) NSURLSession *session;
-@property (nonatomic, readonly, nonnull) NSURLRequest *request;
-@property (nonatomic, readonly, nullable) NSData *bodyData;
-@property (nonatomic, copy, readonly, nullable) TMURLSessionRequestIncrementedHandler incrementalHandler;
-@property (nonatomic, copy, readonly, nonnull) TMURLSessionRequestCompletionHandler completionHandler;
+@property (nonatomic, readonly) NSURL *filePath;
+@property (nonatomic, readonly) NSURLSession *session;
+@property (nonatomic, readonly) NSURLRequest *request;
+@property (nonatomic, readonly) NSData *bodyData;
+@property (nonatomic, copy, readonly) TMURLSessionRequestIncrementedHandler incrementalHandler;
+@property (nonatomic, copy, readonly) TMURLSessionRequestCompletionHandler completionHandler;
 
 @end
 
 @implementation TMUploadSessionTaskCreator
 
-- (nonnull instancetype)initWithFilePath:(nonnull NSURL *)filePath
-                                 session:(nonnull NSURLSession *)session
-                                 request:(nonnull NSURLRequest *)request
-                                bodyData:(nullable NSData *)bodyData
-                      incrementalHandler:(nullable TMURLSessionRequestIncrementedHandler)incrementalHandler
-                       completionHandler:(nonnull TMURLSessionRequestCompletionHandler)completionHandler {
-    NSParameterAssert(filePath);
+- (nonnull instancetype)initWithFilePath:(NSURL *)filePath
+                                 session:(NSURLSession *)session
+                                 request:(NSURLRequest *)request
+                                bodyData:(NSData *)bodyData
+                      incrementalHandler:(TMURLSessionRequestIncrementedHandler)incrementalHandler
+                       completionHandler:(TMURLSessionRequestCompletionHandler)completionHandler {
     NSParameterAssert(session);
     NSParameterAssert(request);
     NSParameterAssert(completionHandler);
@@ -49,7 +48,7 @@
 
     NSURLSessionTask *task;
 
-    if ((self.bodyData && [self.bodyData writeToURL:self.filePath atomically:YES]) || !self.bodyData) {
+    if (self.filePath) {
         if (!self.incrementalHandler) {
             task = [self.session uploadTaskWithRequest:self.request
                                               fromFile:self.filePath
@@ -60,7 +59,7 @@
                                               fromFile:self.filePath];
         }
     }
-    else if (self.bodyData) {
+    else {
         NSLog(@"WARNING: Could not write data to disk, using fromData to initialize upload task.");
         task = [self.session uploadTaskWithRequest:self.request fromData:self.bodyData completionHandler:self.completionHandler];
     }

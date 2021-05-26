@@ -40,6 +40,7 @@ NSString * const ConsumerSecret = @"";
                                      sessionTaskUpdateDelegate:nil
                                         sessionMetricsDelegate:nil
                                             requestTransformer:nil
+                                  customURLSessionDataDelegate:nil
                                              additionalHeaders:nil];
 
     self.authenticator = [[TMOAuthAuthenticator alloc] initWithSession:self.session

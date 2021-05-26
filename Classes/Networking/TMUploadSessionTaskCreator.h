@@ -33,7 +33,7 @@ __attribute__((objc_subclassing_restricted))
  *
  *  @return A new instance of @c TMUploadSessionTaskCreator that can now make a new upload task.
  */
-- (nonnull instancetype)initWithFilePath:(nonnull NSURL *)filePath
+- (nonnull instancetype)initWithFilePath:(nullable NSURL *)filePath
                                  session:(nonnull NSURLSession *)session
                                  request:(nonnull NSURLRequest *)request
                                 bodyData:(nullable NSData *)bodyData
