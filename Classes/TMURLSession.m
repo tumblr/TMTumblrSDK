@@ -225,7 +225,12 @@ NSString * _Nonnull const TMURLSessionInvalidateHTTPHeadersNotificationKey = @"T
             NSAssert(NO, @"Failed to encode multipart body request.");
             return nil;
         }
-    } else {
+    }
+    else {
+        NSData *bodyData = [request.requestBody bodyData];
+        form = [[TMMultipartEncodedForm alloc] initWithData:bodyData];
+    }
+    if (!form.fileURL) {
         NSAssert(NO, @"Background tasks must be encoded into a file.");
         return nil;
     }
