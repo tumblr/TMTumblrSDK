@@ -10,7 +10,7 @@ import Foundation
 import TMTumblrSDK
 import XCTest
 
-final class TMURLSessionTests: XCTestCase {
+final class TMURLSessionTests: TMBaseTestCase {
     
     let URLSessionManager = TMURLSession(configuration: URLSessionConfiguration.default, applicationCredentials: TMAPIApplicationCredentials(consumerKey: "kenny", consumerSecret: "paul"), userCredentials: TMAPIUserCredentials(token: "token'", tokenSecret: "ht"))
 
@@ -214,6 +214,27 @@ final class TMURLSessionTests: XCTestCase {
         }
 
         XCTAssertEqual(headers, ["tape": "tumblr"])
+    }
+    
+    func testUploadBackgroundTaskWithSinglePartRequest() throws {
+        let sessionManager = TMURLSession(configuration: URLSessionConfiguration.default,
+                                          applicationCredentials: TMAPIApplicationCredentials(consumerKey: "kenny", consumerSecret: "paul"),
+                                          userCredentials: TMAPIUserCredentials(token: "token", tokenSecret: "ht"),
+                                          networkActivityManager: nil,
+                                          sessionTaskUpdateDelegate: nil,
+                                          sessionMetricsDelegate: nil,
+                                          requestTransformer: nil,
+                                          customURLSessionDataDelegate: nil,
+                                          additionalHeaders: nil)
+        
+        let request = TMAPIRequest(baseURL: try XCTUnwrap(URL(string: "http://test.com")),
+                     method: .POST,
+                     path: "path",
+                     queryParameters: nil,
+                     requestBody: TMQueryEncodedRequestBody(queryDictionary: [String: AnyObject]()),
+                     additionalHeaders: nil)
+        let task = sessionManager.backgroundUploadTask(with: request)
+        XCTAssertNotNil(task)
     }
 
     // MARK: -
