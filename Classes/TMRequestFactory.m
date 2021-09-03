@@ -204,6 +204,23 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
     return [self requestWithPath:TMRoutePathUserInfo method:TMHTTPRequestMethodGET queryParameters:nil];
 }
 
+- (nonnull id <TMRequest>)userDeleteRequestWithEmail:(NSString *)email password:(NSString *)password {
+    NSString * const TMRoutePathUserInfo = @"user";
+
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    if (email) {
+        mutableParameters[@"email"] = email;
+    }
+    if (password) {
+        mutableParameters[@"password"] = password;
+    }
+
+    return [self requestWithPath:TMRoutePathUserInfo
+                           method:TMHTTPRequestMethodDELETE
+                  queryParameters:nil
+                      requestBody:[[TMFormEncodedRequestBody alloc] initWithBody:[mutableParameters copy]]];
+}
+
 - (nonnull id <TMRequest>)likesRequestWithParameters:(nonnull NSDictionary *)parameters {
     NSParameterAssert(parameters);
 

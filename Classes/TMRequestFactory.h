@@ -161,6 +161,13 @@ __attribute__((objc_subclassing_restricted))
 - (nonnull id <TMRequest>)userInfoRequest;
 
 /**
+ *  Creates a URL request for making a DELETE request to the API's 'v2/user' route
+ *
+ *  @return A new account deletion API request.
+ */
+- (nonnull id <TMRequest>)userDeleteRequestWithEmail:(nullable NSString *)email password:(nullable NSString *)password;
+
+/**
  *  Creates a request that retrieves the authenticated user's likes.
  *
  *  @param parameters The parameters to pass to the user's like API endpoint.
