@@ -106,7 +106,7 @@
 
     NSDictionary *requestParameters = @{ @"oauth_verifier" : URLParameters[@"oauth_verifier"] };
 
-    NSString *urlString = @"https://www.tumblr.com/oauth/access_token";
+    NSString *urlString = @"https://www.tumblr.com/api/v2/oauth2/token";
 
     TMFormEncodedRequestBody *requestBody = [[TMFormEncodedRequestBody alloc] initWithBody:requestParameters];
 

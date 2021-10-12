@@ -13,7 +13,7 @@
 
 NSString * const urlScheme = @"ello";
 NSString * const authorizeURLString = @"https://www.tumblr.com/oauth/request_token?oauth_callback=ello%3A%2F%2Ftumblr-authorize";
-NSString * const accessTokenURLString = @"https://www.tumblr.com/oauth/access_token";
+NSString * const accessTokenURLString = @"https://www.tumblr.com/api/v2/oauth2/token";
 
 @interface TMOAuthAuthenticatorTests : XCTestCase <TMOAuthAuthenticatorDelegate>
 

@@ -71,7 +71,7 @@ typedef void (^TMCompletionHandler)(NSData *, NSURLResponse *, NSError *);
         return [parameters copy];
     }();
 
-    TMHTTPRequest *HTTPRequest = [[TMHTTPRequest alloc] initWithURLString:@"https://www.tumblr.com/oauth/access_token"
+    TMHTTPRequest *HTTPRequest = [[TMHTTPRequest alloc] initWithURLString:@"https://www.tumblr.com/api/v2/oauth2/token"
                                                                    method:TMHTTPRequestMethodPOST
                                                         additionalHeaders:@{@"User-Agent": [TMSDKUserAgent userAgentHeaderString]}
                                                               requestBody:[[TMQueryEncodedRequestBody alloc] initWithQueryDictionary:requestParameters]
