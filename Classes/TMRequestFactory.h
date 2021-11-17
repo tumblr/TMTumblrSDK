@@ -254,6 +254,17 @@ __attribute__((objc_subclassing_restricted))
  *
  *  @return A new request to fetch a permalink content package.
  */
+- (nonnull id <TMRequest>)permalinkRequestWithBlogName:(nonnull NSString *)blogName postID:(nonnull NSString *)postID;
+
+/*
+ *  Creates a request that fetches an individual blog post and its associated recommended content.
+ *
+ *  @param blogName     The name of the blog to which the post belongs.
+ *  @param postID       The ID of the post in question.
+ *  @param queryParameters Query parameters to pass to the permalink endpoint.
+ *
+ *  @return A new request to fetch a permalink content package.
+ */
 - (nonnull id <TMRequest>)permalinkRequestWithBlogName:(nonnull NSString *)blogName postID:(nonnull NSString *)postID queryParameters:(nullable NSDictionary *)queryParameters;
 
 /*
@@ -261,6 +272,17 @@ __attribute__((objc_subclassing_restricted))
  *
  *  @param blogUUID     The UUID of the blog to which the post belongs.
  *  @param postID       The ID of the post in question.
+ *
+ *  @return A new request to fetch a permalink content package.
+ */
+- (nonnull id <TMRequest>)permalinkRequestWithBlogUUID:(nonnull NSString *)blogUUID postID:(nonnull NSString *)postID;
+
+/*
+ *  Creates a request that fetches an individual blog post and its associated recommended content.
+ *
+ *  @param blogName     The UUID of the blog to which the post belongs.
+ *  @param postID       The ID of the post in question.
+ *  @param queryParameters Query parameters to pass to the permalink endpoint.
  *
  *  @return A new request to fetch a permalink content package.
  */

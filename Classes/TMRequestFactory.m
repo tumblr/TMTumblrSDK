@@ -276,6 +276,11 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
     return [self requestWithPath:blogPath(TMRouteBlogPathPosts, blogName) method:TMHTTPRequestMethodGET queryParameters:[mutableParameters copy]];
 }
 
+- (nonnull id <TMRequest>)permalinkRequestWithBlogName:(nonnull NSString *)blogName postID:(nonnull NSString *)postID {
+
+    return [self permalinkRequestWithBlogName:blogName postID:postID queryParameters:nil];
+}
+
 - (nonnull id <TMRequest>)permalinkRequestWithBlogName:(nonnull NSString *)blogName postID:(nonnull NSString *)postID queryParameters:(nullable NSDictionary *)queryParameters {
     NSParameterAssert(blogName);
     NSParameterAssert(postID);
@@ -283,11 +288,15 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
     return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/posts/%@/permalink", fullBlogName(blogName), postID] method:TMHTTPRequestMethodGET queryParameters:queryParameters];
 }
 
-- (nonnull id <TMRequest>)permalinkRequestWithBlogUUID:(nonnull NSString *)blogUUID postID:(nonnull NSString *)postID queryParameters:(nullable NSDictionary *)queryParameters {
+- (nonnull id <TMRequest>)permalinkRequestWithBlogUUID:(nonnull NSString *)blogUUID postID:(nonnull NSString *)postID {
+    return [self permalinkRequestWithBlogUUID:blogUUID postID:postID queryParameters:nil];
+}
+
+- (nonnull id <TMRequest>)permalinkRequestWithBlogUUID:(nonnull NSString *)blogUUID postID:(nonnull NSString *)postID queryParameters:(nullable NSDictionary *)queryParameters  {
     NSParameterAssert(blogUUID);
     NSParameterAssert(postID);
 
-    return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/posts/%@/permalink", TMURLEncode(blogUUID), postID] method:TMHTTPRequestMethodGET queryParameters:queryParameters];
+    return [self requestWithPath:[NSString stringWithFormat:@"blog/%@/posts/%@/permalink", TMURLEncode(blogUUID), postID] method:TMHTTPRequestMethodGET queryParameters:nil];
 }
 
 - (nonnull id <TMRequest>)postRequestWithBlogName:(nonnull NSString *)blogName type:(nullable NSString *)type parameters:(nonnull NSDictionary *)parameters {
