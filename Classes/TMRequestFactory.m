@@ -130,6 +130,12 @@ NSString * _Nonnull const TMRequestFactoryInvalidateBaseURLNotificationKey = @"T
 
 }
 
+- (nonnull id <TMRequest>)unfollowRequest:(nonnull NSString *)blogName {
+    
+    return [self unfollowRequest:blogName
+                      parameters:nil];
+}
+
 - (nonnull id <TMRequest>)unfollowRequest:(nonnull NSString *)blogName parameters:(nullable NSDictionary *)parameters {
     NSParameterAssert(blogName);
     NSMutableDictionary *requestParameters = [NSMutableDictionary dictionary];

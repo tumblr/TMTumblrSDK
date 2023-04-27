@@ -148,6 +148,15 @@ __attribute__((objc_subclassing_restricted))
  *  Creates a new request that unfollows a blog.
  *
  *  @param blogName The blog we want to unfollow.
+ *
+ *  @return A new request that allows you to unfollow a blog.
+ */
+- (nonnull id <TMRequest>)unfollowRequest:(nonnull NSString *)blogName;
+
+/**
+ *  Creates a new request that unfollows a blog.
+ *
+ *  @param blogName The blog we want to unfollow.
  *  @param parameters Additional parameters on the request.
  *
  *  @return A new request that allows you to unfollow a blog.
