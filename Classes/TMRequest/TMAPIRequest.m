@@ -123,7 +123,9 @@
     NSURL *URL = [NSURL URLWithString:baseURLStringPlusPath];
 
     if (!URL) {
-        @throw [[NSException alloc] initWithName:@"Illegal URL or Path exception" reason:@"The URL generated was nil." userInfo:nil];
+        @throw [[NSException alloc] initWithName:@"Illegal URL or Path exception"
+                                          reason:[NSString stringWithFormat: @"The URL generated was nil. baseURLStringPlusPath: %@", baseURLStringPlusPath]
+                                        userInfo:nil];
     }
 
     return URL;
