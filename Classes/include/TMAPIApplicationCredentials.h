@@ -5,7 +5,7 @@
 //  Created by Bryan Irace on 9/22/14.
 //  Copyright (c) 2014 Tumblr. All rights reserved.
 //
-
+@import Foundation;
 /**
  *  Model object reprenting a Tumblr API application’s credentials (OAuth consumer key and secret).
  */

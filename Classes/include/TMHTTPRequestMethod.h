@@ -5,7 +5,7 @@
 //  Created by Kenny Ackerson on 11/18/15.
 //
 //
-
+@import Foundation;
 /**
  *  Enum representing request methods.
  */
