@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMURLSessionTaskObserver.h>
+#import "TMURLSessionTaskObserver.h"
 
 @interface TMURLSessionTaskObserverTests : XCTestCase
 

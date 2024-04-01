@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMConcreteURLSessionTaskDelegate.h>
+#import "TMConcreteURLSessionTaskDelegate.h"
 #import "TMFakeMetricsDelegate.h"
 
 @interface TMConcreteURLSessionTaskDelegateTests : XCTestCase

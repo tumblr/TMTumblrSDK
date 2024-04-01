@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMNetworkActivityVisiblityCounter.h>
+#import "TMNetworkActivityVisiblityCounter.h"
 
 @interface TMVisiblityCounterTests : XCTestCase <TMNetworkActivityIndicatorManager>
 

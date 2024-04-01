@@ -7,12 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMRequestParamaterizer.h>
-#import <TMTumblrSDK/TMHTTPRequest.h>
-#import <TMTumblrSDK/TMHTTPRequestMethod.h>
-#import <TMTumblrSDK/TMJSONEncodedRequestBody.h>
-#import <TMTumblrSDK/TMFormEncodedRequestBody.h>
-#import <TMTumblrSDK/TMSDKFunctions.h>
+#import "TMRequestParamaterizer.h"
+#import "TMHTTPRequest.h"
+#import "TMHTTPRequestMethod.h"
+#import "TMJSONEncodedRequestBody.h"
+#import "TMFormEncodedRequestBody.h"
+#import "TMSDKFunctions.h"
 
 @interface TMRequestParamaterizerTests : XCTestCase
 

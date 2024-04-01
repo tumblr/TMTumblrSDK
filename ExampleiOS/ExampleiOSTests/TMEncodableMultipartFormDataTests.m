@@ -8,9 +8,10 @@
 
 #import <XCTest/XCTest.h>
 #import "TMBaseTestCase.h"
-#import <TMTumblrSDK/TMMultipartRequestBody.h>
-#import <TMTumblrSDK/TMEncodableMultipartFormData.h>
-#import <TMTumblrSDK/TMMultipartConstants.h>
+#import "TMMultipartRequestBody.h"
+#import "TMEncodableMultipartFormData.h"
+#import "TMMultipartConstants.h"
+#import "NSBundle+Current.h"
 
 @interface TMEncodableMultipartFormDataTests : TMBaseTestCase
 
@@ -19,7 +20,7 @@
 @implementation TMEncodableMultipartFormDataTests
 
 - (void)testWriteMultipleEncodedBodyPartsToDisk {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
     TMEncodableMultipartFormData *form = [[TMEncodableMultipartFormData alloc] initWithFileManager:[NSFileManager defaultManager] boundary:TMMultipartBoundary];
 
     [form appendData:[@"The quick brown fox jumps over the lazy dog." dataUsingEncoding:NSUTF8StringEncoding] name:@"latinAlphabetData" fileName:@"testFilename" contentType:@"plain/text"];

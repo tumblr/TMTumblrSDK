@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/NSURLRequest+TMTumblrSDK.h>
+#import "NSURLRequest+TMTumblrSDK.h"
 
 @interface NSURL_TumblrTests : XCTestCase
 

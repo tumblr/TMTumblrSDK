@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMHTTPRequest.h>
+#import "TMHTTPRequest.h"
 
 @interface TMHTTPRequestTests : XCTestCase
 

@@ -6,21 +6,29 @@ import PackageDescription
 let package = Package(
     name: "TMTumblrSDK",
     platforms: [
-        .iOS(.v12)
+        .iOS(.v14)
     ],
     products: [
         .library(
             name: "TMTumblrSDK",
-            targets: ["TMTumblrSDK"]),
+            targets: ["TMTumblrSDK", "TMTumblrSDKTests"]),
     ],
     targets: [
         .target(
             name: "TMTumblrSDK",
-            path: "Classes"),
-        // TODO: - The tests are mixed objc/swift so we need to split them to make this work
+            path: "Classes"
+        ),
         .testTarget(
             name: "TMTumblrSDKTests",
-            dependencies: ["TMTumblrSDK"]
+            dependencies: ["TMTumblrSDK"],
+            path: "ExampleiOS/ExampleiOSTests",
+            exclude: ["info.plist"],
+            resources: [.process("Resources")]
         ),
+//        .testTarget(
+//            name: "TMTumblrSDKSwiftTests",
+//            dependencies: ["TMTumblrSDK"],
+//            path: "ExampleiOS/ExampleiOSTestsSwift"
+//        )
     ]
 )

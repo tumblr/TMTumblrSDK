@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMFunctions.h>
+#import "TMFunctions.h"
 
 @interface TMFunctionsTests : XCTestCase
 

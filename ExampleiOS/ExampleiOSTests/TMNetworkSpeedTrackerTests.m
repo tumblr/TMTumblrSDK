@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMNetworkSpeedTracker.h>
+#import "TMNetworkSpeedTracker.h"
 
 // Testable tracker for receiving multiple events
 @interface TestableTMNetworkSpeedTracker : TMNetworkSpeedTracker

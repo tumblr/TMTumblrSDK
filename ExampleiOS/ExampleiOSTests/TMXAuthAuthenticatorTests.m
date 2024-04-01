@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMXAuthAuthenticator.h>
-#import <TMTumblrSDK/TMURLSession.h>
+#import "TMXAuthAuthenticator.h"
+#import "TMURLSession.h"
 
 @interface TMXAuthAuthenticatorTests : XCTestCase
 

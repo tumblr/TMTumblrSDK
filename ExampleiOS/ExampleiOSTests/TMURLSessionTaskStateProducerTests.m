@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMURLSessionTaskStateProducer.h>
+#import "TMURLSessionTaskStateProducer.h"
 
 @interface TMURLSessionTaskStateProducerTests : XCTestCase
 

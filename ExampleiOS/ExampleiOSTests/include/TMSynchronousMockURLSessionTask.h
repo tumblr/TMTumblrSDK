@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <TMTumblrSDK/TMURLSessionCallbacks.h>
+#import "TMURLSessionCallbacks.h"
 
 /**
  A mock @c NSURLSessionTask that executes the request's completion block synchronously with dummy response data so we can
