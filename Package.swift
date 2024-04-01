@@ -11,7 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "TMTumblrSDK",
-            targets: ["TMTumblrSDK", "TMTumblrSDKTests"]),
+            targets: ["TMTumblrSDK", "TMTumblrSDKTests", "TMTumblrSDKSwiftTests"]),
     ],
     targets: [
         .target(
@@ -25,10 +25,10 @@ let package = Package(
             exclude: ["info.plist"],
             resources: [.process("Resources")]
         ),
-//        .testTarget(
-//            name: "TMTumblrSDKSwiftTests",
-//            dependencies: ["TMTumblrSDK"],
-//            path: "ExampleiOS/ExampleiOSTestsSwift"
-//        )
+        .testTarget(
+            name: "TMTumblrSDKSwiftTests",
+            dependencies: ["TMTumblrSDK"],
+            path: "ExampleiOS/ExampleiOSTestsSwift"
+        )
     ]
 )
