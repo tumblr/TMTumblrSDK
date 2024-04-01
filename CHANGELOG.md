@@ -1,5 +1,9 @@
 # TMTumblrSDK changelog
 
+## 2.2
+
+* Adds support for Swift Package Manager
+
 ## 2.1
 
 * Adds a method for creating video posts from either embed codes or web URLs
