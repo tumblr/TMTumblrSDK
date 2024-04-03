@@ -30,4 +30,22 @@
     return self;
 }
 
+- (nonnull instancetype)initWithJSONArray:(nullable NSArray<NSDictionary<NSString *, id> *> *)JSONArray
+                               successful:(BOOL)successful
+                      responseDescription:(nullable NSString *)responseDescription
+                                    error:(nullable NSError *)error
+                                APIErrors:(nonnull NSArray <id <TMAPIError>> *)APIErrors
+                               statusCode:(NSInteger)statusCode {
+    self = [super init];
+    if (self) {
+        _JSONArray = [JSONArray copy];
+        _successful = successful;
+        _responseDescription = [responseDescription copy];
+        _APIErrors = [APIErrors copy];
+        _error = error;
+        _statusCode = statusCode;
+    }
+    return self;
+}
+
 @end

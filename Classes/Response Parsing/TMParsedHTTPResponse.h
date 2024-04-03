@@ -35,10 +35,19 @@ __attribute__((objc_subclassing_restricted))
                                      APIErrors:(nonnull NSArray <id <TMAPIError>> *)APIErrors
                                     statusCode:(NSInteger)statusCode;
 
+- (nonnull instancetype)initWithJSONArray:(nullable NSArray<NSDictionary<NSString *, id> *> *)JSONArray
+                               successful:(BOOL)successful
+                      responseDescription:(nullable NSString *)responseDescription
+                                    error:(nullable NSError *)error
+                                APIErrors:(nonnull NSArray <id <TMAPIError>> *)APIErrors
+                               statusCode:(NSInteger)statusCode;
+
 /**
  *  The dictionary of the JSON returned from the API.
  */
 @property (nonatomic, nullable, copy, readonly) NSDictionary<NSString *, id> *JSONDictionary;
+
+@property (nonatomic, nullable, copy, readonly) NSArray<NSDictionary<NSString *, id> *> *JSONArray;
 
 /**
  *  Whether or not the HTTP requst was successful or not.
