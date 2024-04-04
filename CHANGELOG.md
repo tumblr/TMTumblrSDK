@@ -1,6 +1,6 @@
 # TMTumblrSDK changelog
 
-## 2.2
+## 6.1.2
 
 * Adds support for Swift Package Manager
 
