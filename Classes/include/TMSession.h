@@ -5,11 +5,12 @@
 //  Created by Kenny Ackerson on 10/26/16.
 //
 //
-
+#import "TMURLSessionCallbacks.h"
 @protocol TMRequest;
 @class TMNetworkActivityVisiblityCounter;
 
 @protocol TMSession
+
 
 /**
  *  Creates an OAuth-signed HTTP session task for the specified URL request object, and calls a handler upon completion.

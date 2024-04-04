@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMURLEncoding.h>
+#import "TMURLEncoding.h"
 
 @interface TMURLEncodingTests : XCTestCase
 

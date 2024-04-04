@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMOAuth.h>
+#import "TMOAuth.h"
 
 @interface TMOAuthTests : XCTestCase
 

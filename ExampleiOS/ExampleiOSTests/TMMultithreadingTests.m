@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMURLSession.h>
-#import <TMTumblrSDK/TMHTTPRequest.h>
+#import "TMURLSession.h"
+#import "TMHTTPRequest.h"
 
 @interface TMMultithreadingTests : XCTestCase <TMNetworkActivityIndicatorManager, TMSessionTaskUpdateDelegate>
 

@@ -159,8 +159,9 @@
 
     TMAPIErrorFactory *errorFactory = [[TMAPIErrorFactory alloc] initWithErrors:errors legacy:YES];
 
-    NSArray <id <TMAPIError>> *parseErrors = responseParser.parse.APIErrors;
-    NSArray <id <TMAPIError>> *errorFactoryErrors = [errorFactory APIErrors];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    NSArray <id <TMAPIError>> *parseErrors = [responseParser.parse.APIErrors sortedArrayUsingDescriptors:@[sortDescriptor]];
+    NSArray <id <TMAPIError>> *errorFactoryErrors = [[errorFactory APIErrors] sortedArrayUsingDescriptors:@[sortDescriptor]];
 
     XCTAssert(parseErrors.count == errorFactoryErrors.count);
 
@@ -189,8 +190,9 @@
 
     TMAPIErrorFactory *errorFactory = [[TMAPIErrorFactory alloc] initWithErrors:@[errors] legacy:YES];
 
-    NSArray <id <TMAPIError>> *parseErrors = responseParser.parse.APIErrors;
-    NSArray <id <TMAPIError>> *errorFactoryErrors = [errorFactory APIErrors];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    NSArray <id <TMAPIError>> *parseErrors = [responseParser.parse.APIErrors sortedArrayUsingDescriptors:@[sortDescriptor]];
+    NSArray <id <TMAPIError>> *errorFactoryErrors = [[errorFactory APIErrors] sortedArrayUsingDescriptors:@[sortDescriptor]];
 
     XCTAssert(parseErrors.count == errorFactoryErrors.count);
 

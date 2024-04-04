@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMAPIUserCredentials.h>
+#import "TMAPIUserCredentials.h"
 
 @interface TMAPIUserCredentialsTests : XCTestCase
 

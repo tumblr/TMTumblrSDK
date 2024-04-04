@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMBasicBaseURLDeterminer.h>
+#import "TMBasicBaseURLDeterminer.h"
 
 @interface TMBasicBaseURLDeterminerTests : XCTestCase
 

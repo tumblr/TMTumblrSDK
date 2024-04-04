@@ -7,7 +7,7 @@
 //
 
 #import "TMMockSession.h"
-#import <TMTumblrSDK/TMRequest.h>
+#import "TMRequest.h"
 #import "TMNetworkActivityVisiblityCounter.h"
 
 @interface TMMockSession ()

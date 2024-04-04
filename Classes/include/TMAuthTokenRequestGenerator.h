@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <TMTumblrSDK/TMHTTPRequest.h>
+#import "TMHTTPRequest.h"
 
 /**
  Generates a request for the auth token required by the OAuth flow
