@@ -34,6 +34,14 @@
 }
 
 - (void)testBadPath {
+    if (@available(iOS 17.0, *)) {
+        /**
+         https://developer.apple.com/documentation/foundation/nsurl/1572047-urlwithstring
+
+         For apps linked on or after iOS 17 and aligned OS versions, NSURL parsing has updated from the obsolete RFC 1738/1808 parsing to the same RFC 3986 parsing as NSURLComponents. This unifies the parsing behaviors of the NSURL and NSURLComponents APIs. Now, NSURL automatically percent- and IDNA-encodes invalid characters to help create a valid URL.
+         */
+        return;
+    }
     XCTAssertThrows([[TMAPIRequest alloc] initWithBaseURL:[NSURL URLWithString:@""]
                                                    method:TMHTTPRequestMethodGET
                                                      path:@"/?/&/C://hello%"
