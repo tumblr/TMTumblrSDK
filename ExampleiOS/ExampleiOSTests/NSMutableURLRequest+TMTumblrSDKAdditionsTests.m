@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/NSMutableURLRequest+TMTumblrSDKAdditions.h>
+#import "NSMutableURLRequest+TMTumblrSDKAdditions.h"
 
 @interface NSMutableURLRequest_TMTumblrSDKAdditionsTests : XCTestCase
 

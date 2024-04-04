@@ -7,20 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26B085A12BB4A851004635FE /* TMURLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B085A02BB4A851004635FE /* TMURLSessionTests.swift */; };
+		26B085AE2BB4A89F004635FE /* multipartTextData in Resources */ = {isa = PBXBuildFile; fileRef = 26B085A42BB4A89E004635FE /* multipartTextData */; };
+		26B085AF2BB4A89F004635FE /* json_data in Resources */ = {isa = PBXBuildFile; fileRef = 26B085A52BB4A89E004635FE /* json_data */; };
+		26B085B02BB4A89F004635FE /* diff.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B085A62BB4A89E004635FE /* diff.png */; };
+		26B085B12BB4A89F004635FE /* multiple_files in Resources */ = {isa = PBXBuildFile; fileRef = 26B085A72BB4A89E004635FE /* multiple_files */; };
+		26B085B22BB4A89F004635FE /* spaces.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B085A82BB4A89E004635FE /* spaces.png */; };
+		26B085B32BB4A89F004635FE /* json_dictionary.json in Resources */ = {isa = PBXBuildFile; fileRef = 26B085A92BB4A89E004635FE /* json_dictionary.json */; };
+		26B085B42BB4A89F004635FE /* code.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B085AA2BB4A89F004635FE /* code.png */; };
+		26B085B52BB4A89F004635FE /* multiple_files_different_key in Resources */ = {isa = PBXBuildFile; fileRef = 26B085AB2BB4A89F004635FE /* multiple_files_different_key */; };
+		26B085B62BB4A89F004635FE /* multiple_files_three in Resources */ = {isa = PBXBuildFile; fileRef = 26B085AC2BB4A89F004635FE /* multiple_files_three */; };
+		26B085B72BB4A89F004635FE /* data in Resources */ = {isa = PBXBuildFile; fileRef = 26B085AD2BB4A89F004635FE /* data */; };
+		26B085BA2BB4A8B9004635FE /* TMRequestMethodHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B085B82BB4A8B9004635FE /* TMRequestMethodHelpersTests.swift */; };
+		26B085BB2BB4A8B9004635FE /* TMRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B085B92BB4A8B9004635FE /* TMRequestBodyTests.swift */; };
+		26B085BE2BBB09C4004635FE /* NSBundle+Current.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B085BD2BBB09C4004635FE /* NSBundle+Current.m */; };
 		2D8396641EE0767C0003A80F /* TMBasicBaseURLDeterminerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8396631EE0767C0003A80F /* TMBasicBaseURLDeterminerTests.m */; };
 		2DBBAF3F1E9EC5E40029437A /* TMOAuthAuthenticatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBBAF3E1E9EC5E40029437A /* TMOAuthAuthenticatorTests.m */; };
 		2DEC2FF21EBA336B00A1BDEA /* TMMockSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEC2FF11EBA336B00A1BDEA /* TMMockSession.m */; };
 		2DEC2FF51EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEC2FF41EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m */; };
 		2DEC2FFF1EBBA1AD00A1BDEA /* TMAuthTokenRequestGeneratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEC2FFE1EBBA1AC00A1BDEA /* TMAuthTokenRequestGeneratorTests.m */; };
 		4EF02C761FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF02C751FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m */; };
-		4F1262741ECB51BC0039DD2F /* json_dictionary.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F1262731ECB51BC0039DD2F /* json_dictionary.json */; };
-		4F1262761ECB542E0039DD2F /* json_data in Resources */ = {isa = PBXBuildFile; fileRef = 4F1262751ECB52FD0039DD2F /* json_data */; };
-		4F42407C1E7870440025D05A /* TMRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F42407B1E7870440025D05A /* TMRequestBodyTests.swift */; };
 		5504733998EABA0CAC4A36D1 /* Pods_ExampleiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FF02AD3DC60E53A04343321 /* Pods_ExampleiOSTests.framework */; };
 		58B1FF699B7A5ADD949BC11C /* Pods_ExampleiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF14371B0CC595789B748CB /* Pods_ExampleiOS.framework */; };
 		7236C8821FCE0DBE00D0BE36 /* TMOAuthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7236C8811FCE0DBE00D0BE36 /* TMOAuthTests.m */; };
 		914A992426442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 914A992326442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m */; };
-		914A99342645B199009CBFA3 /* multipartTextData in Resources */ = {isa = PBXBuildFile; fileRef = 914A99332645B199009CBFA3 /* multipartTextData */; };
 		914A9BBE2649AB74009CBFA3 /* TMBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 914A9BBD2649AB74009CBFA3 /* TMBaseTestCase.m */; };
 		B901B72F1C3DC99B007691FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B72E1C3DC99B007691FA /* main.m */; };
 		B901B7321C3DC99B007691FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B901B7311C3DC99B007691FA /* AppDelegate.m */; };
@@ -42,24 +52,15 @@
 		B98885831D0CB090008B9B07 /* TMSDKFunctionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B98885821D0CB090008B9B07 /* TMSDKFunctionsTests.m */; };
 		B98885851D0CB47B008B9B07 /* TMFunctionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B98885841D0CB47B008B9B07 /* TMFunctionsTests.m */; };
 		B99900D31D0F789D00558ADA /* TMHTTPRequestMethodTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B99900D21D0F789D00558ADA /* TMHTTPRequestMethodTests.m */; };
-		B99900D71D0F7EE600558ADA /* TMURLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99900D61D0F7EE600558ADA /* TMURLSessionTests.swift */; };
 		B99900D91D0F840D00558ADA /* TMMultipartBodyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B99900D81D0F840D00558ADA /* TMMultipartBodyTest.m */; };
-		B99900DB1D0F848D00558ADA /* code.png in Resources */ = {isa = PBXBuildFile; fileRef = B99900DA1D0F848D00558ADA /* code.png */; };
 		B99900DF1D0F893700558ADA /* TMURLSessionTaskObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B99900DE1D0F893700558ADA /* TMURLSessionTaskObserverTests.m */; };
 		B9ACAA941C617E20009B9BDF /* TMMultithreadingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9ACAA931C617E20009B9BDF /* TMMultithreadingTests.m */; };
-		B9BA142D1D10CCD000D90A89 /* diff.png in Resources */ = {isa = PBXBuildFile; fileRef = B9BA142C1D10CCD000D90A89 /* diff.png */; };
 		B9BA14311D10D04500D90A89 /* TMXAuthAuthenticatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BA14301D10D04500D90A89 /* TMXAuthAuthenticatorTests.m */; };
 		B9BA14371D10D34700D90A89 /* TMAuthenticationResponseProcessorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BA14361D10D34700D90A89 /* TMAuthenticationResponseProcessorTests.m */; };
 		B9BA14391D10DB5E00D90A89 /* TMURLEncodingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BA14381D10DB5E00D90A89 /* TMURLEncodingTests.m */; };
 		B9BCB91F1DCB8AC4006E8BCD /* TMFakeMetricsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BCB91E1DCB8AC4006E8BCD /* TMFakeMetricsDelegate.m */; };
 		B9C29ADB1D14A5510063FBEB /* TMAPIClientCallbackConverterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9C29ADA1D14A5510063FBEB /* TMAPIClientCallbackConverterTests.m */; };
-		B9C49C4A1DB69EFD00972A8A /* TMRequestMethodHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C49C491DB69EFD00972A8A /* TMRequestMethodHelpersTests.swift */; };
 		B9D27E5E1D0F938A00A2E95E /* TMHTTPRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D27E5D1D0F938A00A2E95E /* TMHTTPRequestTests.m */; };
-		B9D27E601D0F946F00A2E95E /* spaces.png in Resources */ = {isa = PBXBuildFile; fileRef = B9D27E5F1D0F946F00A2E95E /* spaces.png */; };
-		B9DB2DE51DAFFD7B006AD175 /* multiple_files in Resources */ = {isa = PBXBuildFile; fileRef = B9DB2DE41DAFFD2F006AD175 /* multiple_files */; };
-		B9DB2DE71DAFFDEC006AD175 /* data in Resources */ = {isa = PBXBuildFile; fileRef = B9DB2DE61DAFFDEC006AD175 /* data */; };
-		B9DB2DE91DAFFFD6006AD175 /* multiple_files_different_key in Resources */ = {isa = PBXBuildFile; fileRef = B9DB2DE81DAFFFD6006AD175 /* multiple_files_different_key */; };
-		B9DB2DEB1DAFFFF8006AD175 /* multiple_files_three in Resources */ = {isa = PBXBuildFile; fileRef = B9DB2DEA1DAFFFF8006AD175 /* multiple_files_three */; };
 		B9E6BCCF1D0B3A720049C88E /* TMAPIApplicationCredentialsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E6BCCE1D0B3A720049C88E /* TMAPIApplicationCredentialsTests.m */; };
 		B9E6BCD11D0B3C840049C88E /* TMAPIUserCredentialsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E6BCD01D0B3C840049C88E /* TMAPIUserCredentialsTests.m */; };
 		B9E6BCD31D0B402F0049C88E /* TMSDKUserAgentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E6BCD21D0B402F0049C88E /* TMSDKUserAgentTests.m */; };
@@ -81,24 +82,37 @@
 /* Begin PBXFileReference section */
 		0FF02AD3DC60E53A04343321 /* Pods_ExampleiOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleiOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BB76FF8F728C16CEAEFFAE /* Pods-ExampleiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleiOS/Pods-ExampleiOS.release.xcconfig"; sourceTree = "<group>"; };
+		26B0859E2BB4A833004635FE /* TMMockSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMMockSession.h; path = include/TMMockSession.h; sourceTree = "<group>"; };
+		26B0859F2BB4A83E004635FE /* TMSynchronousMockURLSessionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMSynchronousMockURLSessionTask.h; path = include/TMSynchronousMockURLSessionTask.h; sourceTree = "<group>"; };
+		26B085A02BB4A851004635FE /* TMURLSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TMURLSessionTests.swift; path = ExampleiOSTestsSwift/TMURLSessionTests.swift; sourceTree = SOURCE_ROOT; };
+		26B085A22BB4A894004635FE /* ExampleiOSTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ExampleiOSTests-Bridging-Header.h"; path = "include/ExampleiOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		26B085A32BB4A894004635FE /* TMBaseTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMBaseTestCase.h; path = include/TMBaseTestCase.h; sourceTree = "<group>"; };
+		26B085A42BB4A89E004635FE /* multipartTextData */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = multipartTextData; path = Resources/multipartTextData; sourceTree = "<group>"; };
+		26B085A52BB4A89E004635FE /* json_data */ = {isa = PBXFileReference; lastKnownFileType = file; name = json_data; path = Resources/json_data; sourceTree = "<group>"; };
+		26B085A62BB4A89E004635FE /* diff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = diff.png; path = Resources/diff.png; sourceTree = "<group>"; };
+		26B085A72BB4A89E004635FE /* multiple_files */ = {isa = PBXFileReference; lastKnownFileType = file; name = multiple_files; path = Resources/multiple_files; sourceTree = "<group>"; };
+		26B085A82BB4A89E004635FE /* spaces.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spaces.png; path = Resources/spaces.png; sourceTree = "<group>"; };
+		26B085A92BB4A89E004635FE /* json_dictionary.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = json_dictionary.json; path = Resources/json_dictionary.json; sourceTree = "<group>"; };
+		26B085AA2BB4A89F004635FE /* code.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = code.png; path = Resources/code.png; sourceTree = "<group>"; };
+		26B085AB2BB4A89F004635FE /* multiple_files_different_key */ = {isa = PBXFileReference; lastKnownFileType = file; name = multiple_files_different_key; path = Resources/multiple_files_different_key; sourceTree = "<group>"; };
+		26B085AC2BB4A89F004635FE /* multiple_files_three */ = {isa = PBXFileReference; lastKnownFileType = file; name = multiple_files_three; path = Resources/multiple_files_three; sourceTree = "<group>"; };
+		26B085AD2BB4A89F004635FE /* data */ = {isa = PBXFileReference; lastKnownFileType = file; name = data; path = Resources/data; sourceTree = "<group>"; };
+		26B085B82BB4A8B9004635FE /* TMRequestMethodHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TMRequestMethodHelpersTests.swift; path = ExampleiOSTestsSwift/TMRequestMethodHelpersTests.swift; sourceTree = SOURCE_ROOT; };
+		26B085B92BB4A8B9004635FE /* TMRequestBodyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TMRequestBodyTests.swift; path = ExampleiOSTestsSwift/TMRequestBodyTests.swift; sourceTree = SOURCE_ROOT; };
+		26B085BC2BB4A996004635FE /* TMFakeMetricsDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TMFakeMetricsDelegate.h; path = include/TMFakeMetricsDelegate.h; sourceTree = "<group>"; };
+		26B085BD2BBB09C4004635FE /* NSBundle+Current.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Current.m"; sourceTree = "<group>"; };
+		26B085BF2BBB09CA004635FE /* NSBundle+Current.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSBundle+Current.h"; path = "include/NSBundle+Current.h"; sourceTree = "<group>"; };
 		2D8396631EE0767C0003A80F /* TMBasicBaseURLDeterminerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMBasicBaseURLDeterminerTests.m; sourceTree = "<group>"; };
 		2DBBAF3E1E9EC5E40029437A /* TMOAuthAuthenticatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMOAuthAuthenticatorTests.m; sourceTree = "<group>"; };
-		2DEC2FF01EBA336B00A1BDEA /* TMMockSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMMockSession.h; sourceTree = "<group>"; };
 		2DEC2FF11EBA336B00A1BDEA /* TMMockSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMMockSession.m; sourceTree = "<group>"; };
-		2DEC2FF31EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMSynchronousMockURLSessionTask.h; sourceTree = "<group>"; };
 		2DEC2FF41EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMSynchronousMockURLSessionTask.m; sourceTree = "<group>"; };
 		2DEC2FFE1EBBA1AC00A1BDEA /* TMAuthTokenRequestGeneratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAuthTokenRequestGeneratorTests.m; sourceTree = "<group>"; };
 		2E30B1AA52F4A5DF6989226C /* Pods-ExampleiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleiOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleiOSTests/Pods-ExampleiOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		4EF02C751FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMNetworkSpeedTrackerTests.m; sourceTree = "<group>"; };
-		4F1262731ECB51BC0039DD2F /* json_dictionary.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = json_dictionary.json; sourceTree = "<group>"; };
-		4F1262751ECB52FD0039DD2F /* json_data */ = {isa = PBXFileReference; lastKnownFileType = file; path = json_data; sourceTree = "<group>"; };
-		4F42407B1E7870440025D05A /* TMRequestBodyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMRequestBodyTests.swift; sourceTree = "<group>"; };
 		7236C8811FCE0DBE00D0BE36 /* TMOAuthTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMOAuthTests.m; sourceTree = "<group>"; };
 		881E033CC768127BD368A833 /* Pods-ExampleiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleiOS/Pods-ExampleiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		914A992326442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMEncodableMultipartFormDataTests.m; sourceTree = "<group>"; };
-		914A99332645B199009CBFA3 /* multipartTextData */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = multipartTextData; sourceTree = "<group>"; };
 		914A9BBD2649AB74009CBFA3 /* TMBaseTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMBaseTestCase.m; sourceTree = "<group>"; };
-		914A9BC12649AC10009CBFA3 /* TMBaseTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMBaseTestCase.h; sourceTree = "<group>"; };
 		B901B72A1C3DC99B007691FA /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B901B72E1C3DC99B007691FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B901B7301C3DC99B007691FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -125,26 +139,15 @@
 		B98885821D0CB090008B9B07 /* TMSDKFunctionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMSDKFunctionsTests.m; sourceTree = "<group>"; };
 		B98885841D0CB47B008B9B07 /* TMFunctionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMFunctionsTests.m; sourceTree = "<group>"; };
 		B99900D21D0F789D00558ADA /* TMHTTPRequestMethodTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHTTPRequestMethodTests.m; sourceTree = "<group>"; };
-		B99900D41D0F7EE400558ADA /* ExampleiOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ExampleiOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		B99900D61D0F7EE600558ADA /* TMURLSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMURLSessionTests.swift; sourceTree = "<group>"; };
 		B99900D81D0F840D00558ADA /* TMMultipartBodyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMMultipartBodyTest.m; sourceTree = "<group>"; };
-		B99900DA1D0F848D00558ADA /* code.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = code.png; sourceTree = "<group>"; };
 		B99900DE1D0F893700558ADA /* TMURLSessionTaskObserverTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMURLSessionTaskObserverTests.m; sourceTree = "<group>"; };
 		B9ACAA931C617E20009B9BDF /* TMMultithreadingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMMultithreadingTests.m; sourceTree = "<group>"; };
-		B9BA142C1D10CCD000D90A89 /* diff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diff.png; sourceTree = "<group>"; };
 		B9BA14301D10D04500D90A89 /* TMXAuthAuthenticatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMXAuthAuthenticatorTests.m; sourceTree = "<group>"; };
 		B9BA14361D10D34700D90A89 /* TMAuthenticationResponseProcessorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAuthenticationResponseProcessorTests.m; sourceTree = "<group>"; };
 		B9BA14381D10DB5E00D90A89 /* TMURLEncodingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMURLEncodingTests.m; sourceTree = "<group>"; };
-		B9BCB91D1DCB8AC4006E8BCD /* TMFakeMetricsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMFakeMetricsDelegate.h; sourceTree = "<group>"; };
 		B9BCB91E1DCB8AC4006E8BCD /* TMFakeMetricsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMFakeMetricsDelegate.m; sourceTree = "<group>"; };
 		B9C29ADA1D14A5510063FBEB /* TMAPIClientCallbackConverterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIClientCallbackConverterTests.m; sourceTree = "<group>"; };
-		B9C49C491DB69EFD00972A8A /* TMRequestMethodHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMRequestMethodHelpersTests.swift; sourceTree = "<group>"; };
 		B9D27E5D1D0F938A00A2E95E /* TMHTTPRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHTTPRequestTests.m; sourceTree = "<group>"; };
-		B9D27E5F1D0F946F00A2E95E /* spaces.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spaces.png; sourceTree = "<group>"; };
-		B9DB2DE41DAFFD2F006AD175 /* multiple_files */ = {isa = PBXFileReference; lastKnownFileType = file; path = multiple_files; sourceTree = "<group>"; };
-		B9DB2DE61DAFFDEC006AD175 /* data */ = {isa = PBXFileReference; lastKnownFileType = file; path = data; sourceTree = "<group>"; };
-		B9DB2DE81DAFFFD6006AD175 /* multiple_files_different_key */ = {isa = PBXFileReference; lastKnownFileType = file; path = multiple_files_different_key; sourceTree = "<group>"; };
-		B9DB2DEA1DAFFFF8006AD175 /* multiple_files_three */ = {isa = PBXFileReference; lastKnownFileType = file; path = multiple_files_three; sourceTree = "<group>"; };
 		B9E6BCCE1D0B3A720049C88E /* TMAPIApplicationCredentialsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIApplicationCredentialsTests.m; sourceTree = "<group>"; };
 		B9E6BCD01D0B3C840049C88E /* TMAPIUserCredentialsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAPIUserCredentialsTests.m; sourceTree = "<group>"; };
 		B9E6BCD21D0B402F0049C88E /* TMSDKUserAgentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMSDKUserAgentTests.m; sourceTree = "<group>"; };
@@ -187,9 +190,11 @@
 		2DEC2FEF1EBA333E00A1BDEA /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				2DEC2FF01EBA336B00A1BDEA /* TMMockSession.h */,
+				26B085BF2BBB09CA004635FE /* NSBundle+Current.h */,
+				26B085BD2BBB09C4004635FE /* NSBundle+Current.m */,
+				26B0859E2BB4A833004635FE /* TMMockSession.h */,
 				2DEC2FF11EBA336B00A1BDEA /* TMMockSession.m */,
-				2DEC2FF31EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.h */,
+				26B0859F2BB4A83E004635FE /* TMSynchronousMockURLSessionTask.h */,
 				2DEC2FF41EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m */,
 			);
 			name = Helpers;
@@ -243,7 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				2DEC2FEF1EBA333E00A1BDEA /* Helpers */,
-				B99900D61D0F7EE600558ADA /* TMURLSessionTests.swift */,
+				26B085A02BB4A851004635FE /* TMURLSessionTests.swift */,
 				B9E6BCD41D0B422F0049C88E /* NSURL+TumblrTests.m */,
 				B901B7471C3DC99B007691FA /* TMVisiblityCounterTests.m */,
 				B930CF821C57EDDB000E69E8 /* TMURLSessionTaskStateProducerTests.m */,
@@ -263,9 +268,9 @@
 				B98885821D0CB090008B9B07 /* TMSDKFunctionsTests.m */,
 				B98885841D0CB47B008B9B07 /* TMFunctionsTests.m */,
 				B99900D21D0F789D00558ADA /* TMHTTPRequestMethodTests.m */,
-				B99900D41D0F7EE400558ADA /* ExampleiOSTests-Bridging-Header.h */,
 				B99900D81D0F840D00558ADA /* TMMultipartBodyTest.m */,
-				914A9BC12649AC10009CBFA3 /* TMBaseTestCase.h */,
+				26B085A22BB4A894004635FE /* ExampleiOSTests-Bridging-Header.h */,
+				26B085A32BB4A894004635FE /* TMBaseTestCase.h */,
 				914A9BBD2649AB74009CBFA3 /* TMBaseTestCase.m */,
 				914A992326442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m */,
 				B9C29ADA1D14A5510063FBEB /* TMAPIClientCallbackConverterTests.m */,
@@ -274,23 +279,23 @@
 				B9BA14301D10D04500D90A89 /* TMXAuthAuthenticatorTests.m */,
 				B9BA14381D10DB5E00D90A89 /* TMURLEncodingTests.m */,
 				B9D27E5D1D0F938A00A2E95E /* TMHTTPRequestTests.m */,
-				B9BA142C1D10CCD000D90A89 /* diff.png */,
-				B99900DA1D0F848D00558ADA /* code.png */,
-				914A99332645B199009CBFA3 /* multipartTextData */,
-				B9DB2DE81DAFFFD6006AD175 /* multiple_files_different_key */,
-				B9DB2DE41DAFFD2F006AD175 /* multiple_files */,
-				B9DB2DE61DAFFDEC006AD175 /* data */,
-				B9DB2DEA1DAFFFF8006AD175 /* multiple_files_three */,
-				B9D27E5F1D0F946F00A2E95E /* spaces.png */,
-				4F1262731ECB51BC0039DD2F /* json_dictionary.json */,
-				4F1262751ECB52FD0039DD2F /* json_data */,
+				26B085AA2BB4A89F004635FE /* code.png */,
+				26B085AD2BB4A89F004635FE /* data */,
+				26B085A62BB4A89E004635FE /* diff.png */,
+				26B085A52BB4A89E004635FE /* json_data */,
+				26B085A92BB4A89E004635FE /* json_dictionary.json */,
+				26B085AB2BB4A89F004635FE /* multiple_files_different_key */,
+				26B085AC2BB4A89F004635FE /* multiple_files_three */,
+				26B085A42BB4A89E004635FE /* multipartTextData */,
+				26B085A72BB4A89E004635FE /* multiple_files */,
+				26B085A82BB4A89E004635FE /* spaces.png */,
 				B9BA14361D10D34700D90A89 /* TMAuthenticationResponseProcessorTests.m */,
 				B9415D6F1D13763000F80E01 /* TMAllSystemTests.m */,
 				B9415D731D13844500F80E01 /* TMRequestFactoryTests.m */,
 				B94DC9F91D3E90F5005FB76E /* TMAPIErrorFactoryTests.m */,
 				B94DC9FD1D3EB4AC005FB76E /* TMLegacyAPIErrorTests.m */,
-				B9C49C491DB69EFD00972A8A /* TMRequestMethodHelpersTests.swift */,
-				4F42407B1E7870440025D05A /* TMRequestBodyTests.swift */,
+				26B085B92BB4A8B9004635FE /* TMRequestBodyTests.swift */,
+				26B085B82BB4A8B9004635FE /* TMRequestMethodHelpersTests.swift */,
 				2DEC2FFE1EBBA1AC00A1BDEA /* TMAuthTokenRequestGeneratorTests.m */,
 				2D8396631EE0767C0003A80F /* TMBasicBaseURLDeterminerTests.m */,
 				4EF02C751FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m */,
@@ -302,7 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				B963CB341C5BF0F100D0447D /* TMConcreteURLSessionTaskDelegateTests.m */,
-				B9BCB91D1DCB8AC4006E8BCD /* TMFakeMetricsDelegate.h */,
+				26B085BC2BB4A996004635FE /* TMFakeMetricsDelegate.h */,
 				B9BCB91E1DCB8AC4006E8BCD /* TMFakeMetricsDelegate.m */,
 			);
 			name = Delegation;
@@ -416,16 +421,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				914A99342645B199009CBFA3 /* multipartTextData in Resources */,
-				B9DB2DE91DAFFFD6006AD175 /* multiple_files_different_key in Resources */,
-				B9DB2DE51DAFFD7B006AD175 /* multiple_files in Resources */,
-				B9DB2DE71DAFFDEC006AD175 /* data in Resources */,
-				B9BA142D1D10CCD000D90A89 /* diff.png in Resources */,
-				B9D27E601D0F946F00A2E95E /* spaces.png in Resources */,
-				B99900DB1D0F848D00558ADA /* code.png in Resources */,
-				4F1262761ECB542E0039DD2F /* json_data in Resources */,
-				B9DB2DEB1DAFFFF8006AD175 /* multiple_files_three in Resources */,
-				4F1262741ECB51BC0039DD2F /* json_dictionary.json in Resources */,
+				26B085B62BB4A89F004635FE /* multiple_files_three in Resources */,
+				26B085B42BB4A89F004635FE /* code.png in Resources */,
+				26B085B12BB4A89F004635FE /* multiple_files in Resources */,
+				26B085B02BB4A89F004635FE /* diff.png in Resources */,
+				26B085AF2BB4A89F004635FE /* json_data in Resources */,
+				26B085AE2BB4A89F004635FE /* multipartTextData in Resources */,
+				26B085B22BB4A89F004635FE /* spaces.png in Resources */,
+				26B085B32BB4A89F004635FE /* json_dictionary.json in Resources */,
+				26B085B72BB4A89F004635FE /* data in Resources */,
+				26B085B52BB4A89F004635FE /* multiple_files_different_key in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +526,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26B085BE2BBB09C4004635FE /* NSBundle+Current.m in Sources */,
 				B98876421CD8233000132FB0 /* TMRequestParamaterizerTests.m in Sources */,
 				B99900D91D0F840D00558ADA /* TMMultipartBodyTest.m in Sources */,
 				B9E6BCD11D0B3C840049C88E /* TMAPIUserCredentialsTests.m in Sources */,
@@ -528,10 +534,10 @@
 				B99900D31D0F789D00558ADA /* TMHTTPRequestMethodTests.m in Sources */,
 				B9415D741D13844500F80E01 /* TMRequestFactoryTests.m in Sources */,
 				B9BA14311D10D04500D90A89 /* TMXAuthAuthenticatorTests.m in Sources */,
+				26B085BA2BB4A8B9004635FE /* TMRequestMethodHelpersTests.swift in Sources */,
 				B921553F1CD1054500A13BB8 /* TMResponseParserTests.m in Sources */,
 				B98885811D0C9420008B9B07 /* TMAPIRequestTests.m in Sources */,
 				B9E6BCD91D0B46970049C88E /* TMRequestBodiesTests.m in Sources */,
-				B99900D71D0F7EE600558ADA /* TMURLSessionTests.swift in Sources */,
 				B94DC9FA1D3E90F5005FB76E /* TMAPIErrorFactoryTests.m in Sources */,
 				B9BA14371D10D34700D90A89 /* TMAuthenticationResponseProcessorTests.m in Sources */,
 				B98885851D0CB47B008B9B07 /* TMFunctionsTests.m in Sources */,
@@ -539,7 +545,6 @@
 				B9E6BCCF1D0B3A720049C88E /* TMAPIApplicationCredentialsTests.m in Sources */,
 				914A9BBE2649AB74009CBFA3 /* TMBaseTestCase.m in Sources */,
 				B930CF831C57EDDB000E69E8 /* TMURLSessionTaskStateProducerTests.m in Sources */,
-				B9C49C4A1DB69EFD00972A8A /* TMRequestMethodHelpersTests.swift in Sources */,
 				B9D27E5E1D0F938A00A2E95E /* TMHTTPRequestTests.m in Sources */,
 				B9E6BCD71D0B449E0049C88E /* NSMutableURLRequest+TMTumblrSDKAdditionsTests.m in Sources */,
 				2DEC2FF21EBA336B00A1BDEA /* TMMockSession.m in Sources */,
@@ -548,6 +553,8 @@
 				4EF02C761FE9BC8600DECADB /* TMNetworkSpeedTrackerTests.m in Sources */,
 				B9BA14391D10DB5E00D90A89 /* TMURLEncodingTests.m in Sources */,
 				B9E6BCD31D0B402F0049C88E /* TMSDKUserAgentTests.m in Sources */,
+				26B085BB2BB4A8B9004635FE /* TMRequestBodyTests.swift in Sources */,
+				26B085A12BB4A851004635FE /* TMURLSessionTests.swift in Sources */,
 				B9415D701D13763000F80E01 /* TMAllSystemTests.m in Sources */,
 				2DEC2FF51EBA3FEC00A1BDEA /* TMSynchronousMockURLSessionTask.m in Sources */,
 				B9C29ADB1D14A5510063FBEB /* TMAPIClientCallbackConverterTests.m in Sources */,
@@ -559,7 +566,6 @@
 				B9BCB91F1DCB8AC4006E8BCD /* TMFakeMetricsDelegate.m in Sources */,
 				B94DC9FE1D3EB4AC005FB76E /* TMLegacyAPIErrorTests.m in Sources */,
 				B94DC9FC1D3EA72F005FB76E /* TMResponseParserErrorTests.m in Sources */,
-				4F42407C1E7870440025D05A /* TMRequestBodyTests.swift in Sources */,
 				B901B7481C3DC99B007691FA /* TMVisiblityCounterTests.m in Sources */,
 				914A992426442DF6009CBFA3 /* TMEncodableMultipartFormDataTests.m in Sources */,
 			);
@@ -727,11 +733,16 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TMTumblrSDK/TMTumblrSDK.framework/Headers\"",
+					include,
+				);
 				INFOPLIST_FILE = ExampleiOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tumblr..ExampleiOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "ExampleiOSTests/ExampleiOSTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ExampleiOSTests/include/ExampleiOSTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -745,11 +756,16 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TMTumblrSDK/TMTumblrSDK.framework/Headers\"",
+					include,
+				);
 				INFOPLIST_FILE = ExampleiOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tumblr..ExampleiOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "ExampleiOSTests/ExampleiOSTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ExampleiOSTests/include/ExampleiOSTests-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExampleiOS.app/ExampleiOS";

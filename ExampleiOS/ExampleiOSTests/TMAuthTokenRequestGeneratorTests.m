@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMAuthTokenRequestGenerator.h>
-#import <TMTumblrSDK/TMHTTPRequest.h>
+#import "TMAuthTokenRequestGenerator.h"
+#import "TMHTTPRequest.h"
 
 @interface TMAuthTokenRequestGeneratorTests : XCTestCase
 

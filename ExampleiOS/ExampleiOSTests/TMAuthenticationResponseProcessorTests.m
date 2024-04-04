@@ -7,9 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMAuthenticationResponseProcessor.h>
-#import <TMTumblrSDK/TMAPIUserCredentials.h>
-#import <TMTumblrSDK/TMAPIError.h>
+#import "TMAuthenticationResponseProcessor.h"
+#import "TMAPIUserCredentials.h"
+#import "TMAPIError.h"
 
 @interface TMAuthenticationResponseProcessorTests : XCTestCase
 

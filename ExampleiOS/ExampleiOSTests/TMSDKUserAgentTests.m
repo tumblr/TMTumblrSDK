@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMSDKUserAgent.h> 
+#import "TMSDKUserAgent.h"
 
 @interface TMSDKUserAgentTests : XCTestCase
 

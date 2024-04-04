@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <TMTumblrSDK/TMSession.h>
+#import "TMSession.h"
 #import "TMSynchronousMockURLSessionTask.h"
 
 /**

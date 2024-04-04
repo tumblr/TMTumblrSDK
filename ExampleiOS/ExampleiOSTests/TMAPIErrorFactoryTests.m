@@ -113,26 +113,27 @@
                                                                                  }
 
                                                                              ] legacy:YES];
-
-    NSArray <id <TMAPIError>> *errors = [factory APIErrors];
+    
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    NSArray <id <TMAPIError>> *errors = [[factory APIErrors] sortedArrayUsingDescriptors:@[sortDescriptor]];
 
     id <TMAPIError> error = [errors firstObject];
 
     XCTAssert(![error logout]);
-    XCTAssert([[error title] isEqualToString:@"title"]);
-    XCTAssert([[error detail] isEqualToString:@"We messed up!"]);
+    XCTAssert([[error title] isEqualToString:@"detail"]);
+    XCTAssert([[error detail] isEqualToString:@"idek!"]);
 
     error = errors[1];
 
     XCTAssert(![error logout]);
-    XCTAssert([[error detail] isEqualToString:@"idek!"]);
-    XCTAssert([[error title] isEqualToString:@"detail"]);
+    XCTAssert([[error title] isEqualToString:@"kenny"]);
+    XCTAssert([[error detail] isEqualToString:@"chains"]);
 
     error = errors[2];
 
     XCTAssert(![error logout]);
-    XCTAssert([[error detail] isEqualToString:@"chains"]);
-    XCTAssert([[error title] isEqualToString:@"kenny"]);
+    XCTAssert([[error title] isEqualToString:@"title"]);
+    XCTAssert([[error detail] isEqualToString:@"We messed up!"]);
 }
 
 - (void)testMultipleObjectsCorrectlyTranslatesToModelObjectWithNoLogout {

@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMAPIClient.h>
+#import "TMAPIClient.h"
 #import "TMBasicBaseURLDeterminer.h"
 
 @interface TMAllSystemTests : XCTestCase

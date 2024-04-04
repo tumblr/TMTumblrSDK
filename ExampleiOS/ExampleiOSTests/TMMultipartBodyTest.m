@@ -8,9 +8,10 @@
 
 #import <XCTest/XCTest.h>
 #import "TMBaseTestCase.h"
-#import <TMTumblrSDK/TMMultipartRequestBodyFactory.h>
-#import <TMTumblrSDK/TMMultipartRequestBody.h>
-#import <TMTumblrSDK/TMRequestBody.h>
+#import "TMMultipartRequestBodyFactory.h"
+#import "TMMultipartRequestBody.h"
+#import "TMRequestBody.h"
+#import "NSBundle+Current.h"
 @import TMTumblrSDK;
 
 @interface TMMultipartBodyTest : TMBaseTestCase
@@ -20,7 +21,7 @@
 @implementation TMMultipartBodyTest
 
 - (void)testMultipartDataIsTheSameBySpecifyingKeys {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
 
@@ -28,7 +29,7 @@
 
     NSData *data = [requestBody bodyData];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"data" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"data" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -37,13 +38,13 @@
 
 - (void)testMultipartBodyIsTheSameFactoryWithMultipartBody {
     TMRequestFactory *requestFactory = [[TMRequestFactory alloc] initWithBaseURLDeterminer:[[TMBasicBaseURLDeterminer alloc] init]];
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
 
     id <TMRequest> request = [requestFactory multipartPostRequestForParameters:nil path:@"" requestBody:[TMMultipartRequestBodyFactory multipartRequestBodyForParameters:nil filePathArray:@[path] contentTypeArray:@[@"image/png"] fileNameArray:@[@"code.png"] type:@"image" keys:@[@"data"]]];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"data" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"data" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -51,7 +52,7 @@
 }
 
 - (void)testMultipartDataDoesntCrashWithAnNSNULL {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
 
@@ -59,7 +60,7 @@
 
     NSData *data = [requestBody bodyData];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"data" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"data" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -69,13 +70,13 @@
 
 - (void)testMultipartBodyIsTheSameFactoryWithoutMultipartBodyWithBlogName {
     TMRequestFactory *requestFactory = [[TMRequestFactory alloc] initWithBaseURLDeterminer:[[TMBasicBaseURLDeterminer alloc] init]];
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
+    
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
 
     id <TMRequest> request = [requestFactory multipartPostRequestForParameters:nil blogName:@"" type:@"image" filePathArray:@[path] contentTypeArray:@[@"image/png"] fileNameArray:@[@"code.png"]];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"data" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"data" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -84,13 +85,13 @@
 
 - (void)testMultipartBodyIsTheSameFactoryWithMultipartBodyBlogName {
     TMRequestFactory *requestFactory = [[TMRequestFactory alloc] initWithBaseURLDeterminer:[[TMBasicBaseURLDeterminer alloc] init]];
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
 
     id <TMRequest> request = [requestFactory multipartPostRequestForParameters:nil blogName:@"" requestBody:[TMMultipartRequestBodyFactory multipartRequestBodyForParameters:nil filePathArray:@[path] contentTypeArray:@[@"image/png"] fileNameArray:@[@"code.png"] type:@"image" keys:@[@"data"]]];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"data" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"data" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -99,13 +100,13 @@
 
 - (void)testMultipartBodyIsTheSameFactoryWithItGeneratingMultipartBody {
     TMRequestFactory *requestFactory = [[TMRequestFactory alloc] initWithBaseURLDeterminer:[[TMBasicBaseURLDeterminer alloc] init]];
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
 
     id <TMRequest> request = [requestFactory multipartPostRequestForParameters:nil path:@"" type:@"image" filePathArray:@[path] contentTypeArray:@[@"image/png"] fileNameArray:@[@"code.png"]];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"data" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"data" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -113,7 +114,7 @@
 }
 
 - (void)testMultipartDataIsTheSameBySpecifyingKeysMultipleFilePaths {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
     NSString *pathTwo = [bundle pathForResource:@"spaces" ofType:@"png"];
@@ -127,7 +128,7 @@
 //
 //    [data writeToFile:writeDirectory atomically:YES];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"multiple_files" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"multiple_files" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -135,7 +136,7 @@
 }
 
 - (void)testMultipartDataIsTheSameBySpecifyingKeysMultipleFilePathsUsingDefault {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
     NSString *pathTwo = [bundle pathForResource:@"spaces" ofType:@"png"];
@@ -144,7 +145,7 @@
 
     NSData *data = [requestBody bodyData];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"multiple_files" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"multiple_files" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -152,7 +153,7 @@
 }
 
 - (void)testMultipartDataIsTheSameWithKeysThatAreDifferentlyWithMultipleFilePaths {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
     NSString *pathTwo = [bundle pathForResource:@"spaces" ofType:@"png"];
@@ -161,7 +162,7 @@
 
     NSData *data = [requestBody bodyData];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"multiple_files_different_key" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"multiple_files_different_key" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -169,7 +170,7 @@
 }
 
 - (void)testMultipartDataIsTheSameWithKeysThatAreDifferentlyWithMultipleFilePathsWithThreeImages {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
     NSString *pathTwo = [bundle pathForResource:@"spaces" ofType:@"png"];
@@ -179,7 +180,7 @@
 
     NSData *data = [requestBody bodyData];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"multiple_files_three" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"multiple_files_three" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -187,7 +188,7 @@
 }
 
 - (void)testMultipartDataIsTheSameUsingDefault {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
 
@@ -195,7 +196,7 @@
 
     NSData *data = [requestBody bodyData];
 
-    NSString *pathToKnownMultipartData = [bundle pathForResource:@"data" ofType:@""];
+    NSString *pathToKnownMultipartData = [bundle pathForResourceInCurrentBundle:@"data" ofType:@""];
 
     NSData *knownMultipartData = [NSData dataWithContentsOfFile:pathToKnownMultipartData];
 
@@ -203,7 +204,7 @@
 }
 
 - (void)testMultipartContentTypeIsCorrect {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *path = [bundle pathForResource:@"code" ofType:@"png"];
 
@@ -221,7 +222,7 @@
 }
 
 - (void)testMultipartJSONBody {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *pathToJSONDictionary = [bundle pathForResource:@"json_dictionary" ofType:@"json"];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:pathToJSONDictionary] options:0 error:NULL];
@@ -230,14 +231,14 @@
     id <TMRequestBody> requestBody = [[TMMultipartRequestBody alloc] initWithFilePaths:@[path] contentTypes:@[@"image/png"] fileNames:@[@"code.png"] parameters:dictionary keys:@[@"data"] encodeJSONBody:YES];
 
     NSData *data = [requestBody bodyData];
-    NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
+    NSString *pathToKnownMultipartJSONData = [bundle pathForResourceInCurrentBundle:@"json_data" ofType:@""];
     NSData *knownMultipartJSONData = [NSData dataWithContentsOfFile:pathToKnownMultipartJSONData];
 
     XCTAssert([knownMultipartJSONData isEqual:data]);
 }
 
 - (void)testMultipartDataEncodeToFile {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *pathToJSONDictionary = [bundle pathForResource:@"json_dictionary" ofType:@"json"];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:pathToJSONDictionary] options:0 error:NULL];
@@ -251,7 +252,7 @@
     XCTAssertNil(error);
     XCTAssertNotNil(encodedFile);
     
-    NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
+    NSString *pathToKnownMultipartJSONData = [bundle pathForResourceInCurrentBundle:@"json_data" ofType:@""];
     NSData *knownMultipartJSONData = [NSData dataWithContentsOfFile:pathToKnownMultipartJSONData];
 
     NSData *dataContent = [NSData dataWithContentsOfURL:encodedFile];
@@ -259,7 +260,7 @@
 }
 
 - (void)testMultipartDataEncodeWithLowFileEndodingThreshold {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     TMMultipartRequestBody *requestBody = [self createRequestBodyWithThreshold:1024]; //So anything above 1KB encoded into file
     
@@ -269,7 +270,7 @@
     XCTAssertNil(encodedForm.data);
     XCTAssertNotNil(encodedForm.fileURL);
     
-    NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
+    NSString *pathToKnownMultipartJSONData = [bundle pathForResourceInCurrentBundle:@"json_data" ofType:@""];
     NSData *knownMultipartJSONData = [NSData dataWithContentsOfFile:pathToKnownMultipartJSONData];
     NSData *dataContent = [NSData dataWithContentsOfURL:encodedForm.fileURL];
 
@@ -277,7 +278,7 @@
 }
 
 - (void)testMultipartDataEncodeWithHighFileEndodingThreshold {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     TMMultipartRequestBody *requestBody = [self createRequestBodyWithThreshold:TMMultipartFormFileEncodingThreshold]; //10MB threshold
     
@@ -287,14 +288,14 @@
     XCTAssertNotNil(encodedForm.data);
     XCTAssertNotNil(encodedForm.fileURL);
 
-    NSString *pathToKnownMultipartJSONData = [bundle pathForResource:@"json_data" ofType:@""];
+    NSString *pathToKnownMultipartJSONData = [bundle pathForResourceInCurrentBundle:@"json_data" ofType:@""];
     NSData *knownMultipartJSONData = [NSData dataWithContentsOfFile:pathToKnownMultipartJSONData];
 
     XCTAssert([knownMultipartJSONData isEqual:encodedForm.data]);
 }
 
 - (TMMultipartRequestBody *)createRequestBodyWithThreshold:(NSUInteger)fileEncodingThreshold {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle currentBundleForClass:[self class]];
 
     NSString *pathToJSONDictionary = [bundle pathForResource:@"json_dictionary" ofType:@"json"];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:pathToJSONDictionary] options:0 error:NULL];

@@ -7,10 +7,10 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <TMTumblrSDK/TMQueryEncodedRequestBody.h>
-#import <TMTumblrSDK/TMFormEncodedRequestBody.h>
-#import <TMTumblrSDK/TMJSONEncodedRequestBody.h>
-#import <TMTumblrSDK/TMGZIPEncodedRequestBody.h>
+#import "TMQueryEncodedRequestBody.h"
+#import "TMFormEncodedRequestBody.h"
+#import "TMJSONEncodedRequestBody.h"
+#import "TMGZIPEncodedRequestBody.h"
 #import <zlib.h>
 
 @interface TMRequestBodiesTests : XCTestCase
