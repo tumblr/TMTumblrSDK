@@ -1,5 +1,9 @@
 # TMTumblrSDK changelog
 
+## 6.1.3
+
+* Allow an array as a top level response object
+
 ## 6.1.2
 
 * Adds support for Swift Package Manager
