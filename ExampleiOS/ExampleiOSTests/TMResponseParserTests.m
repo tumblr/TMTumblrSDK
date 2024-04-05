@@ -60,6 +60,23 @@
     XCTAssert([response.JSONDictionary isEqual:test]);
 }
 
+- (void)testValidJSONArrayGetsParsedCorrectly {
+    NSArray *test = [self testJSONArray];
+
+    NSData *data = [self dataForJSONObject:@{@"response" : test}];
+
+    TMResponseParser *responseParser = [[TMResponseParser alloc] initWithData:data
+                                                                  URLResponse:[[NSHTTPURLResponse alloc] init]
+                                                                        error:nil
+                                                                serializeJSON:YES];
+
+    TMParsedHTTPResponse *response = [responseParser parse];
+
+    XCTAssert([response.JSONArray isEqual:test]);
+    XCTAssert(response.JSONDictionary.count == 0);
+}
+
+
 - (void)testValidJSONGetsCorrectStatusCodeBackAndJSONIsCorrect {
     for (NSNumber *statusCode in @[@200, @201]) {
         for (NSDictionary *JSON in @[[self testJSON], [self testJSONNested]]) {
@@ -185,6 +202,13 @@
                      @"otherKey" : [self testJSON]
                  }
              };
+}
+
+- (NSArray *)testJSONArray {
+    return @[
+        @{ @"key" : @"value1" },
+        @{ @"key" : @"value2" }
+    ];
 }
 
 - (NSData *)dataForJSONObject:(id)JSONObject {

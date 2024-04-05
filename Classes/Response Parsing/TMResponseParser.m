@@ -64,27 +64,37 @@
     const BOOL successful = response.statusCode / 100 == 2;
 
     NSDictionary *JSON = [self JSON];
-    NSDictionary *responseJSON = [self calculateResponseFromJSON:JSON];
+    id responseJSON = [self calculateResponseFromJSON:JSON];
     NSArray <id <TMAPIError>> *APIErrors = [self errors:JSON responseJSON:responseJSON];
-
-    return [[TMParsedHTTPResponse alloc] initWithJSONDictionary:responseJSON
-                                                     successful:successful
-                                            responseDescription:response.description
-                                                          error:self.error ?: (successful ? nil : [NSError errorWithDomain:@"Request failed" code:response.statusCode  userInfo:nil])
-                                                      APIErrors:APIErrors
-                                                     statusCode:response.statusCode];
+    
+    if ([responseJSON isKindOfClass:[NSArray class]]) {
+        return [[TMParsedHTTPResponse alloc] initWithJSONArray:responseJSON
+                                                    successful:successful
+                                           responseDescription:response.description
+                                                         error:self.error ?: (successful ? nil : [NSError errorWithDomain:@"Request failed" code:response.statusCode  userInfo:nil])
+                                                     APIErrors:APIErrors
+                                                    statusCode:response.statusCode];
+    }
+    else {
+        return [[TMParsedHTTPResponse alloc] initWithJSONDictionary:responseJSON
+                                                         successful:successful
+                                                responseDescription:response.description
+                                                              error:self.error ?: (successful ? nil : [NSError errorWithDomain:@"Request failed" code:response.statusCode  userInfo:nil])
+                                                          APIErrors:APIErrors
+                                                         statusCode:response.statusCode];
+    }
 }
 
 #pragma mark - Private
 
-- (nonnull NSArray <id <TMAPIError>> *)errors:(nonnull NSDictionary *)fullJSON responseJSON:(nonnull NSDictionary *)responseJSON {
+- (nonnull NSArray <id <TMAPIError>> *)errors:(nonnull NSDictionary *)fullJSON responseJSON:(nonnull id)responseJSON {
 
     id topLevelErrors = fullJSON[@"errors"];
 
     if ([topLevelErrors isKindOfClass:[NSArray class]]) {
         return [[[TMAPIErrorFactory alloc] initWithErrors:topLevelErrors legacy:NO] APIErrors];
     }
-    else {
+    else if ([responseJSON isKindOfClass:[NSDictionary class]]) {
         id legacyErrors = responseJSON[@"errors"];
 
         if ([legacyErrors isKindOfClass:[NSArray class]]) {
@@ -101,11 +111,11 @@
     return @[];
 }
 
-- (nonnull NSDictionary *)calculateResponseFromJSON:(nonnull NSDictionary *)JSON {
+- (nonnull id)calculateResponseFromJSON:(nonnull NSDictionary *)JSON {
 
     const id response = JSON[@"response"];
 
-    if ([response isKindOfClass:[NSDictionary class]]) {
+    if ([response isKindOfClass:[NSDictionary class]] || [response isKindOfClass:[NSArray class]]) {
         return response;
     }
 
