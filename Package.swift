@@ -11,7 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "TMTumblrSDK",
-            targets: ["TMTumblrSDK", "TMTumblrSDKTests", "TMTumblrSDKSwiftTests"]),
+            targets: ["TMTumblrSDK"]),
     ],
     targets: [
         .target(
