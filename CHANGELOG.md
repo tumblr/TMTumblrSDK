@@ -1,5 +1,9 @@
 # TMTumblrSDK changelog
 
+## 6.1.4
+
+* Allow an array of any objects as a top level response object
+
 ## 6.1.3
 
 * Allow an array as a top level response object
