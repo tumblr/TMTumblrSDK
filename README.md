@@ -1,7 +1,7 @@
 # Tumblr SDK for iOS
 
 An unopinionated and flexible library for easily integrating Tumblr data into
-your iOS or OS X application. The library uses ARC requires at least iOS 9 or OS X 10.10.
+your iOS or OS X application. The library uses ARC requires at least iOS 10 or OS X 10.12.
 
 If you have any feature requests, please let us know by creating an issue or
 submitting a pull request. Please use the Tumblr API responsibly and adhere to the [Application Developer and API License Agreement](http://www.tumblr.com/docs/en/api_agreement).
@@ -47,7 +47,7 @@ To install the Tumblr SDK you can simply create a
 in your application's root directory that looks as follows:
 
 ``` ruby
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 pod 'TMTumblrSDK'
 ```
